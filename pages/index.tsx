@@ -187,7 +187,7 @@ export default function Home(props: {
             <button
               key={button.text}
               onClick={() => router.push(button.path)}
-              className="max-w-[12rem] w-[12rem] md:max-w-full bg-indigo-300 py-4"
+              className="btn btn-primary"
             >
               {button.text}
             </button>
