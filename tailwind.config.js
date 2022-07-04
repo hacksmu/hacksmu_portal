@@ -21,7 +21,7 @@ module.exports = {
         'light-red': '#ff8787',
         'warm-white': '#ffebeb',
         red: '#cc0035',
-        'light-yellow': '#cdcbc6',
+        'light-yellow': '#cac8c4',
       },
       textColor: {
         'light-red': '#ff8787',

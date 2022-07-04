@@ -186,14 +186,14 @@ export default function Home(props: {
           <div className="text-light-red text-5xl font-bold text-center mt-12">
             September 16-18, 2022
           </div>
-          <div className="grid grid-cols-3 mt-12 ml-8">
-            <button className="w-[12rem] bg-[#631f0b] text-2xl text-white md:max-w-full py-3">
+          <div className="grid grid-cols-3 mt-12 px-4 absolute bottom-8 space-x-8 w-full">
+            <button className="bg-[#631f0b] text-2xl text-white md:max-w-full py-3">
               Apply here!
             </button>
-            <button className="w-[14rem] bg-dark-blue text-2xl text-white md:max-w-full py-3">
+            <button className="bg-dark-blue text-2xl text-white md:max-w-full py-3">
               Volunteer here!
             </button>
-            <button className="w-[16rem] bg-dark-blue text-2xl text-white md:max-w-full py-3">
+            <button className="bg-dark-blue text-2xl text-white md:max-w-full py-3">
               Become a mentor!
             </button>
           </div>
