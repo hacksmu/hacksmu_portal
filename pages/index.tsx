@@ -171,8 +171,8 @@ export default function Home(props: {
             <NextImage src="/assets/hacksmu-photo1.png" layout="fill" objectFit="cover" />
           </span>
         </div>
-        <div className="w-3/6 h-3/6 bg-black absolute bottom-72 left-32 z-10" />
-        <div className="w-3/6 h-3/6 bg-gradient-to-r from-light-yellow via-dark-blue to-light-yellow absolute bottom-64 left-40 z-20">
+        <div className="w-3/6 h-3/6 bg-black absolute bottom-64 left-32 z-10" />
+        <div className="w-3/6 h-3/6 bg-gradient-to-r from-light-yellow via-[#272550] to-light-yellow absolute bottom-60 left-36 z-20">
           <div className="flex flex-col justify-center items-center relative">
             <div className="flex mt-3">
               <NextImage src="/assets/hacksmu.png" width="50" height="80" objectFit="cover" />
@@ -183,6 +183,20 @@ export default function Home(props: {
           <div className="text-white text-4xl ml-12 mt-12">{'>>> MEET UP.'}</div>
           <div className="text-white text-4xl ml-20 mt-2">{'>>> HAVE FUN.'}</div>
           <div className="text-white text-4xl ml-28 mt-2">{'>>> CREATE AWESOME.'}</div>
+          <div className="text-light-red text-5xl font-bold text-center mt-12">
+            September 16-18, 2022
+          </div>
+          <div className="grid grid-cols-3 mt-12 ml-8">
+            <button className="w-[12rem] bg-[#631f0b] text-2xl text-white md:max-w-full py-3">
+              Apply here!
+            </button>
+            <button className="w-[14rem] bg-dark-blue text-2xl text-white md:max-w-full py-3">
+              Volunteer here!
+            </button>
+            <button className="w-[16rem] bg-dark-blue text-2xl text-white md:max-w-full py-3">
+              Become a mentor!
+            </button>
+          </div>
         </div>
       </section>
       {/* Video Space */}

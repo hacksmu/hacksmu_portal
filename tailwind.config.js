@@ -5,13 +5,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'dark-blue': '00034B',
-        'medium-blue': '8888ff',
-        'cool-white': 'ebebff',
-        'dark-red': '4a0000',
-        'light-red': 'ff8787',
-        'warm-white': 'ffebeb',
-        red: 'cc0035',
+        'dark-blue': '#00034B',
+        'medium-blue': '#8888ff',
+        'cool-white': '#ebebff',
+        'dark-red': '#4a0000',
+        'light-red': '#ff8787',
+        'warm-white': '#ffebeb',
+        red: '#cc0035',
       },
       gradientColorStops: {
         'dark-blue': '#00034B',
@@ -22,6 +22,9 @@ module.exports = {
         'warm-white': '#ffebeb',
         red: '#cc0035',
         'light-yellow': '#cdcbc6',
+      },
+      textColor: {
+        'light-red': '#ff8787',
       },
       fontFamily: {
         sans: ['wavehaus'],
