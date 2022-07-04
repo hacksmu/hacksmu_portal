@@ -73,13 +73,12 @@ export default function AppHeader() {
   return (
     <>
       <div className="min-h-[4rem]"></div>
-      <header className="top-0 fixed justify-between flex flex-row w-full bg-indigo-100 items-center h-16 z-10 p-4">
+      <header className="top-0 fixed justify-between flex flex-row w-full bg-gray-900 items-center h-24 z-10 p-4">
         <div className="flex justify-between items-center md:max-w-full md:justify-start md:w-9/12">
           <Link href="/">
             <a className="flex gap-2 order-2 relative ml-[6px] font-display self-center items-center md:order-1 md:ml-0">
               {/* !change src */}
-              <Image src={'/assets/hp-logo.png'} width="30px" height="30px" />
-              <span className="text-[16px] font-black md:z-0 md:text-2xl">HackPortal</span>
+              <Image src={'/assets/hacksmu.png'} width="50px" height="81px" />
             </a>
           </Link>
           {/* Smartphone nav */}
@@ -104,7 +103,7 @@ export default function AppHeader() {
             {dynamicNavItems.map((item) => (
               <Link key={item.text} href={item.path}>
                 <a>
-                  <p className="md:mx-4 text-sm font-bold">{item.text}</p>
+                  <p className="md:mx-4 text-xl font-bold text-white">{item.text}</p>
                 </a>
               </Link>
             ))}

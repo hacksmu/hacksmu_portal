@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import NextImage from 'next/image';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -150,8 +151,8 @@ export default function Home(props: {
   return (
     <>
       <Head>
-        <title>HackPortal</title> {/* !change */}
-        <meta name="description" content="A default HackPortal instance" /> {/* !change */}
+        <title>HackSMU IV</title> {/* !change */}
+        <meta name="description" content="HackSMU Portal" /> {/* !change */}
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {/* Notification info pop up */}
@@ -163,35 +164,25 @@ export default function Home(props: {
           Turn on push notifications to recieve announcements!
         </div>
       )}
-      {/* Hero section */}
+      {/* Header section */}
       <section className="min-h-screen p-4 bg-contain bg-hero-pattern">
-        <div
-          style={{ minHeight: 480 }}
-          className="max-w-4xl mx-auto flex flex-col justify-center items-center"
-        >
-          <div
-            className="min-w-[280px] w-8/12 h-[240px] flex flex-col justify-center relative md:mb-28 md:min-w-full before:block before:absolute before:bottom-0 before:left-0 before:w-16 before:h-16 before:bg-transparent before:border-b-4 before:border-l-4 before:border-black
-          after:block after:absolute after:top-0 after:right-0 after:w-16 after:h-16 after:bg-transparent after:border-t-4 after:border-r-4 after:border-black"
-          >
-            <h1 className="text-center md:text-6xl text-3xl md:font-black font-bold">HackPortal</h1>{' '}
-            {/* !change */}
-            <p className="text-center my-4 md:font-bold md:text-3xl text-xl">
-              {' '}
-              {/* !change */}A Project by ACM Development and HackUTD
-            </p>
-          </div>
-          {/* TODO: Programmatically show these based on configured times/organizer preference */}
+        <div style={{ width: '100vh', height: 'auto' }}>
+          <span className="">
+            <NextImage src="/assets/hacksmu-photo1.png" layout="fill" objectFit="cover" />
+          </span>
         </div>
-        <div className="flex flex-col items-center md:flex-row md:justify-around px-4 md:space-y-0 space-y-3 > * + *">
-          {buttonDatas.map((button) => (
-            <button
-              key={button.text}
-              onClick={() => router.push(button.path)}
-              className="btn btn-primary"
-            >
-              {button.text}
-            </button>
-          ))}
+        <div className="w-3/6 h-3/6 bg-black absolute bottom-72 left-32 z-10" />
+        <div className="w-3/6 h-3/6 bg-gradient-to-r from-light-yellow via-dark-blue to-light-yellow absolute bottom-64 left-40 z-20">
+          <div className="flex flex-col justify-center items-center relative">
+            <div className="flex mt-3">
+              <NextImage src="/assets/hacksmu.png" width="50" height="80" objectFit="cover" />
+              <h1 className="text-white text-center text-4xl mt-4 ms-4 font-bold">HackSMU IV</h1>
+            </div>
+            <span className="border-white w-11/12 mt-2 border-t-4" />
+          </div>
+          <div className="text-white text-4xl ml-12 mt-12">{'>>> MEET UP.'}</div>
+          <div className="text-white text-4xl ml-20 mt-2">{'>>> HAVE FUN.'}</div>
+          <div className="text-white text-4xl ml-28 mt-2">{'>>> CREATE AWESOME.'}</div>
         </div>
       </section>
       {/* Video Space */}
