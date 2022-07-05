@@ -205,9 +205,15 @@ export default function Home(props: {
             >
               Volunteer here!
             </a>
-            <button className="bg-dark-blue text-2xl text-white md:max-w-full py-3">
+            <a
+              href="https://www.google.com"
+              rel="noreferrer"
+              target="_blank"
+              className="bg-dark-blue text-2xl text-center text-white font-bold md:max-w-full py-3"
+              role="button"
+            >
               Become a mentor!
-            </button>
+            </a>
           </div>
         </div>
       </section>
