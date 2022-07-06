@@ -165,55 +165,66 @@ export default function Home(props: {
         </div>
       )}
       {/* Header section */}
-      <section className="min-h-screen p-4 bg-contain bg-hero-pattern">
-        <div style={{ width: '100vh', height: 'auto' }}>
-          <span className="">
+      <section className="md:px-4 bg-contain bg-hero-pattern">
+        <div style={{ width: '100vw', height: '95vh' }}>
+          <div>
             <NextImage src="/assets/hacksmu-photo1.png" layout="fill" objectFit="cover" />
-          </span>
-        </div>
-        <div className="w-3/6 h-3/6 bg-black absolute bottom-64 left-32 z-10" />
-        <div className="w-3/6 h-3/6 bg-gradient-to-r from-light-yellow via-[#272550] to-light-yellow absolute bottom-60 left-36 z-20">
-          <div className="flex flex-col justify-center items-center relative">
-            <div className="flex mt-3">
-              <NextImage src="/assets/hacksmu.png" width="50" height="80" objectFit="cover" />
-              <h1 className="text-white text-center text-4xl mt-4 ms-4 font-bold">HackSMU IV</h1>
+          </div>
+
+          <div className="w-screen min-h-[105vh] h-auto relative">
+            <div className="w-[90%] xl:w-3/6 h-[80vh] xl:h-[60%] bg-white absolute top-[8%] left-[3%] xl:left-24 z-10" />
+            <div className="w-[90%] xl:w-3/6 h-[80vh] xl:h-[60%] bg-dark-blue absolute top-[10%] left-[5%] xl:left-28 z-20">
+              <div className="flex flex-col justify-center items-center relative">
+                <div className="flex mt-3">
+                  <NextImage src="/assets/hacksmu.png" width="50" height="80" objectFit="cover" />
+                  <h1 className="text-white text-center text-4xl mt-4 ms-4 font-bold">
+                    HackSMU IV
+                  </h1>
+                </div>
+                <span className="border-white w-11/12 mt-2 border-t-4" />
+              </div>
+              <div className="text-white text-2xl sm:text-3xl ml-8 sm:ml-12 mt-8">
+                {'>>> MEET UP.'}
+              </div>
+              <div className="text-white text-2xl sm:text-3xl ml-12 sm:ml-20 mt-2">
+                {'>>> HAVE FUN.'}
+              </div>
+              <div className="text-white text-2xl sm:text-3xl ml-16 sm:ml-28 mt-2">
+                {'>>> CREATE AWESOME.'}
+              </div>
+              <div className="text-light-red text-5xl font-bold text-center mt-4">
+                {'September 16-18, 2022'}
+              </div>
+              <div className="grid grid-cols-1 relative xl:absolute xl:grid-cols-3 mt-4 px-4 xl:space-x-8 space-y-4 xl:space-y-0 w-full xl:top-[75%]">
+                <a
+                  href="https://www.google.com"
+                  rel="noreferrer"
+                  target="_blank"
+                  className="bg-light-red text-2xl text-center text-white font-bold md:max-w-full py-3 px-2"
+                  role="button"
+                >
+                  Apply here!
+                </a>
+                <a
+                  href="https://www.google.com"
+                  rel="noreferrer"
+                  target="_blank"
+                  className="bg-medium-blue text-2xl text-center text-white font-bold md:max-w-full py-3 px-2"
+                  role="button"
+                >
+                  Volunteer here!
+                </a>
+                <a
+                  href="https://www.google.com"
+                  rel="noreferrer"
+                  target="_blank"
+                  className="bg-medium-blue text-2xl text-center text-white font-bold md:max-w-full py-3 px-2"
+                  role="button"
+                >
+                  Become a mentor!
+                </a>
+              </div>
             </div>
-            <span className="border-white w-11/12 mt-2 border-t-4" />
-          </div>
-          <div className="text-white text-4xl ml-12 mt-12">{'>>> MEET UP.'}</div>
-          <div className="text-white text-4xl ml-20 mt-2">{'>>> HAVE FUN.'}</div>
-          <div className="text-white text-4xl ml-28 mt-2">{'>>> CREATE AWESOME.'}</div>
-          <div className="text-light-red text-5xl font-bold text-center mt-4">
-            {'September 16-18, 2022'}
-          </div>
-          <div className="grid grid-cols-3 mt-18 px-4 absolute bottom-8 space-x-8 w-full">
-            <a
-              href="https://www.google.com"
-              rel="noreferrer"
-              target="_blank"
-              className="bg-[#631f0b] text-2xl text-center text-white font-bold md:max-w-full py-3"
-              role="button"
-            >
-              Apply here!
-            </a>
-            <a
-              href="https://www.google.com"
-              rel="noreferrer"
-              target="_blank"
-              className="bg-dark-blue text-2xl text-center text-white font-bold md:max-w-full py-3"
-              role="button"
-            >
-              Volunteer here!
-            </a>
-            <a
-              href="https://www.google.com"
-              rel="noreferrer"
-              target="_blank"
-              className="bg-dark-blue text-2xl text-center text-white font-bold md:max-w-full py-3"
-              role="button"
-            >
-              Become a mentor!
-            </a>
           </div>
         </div>
       </section>
@@ -238,11 +249,11 @@ export default function Home(props: {
               <div
                 key={stat.data}
                 className={`${
-                  index % 2 === 0 ? 'lg:ml-40 md:ml-20 ml-14' : 'md:mr-8 mr-24'
+                  index % 2 === 0 ? 'xl:ml-40 md:ml-20 ml-14' : 'md:mr-8 mr-24'
                 } text-center md:my-6 my-4`}
               >
-                <p className="font-bold text-2xl text-indigo-600 lg:text-5xl">{stat.data}</p>
-                <p className="font-medium text-lg lg:text-3xl">{stat.object}</p>
+                <p className="font-bold text-2xl text-indigo-600 xl:text-5xl">{stat.data}</p>
+                <p className="font-medium text-lg xl:text-3xl">{stat.object}</p>
               </div>
             ))}
           </div>
