@@ -73,25 +73,25 @@ export default function AppHeader() {
   return (
     <>
       <div className="min-h-[4rem]"></div>
-      <header className="top-0 fixed justify-between flex flex-row w-full bg-gray-900 items-center h-24 z-50 p-4">
+      <header className="top-0 fixed justify-between flex flex-row w-full bg-dark-blue items-center h-24 z-50 p-4">
         <div className="flex justify-between items-center md:max-w-full md:justify-start md:w-9/12">
           <Link href="/">
-            <a className="flex gap-2 order-2 relative ml-[6px] font-display self-center items-center md:order-1 md:ml-0">
+            <a className="flex gap-2 order-2 relative ml-[12px] font-display self-center items-center md:order-1 md:ml-0 z-[-1]">
               {/* !change src */}
               <Image src={'/assets/hacksmu.png'} width="50px" height="81px" />
             </a>
           </Link>
           {/* Smartphone nav */}
           <div onClick={toggleMenu} className={'relative md:hidden'}>
-            {mobileIcon ? <MenuIcon /> : <CloseIcon />}
+            {mobileIcon ? <MenuIcon htmlColor="white" /> : <CloseIcon htmlColor="white" />}
             <ul
               className={`${
                 showMenu ? 'translate-x-0' : '-translate-x-full'
-              } transform transition-all ease-out duration-300 flex w-6/12 h-screen border-2 border-black flex-col bg-white fixed top-0 left-0 z-[-1] pt-16`}
+              } transform transition-all ease-out duration-300 flex w-6/12 h-screen border-2 border-white flex-col bg-medium-blue fixed top-0 left-0 z-[-1] pt-16`}
             >
               {dynamicNavItems.map((item) => (
                 <Link key={item.text} href={item.path}>
-                  <a className="border-b-2 first:border-t-2 border-black p-4 py-6 hover:bg-[#D8F8FF]">
+                  <a className="border-b-2 first:border-t-2 text-white border-white p-4 py-6 hover:bg-dark-blue">
                     <p className="text-sm font-bold">{item.text}</p>
                   </a>
                 </Link>
