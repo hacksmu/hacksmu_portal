@@ -229,9 +229,14 @@ export default function Home(props: {
 
       {/* About HackSMU */}
       <section id="about" className="z-0 relative bg-cool-white">
-        <div className="flex flex-col justify-center items-center md:flex-row h-[135vh] xl:h-screen w-screen">
-          <div className="rounded-[3rem] bg-light-red w-[90%] xl:w-[45%] h-[120vh] xl:h-[80%] left-[1rem] xl:left-auto absolute" />
-          <div className="rounded-[3rem] bg-white w-[90%] xl:w-[45%] h-[120vh] xl:h-[80%] z-10 relative left-2 xl:left-[2rem] top-[0.75rem] xl:px-[6rem] ">
+        <div className="flex flex-col justify-center items-center relative h-[135vh] xl:h-screen w-screen">
+          <div className="hidden xl:block rounded-[3rem] bg-white w-[90%] xl:w-[45%] h-[120vh] xl:h-[80%] z-0 relative left-2 xl:left-[1.5rem] top-[0.75rem] xl:px-[6rem] ">
+            <div className=" transform-gpu rotate-[-45deg] w-[15rem] h-[15rem] absolute top-[10%] right-[94%] z-0">
+              <NextImage src="/assets/robin.svg" layout="fill" />
+            </div>
+          </div>
+          <div className="rounded-[3rem] bg-light-red w-[90%] xl:w-[45%] h-[120vh] xl:h-[80%] left-[0.75rem] xl:left-auto absolute z-10" />
+          <div className="rounded-[3rem] bg-white w-[90%] xl:w-[45%] h-[120vh] xl:h-[80%] z-20 absolute ml-[1rem] xl:ml-[3rem] mt-[1.5rem] xl:mt-[2rem] xl:px-[6rem] ">
             <h1 className="text-3xl text-center mt-[2rem] text-dark-red font-bold">
               {"We are SMU's Annual 36-hour Hackathon."}
             </h1>
@@ -265,6 +270,18 @@ export default function Home(props: {
               <li className="mb-4">An absurd amount of fun.</li>
             </ul>
           </div>
+        </div>
+        <div className="hidden xl:block w-[20rem] h-[10rem] mx-auto absolute bottom-[50%] left-[2%] z-40">
+          <NextImage src="/assets/cloud-sm.svg" layout="fill" />
+        </div>
+        <div className="hidden xl:block w-[12rem] h-[6rem] mx-auto absolute bottom-[20%] left-[10%] z-40">
+          <NextImage src="/assets/cloud-sm.svg" layout="fill" />
+        </div>
+        <div className="hidden xl:block w-[16rem] h-[8rem] mx-auto absolute bottom-[70%] right-[3%] z-40">
+          <NextImage src="/assets/cloud-sm.svg" layout="fill" />
+        </div>
+        <div className="hidden xl:block w-[12rem] h-[6rem] mx-auto absolute bottom-[40%] right-[3%] z-40">
+          <NextImage src="/assets/cloud-sm.svg" layout="fill" />
         </div>
       </section>
 
