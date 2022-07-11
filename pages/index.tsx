@@ -165,7 +165,7 @@ export default function Home(props: {
         </div>
       )}
       {/* Header section */}
-      <section className="md:px-4 bg-contain bg-hero-pattern">
+      <section id="" className="md:px-4 bg-contain bg-hero-pattern">
         <div className="flex flex-row w-screen h-[95vh]">
           <NextImage src="/assets/hacksmu-photo1.png" layout="fill" objectFit="cover" />
           <div className="w-screen xl:w-[50vw] min-h-[105vh] h-auto relative">
@@ -180,18 +180,16 @@ export default function Home(props: {
                 </div>
                 <span className="border-white w-11/12 mt-2 border-t-4" />
               </div>
-              <div className="text-white text-2xl sm:text-3xl ml-8 sm:ml-12 mt-8">
-                {'>>> MEET UP.'}
-              </div>
-              <div className="text-white text-2xl sm:text-3xl ml-12 sm:ml-20 mt-2">
+              <p className="text-white text-2xl sm:text-3xl ml-8 sm:ml-12 mt-8">{'>>> MEET UP.'}</p>
+              <p className="text-white text-2xl sm:text-3xl ml-12 sm:ml-20 mt-2">
                 {'>>> HAVE FUN.'}
-              </div>
-              <div className="text-white text-2xl sm:text-3xl ml-16 sm:ml-28 mt-2">
+              </p>
+              <p className="text-white text-2xl sm:text-3xl ml-16 sm:ml-28 mt-2">
                 {'>>> CREATE AWESOME.'}
-              </div>
-              <div className="text-light-red text-5xl font-bold text-center mt-4">
+              </p>
+              <h2 className="text-light-red text-5xl font-bold text-center mt-4 font-jetbrains">
                 {'September 16-18, 2022'}
-              </div>
+              </h2>
               <div className="grid grid-cols-1 relative xl:absolute xl:grid-cols-3 mt-4 px-4 xl:space-x-8 space-y-4 xl:space-y-0 w-full xl:top-[75%]">
                 <a
                   href="https://www.google.com"
@@ -228,38 +226,49 @@ export default function Home(props: {
           </div>
         </div>
       </section>
-      {/* Video Space */}
-      <section className="z-0 relative md:h-[560px] py-[3rem] bg-white">
-        <div className="flex flex-col justify-center items-center md:flex-row">
-          {/* Video */}
-          {/* !change */}
-          <iframe
-            className="video"
-            width="700"
-            height="400"
-            src="https://www.youtube.com/embed/niFBblrblqo"
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-          {/* Stats */}
-          <div className="">
-            {stats.map((stat, index) => (
-              <div
-                key={stat.data}
-                className={`${
-                  index % 2 === 0 ? 'xl:ml-40 md:ml-20 ml-14' : 'md:mr-8 mr-24'
-                } text-center md:my-6 my-4`}
-              >
-                <p className="font-bold text-2xl text-indigo-600 xl:text-5xl">{stat.data}</p>
-                <p className="font-medium text-lg xl:text-3xl">{stat.object}</p>
+
+      {/* About HackSMU */}
+      <section id="about" className="z-0 relative bg-cool-white">
+        <div className="flex flex-col justify-center items-center md:flex-row h-[135vh] xl:h-screen w-screen">
+          <div className="rounded-[3rem] bg-light-red w-[90%] xl:w-[45%] h-[120vh] xl:h-[80%] left-[1rem] xl:left-auto absolute" />
+          <div className="rounded-[3rem] bg-white w-[90%] xl:w-[45%] h-[120vh] xl:h-[80%] z-10 relative left-2 xl:left-[2rem] top-[0.75rem] xl:px-[6rem] ">
+            <h1 className="text-3xl text-center mt-[2rem] text-dark-red font-bold">
+              {"We are SMU's Annual 36-hour Hackathon."}
+            </h1>
+            <span className="border-dark-red border-solid w-[10rem] mt-2 ml-4 border-t-[4px] block rounded" />
+            <div className="grid xl:grid-cols-3 gap-0 mt-4 right-4 relative">
+              <div>
+                <h2 className="font-jetbrains text-6xl text-dark-red text-center">150+</h2>
+                <h3 className="text-3xl text-dark-red text-center">Hackers</h3>
               </div>
-            ))}
+              <div>
+                <h2 className="font-jetbrains text-6xl text-dark-red text-center">20+</h2>
+                <h3 className="text-3xl text-dark-red text-center">Projects</h3>
+              </div>
+              <div>
+                <h2 className="font-jetbrains text-6xl text-dark-red text-center">$1500+</h2>
+                <h3 className="text-3xl text-dark-red text-center">In Prizes</h3>
+              </div>
+            </div>
+            <h2 className="text-3xl text-dark-red font-bold ml-4 mt-8">HackSMU is...</h2>
+            <ul className="list-disc text-2xl text-dark-red ml-10 xl:ml-14 mt-4">
+              <li className="mb-4">
+                A space for enterpreneurs, designers, and developers to unleash their creativity and
+                spark positive social change.
+              </li>
+              <li className="mb-4">
+                A place to meet likeminded individuals, network with companies and advance your
+                career.
+              </li>
+              <li className="mb-4">Open to all majors and experience levels (seriously!)</li>
+              <li className="mb-4">Offering a lot of free food!</li>
+              <li className="mb-4">An absurd amount of fun.</li>
+            </ul>
           </div>
         </div>
       </section>
-      {/* About section */}
+
+      {/* WIP section */}
       <section className="md:p-12 p-6">
         <h1 className="md:text-4xl text-2xl font-bold my-4">About HackPortal</h1> {/* !change */}
         <div className="md:text-base text-sm">

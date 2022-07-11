@@ -27,7 +27,8 @@ module.exports = {
         'light-red': '#ff8787',
       },
       fontFamily: {
-        sans: ['wavehaus'],
+        sans: ['Roboto'],
+        jetbrains: ['JetBrains Mono'],
       },
       width: {
         '1/8': '12.5%',

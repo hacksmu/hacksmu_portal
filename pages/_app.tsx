@@ -28,6 +28,12 @@ function PortalApp({ Component, pageProps }: AppProps) {
             integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
             crossOrigin="anonymous"
           ></link>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Roboto:wght@400;600;700;900&display=swap"
+            rel="stylesheet"
+          />
           <meta charSet="utf-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
           <meta
