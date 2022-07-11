@@ -166,14 +166,11 @@ export default function Home(props: {
       )}
       {/* Header section */}
       <section className="md:px-4 bg-contain bg-hero-pattern">
-        <div style={{ width: '100vw', height: '95vh' }}>
-          <div>
-            <NextImage src="/assets/hacksmu-photo1.png" layout="fill" objectFit="cover" />
-          </div>
-
-          <div className="w-screen min-h-[105vh] h-auto relative">
-            <div className="w-[90%] xl:w-3/6 h-[80vh] xl:h-[60%] bg-white absolute top-[8%] left-[3%] xl:left-24 z-10" />
-            <div className="w-[90%] xl:w-3/6 h-[80vh] xl:h-[60%] bg-dark-blue absolute top-[10%] left-[5%] xl:left-28 z-20">
+        <div className="flex flex-row w-screen h-[95vh]">
+          <NextImage src="/assets/hacksmu-photo1.png" layout="fill" objectFit="cover" />
+          <div className="w-screen xl:w-[50vw] min-h-[105vh] h-auto relative">
+            <div className="w-[90%] h-[80vh] xl:h-[60%] bg-white absolute top-[8%] left-[3%] xl:left-24 z-10" />
+            <div className="w-[90%] h-[80vh] xl:h-[60%] bg-dark-blue absolute top-[10%] left-[5%] xl:left-28 z-20">
               <div className="flex flex-col justify-center items-center relative">
                 <div className="flex mt-3">
                   <NextImage src="/assets/hacksmu.png" width="50" height="80" objectFit="cover" />
@@ -225,6 +222,9 @@ export default function Home(props: {
                 </a>
               </div>
             </div>
+          </div>
+          <div className="hidden xl:block w-[40vw] bottom-[5rem] mx-auto relative z-30">
+            <NextImage src="/assets/robotcrew.svg" layout="fill" />
           </div>
         </div>
       </section>
