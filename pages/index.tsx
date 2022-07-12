@@ -109,19 +109,19 @@ export default function Home(props: {
     }
   };
 
-  const checkNotif = () => {
-    //pop up visible if user did not enable push notif and browser supports push notif
-    const isSupported =
-      'Notification' in window &&
-      'serviceWorker' in navigator &&
-      'PushManager' in window &&
-      firebase.messaging.isSupported();
-    if (isSupported && Notification.permission !== 'granted') {
-      Notification.requestPermission();
-      return true;
-    }
-    return false;
-  };
+  // const checkNotif = () => {
+  //   //pop up visible if user did not enable push notif and browser supports push notif
+  //   const isSupported =
+  //     'Notification' in window &&
+  //     'serviceWorker' in navigator &&
+  //     'PushManager' in window &&
+  //     firebase.messaging.isSupported();
+  //   if (isSupported && Notification.permission !== 'granted') {
+  //     Notification.requestPermission();
+  //     return true;
+  //   }
+  //   return false;
+  // };
 
   const changeOrg = (challenge, newIdx) => {
     document.getElementById(`org${challengeIdx}`).style.textDecoration = 'none';
@@ -156,73 +156,83 @@ export default function Home(props: {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {/* Notification info pop up */}
-      {checkNotif() && (
+      {/* {checkNotif() && (
         <div
           id="popup"
           className="fixed z-50 md:translate-x-0 translate-x-1/2 w-[22rem] rounded-md px-4 py-2 top-16 md:right-6 right-1/2 bg-red-200 md:text-base text-sm"
         >
           Turn on push notifications to recieve announcements!
         </div>
-      )}
+      )} */}
       {/* Header section */}
-      <section id="" className="md:px-4 bg-contain bg-hero-pattern">
-        <div className="flex flex-row w-screen h-[95vh]">
-          <NextImage src="/assets/hacksmu-photo1.png" layout="fill" objectFit="cover" />
-          <div className="w-screen xl:w-[50vw] min-h-[105vh] h-auto relative">
-            <div className="w-[90%] h-[80vh] xl:h-[60%] bg-white absolute top-[8%] left-[3%] xl:left-24 z-10" />
-            <div className="w-[90%] h-[80vh] xl:h-[60%] bg-dark-blue absolute top-[10%] left-[5%] xl:left-28 z-20">
-              <div className="flex flex-col justify-center items-center relative">
-                <div className="flex mt-3">
-                  <NextImage src="/assets/hacksmu.png" width="50" height="80" objectFit="cover" />
-                  <h1 className="text-white text-center text-4xl mt-4 ms-4 font-bold">
-                    HackSMU IV
-                  </h1>
+      <section id="" className=" bg-contain bg-hero-pattern">
+        <div className="flex flex-col w-[calc(100vw + 2px)] py-16 px-0 relative">
+          <div className="">
+            <NextImage src="/assets/hacksmu-photo1.png" layout="fill" objectFit="cover" />
+          </div>
+          <div className="w-screen xl:w-[50vw] min-h-[100vh] h-auto relative">
+            <div className="w-[90%]  bg-white relative top-[-2.5rem] md:top-[1rem] xl:top-[5%] right-[0.5rem] xl:left-24 z-10 mx-auto">
+              <div className="w-[100%] bg-dark-blue relative top-[1rem] left-4 z-20 mx-auto">
+                <div className="flex flex-col justify-center items-center relative">
+                  <div className="flex mt-3">
+                    <NextImage src="/assets/hacksmu.png" width="50" height="80" objectFit="cover" />
+                    <h1 className="text-white text-center text-4xl mt-4 ms-4 font-bold">
+                      HackSMU IV
+                    </h1>
+                  </div>
+                  <span className="border-white w-11/12 mt-2 border-t-4" />
                 </div>
-                <span className="border-white w-11/12 mt-2 border-t-4" />
-              </div>
-              <p className="text-white text-2xl sm:text-3xl ml-8 sm:ml-12 mt-8">{'>>> MEET UP.'}</p>
-              <p className="text-white text-2xl sm:text-3xl ml-12 sm:ml-20 mt-2">
-                {'>>> HAVE FUN.'}
-              </p>
-              <p className="text-white text-2xl sm:text-3xl ml-16 sm:ml-28 mt-2">
-                {'>>> CREATE AWESOME.'}
-              </p>
-              <h2 className="text-light-red text-5xl font-bold text-center mt-4 font-jetbrains">
-                {'September 16-18, 2022'}
-              </h2>
-              <div className="grid grid-cols-1 relative xl:absolute xl:grid-cols-3 mt-4 px-4 xl:space-x-8 space-y-4 xl:space-y-0 w-full xl:top-[75%]">
-                <a
-                  href="https://www.google.com"
-                  rel="noreferrer"
-                  target="_blank"
-                  className="bg-light-red text-2xl text-center text-white font-bold md:max-w-full py-3 px-2"
-                  role="button"
-                >
-                  Apply here!
-                </a>
-                <a
-                  href="https://www.google.com"
-                  rel="noreferrer"
-                  target="_blank"
-                  className="bg-medium-blue text-2xl text-center text-white font-bold md:max-w-full py-3 px-2"
-                  role="button"
-                >
-                  Volunteer here!
-                </a>
-                <a
-                  href="https://www.google.com"
-                  rel="noreferrer"
-                  target="_blank"
-                  className="bg-medium-blue text-2xl text-center text-white font-bold md:max-w-full py-3 px-2"
-                  role="button"
-                >
-                  Become a mentor!
-                </a>
+                <p className="text-white text-2xl sm:text-3xl ml-8 sm:ml-12 mt-8">
+                  {'>>> MEET UP.'}
+                </p>
+                <p className="text-white text-2xl sm:text-3xl ml-12 sm:ml-20 mt-2">
+                  {'>>> HAVE FUN.'}
+                </p>
+                <p className="text-white text-2xl sm:text-3xl ml-16 sm:ml-28 mt-2">
+                  {'>>> CREATE AWESOME.'}
+                </p>
+                <h2 className="text-light-red text-5xl font-bold text-center mt-4 font-jetbrains">
+                  {'September 16-18, 2022'}
+                </h2>
+                <div className="w-full text-center">
+                  <NextImage
+                    className="block w-[10%] z-40 mx-auto p-3"
+                    src="/assets/robotcrew.svg"
+                    width="512"
+                    height="256"
+                  />
+                </div>
+                <div className="grid grid-cols-1 relative xl:grid-cols-3 mt-4 px-4 xl:space-x-8 space-y-4 xl:space-y-0 w-full xl:top-[75%] pb-8">
+                  <a
+                    href="https://www.google.com"
+                    rel="noreferrer"
+                    target="_blank"
+                    className="bg-light-red text-2xl text-center text-white font-bold md:max-w-full py-3 px-2"
+                    role="button"
+                  >
+                    Apply here!
+                  </a>
+                  <a
+                    href="https://www.google.com"
+                    rel="noreferrer"
+                    target="_blank"
+                    className="bg-medium-blue text-2xl text-center text-white font-bold md:max-w-full py-3 px-2"
+                    role="button"
+                  >
+                    Volunteer here!
+                  </a>
+                  <a
+                    href="https://www.google.com"
+                    rel="noreferrer"
+                    target="_blank"
+                    className="bg-medium-blue text-2xl text-center text-white font-bold md:max-w-full py-3 px-2"
+                    role="button"
+                  >
+                    Become a mentor!
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="hidden xl:block w-[40vw] bottom-[5rem] mx-auto relative z-30">
-            <NextImage src="/assets/robotcrew.svg" layout="fill" />
           </div>
         </div>
       </section>

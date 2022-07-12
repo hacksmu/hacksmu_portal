@@ -5,7 +5,7 @@ export const buttonDatas = [
 ];
 
 export const navItems = [
-  { text: 'About', path: '#about' },
+  { text: 'About', path: '/#about' },
   { text: 'FAQ', path: '/' },
   { text: 'Resources', path: '/' },
   { text: 'Sponsors', path: '/' },
