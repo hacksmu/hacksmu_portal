@@ -232,7 +232,7 @@ export default function Home(props: {
         <div className="flex flex-col justify-center items-center relative h-[135vh] xl:h-screen w-screen">
           <div className="hidden xl:block rounded-[3rem] bg-white w-[90%] xl:w-[45%] h-[120vh] xl:h-[80%] z-0 relative left-2 xl:left-[1.5rem] top-[0.75rem] xl:px-[6rem] ">
             <div className=" transform-gpu rotate-[-45deg] w-[15rem] h-[15rem] absolute top-[10%] right-[94%] z-0">
-              <NextImage src="/assets/robin.svg" layout="fill" />
+              <NextImage src="/assets/Robin.svg" layout="fill" />
             </div>
           </div>
           <div className="rounded-[3rem] bg-light-red w-[90%] xl:w-[45%] h-[120vh] xl:h-[80%] left-[0.75rem] xl:left-auto absolute z-10" />
