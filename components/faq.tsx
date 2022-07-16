@@ -13,9 +13,9 @@ import { RequestHelper } from '../lib/request-helper';
  *
  * Route: /about/faq
  */
-export default function FaqPage({ fetchedFaqs }: { fetchedFaqs: AnsweredQuestion[] }) {
+export default function FaqPage({ fetchedFaqs }: { fetchedFaqs: FAQ[] }) {
   const [loading, setLoading] = useState(true);
-  const [faqs, setFaqs] = useState<AnsweredQuestion[]>([]);
+  const [faqs, setFaqs] = useState<FAQ[]>([]);
   const [disclosuresStatus, setDisclosureStatus] = useState<boolean[]>();
 
   useEffect(() => {
@@ -42,83 +42,55 @@ export default function FaqPage({ fetchedFaqs }: { fetchedFaqs: AnsweredQuestion
   }
 
   return (
-    <div className="flex flex-col flex-grow">
-      <Head>
-        <title>HackSMU IV</title>
-        <meta name="description" content="HackPortal's Frequently Asked Questions" />
-      </Head>
-      {/* <AboutHeader active="/about/faq" /> */}
-      <div className="top-6 p-4 px-8">
-        <div className="flex flex-row justify-between items-center py-2">
-          <h4 className="font-bold p-6 md:text-4xl text-2xl my-4">FAQ</h4>
-          <div className="flex flex-row items-center gap-x-2">
-            <button
-              onClick={() => {
-                expandAll();
-              }}
-              className="font-bold"
-            >
-              Expand All
-            </button>
-            <ChevronUpIcon className="w-5 h-5" />
-          </div>
-        </div>
-        {/* FAQ for lg-md */}
-        {/* Uses different section for mobile because using 2 columns is buggy when expanding FAQs */}
-        <div className="md:flex hidden justify-between">
-          <div className="w-[49%] my-3 space-y-4 > * + *">
-            {faqs.map(
-              ({ question, answer }, idx) =>
-                idx % 2 == 0 && (
-                  <FaqDisclosure
-                    key={idx}
-                    question={question}
-                    answer={answer}
-                    isOpen={disclosuresStatus[idx]}
-                    toggleDisclosure={() => {
-                      const currDisclosure = [...disclosuresStatus];
-                      currDisclosure[idx] = !currDisclosure[idx];
-                      setDisclosureStatus(currDisclosure);
-                    }}
-                  />
-                ),
-            )}
-          </div>
-          <div className="w-[49%] my-3 space-y-4 > * + *">
-            {faqs.map(
-              ({ question, answer }, idx) =>
-                idx % 2 != 0 && (
-                  <FaqDisclosure
-                    key={idx}
-                    question={question}
-                    answer={answer}
-                    isOpen={disclosuresStatus[idx]}
-                    toggleDisclosure={() => {
-                      const currDisclosure = [...disclosuresStatus];
-                      currDisclosure[idx] = !currDisclosure[idx];
-                      setDisclosureStatus(currDisclosure);
-                    }}
-                  />
-                ),
-            )}
-          </div>
-        </div>
-        {/* FAQ for mobile */}
-        <div className="md:hidden">
-          <div className="w-full my-3 space-y-4 > * + *">
-            {faqs.map(({ question, answer }, idx) => (
-              <FaqDisclosure
-                key={idx}
-                question={question}
-                answer={answer}
-                isOpen={disclosuresStatus[idx]}
-                toggleDisclosure={() => {
-                  const currDisclosure = [...disclosuresStatus];
-                  currDisclosure[idx] = !currDisclosure[idx];
-                  setDisclosureStatus(currDisclosure);
-                }}
-              />
-            ))}
+    <div className="z-0 relative bg-cool-white min-h-[95vh] pt-[10rem]">
+      <div className="flex flex-col w-[calc(100vw + 2px)] xl:w-[90vw] pt-8 xl:pt-0 pb-24 xl:pb-64 px-0 relative container justify-center items-end">
+        <div className="rounded-[3rem] bg-light-red w-[90%] xl:w-[100%] relative z-10 mx-auto left-[-.5rem]">
+          <div className="rounded-[3rem] bg-white w-[100%] z-20 relative left-10 top-3 pb-8 pt-1 px-2">
+            <h1 className="text-4xl text-left tracking-widest mt-[2rem] pl-[2rem] text-dark-red font-bold">
+              FAQ
+              <span className="border-dark-red border-solid w-[7.5%] border-t-[4px] self-left block rounded" />
+            </h1>
+            <div className="flex flex-col flex-grow">
+              <div className="top-6 p-4 px-8">
+                {/* FAQ for lg-md */}
+                {/* Uses different section for mobile because using 2 columns is buggy when expanding FAQs */}
+                <div className="md:flex hidden justify-between">
+                  <div className="w-[49%] my-3 space-y-4 > * + *">
+                    {faqs.map(({ question, answer }, idx) => (
+                      <FaqDisclosure
+                        key={idx}
+                        question={question}
+                        answer={answer}
+                        isOpen={disclosuresStatus[idx]}
+                        toggleDisclosure={() => {
+                          const currDisclosure = [...disclosuresStatus];
+                          currDisclosure[idx] = !currDisclosure[idx];
+                          setDisclosureStatus(currDisclosure);
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+                {/* FAQ for mobile */}
+                <div className="md:hidden">
+                  <div className="w-full my-3 space-y-4 > * + *">
+                    {faqs.map(({ question, answer }, idx) => (
+                      <FaqDisclosure
+                        key={idx}
+                        question={question}
+                        answer={answer}
+                        isOpen={disclosuresStatus[idx]}
+                        toggleDisclosure={() => {
+                          const currDisclosure = [...disclosuresStatus];
+                          currDisclosure[idx] = !currDisclosure[idx];
+                          setDisclosureStatus(currDisclosure);
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -133,7 +105,7 @@ export default function FaqPage({ fetchedFaqs }: { fetchedFaqs: AnsweredQuestion
  */
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const protocol = context.req.headers.referer?.split('://')[0] || 'http';
-  const { data } = await RequestHelper.get<AnsweredQuestion[]>(
+  const { data } = await RequestHelper.get<FAQ[]>(
     `${protocol}://${context.req.headers.host}/api/questions/faq`,
     {},
   );

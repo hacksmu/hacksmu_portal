@@ -13,7 +13,7 @@ import { ChevronUpIcon } from '@heroicons/react/solid';
  */
 interface FaqDisclosureProps {
   question: string;
-  answer: string;
+  answer: string | Answer[];
   isOpen: boolean;
   toggleDisclosure: () => void;
 }
@@ -48,7 +48,17 @@ export default function FaqDisclosure({
         </Disclosure.Button>
         {isOpen && (
           <Disclosure.Panel className="rounded-md my-2 py-2 bg-[#ECEEFF] p-2" static>
-            {answer}
+            {typeof answer === 'string'
+              ? answer
+              : typeof answer === 'object'
+              ? answer.map((section) => {
+                  if (section?.type === 'link') {
+                    return <a href={section.url}>{section.text}</a>;
+                  } else if (section?.type === 'plaintext') {
+                    return section.text;
+                  }
+                })
+              : null}
           </Disclosure.Panel>
         )}
       </div>

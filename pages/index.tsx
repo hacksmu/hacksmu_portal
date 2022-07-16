@@ -16,6 +16,7 @@ import FAQ from '../components/faq';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import FaqPage from '../components/faq';
 
 /**
  * The home page.
@@ -26,7 +27,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 export default function Home(props: {
   keynoteSpeakers: KeynoteSpeaker[];
   challenges: Challenge[];
-  answeredQuestion: AnsweredQuestion[];
+  faqs: FAQ[];
   fetchedMembers: TeamMember[];
   sponsorCard: Sponsor[];
 }) {
@@ -44,6 +45,8 @@ export default function Home(props: {
     description: '',
     prizes: [],
   });
+
+  const [faqs, setFaqs] = useState<FAQ[]>([]);
 
   const colorSchemes: ColorScheme[] = [
     {
@@ -75,6 +78,8 @@ export default function Home(props: {
       prizes: sortedChallenges[0].prizes,
     });
     setSponsor(props.sponsorCard);
+
+    setFaqs(props.faqs);
 
     //Organize members in order by rank given in firebase
     setMembers(props.fetchedMembers.sort((a, b) => (a.rank > b.rank ? 1 : -1)));
@@ -170,7 +175,7 @@ export default function Home(props: {
           <div className="">
             <NextImage src="/assets/hacksmu-photo1.png" layout="fill" objectFit="cover" />
           </div>
-          <div className="w-screen xl:w-[50vw] min-h-[60vh] relative">
+          <div className="w-screen xl:w-[50vw] min-h-[85vh] relative">
             <div className="w-[90%]  bg-white relative top-[-2.5rem] md:top-[1rem] xl:top-[5%] right-[0.5rem] xl:left-24 z-10 mx-auto">
               <div className="w-[100%] bg-dark-blue relative top-[1rem] left-4 z-20 mx-auto">
                 <div className="flex flex-col justify-center items-center relative">
@@ -238,7 +243,10 @@ export default function Home(props: {
       </section>
 
       {/* About HackSMU */}
-      <section id="about" className="z-0 relative bg-cool-white">
+      <section
+        id="about"
+        className="z-0 relative bg-cool-white min-h-[95vh] border-b-[1rem] border-white"
+      >
         <div className="flex flex-col w-[calc(100vw + 2px)] xl:w-[50vw] pt-8 xl:pt-0 pb-24 xl:pb-64 px-0 relative container justify-center items-end">
           <div className="hidden xl:block relative top-[6rem] mr-12">
             <NextImage
@@ -289,7 +297,7 @@ export default function Home(props: {
         <div className="hidden xl:block w-[20rem] h-[10rem] mx-auto absolute top-[6%] left-[2%] z-40">
           <NextImage src="/assets/cloud-sm.svg" layout="fill" />
         </div>
-        <div className="hidden xl:block w-[12rem] h-[6rem] mx-auto absolute bottom-[30%] left-[6%] z-40">
+        <div className="hidden xl:block w-[12rem] h-[6rem] mx-auto absolute top-[45%] left-[6%] z-40">
           <NextImage src="/assets/cloud-sm.svg" layout="fill" />
         </div>
         <div className="hidden xl:block w-[16rem] h-[8rem] mx-auto absolute bottom-[75%] right-[3%] z-40">
@@ -300,28 +308,11 @@ export default function Home(props: {
         </div>
       </section>
 
-      {/* WIP section */}
-      <section className="md:p-12 p-6">
-        <h1 className="md:text-4xl text-2xl font-bold my-4">About HackPortal</h1> {/* !change */}
-        <div className="md:text-base text-sm">
-          HackPortal is a platform for user-friendly hackathon event management. <br />
-          <br />A few of its features include: A fully customizable front end, sign in with email/
-          Google, hacker registration, images, challenges, sponsors, FAQ and more fetched from
-          backend, push notifications, a spotlight carousel highlighting ongoing events, QR code
-          check in and swag claims, report submission/ Ask a question, a built-in and easy to set up
-          schedule, Hacker, Admin, and Super Admin roles, an Admin console to send announcements,
-          update user roles, show number of check-ins, swag claims, and more!. <br />
-          <br />
-          To set up HackPortal for your hackathon, check out the{' '}
-          <a
-            href="https://github.com/acmutd/hackportal/blob/develop/docs/set-up.md"
-            className="underline"
-          >
-            HackPortal Github
-          </a>
-          !
-        </div>
+      {/* FAQ section */}
+      <section id="faq">
+        <FaqPage fetchedFaqs={props.faqs} />
       </section>
+
       {/* Featuring Keynotes speakers */}
 
       <section className="flex overflow-x-auto bg-gray-200 min-h-[24rem]">
@@ -391,10 +382,6 @@ export default function Home(props: {
             />
           </div>
         </div>
-      </section>
-      {/* FAQ */}
-      <section>
-        <FAQ fetchedFaqs={props.answeredQuestion}></FAQ>
       </section>
       <section>
         {/* Team Members */}
@@ -528,7 +515,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     `${protocol}://${context.req.headers.host}/api/challenges/`,
     {},
   );
-  const { data: answeredQuestion } = await RequestHelper.get<AnsweredQuestion[]>(
+  const { data: faqs } = await RequestHelper.get<FAQ[]>(
     `${protocol}://${context.req.headers.host}/api/questions/faq`,
     {},
   );
@@ -544,7 +531,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       keynoteSpeakers: keynoteData,
       challenges: challengeData,
-      answeredQuestion: answeredQuestion,
+      faqs: faqs,
       fetchedMembers: memberData,
       sponsorCard: sponsorData,
     },

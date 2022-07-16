@@ -116,9 +116,16 @@ type Registration = {
  * @param answer answer to corresponding question
  *
  *  */
-type AnsweredQuestion = {
+type FAQ = {
   question: string;
-  answer: string;
+  answer: string | Answer[];
+  id: string;
+};
+
+type Answer = {
+  type: string;
+  text: string;
+  url: string;
 };
 
 /**
