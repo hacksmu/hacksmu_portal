@@ -118,7 +118,7 @@ type Registration = {
  *  */
 type FAQ = {
   question: string;
-  answer: string | Answer[];
+  answer: Answer[];
   id: string;
 };
 
