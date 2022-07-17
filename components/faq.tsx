@@ -65,7 +65,7 @@ export default function FaqPage({ fetchedFaqs }: { fetchedFaqs: FAQ[] }) {
             />
           </div>
         </div>
-        <div className="rounded-[3rem] bg-light-red w-[90%] xl:w-[100%] relative z-10 mx-auto left-[-1.5rem]">
+        <div className="rounded-[3rem] bg-light-red w-[90%] xl:w-[100%] relative z-10 mx-auto left-[-0.5rem] xl:left-[-1.5rem]">
           <div className="rounded-[3rem] bg-white w-[100%] z-20 relative left-4 xl:left-10 top-3 pb-8 pt-1 px-2">
             <h1 className="text-4xl text-left tracking-widest mt-[2rem] pl-[2rem] text-dark-red font-bold">
               FAQ
