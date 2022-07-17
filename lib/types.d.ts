@@ -122,6 +122,11 @@ type FAQ = {
   id: string;
 };
 
+type AnsweredQuestion = {
+  question: string;
+  answer: string;
+};
+
 type Answer = {
   type: string;
   text: string;
