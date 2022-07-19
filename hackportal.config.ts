@@ -132,6 +132,10 @@ export const hackPortalConfig: HackPortalConfig = {
                 title: 'Not Hispanic or Latino',
                 value: 'notHispanic',
               },
+              {
+                title: 'Prefer not to answer',
+                value: 'notSay',
+              },
             ],
           },
         ],
@@ -144,7 +148,7 @@ export const hackPortalConfig: HackPortalConfig = {
           {
             //University question
             question:
-              'This event is for college students worldwide. Which university do you attend?',
+              'This event is for college students worldwide. Which university do you attend? If you are not a college student, please say "Other".',
             id: 'university',
             name: 'university',
             required: true,
@@ -153,7 +157,8 @@ export const hackPortalConfig: HackPortalConfig = {
           },
           {
             //Major question
-            question: 'All majors are welcome at this event. What is your major?',
+            question:
+              'All majors are welcome at this event. What is your major? If you are not a college student, please say "N/A".',
             id: 'major',
             name: 'major',
             required: true,
@@ -173,6 +178,10 @@ export const hackPortalConfig: HackPortalConfig = {
             initialValue: '',
             options: [
               {
+                title: 'High School',
+                value: 'highSchool',
+              },
+              {
                 title: 'Freshman',
                 value: 'freshman',
               },
@@ -191,6 +200,10 @@ export const hackPortalConfig: HackPortalConfig = {
               {
                 title: 'Graduate Student',
                 value: 'grad',
+              },
+              {
+                title: 'Other',
+                value: 'other',
               },
             ],
           },
@@ -244,7 +257,7 @@ export const hackPortalConfig: HackPortalConfig = {
           },
           {
             //Heard from question
-            question: 'Where did you hear about HackPortal?',
+            question: 'Where did you hear about HackSMU?',
             required: true,
             id: 'heardFrom',
             name: 'heardFrom',
@@ -265,6 +278,10 @@ export const hackPortalConfig: HackPortalConfig = {
               {
                 title: 'Friend',
                 value: 'Friend',
+              },
+              {
+                title: 'School/University',
+                value: 'school',
               },
               {
                 title: 'Other',
@@ -302,6 +319,10 @@ export const hackPortalConfig: HackPortalConfig = {
               {
                 title: 'XL',
                 value: 'xl',
+              },
+              {
+                title: 'XXL',
+                value: 'xxl',
               },
             ],
           },
@@ -404,24 +425,61 @@ export const hackPortalConfig: HackPortalConfig = {
             initialValue: [],
             options: [
               {
-                title: 'State Farm',
-                value: 'State Farm',
+                title: 'AT&T',
+                value: 'att',
               },
               {
-                title: 'American Airlines',
-                value: 'American Airlines',
+                title: 'Improving',
+                value: 'improving',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    //Question Topic
+    agreements: [
+      {
+        checkboxQuestions: [
+          {
+            //Agreements question
+            question: 'I agree to the following:',
+            required: true,
+            id: 'agreements',
+            name: 'agreements',
+            initialValue: [],
+            options: [
+              {
+                title: 'I have read and agree to the MLH Code of Conduct.',
+                value: 'codeOfConduct',
               },
               {
-                title: 'Capital One',
-                value: 'Capital One',
+                title:
+                  'I authorize you to share my application/registration information with Major League Hacking for event administration, ranking, and MLH administration in-line with the MLH Privacy Policy. I further agree to the terms of both the MLH Contest Terms and Conditions and the MLH Privacy Policy.',
+                value: 'termsAndConditions',
               },
+            ],
+          },
+        ],
+      },
+    ],
+
+    //Question Topic
+    marketing: [
+      {
+        checkboxQuestions: [
+          {
+            //Newsletters question
+            question: '[Optional]',
+            required: false,
+            id: 'newsletters',
+            name: 'newsletters',
+            initialValue: [],
+            options: [
               {
-                title: 'Ebay',
-                value: 'Ebay',
-              },
-              {
-                title: 'Facebook',
-                value: 'Facebook',
+                title:
+                  'I authorize MLH to send me an email where I can further opt into the MLH Hacker, Events, or Organizer Newsletters and other communications from MLH.',
+                value: 'newsletters',
               },
             ],
           },
@@ -490,6 +548,8 @@ export interface HackPortalConfig {
     hackathonExperienceQuestions: QuestionTypes[];
     eventInfoQuestions: QuestionTypes[];
     sponsorInfoQuestions: QuestionTypes[];
+    agreements: QuestionTypes[];
+    marketing: QuestionTypes[];
   };
 }
 
@@ -554,6 +614,12 @@ const getInitialValues = () => {
     setInitialValues(obj);
   }
   for (let obj of hackPortalConfig.registrationFields.sponsorInfoQuestions) {
+    setInitialValues(obj);
+  }
+  for (let obj of hackPortalConfig.registrationFields.agreements) {
+    setInitialValues(obj);
+  }
+  for (let obj of hackPortalConfig.registrationFields.marketing) {
     setInitialValues(obj);
   }
   return InitialValues;

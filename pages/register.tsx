@@ -28,6 +28,8 @@ export default function Register() {
       hackathonExperienceQuestions,
       eventInfoQuestions,
       sponsorInfoQuestions,
+      agreements,
+      marketing,
     },
   } = hackPortalConfig;
 
@@ -206,6 +208,12 @@ export default function Register() {
             for (let obj of sponsorInfoQuestions) {
               errors = setErrors(obj, values, errors);
             }
+            for (let obj of agreements) {
+              errors = setErrors(obj, values, errors);
+            }
+            for (let obj of marketing) {
+              errors = setErrors(obj, values, errors);
+            }
 
             //additional custom error validation
             if (
@@ -298,6 +306,18 @@ export default function Register() {
                 />
                 <br />
               </label>
+
+              {/* Agreements */}
+              <div className="text-2xl py-1 border-b-2 border-black mr-auto mt-8">Agreements</div>
+              {agreements.map((obj, idx) => (
+                <DisplayQuestion key={idx} obj={obj} values={values} onChange={handleChange} />
+              ))}
+
+              {/* Marketing */}
+              <div className="text-2xl py-1 border-b-2 border-black mr-auto mt-8">Marketing</div>
+              {marketing.map((obj, idx) => (
+                <DisplayQuestion key={idx} obj={obj} values={values} onChange={handleChange} />
+              ))}
 
               {/* Submit */}
               <div className="my-8">
