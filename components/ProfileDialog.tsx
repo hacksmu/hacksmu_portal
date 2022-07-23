@@ -74,14 +74,16 @@ export default function ProfileDialog({ onDismiss }: ProfileDialogProps) {
       </div>
       {(isSignedIn && (
         <>
-          <div onClick={onDismiss}>
-            <Link href="/dashboard">
-              <a className="block p-4 hover:bg-gray-200">
-                <DashboardIcon />
-                <span className="ml-4">{hasProfile ? 'Dashboard' : null}</span>
-              </a>
-            </Link>
-          </div>
+          {hasProfile ? (
+            <div onClick={onDismiss}>
+              <Link href="/dashboard">
+                <a className="block p-4 hover:bg-gray-200">
+                  <DashboardIcon />
+                  <span className="ml-4">{'Dashboard'}</span>
+                </a>
+              </Link>
+            </div>
+          ) : null}
           <div onClick={onDismiss}>
             <Link href="/profile">
               <a className="block p-4 hover:bg-gray-200">

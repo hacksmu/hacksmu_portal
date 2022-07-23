@@ -17,6 +17,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import FaqPage from '../components/faq';
+import Link from 'next/link';
 
 /**
  * The home page.
@@ -207,21 +208,17 @@ export default function Home(props: {
                     height="256"
                   />
                 </div>
-                <div className="grid grid-cols-1 relative xl:grid-cols-3 mt-4 px-4 xl:space-x-8 space-y-4 xl:space-y-0 w-full xl:top-[75%] pb-8">
+                <div className="grid grid-cols-1 relative xl:w-[50%] xl:mx-auto mt-4 px-4 xl:space-x-8 space-y-4 xl:space-y-0 w-full xl:top-[75%] pb-8">
+                  <Link passHref href="/auth">
+                    <div className="bg-light-red text-2xl text-center text-white font-bold md:max-w-full py-3 px-2 rounded cursor-pointer">
+                      Apply here!
+                    </div>
+                  </Link>
                   <a
                     href="https://www.google.com"
                     rel="noreferrer"
                     target="_blank"
-                    className="bg-light-red text-2xl text-center text-white font-bold md:max-w-full py-3 px-2"
-                    role="button"
-                  >
-                    Apply here!
-                  </a>
-                  <a
-                    href="https://www.google.com"
-                    rel="noreferrer"
-                    target="_blank"
-                    className="bg-medium-blue text-2xl text-center text-white font-bold md:max-w-full py-3 px-2"
+                    className="hidden bg-medium-blue text-2xl text-center text-white font-bold md:max-w-full py-3 px-2 rounded"
                     role="button"
                   >
                     Volunteer here!
@@ -230,7 +227,7 @@ export default function Home(props: {
                     href="https://www.google.com"
                     rel="noreferrer"
                     target="_blank"
-                    className="bg-medium-blue text-2xl text-center text-white font-bold md:max-w-full py-3 px-2"
+                    className="hidden bg-medium-blue text-2xl text-center text-white font-bold md:max-w-full py-3 px-2 rounded"
                     role="button"
                   >
                     Become a mentor!
@@ -243,10 +240,7 @@ export default function Home(props: {
       </section>
 
       {/* About HackSMU */}
-      <section
-        id="about"
-        className="z-0 relative bg-cool-white min-h-[95vh] border-b-[1rem] border-white"
-      >
+      <section id="about" className="z-0 relative bg-cool-white min-h-[95vh]">
         <div className="flex flex-col w-[calc(100vw + 2px)] xl:w-[50vw] pt-8 xl:pt-0 pb-24 xl:pb-64 px-0 relative container justify-center items-end">
           <div className="hidden xl:block relative top-[6rem] mr-12">
             <NextImage
@@ -313,76 +307,49 @@ export default function Home(props: {
         <FaqPage fetchedFaqs={props.faqs} />
       </section>
 
-      {/* Featuring Keynotes speakers */}
-
-      <section className="flex overflow-x-auto bg-gray-200 min-h-[24rem]">
-        <div className="flex items-center justify-center font-bold p-6 md:text-4xl text-2xl my-4">
-          Featuring Keynote Speakers
-        </div>
-        <div className="flex flex-col justify-center py-6 md:px-6">
-          {/* Row 1 */}
-          <div className="flex">
-            {speakers.map(
-              ({ name, description, fileName }, idx) =>
-                idx < speakers.length / 2 && (
-                  <KeynoteSpeaker
-                    key={idx}
-                    name={name}
-                    description={description}
-                    cardColor={colorSchemes[idx % 3]}
-                    imageLink={fileName}
-                  />
-                ),
-            )}
-          </div>
-          {/* row 2 */}
-          <div className="flex md:ml-[7rem] ml-[5rem]">
-            {speakers.map(
-              ({ name, description, fileName }, idx) =>
-                idx >= speakers.length / 2 && (
-                  <KeynoteSpeaker
-                    key={idx}
-                    name={name}
-                    description={description}
-                    cardColor={colorSchemes[idx % 3]}
-                    imageLink={fileName}
-                  />
-                ),
-            )}
-          </div>
-        </div>
-      </section>
-      {/* Challenges */}
-      <section className="p-6 ">
-        <div className="font-bold p-6 md:text-4xl text-2xl my-4">Challenges</div>
-        <div className="flex">
-          {/* Challenge Orgs Selectors*/}
-          <div className="md:w-1/4 w-1/5">
-            {challenges.map((challenge, idx) => (
-              <div
-                id={`org${idx}`}
-                className={`${idx} relative cursor-pointer text-center md:text-lg sm:text-sm text-xs md:py-6 py-4 my-4 bg-purple-200 rounded-sm`}
-                key={idx}
-                onClick={() => changeOrg(challenge, idx)}
-              >
-                {/* change arrow color in global css to match parent selector */}
-                <div className="arrow-right absolute top-1/2 right-0 -translate-y-1/2 translate-x-full hidden"></div>
-                {challenge.organization}
-              </div>
-            ))}
-          </div>
-          {/* Challenges Description Cards */}
-          <div className="md:w-3/4 w-4/5 my-4 pl-6 min-h-full">
-            {/* Card */}
-            <HomeChallengeCard
-              title={challengeData.title}
-              organization={challengeData.organization}
-              description={challengeData.description}
-              prizes={challengeData.prizes}
+      {/* Resources for HackSMU */}
+      <section id="resources" className="z-0 relative bg-cool-white min-h-[100vh] flex flex-row">
+        <div className="flex flex-col w-[calc(100vw + 2px)] xl:w-[50vw] pt-8 xl:pt-0 pb-24 xl:pb-64 px-0 relative container justify-center items-start">
+          <div className="hidden xl:block relative top-[3rem] mr-12">
+            <NextImage
+              className="transform-gpu rotate-[-10deg]"
+              src="/assets/Momin.svg"
+              width={192}
+              height={192}
             />
           </div>
+          <div className="rounded-[3rem] bg-light-red w-[90%] xl:w-[100%] relative z-10 mx-auto left-[-.5rem]">
+            <div className="rounded-[3rem] bg-white w-[100%] z-20 relative left-4 xl:left-8 top-3 pb-8 pt-1 px-4 ">
+              <h1 className="text-5xl text-start ms-4 mt-[2rem] text-dark-red font-bold">
+                Info and Resources
+                <span className="border-dark-red border-solid w-[75%] border-t-[4px] self-left inline-block rounded top-[-1.5rem] relative" />
+              </h1>
+              <p className="text-dark-red text-3xl ms-4">
+                HackSMU will take place fully in person on September 16-18, 2022. The address is{' '}
+                <span className="font-bold">3140 Dyer Street, Dallas, TX, 75275.</span> <br />
+                <br />
+                <p>
+                  Check out our live site for more information on schedule, location, events,
+                  prizes, and more!
+                </p>{' '}
+                <br /> <br />
+                <div className="w-[30%] mx-auto">
+                  <Link passHref href="/auth">
+                    <div className="bg-medium-blue text-2xl text-center text-white font-bold py-3 px-2 rounded cursor-pointer">
+                      Apply here!
+                    </div>
+                  </Link>
+                </div>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="hidden xl:block relative top-[12rem] mr-12">
+          <NextImage src="/assets/dallas-texas.svg" width={512} height={512} />
         </div>
       </section>
+
       <section>
         {/* Team Members */}
         <div className="flex flex-col flex-grow bg-white">

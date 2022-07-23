@@ -136,6 +136,7 @@ function AuthProvider({ children }: React.PropsWithChildren<Record<string, any>>
       .signOut()
       .then(() => {
         setUser(null);
+        window.location.reload();
       })
       .catch((error) => {
         console.error('Could not sign out.', error);
