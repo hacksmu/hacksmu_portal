@@ -157,16 +157,15 @@ export default function Dashboard(props: {
             </div>
           </div>
 
-          {/* Challenges */}
+          {/* Challenges
           <div className="flex flex-col items-center my-8">
             <h1 className="md:text-3xl text-xl font-black">Challenges</h1>
-            {/* Cards */}
             <div className="challengeGrid my-8">
               {challenges.map(({ title, description, prizes }, idx) => (
                 <ChallengeCard key={idx} title={title} description={description} prizes={prizes} />
               ))}
             </div>
-          </div>
+          </div> */}
         </section>
       </div>
     </>

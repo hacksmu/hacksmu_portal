@@ -74,7 +74,7 @@ export default function Scan() {
               <span className="text-center text-lg">{error}</span>
             </div>
             <div
-              className="rounded-2xl bg-green-300 text-center p-3 m-auto cursor-pointer hover:brightness-125 my-3"
+              className="rounded-2xl bg-medium-blue text-white text-center p-3 m-auto cursor-pointer hover:brightness-125 my-3"
               onClick={fetchQR}
             >
               Fetch QR

@@ -3,6 +3,7 @@ import Image from 'next/image';
 import React from 'react';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NotesIcon from '@material-ui/icons/Notes';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import { useAuthContext } from '../lib/user/AuthContext';
 
 /**
@@ -73,6 +74,14 @@ export default function ProfileDialog({ onDismiss }: ProfileDialogProps) {
       </div>
       {(isSignedIn && (
         <>
+          <div onClick={onDismiss}>
+            <Link href="/dashboard">
+              <a className="block p-4 hover:bg-gray-200">
+                <DashboardIcon />
+                <span className="ml-4">{hasProfile ? 'Dashboard' : null}</span>
+              </a>
+            </Link>
+          </div>
           <div onClick={onDismiss}>
             <Link href="/profile">
               <a className="block p-4 hover:bg-gray-200">

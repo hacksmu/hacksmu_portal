@@ -92,7 +92,9 @@ export default function QuestionsPage() {
           userId: user.id,
           question: currentQuestion,
         },
-      );
+      ).then(() => {
+        Boolean(alert('Question submitted successfully')) ? null : window.location.reload();
+      });
       setCurrentQuestion('');
     } catch (error) {
       addError('Failed to send question. Please try again later.');
