@@ -26,7 +26,7 @@ async function getScheduleEvents(req: NextApiRequest, res: NextApiResponse) {
       startTimestamp: currentEvent.startDate,
       endTimestamp: currentEvent.endDate,
       startDate: currentEvent.startDate.toDate(),
-      endDate: currentEvent.endDate.toDate(),
+      endDate: currentEvent.endDate?.toDate(),
     });
   });
   res.json(data);

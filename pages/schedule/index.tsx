@@ -122,7 +122,7 @@ type TimeTableCellProps = MonthView.TimeTableCellProps & WithStyles<typeof style
 type DayScaleCellProps = MonthView.DayScaleCellProps & WithStyles<typeof styles>;
 
 const isWeekEnd = (date: Date): boolean => date.getDay() === 0 || date.getDay() === 6;
-const defaultCurrentDate = new Date(2021, 10, 13, 9, 0);
+const defaultCurrentDate = new Date(2022, 8, 16, 16, 0);
 {
   /* !change */
 }
@@ -211,7 +211,8 @@ export default function Calendar(props: { scheduleCard: ScheduleEvent[] }) {
 
   const changeEventData = (data) => {
     const startDate = new firebase.firestore.Timestamp(data.startTimestamp._seconds, 0).toDate();
-    const endDate = new firebase.firestore.Timestamp(data.endTimestamp._seconds, 0).toDate();
+    const endDate = new firebase.firestore.Timestamp(data.endTimestamp?._seconds, 0)?.toDate();
+    console.log(endDate);
     //first match extracts day abbreviation
     //second match extracts month abbreviation and the number day of the month
     var dayString =
@@ -238,10 +239,12 @@ export default function Calendar(props: { scheduleCard: ScheduleEvent[] }) {
     }
     var timeString = `${(startDate.getHours() + 24) % 12 || 12}:${
       startDate.getMinutes() < 10 ? '0' : ''
-    }${startDate.getMinutes()} ${startDate.getHours() < 12 ? 'AM' : 'PM'} - ${
-      (endDate.getHours() + 24) % 12 || 12
-    }:${endDate.getMinutes() < 10 ? '0' : ''}${endDate.getMinutes()} ${
-      endDate.getHours() < 12 ? 'AM' : 'PM'
+    }${startDate.getMinutes()} ${startDate.getHours() < 12 ? 'AM' : 'PM'} ${
+      !isNaN(Number(endDate))
+        ? ` - ${(endDate?.getHours() + 24) % 12 || 12}:${
+            endDate?.getMinutes() < 10 ? '0' : ''
+          }${endDate?.getMinutes()} ${endDate?.getHours() < 12 ? 'AM' : 'PM'}`
+        : ''
     }`;
 
     //setting new event data based on event clicked
@@ -317,13 +320,13 @@ export default function Calendar(props: { scheduleCard: ScheduleEvent[] }) {
                   </p>
                   <p>{eventData.time}</p>
                 </div>
-                <div className="">
+                {/* <div className="">
                   <p className="flex items-center font-semibold">
                     {<Backpack style={{ fontSize: 'medium', margin: '2px' }} />}
                     Page
                   </p>
                   <p>{eventData.page}</p>
-                </div>
+                </div> */}
               </div>
 
               <div className="lg:text-base text-sm">
