@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -8,6 +9,7 @@ import { useAuthContext } from '../lib/user/AuthContext';
 import { navItems } from '../lib/data';
 import firebase from 'firebase/app';
 import Image from 'next/image';
+import { isTemplateSpan } from 'typescript';
 
 /**
  * A global site header throughout the entire app.
@@ -73,6 +75,28 @@ export default function AppHeader() {
   return (
     <>
       <header className="sticky top-0 justify-between flex flex-row w-full bg-dark-blue items-center h-24 z-50 p-4">
+        <a
+          className="left-[128px] md:left-[84px]"
+          id="mlh-trust-badge"
+          style={{
+            display: 'inline-block',
+            position: 'fixed',
+            top: '0px',
+            width: '54px',
+            zIndex: '0',
+          }}
+          href={
+            'https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2023-season&utm_content=gray'
+          }
+          target="_blank"
+          rel="noreferrer"
+        >
+          <img
+            src="https://s3.amazonaws.com/logged-assets/trust-badge/2023/mlh-trust-badge-2023-gray.svg"
+            alt="Major League Hacking 2023 Hackathon Season"
+            style={{ width: '100%' }}
+          />
+        </a>
         <div className="flex justify-between items-center md:max-w-full md:justify-start md:w-9/12">
           <Link href="/">
             <a className="flex gap-2 order-2 relative ml-[12px] font-display self-center items-center md:order-1 md:ml-0 z-[0]">
@@ -97,9 +121,18 @@ export default function AppHeader() {
             </ul>
           </div>
           {/* PC nav */}
-          <div className="hidden text-xs order-2 md:flex items-center md:text-left lg:ml-12">
+          <div className="hidden text-xs order-2 md:flex items-center md:text-left lg:ml-14">
             {dynamicNavItems.map((item) => (
-              <Link key={item.text} href={item.path}>
+              <Link
+                key={item.text}
+                href={
+                  item.path == '/dashboard' && isSignedIn
+                    ? '/dashboard'
+                    : item.path == 'dashboard'
+                    ? '/auth'
+                    : item.path
+                }
+              >
                 <a>
                   <p className="md:mx-4 text-xl font-bold text-white">{item.text}</p>
                 </a>

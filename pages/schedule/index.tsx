@@ -260,7 +260,7 @@ export default function Calendar(props: { scheduleCard: ScheduleEvent[] }) {
   };
 
   return (
-    <>
+    <div className="max-w-[1440px] mx-auto">
       <div className="text-6xl font-black p-6">Schedule</div>
       <div className="flex flex-wrap lg:justify-between px-6 h-[75vh]">
         {/* Calender */}
@@ -342,7 +342,7 @@ export default function Calendar(props: { scheduleCard: ScheduleEvent[] }) {
           <div className="text-right">*All events are given in CST</div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

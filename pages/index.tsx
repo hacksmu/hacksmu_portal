@@ -333,7 +333,7 @@ export default function Home(props: {
                   prizes, and more!
                 </p>{' '}
                 <br /> <br />
-                <div className="w-[30%] mx-auto">
+                <div className="xl:w-[30%] mx-auto">
                   <Link passHref href="/auth">
                     <div className="bg-medium-blue text-2xl text-center text-white font-bold py-3 px-2 rounded cursor-pointer">
                       Apply here!
@@ -350,14 +350,14 @@ export default function Home(props: {
         </div>
       </section>
 
-      <section>
-        {/* Team Members */}
+      {/* Team Members */}
+
+      {/* <section>
         <div className="flex flex-col flex-grow bg-white">
           <div className="my-2">
             <h4 className="font-bold p-6 md:text-4xl text-2xl my-4">Meet Our Team :)</h4>{' '}
-            {/* !change */}
             <div className="flex flex-wrap justify-center md:px-2">
-              {/* Member Cards */}
+
               {members.map(
                 ({ name, description, linkedin, github, personalSite, fileName }, idx) => (
                   <MemberCards
@@ -374,12 +374,12 @@ export default function Home(props: {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       {/* Sponsors */}
-      <section>
+      {/* <section>
         <div className="flex flex-col flex-grow bg-white">
           <h4 className="font-bold p-6 md:text-4xl text-2xl my-4">Sponsors</h4>
-          {/* Sponsor Card */}
+          {/* Sponsor Card 
           <section className="flex flex-wrap justify-center p-4">
             {sponsor.map(({ link, reference }, idx) => (
               <SponsorCard key={idx} link={link} reference={reference} />
@@ -387,7 +387,7 @@ export default function Home(props: {
           </section>
           <h2 className="my-2 text-center">
             {' '}
-            {/* !change */}
+            {/* !change *
             If you would like to sponsor HackPortal, please reach out to us at&nbsp;
             <a
               href="mailto:email@organization.com"
@@ -399,47 +399,34 @@ export default function Home(props: {
             </a>
           </h2>
         </div>
-      </section>
+      </section> */}
 
       {/* Footer */}
-      <section className="bg-gray-100 mt-16 px-6 py-8 md:text-base text-xs">
+      <section className="bg-gray-100 px-6 py-8 md:text-base text-xs">
         {/* Upper Content */}
         <div className="my-2 relative">
           {/* Social icons */} {/* !change */}
           <div className="space-x-4 > * + *">
-            <a href="https://twitter.com/hackutd" rel="noopener noreferrer" target="_blank">
+            <a href="https://twitter.com/hacksmu" rel="noopener noreferrer" target="_blank">
               <TwitterIcon className="footerIcon" />
             </a>
-            <a
-              href="https://www.instagram.com/hackutd/?hl=en"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
+            <a href="https://www.instagram.com/smucsclub" rel="noopener noreferrer" target="_blank">
               <InstagramIcon className="footerIcon" />
             </a>
-            <a href="https://www.facebook.com/hackutd/" rel="noopener noreferrer" target="_blank">
+            <a href="https://www.facebook.com/hacksmu/" rel="noopener noreferrer" target="_blank">
               <FacebookIcon className="footerIcon" />
             </a>
           </div>
           {/* Text */}
           <div className="absolute bottom-0 right-0">
             {' '}
-            {/* !change */}
-            Checkout HackUTD&apos;s{' '}
-            <a
-              href="https://acmutd.co/"
-              rel="noopener noreferrer"
-              target="_blank"
-              className="font-black hover:underline"
-            >
-              organizer site
-            </a>
+            {/* !change */}© 2022 SMU Computer Science Club
           </div>
         </div>
         {/* Lower Content */}
         <div className="flex justify-between border-t-[1px] py-2 border-black">
           <p>
-            Designed by <p className="font-black inline">HackUTD</p> <br /> {/* !change */}
+            Website designed by <p className="font-black inline">HackSMU</p> <br /> {/* !change */}
             {/* PLEASE DO NOT CHANGE <3 */}
             HackPortal developed with &lt;3 by <p className="font-black inline">HackUTD</p> and{' '}
             <p className="font-black inline">ACM Development</p>
@@ -449,22 +436,14 @@ export default function Home(props: {
           <div className="flex md:flex-row flex-col md:ml-0 ml-6">
             {/* !change */}
             <a
-              href="mailto:email@organization.com"
+              href="mailto:hacksmu.team@gmail.com"
               rel="noopener noreferrer"
               target="_blank"
-              className="hover:underline md:mr-8 font-thin"
+              className="hover:underline font-bold z-10"
             >
               Contact Us
             </a>
             {/* !change */}
-            <a
-              href="https://github.com/acmutd/hackportal"
-              target="_blank"
-              rel="noreferrer"
-              className="hover:underline font-thin whitespace-nowrap"
-            >
-              Source Code
-            </a>
           </div>
         </div>
       </section>

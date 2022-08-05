@@ -8,8 +8,8 @@ export const navItems = [
   { text: 'About', path: '/#about' },
   { text: 'FAQ', path: '/#faq' },
   { text: 'Resources', path: '/#resources' },
-  { text: 'Sponsors', path: '/' },
-  { text: 'Contact', path: '/' },
+  { text: 'Schedule', path: '/schedule' },
+  { text: 'Dashboard', path: '/dashboard' },
 ];
 
 export const stats = [

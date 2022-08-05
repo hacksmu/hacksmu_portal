@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable @next/next/no-sync-scripts */
 import Head from 'next/head';
 import { AppProps } from 'next/dist/shared/lib/router/router';
