@@ -98,6 +98,17 @@ export default function Dashboard(props: {
 
         <section id="mainContent" className="lg:w-7/8 md:w-6/7 w-full px-6 py-3 bg-white">
           <DashboardHeader />
+          <div className="text-lg font-bold text-center">
+            Be sure to join our Discord server!{' '}
+            <a
+              className="text-medium-blue"
+              href="https://discord.gg/VKgtMMXekJ"
+              target="_blank"
+              rel="noreferrer"
+            >
+              https://discord.gg/VKgtMMXekJ
+            </a>
+          </div>
           {/* Spotlight & Announcements */}
           <div className="flex flex-wrap my-16">
             {/* Spotlight Events */}

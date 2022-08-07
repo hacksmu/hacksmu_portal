@@ -336,7 +336,7 @@ export default function Home(props: {
                 <div className="xl:w-[30%] mx-auto">
                   <Link passHref href="/auth">
                     <div className="bg-medium-blue text-2xl text-center text-white font-bold py-3 px-2 rounded cursor-pointer">
-                      Apply here!
+                      Dashboard
                     </div>
                   </Link>
                 </div>
@@ -407,13 +407,17 @@ export default function Home(props: {
         <div className="my-2 relative">
           {/* Social icons */} {/* !change */}
           <div className="space-x-4 > * + *">
-            <a href="https://twitter.com/hacksmu" rel="noopener noreferrer" target="_blank">
+            <a href="https://twitter.com/officialhacksmu" rel="noopener noreferrer" target="_blank">
               <TwitterIcon className="footerIcon" />
             </a>
-            <a href="https://www.instagram.com/smucsclub" rel="noopener noreferrer" target="_blank">
+            <a href="https://www.instagram.com/hack.smu" rel="noopener noreferrer" target="_blank">
               <InstagramIcon className="footerIcon" />
             </a>
-            <a href="https://www.facebook.com/hacksmu/" rel="noopener noreferrer" target="_blank">
+            <a
+              href="https://www.facebook.com/smuhackathon/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               <FacebookIcon className="footerIcon" />
             </a>
           </div>
