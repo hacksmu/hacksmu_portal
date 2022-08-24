@@ -3,6 +3,7 @@ const runtimeCaching = require('next-pwa/cache');
 const withFonts = require('next-fonts');
 
 (module.exports = withPWA({
+  output: 'standalone',
   reactStrictMode: true,
   images: {
     domains: ['lh3.googleusercontent.com', 'firebasestorage.googleapis.com'],
