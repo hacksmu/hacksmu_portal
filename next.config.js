@@ -18,5 +18,10 @@ const withFonts = require('next-fonts');
     webpack(config, options) {
       return config;
     },
-  }),
-  { output: 'standalone' };
+  });
+
+module.exports = {
+  experimental: {
+    outputStandalone: true,
+  },
+};
