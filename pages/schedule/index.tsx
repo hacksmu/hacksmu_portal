@@ -61,7 +61,7 @@ const styles = ({ palette }: Theme) =>
 
     EventTypeAppointment: {
       border: `2px solid ${red[500]}`,
-      backgroundColor: `${grey[900]}`,
+      backgroundColor: `${grey[500]}`,
       borderRadius: 8,
       boxShadow: ` 0 0 16px 1px ${red[400]} `,
     },
@@ -107,7 +107,7 @@ const styles = ({ palette }: Theme) =>
       whiteSpace: 'nowrap',
     },
     content: {
-      opacity: 0.7,
+      opacity: 0.9,
     },
     container: {
       width: '100%',
@@ -192,21 +192,45 @@ export default function Calendar(props: { scheduleCard: ScheduleEvent[] }) {
   });
 
   const Appointment = withStyles(styles)(
-    ({ onClick, classes, data, ...restProps }: AppointmentProps) => (
-      <Appointments.Appointment
-        {...restProps}
-        className={classNames({
-          [classes.EventTypeAppointment]: data.Event === 1,
-          [classes.SponsorTypeAppointment]: data.Event === 2,
-          [classes.TechTalkTypeAppointment]: data.Event === 3,
-          [classes.WorkshopTypeAppointment]: data.Event === 4,
-          [classes.SocialTypeAppointment]: data.Event === 5,
-          [classes.appointment]: true,
-        })}
-        data={data}
-        onClick={() => changeEventData(data)}
-      />
-    ),
+    ({ onClick, classes, data, ...restProps }: AppointmentProps) => {
+      let color = '#000000';
+      switch (data.Event) {
+        case 1:
+          color = '#f44336';
+          break;
+        case 2:
+          color = '#ff9800';
+          break;
+        case 3:
+          color = '#3f51b5';
+          break;
+        case 4:
+          color = '#9c27b0';
+          break;
+        case 5:
+          color = '#2196f3';
+          break;
+        default:
+          color = '#00034B';
+          break;
+      }
+      return (
+        <Appointments.Appointment
+          {...restProps}
+          className={classNames({
+            [classes.EventTypeAppointment]: data.Event === 1,
+            [classes.SponsorTypeAppointment]: data.Event === 2,
+            [classes.TechTalkTypeAppointment]: data.Event === 3,
+            [classes.WorkshopTypeAppointment]: data.Event === 4,
+            [classes.SocialTypeAppointment]: data.Event === 5,
+            [classes.appointment]: true,
+          })}
+          style={{ backgroundColor: color }}
+          data={data}
+          onClick={() => changeEventData(data)}
+        />
+      );
+    },
   );
 
   const changeEventData = (data) => {
@@ -269,7 +293,7 @@ export default function Calendar(props: { scheduleCard: ScheduleEvent[] }) {
             <Scheduler data={props.scheduleCard}>
               <ViewState defaultCurrentDate={defaultCurrentDate} />
 
-              <DayView startDayHour={8} endDayHour={24} intervalCount={1} />
+              <DayView startDayHour={0} endDayHour={24} intervalCount={1} cellDuration={30} />
 
               <Appointments
                 appointmentComponent={Appointment}
