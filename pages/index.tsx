@@ -376,30 +376,40 @@ export default function Home(props: {
         </div>
       </section> */}
       {/* Sponsors */}
-      {/* <section>
-        <div className="flex flex-col flex-grow bg-white">
-          <h4 className="font-bold p-6 md:text-4xl text-2xl my-4">Sponsors</h4>
-          {/* Sponsor Card 
+      <section>
+        <div className="flex flex-col flex-grow bg-cool-white">
+          <h4 className="font-bold px-6 py-3 mx-auto md:text-4xl text-3xl my-4 text-white text-center bg-medium-blue rounded-lg">
+            Sponsors
+          </h4>
+          {/* Sponsor Card */}
           <section className="flex flex-wrap justify-center p-4">
             {sponsor.map(({ link, reference }, idx) => (
               <SponsorCard key={idx} link={link} reference={reference} />
             ))}
           </section>
-          <h2 className="my-2 text-center">
-            {' '}
-            {/* !change *
-            If you would like to sponsor HackPortal, please reach out to us at&nbsp;
-            <a
-              href="mailto:email@organization.com"
-              rel="noopener noreferrer"
-              target="_blank"
-              className="underline"
-            >
-              email@organization.com
-            </a>
-          </h2>
+          <section className="mx-auto xl:max-w-[80%] mb-16">
+            <div className="rounded-[3rem] bg-medium-blue w-[90%] xl:w-[100%] relative z-10 mx-auto left-[-.5rem]">
+              <div className="rounded-[3rem] bg-white w-[100%] z-20 relative left-4 xl:left-6 top-3 pb-8 pt-1 px-4 ">
+                <div className="text-2xl py-2 xl:p-6">
+                  HackSMU&apos;s vision is to give back to the community and help spread innovation
+                  and creativity through students. If you&apos;d like to be part of this movement,
+                  we&apos;d love to have you sponsor!
+                </div>
+                <div className="flex items-center justify-center">
+                  <a
+                    href="mailto:hacksmu.team@gmail.com"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    className="rounded-[1rem] align-center bg-medium-blue p-4 text-white text-2xl font-bold text-center"
+                  >
+                    Sponsor Us!
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
-      </section> */}
+      </section>
 
       {/* Footer */}
       <section className="bg-gray-100 px-6 py-8 md:text-base text-xs">
