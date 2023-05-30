@@ -1,3 +1,6 @@
+import schools from './public/schools.json';
+import majors from './public/majors.json';
+
 export const hackPortalConfig: HackPortalConfig = {
   //registration fields are separated by question topics (general, school, hackathon experience, etc. )
   //each question topic is separated by question types(textInput, numberInput, dropdown, etc. )
@@ -132,10 +135,6 @@ export const hackPortalConfig: HackPortalConfig = {
                 title: 'Not Hispanic or Latino',
                 value: 'notHispanic',
               },
-              {
-                title: 'Prefer not to answer',
-                value: 'notSay',
-              },
             ],
           },
         ],
@@ -148,21 +147,28 @@ export const hackPortalConfig: HackPortalConfig = {
           {
             //University question
             question:
-              'This event is for college students worldwide. Which university do you attend? If you are not a college student, please say "Other".',
+              'This event is for college students worldwide. Which university do you attend?',
             id: 'university',
             name: 'university',
             required: true,
             datalist: 'schools',
+            options: schools.map(({ university }) => ({
+              title: university,
+              value: university,
+            })),
             initialValue: '',
           },
           {
             //Major question
-            question:
-              'All majors are welcome at this event. What is your major? If you are not a college student, please say "N/A".',
+            question: 'All majors are welcome at this event. What is your major?',
             id: 'major',
             name: 'major',
             required: true,
             datalist: 'majors',
+            options: majors.map(({ major }) => ({
+              title: major,
+              value: major,
+            })),
             initialValue: '',
           },
         ],
@@ -177,10 +183,6 @@ export const hackPortalConfig: HackPortalConfig = {
             name: 'studyLevel',
             initialValue: '',
             options: [
-              {
-                title: 'High School',
-                value: 'highSchool',
-              },
               {
                 title: 'Freshman',
                 value: 'freshman',
@@ -200,10 +202,6 @@ export const hackPortalConfig: HackPortalConfig = {
               {
                 title: 'Graduate Student',
                 value: 'grad',
-              },
-              {
-                title: 'Other',
-                value: 'other',
               },
             ],
           },
@@ -257,7 +255,7 @@ export const hackPortalConfig: HackPortalConfig = {
           },
           {
             //Heard from question
-            question: 'Where did you hear about HackSMU?',
+            question: 'Where did you hear about HackPortal?',
             required: true,
             id: 'heardFrom',
             name: 'heardFrom',
@@ -278,10 +276,6 @@ export const hackPortalConfig: HackPortalConfig = {
               {
                 title: 'Friend',
                 value: 'Friend',
-              },
-              {
-                title: 'School/University',
-                value: 'school',
               },
               {
                 title: 'Other',
@@ -319,10 +313,6 @@ export const hackPortalConfig: HackPortalConfig = {
               {
                 title: 'XL',
                 value: 'xl',
-              },
-              {
-                title: 'XXL',
-                value: 'xxl',
               },
             ],
           },
@@ -425,61 +415,24 @@ export const hackPortalConfig: HackPortalConfig = {
             initialValue: [],
             options: [
               {
-                title: 'AT&T',
-                value: 'att',
+                title: 'State Farm',
+                value: 'State Farm',
               },
               {
-                title: 'Improving',
-                value: 'improving',
-              },
-            ],
-          },
-        ],
-      },
-    ],
-    //Question Topic
-    agreements: [
-      {
-        checkboxQuestions: [
-          {
-            //Agreements question
-            question: 'I agree to the following:',
-            required: true,
-            id: 'agreements',
-            name: 'agreements',
-            initialValue: [],
-            options: [
-              {
-                title: 'I have read and agree to the MLH Code of Conduct.',
-                value: 'codeOfConduct',
+                title: 'American Airlines',
+                value: 'American Airlines',
               },
               {
-                title:
-                  'I authorize you to share my application/registration information with Major League Hacking for event administration, ranking, and MLH administration in-line with the MLH Privacy Policy. I further agree to the terms of both the MLH Contest Terms and Conditions and the MLH Privacy Policy.',
-                value: 'termsAndConditions',
+                title: 'Capital One',
+                value: 'Capital One',
               },
-            ],
-          },
-        ],
-      },
-    ],
-
-    //Question Topic
-    marketing: [
-      {
-        checkboxQuestions: [
-          {
-            //Newsletters question
-            question: '[Optional]',
-            required: false,
-            id: 'newsletters',
-            name: 'newsletters',
-            initialValue: [],
-            options: [
               {
-                title:
-                  'I authorize MLH to send me an email where I can further opt into the MLH Hacker, Events, or Organizer Newsletters and other communications from MLH.',
-                value: 'newsletters',
+                title: 'Ebay',
+                value: 'Ebay',
+              },
+              {
+                title: 'Facebook',
+                value: 'Facebook',
               },
             ],
           },
@@ -504,6 +457,7 @@ export type statRecordTypes = {
   gender: Record<string, number>;
   hackathonExperience: Record<number, number>;
   heardFrom: Record<string, number>;
+  timestamp: Record<string, number>;
 };
 
 //add the title for each field that will be displayed as chart titles in admin stats page
@@ -522,6 +476,7 @@ export const fieldNames = {
   scans: 'Swags', //not part of registration questions, used for scanner
   companies: 'Companies',
   dietary: 'Dietary',
+  timestamp: 'Registration Time',
 };
 
 //name fields that are checkbox questions belong here
@@ -548,8 +503,6 @@ export interface HackPortalConfig {
     hackathonExperienceQuestions: QuestionTypes[];
     eventInfoQuestions: QuestionTypes[];
     sponsorInfoQuestions: QuestionTypes[];
-    agreements: QuestionTypes[];
-    marketing: QuestionTypes[];
   };
 }
 
@@ -592,6 +545,10 @@ interface NumberInputQuestion extends RegistrationQuestion {
 
 interface datalistQuestion extends RegistrationQuestion {
   datalist: string;
+  options: Array<{
+    title: string;
+    value: string;
+  }>;
 }
 
 interface textAreaQuestion extends RegistrationQuestion {
@@ -614,12 +571,6 @@ const getInitialValues = () => {
     setInitialValues(obj);
   }
   for (let obj of hackPortalConfig.registrationFields.sponsorInfoQuestions) {
-    setInitialValues(obj);
-  }
-  for (let obj of hackPortalConfig.registrationFields.agreements) {
-    setInitialValues(obj);
-  }
-  for (let obj of hackPortalConfig.registrationFields.marketing) {
     setInitialValues(obj);
   }
   return InitialValues;

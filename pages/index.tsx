@@ -28,123 +28,16 @@ import Link from 'next/link';
 export default function Home(props: {
   keynoteSpeakers: KeynoteSpeaker[];
   challenges: Challenge[];
-  faqs: FAQ[];
+  answeredQuestion: AnsweredQuestion[];
   fetchedMembers: TeamMember[];
   sponsorCard: Sponsor[];
 }) {
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
-
-  const [speakers, setSpeakers] = useState<KeynoteSpeaker[]>([]);
-  const [challenges, setChallenges] = useState<Challenge[]>([]);
-  const [challengeIdx, setChallengeIdx] = useState(0);
-  const [members, setMembers] = useState<TeamMember[]>([]);
-  const [sponsor, setSponsor] = useState<Sponsor[]>([]);
-  const [challengeData, setChallengeData] = useState({
-    title: '',
-    organization: '',
-    description: '',
-    prizes: [],
-  });
-
-  const [faqs, setFaqs] = useState<FAQ[]>([]);
-
-  const colorSchemes: ColorScheme[] = [
-    {
-      light: '#F2F3FF',
-      dark: '#C1C8FF',
-    },
-    {
-      light: '#D8F8FF',
-      dark: '#B0F1FF',
-    },
-    {
-      dark: '#FCD7FF',
-      light: '#FDECFF',
-    },
-  ];
 
   useEffect(() => {
-    // Set amount of time notification prompt gets displayed before fading out
-    setTimeout(fadeOutEffect, 3000);
-    setSpeakers(props.keynoteSpeakers);
-
-    //Organize challenges in order by rank given in firebase
-    const sortedChallenges = props.challenges.sort((a, b) => (a.rank > b.rank ? 1 : -1));
-    setChallenges(sortedChallenges);
-    setChallengeData({
-      title: sortedChallenges[0].title,
-      organization: sortedChallenges[0].organization,
-      description: sortedChallenges[0].description,
-      prizes: sortedChallenges[0].prizes,
-    });
-    setSponsor(props.sponsorCard);
-
-    setFaqs(props.faqs);
-
-    //Organize members in order by rank given in firebase
-    setMembers(props.fetchedMembers.sort((a, b) => (a.rank > b.rank ? 1 : -1)));
+    // Wait for all components to render before showing page
     setLoading(false);
   }, []);
-
-  useEffect(() => {
-    // Initialize styles to first organization in list
-    if (document.getElementById(`org${challengeIdx}`) !== null) {
-      document.getElementById(`org${challengeIdx}`).style.textDecoration = 'underline';
-      (
-        document.getElementById(`org${challengeIdx}`).firstElementChild as HTMLElement
-      ).style.display = 'block';
-    }
-  });
-
-  // Fade out notification prompt
-  const fadeOutEffect = () => {
-    var fadeTarget = document.getElementById('popup');
-
-    if (fadeTarget !== undefined && fadeTarget !== null) {
-      var fadeEffect = setInterval(() => {
-        if (!fadeTarget.style.opacity) {
-          fadeTarget.style.opacity = '1';
-        }
-        if (parseFloat(fadeTarget.style.opacity) > 0) {
-          fadeTarget.style.opacity = (parseFloat(fadeTarget.style.opacity) - 0.1).toString();
-        } else {
-          clearInterval(fadeEffect);
-        }
-      }, 100);
-    }
-  };
-
-  // const checkNotif = () => {
-  //   //pop up visible if user did not enable push notif and browser supports push notif
-  //   const isSupported =
-  //     'Notification' in window &&
-  //     'serviceWorker' in navigator &&
-  //     'PushManager' in window &&
-  //     firebase.messaging.isSupported();
-  //   if (isSupported && Notification.permission !== 'granted') {
-  //     Notification.requestPermission();
-  //     return true;
-  //   }
-  //   return false;
-  // };
-
-  const changeOrg = (challenge, newIdx) => {
-    document.getElementById(`org${challengeIdx}`).style.textDecoration = 'none';
-    (document.getElementById(`org${challengeIdx}`).firstElementChild as HTMLElement).style.display =
-      'none';
-    document.getElementById(`org${newIdx}`).style.textDecoration = 'underline';
-    (document.getElementById(`org${newIdx}`).firstElementChild as HTMLElement).style.display =
-      'block';
-
-    setChallengeIdx(newIdx);
-    setChallengeData({
-      title: challenge.title,
-      organization: challenge.organization,
-      description: challenge.description,
-      prizes: challenge.prizes,
-    });
-  };
 
   if (loading) {
     return (
@@ -304,7 +197,7 @@ export default function Home(props: {
 
       {/* FAQ section */}
       <section id="faq">
-        <FaqPage fetchedFaqs={props.faqs} />
+        <FaqPage fetchedFaqs={props.answeredQuestion} />
       </section>
 
       {/* Resources for HackSMU */}
@@ -383,7 +276,7 @@ export default function Home(props: {
           </h4>
           {/* Sponsor Card */}
           <section className="flex flex-wrap justify-center p-4">
-            {sponsor.map(({ link, reference }, idx) => (
+            {props.sponsorCard.map(({ link, reference }, idx) => (
               <SponsorCard key={idx} link={link} reference={reference} />
             ))}
           </section>
@@ -475,7 +368,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     `${protocol}://${context.req.headers.host}/api/challenges/`,
     {},
   );
-  const { data: faqs } = await RequestHelper.get<FAQ[]>(
+  const { data: answeredQuestion } = await RequestHelper.get<AnsweredQuestion[]>(
     `${protocol}://${context.req.headers.host}/api/questions/faq`,
     {},
   );
@@ -491,7 +384,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       keynoteSpeakers: keynoteData,
       challenges: challengeData,
-      faqs: faqs,
+      answeredQuestion: answeredQuestion,
       fetchedMembers: memberData,
       sponsorCard: sponsorData,
     },

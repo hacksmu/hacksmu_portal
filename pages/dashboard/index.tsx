@@ -1,17 +1,17 @@
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
-import DashboardHeader from '../../components/DashboardHeader';
+import DashboardHeader from '../../components/dashboardComponents/DashboardHeader';
 import { useUser } from '../../lib/profile/user-data';
 import { useAuthContext } from '../../lib/user/AuthContext';
-import AnnouncementCard from './Components/AnnouncementCards';
-import Sidebar from './Components/Sidebar';
+import AnnouncementCard from '../../components/dashboardComponents/AnnouncementCards';
+import Sidebar from '../../components/dashboardComponents/Sidebar';
 import firebase from 'firebase';
 import 'firebase/messaging';
 import { GetServerSideProps } from 'next';
 import { RequestHelper } from '../../lib/request-helper';
 import { useFCMContext } from '../../lib/service-worker/FCMContext';
-import SpotlightCard from './Components/SpotlightCard';
-import ChallengeCard from './Components/ChallengeCard';
+import SpotlightCard from '../../components/dashboardComponents/SpotlightCard';
+import ChallengeCard from '../../components/dashboardComponents/ChallengeCard';
 
 import { Navigation, Pagination, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -168,15 +168,16 @@ export default function Dashboard(props: {
             </div>
           </div>
 
-          {/* Challenges
+          {/* Challenges */}
           <div className="flex flex-col items-center my-8">
             <h1 className="md:text-3xl text-xl font-black">Challenges</h1>
+            {/* Cards */}
             <div className="challengeGrid my-8">
               {challenges.map(({ title, description, prizes }, idx) => (
                 <ChallengeCard key={idx} title={title} description={description} prizes={prizes} />
               ))}
             </div>
-          </div> */}
+          </div>
         </section>
       </div>
     </>

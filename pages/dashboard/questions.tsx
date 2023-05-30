@@ -1,13 +1,12 @@
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
-import AboutHeader from '../../components/AboutHeader';
-import AnsweredQuestion from '../../components/AnsweredQuestion';
+import AnsweredQuestion from '../../components/dashboardComponents/AnsweredQuestion';
 import ErrorList from '../../components/ErrorList';
-import PendingQuestion from '../../components/PendingQuestion';
+import PendingQuestion from '../../components/dashboardComponents/PendingQuestion';
 import { RequestHelper } from '../../lib/request-helper';
 import { useAuthContext } from '../../lib/user/AuthContext';
 import { QAReqBody } from '../api/questions';
-import DashboardHeader from '../../components/DashboardHeader';
+import DashboardHeader from '../../components/dashboardComponents/DashboardHeader';
 /**
  * The Question and Answers page.
  *
@@ -92,9 +91,7 @@ export default function QuestionsPage() {
           userId: user.id,
           question: currentQuestion,
         },
-      ).then(() => {
-        Boolean(alert('Question submitted successfully')) ? null : window.location.reload();
-      });
+      );
       setCurrentQuestion('');
     } catch (error) {
       addError('Failed to send question. Please try again later.');
@@ -175,18 +172,16 @@ export default function QuestionsPage() {
         <h4 className="font-bold text-3xl">Ask the organizers a question!</h4>
         <div>
           <textarea
-            className="w-full rounded-xl p-4"
+            className="w-full rounded-xl p-4 bg-secondary"
             rows={5}
             value={currentQuestion}
             onChange={(e) => setCurrentQuestion(e.target.value)}
-            style={{ backgroundColor: '#F2F3FF' }}
             placeholder="Type your question here"
           ></textarea>
           <div className="flex flex-row justify-end my-4">
             <button
               type="button"
-              className="p-2 rounded-lg"
-              style={{ backgroundColor: '#9CA6FF', color: 'black' }}
+              className="p-2 rounded-lg bg-primary text-secondary"
               onClick={() => {
                 submitQuestion();
               }}

@@ -1,5 +1,5 @@
 # Introduction
-This tutorial will walk you through setting up the environment variables for a local deployment of HackPortal and populating fields in the database to add information to the web app. Basic knowledge of Git and web development terminology is required. Frontend development experience and familiarity with Firebase is recommended, but not required.
+This tutorial will walk you through setting up the environment variables for a local deployment of HackPortal and populating fields in the database to add information to the web app. Basic knowledge of Git and web development terminology is expected. Frontend development experience and familiarity with Firebase is recommended, but not required.
 
 # Set up
 
@@ -31,16 +31,15 @@ The file should look like this:
 
 ```
 NEXT_PUBLIC_FIREBASE_API_KEY=
+NEXT_PUBLIC_FIREBASE_APP_ID=
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
 NEXT_PUBLIC_FIREBASE_PROJECT_ID=
 NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
-NEXT_PUBLIC_FIREBASE_APP_ID=
-MEASUREMENT_ID=
-NEXT_PUBLIC_CLOUD_MESSAGING_SERVER_TOKEN=
 NEXT_PUBLIC_RESUME_UPLOAD_PASSWORD=
 NEXT_PUBLIC_RESUME_UPLOAD_SERVICE_ACCOUNT=
 NEXT_PUBLIC_VAPID_KEY=
+NEXT_PUBLIC_MEASUREMENT_ID=
 SERVICE_ACCOUNT_CLIENT_EMAIL=
 SERVICE_ACCOUNT_PRIVATE_KEY=
 SERVICE_ACCOUNT_PROJECT_ID=
@@ -65,14 +64,9 @@ Create a Firebase project or use an existing Firebase project.
 
 Copy the API Key, the Auth Domain, the Project ID, the Storage Bucket, the Messaging Sender ID, and the App ID into their corresponding environment variables in `.env.local`.
 
-Find the cloud messaging server token under the “Cloud Mesaging” tab. It can be found under the project credentials and is named “Server key”.
-
-Update the corresponding environment variable.
+To configure the cloud messaging API, go to the “Cloud Mesaging” tab. To generate the vapid key, scroll down to the "Web Configuration" and generate a key pair. Copy the key pair generated and fill in the corresponding environment variable.
 
 ![Cloud Messaging](./images/set-up-3.png)
-![Server key](./images/set-up-4.png)
-
-To generate the vapid key, scroll down to the "Web Configuration" and generate a key pair. Copy the key pair generated and fill in the corresponding environment variable.
 ![Vapid key](./images/set-up-7.png)
 
 ## Setting up the service account environment variables.  
@@ -104,6 +98,9 @@ NEXT_PUBLIC_RESUME_UPLOAD_PASSWORD=
 
 ## Firebase Setup
  Follow the instructions in the [Firebase Setup doc](./firebase-setup.md) to see how to set Firebase up for your hackathon.
+
+## Hackerpack Setup
+Follow the instructions in the [Hackerpack Setup docs](./hackerpack-setup.md) to see the different ways to set up the hackerpack. This is a place where you can display your detailed event info, workshops, food, tech guides, and whatever else you want. We have made it as simple as creating a Notion page (though you can definitely write your HTML!).
 
 # Starting the Server
 Run the development server:
