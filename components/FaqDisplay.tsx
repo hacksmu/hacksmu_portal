@@ -3,7 +3,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 interface FaqDisplayProps {
-  faqs: FAQ[];
+  faqs: AnsweredQuestion[] | { question: string; answer: string[] }[] | any[];
 }
 
 const FaqDisplay = ({ faqs }: FaqDisplayProps) => {
