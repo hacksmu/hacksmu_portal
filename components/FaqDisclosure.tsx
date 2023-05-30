@@ -13,7 +13,7 @@ import { ChevronUpIcon } from '@heroicons/react/solid';
  */
 interface FaqDisclosureProps {
   question: string;
-  answer: (() => void | string) | string | Answer[];
+  answer: string | string[] | { type: string; text: string; url: string }[];
   isOpen: boolean;
   toggleDisclosure: () => void;
 }
