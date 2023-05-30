@@ -183,7 +183,7 @@ export default function Home(props: {
                   <div className="flex mt-3">
                     <NextImage src="/assets/hacksmu.png" width="50" height="80" objectFit="cover" />
                     <h1 className="text-white text-center text-4xl mt-4 ms-4 font-bold">
-                      HackSMU IV
+                      HackSMU V
                     </h1>
                   </div>
                   <span className="border-white w-11/12 mt-2 border-t-4" />
@@ -198,7 +198,7 @@ export default function Home(props: {
                   {'>>> CREATE AWESOME.'}
                 </p>
                 <h2 className="text-light-red text-5xl 2xl:text-7xl font-bold text-center mt-4 font-jetbrains">
-                  {'September 16-18, 2022'}
+                  {'October 14-15, 2023'}
                 </h2>
                 <div className="w-full text-center">
                   <NextImage
