@@ -74,13 +74,13 @@ export default function AppHeader() {
 
   return (
     <>
-      <header className="fixed top-0 justify-between flex flex-row w-full bg-dark-blue items-center h-24 z-50 p-4">
+      <header className="mt-[-24px] sticky top-0 justify-between flex flex-row w-full bg-dark-blue items-center h-24 z-50 p-4">
         <a
           className="left-[128px] md:left-[84px]"
           id="mlh-trust-badge"
           style={{
             display: 'inline-block',
-            position: 'fixed',
+            position: 'absolute',
             top: '0px',
             width: '54px',
             zIndex: '0',

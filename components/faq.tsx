@@ -15,9 +15,9 @@ import NextImage from 'next/image';
  *
  * Route: /about/faq
  */
-export default function FaqPage({ fetchedFaqs }: { fetchedFaqs: FAQ[] }) {
+export default function FaqPage({ fetchedFaqs }: { fetchedFaqs: AnsweredQuestion[] }) {
   const [loading, setLoading] = useState(true);
-  const [faqs, setFaqs] = useState<FAQ[]>([]);
+  const [faqs, setFaqs] = useState<AnsweredQuestion[]>([]);
   const [disclosuresStatus, setDisclosureStatus] = useState<boolean[]>();
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export default function FaqPage({ fetchedFaqs }: { fetchedFaqs: FAQ[] }) {
 
   return (
     <div className="z-0 relative bg-cool-white min-h-[100vh] pt-[5rem] xl:pt-[6rem]">
-      <div className="flex flex-col w-[calc(100vw + 2px)] xl:w-[85vw] pt-8 xl:pt-0 pb-24 xl:pb-64 px-0 relative container">
+      <div className="flex flex-col w-[calc(100vw + 2px)] xl:w-[85vw] xl:mx-auto pt-8 xl:pt-0 pb-24 xl:pb-64 px-0 relative container">
         <div className="flex flex-row w-full items-center">
           <div className="hidden xl:block relative self-start top-[5.5rem] left-[-6.5rem] mr-2">
             <NextImage
@@ -112,7 +112,7 @@ export default function FaqPage({ fetchedFaqs }: { fetchedFaqs: FAQ[] }) {
  */
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const protocol = context.req.headers.referer?.split('://')[0] || 'http';
-  const { data } = await RequestHelper.get<FAQ[]>(
+  const { data } = await RequestHelper.get<AnsweredQuestion[]>(
     `${protocol}://${context.req.headers.host}/api/questions/faq`,
     {},
   );
