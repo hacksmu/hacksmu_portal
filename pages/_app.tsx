@@ -49,6 +49,12 @@ function PortalApp({ Component, pageProps }: AppProps) {
               <link href="/icons/favicon-16x16.png" rel="icon" type="image/png" sizes="16x16" />
               <link href="/icons/favicon-32x32.png" rel="icon" type="image/png" sizes="32x32" />
               <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+              <link rel="preconnect" href="https://fonts.googleapis.com" />
+              <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+              <link
+                href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Roboto:wght@400;600;700;900&display=swap"
+                rel="stylesheet"
+              />
               <meta name="theme-color" content="#5D5FEF" />
             </Head>
             <div className="min-h-screen flex flex-col bg-white mt-5">

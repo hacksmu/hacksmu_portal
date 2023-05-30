@@ -50,7 +50,7 @@ export default function Home(props: {
   return (
     <>
       <Head>
-        <title>HackSMU IV</title> {/* !change */}
+        <title>HackSMU V</title> {/* !change */}
         <meta name="description" content="HackSMU Portal" /> {/* !change */}
         <link rel="icon" href="/favicon.ico" />
       </Head>
