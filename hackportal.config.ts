@@ -36,6 +36,22 @@ export const hackPortalConfig: HackPortalConfig = {
             required: true,
             initialValue: '',
           },
+          {
+            //don't remove; for user account info
+            question: 'Phone Number',
+            id: 'phoneNumber',
+            name: 'phoneNumber',
+            required: true,
+            initialValue: '',
+          },
+          {
+            //don't remove; for user account info
+            question: 'Country of Residence',
+            id: 'country',
+            name: 'country',
+            required: true,
+            initialValue: '',
+          },
         ],
       },
       {
@@ -184,24 +200,48 @@ export const hackPortalConfig: HackPortalConfig = {
             initialValue: '',
             options: [
               {
-                title: 'Freshman',
-                value: 'freshman',
+                title: 'Less than Secondary / High School',
+                value: 'lessThanSecondary',
               },
               {
-                title: 'Sophomore',
-                value: 'sophomore',
+                title: 'Secondary / High School',
+                value: 'secondary',
               },
               {
-                title: 'Junior',
-                value: 'junior',
+                title: 'Undergraduate University (2 year - community college or similar)',
+                value: 'undergrad2Year',
               },
               {
-                title: 'Senior',
-                value: 'senior',
+                title: 'Undergraduate University (3+ year)',
+                value: 'undergrad4Year',
               },
               {
-                title: 'Graduate Student',
-                value: 'grad',
+                title: 'Graduate University (Masters, Professional, Doctoral, etc)',
+                value: 'graduate',
+              },
+              {
+                title: 'Code School / Bootcamp',
+                value: 'codeSchool',
+              },
+              {
+                title: 'Other Vocational / Trade Program or Apprenticeship',
+                value: 'vocationalProgram',
+              },
+              {
+                title: 'Post Doctorate',
+                value: 'postDoctorate',
+              },
+              {
+                title: 'Other',
+                value: 'other',
+              },
+              {
+                title: 'I’m not currently a student',
+                value: 'notStudent',
+              },
+              {
+                title: 'Prefer not to answer',
+                value: 'preferNotToSay',
               },
             ],
           },
@@ -255,7 +295,7 @@ export const hackPortalConfig: HackPortalConfig = {
           },
           {
             //Heard from question
-            question: 'Where did you hear about HackPortal?',
+            question: 'Where did you hear about HackSMU?',
             required: true,
             id: 'heardFrom',
             name: 'heardFrom',
