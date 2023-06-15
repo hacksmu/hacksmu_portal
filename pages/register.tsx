@@ -29,6 +29,7 @@ export default function Register() {
       hackathonExperienceQuestions,
       eventInfoQuestions,
       sponsorInfoQuestions,
+      agreementQuestions,
     },
   } = hackPortalConfig;
 
@@ -279,6 +280,38 @@ export default function Register() {
 
               <div className="text-2xl py-1 border-b-2 border-black mr-auto mt-8">Sponsor Info</div>
               {sponsorInfoQuestions.map((obj, idx) => (
+                <DisplayQuestion key={idx} obj={obj} values={values} onChange={handleChange} />
+              ))}
+
+              <div className="text-2xl py-1 border-b-2 border-black mr-auto mt-8 mb-4">
+                MLH Info
+              </div>
+              <a
+                href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-medium-blue"
+              >
+                View MLH Code of Conduct
+              </a>
+              <a
+                href="https://mlh.io/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-medium-blue"
+              >
+                View MLH Privacy Policy
+              </a>
+              <a
+                href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-medium-blue"
+              >
+                View MLH Contest Terms and Conditions
+              </a>
+
+              {agreementQuestions.map((obj, idx) => (
                 <DisplayQuestion key={idx} obj={obj} values={values} onChange={handleChange} />
               ))}
 
