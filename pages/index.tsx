@@ -91,7 +91,7 @@ export default function Home(props: {
                   {'>>> CREATE AWESOME.'}
                 </p>
                 <h2 className="text-light-red text-5xl 2xl:text-7xl font-bold text-center mt-4 font-jetbrains">
-                  {'October 14-15, 2023'}
+                  {'September 16-17, 2023'}
                 </h2>
                 <div className="w-full text-center">
                   <NextImage
@@ -219,7 +219,7 @@ export default function Home(props: {
               </h1>
               <p className="text-dark-red text-3xl ms-4">
                 HackSMU will take place fully in person on September 16-18, 2022. The address is{' '}
-                <span className="font-bold">3140 Dyer Street, Dallas, TX, 75275.</span> <br />
+                <span className="font-bold">717 N Harwood St, Dallas, TX 75201.</span> <br />
                 <br />
                 <p>
                   Check out our live site for more information on schedule, location, events,
