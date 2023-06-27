@@ -74,26 +74,26 @@ export default function AppHeader() {
 
   return (
     <>
-      <header className="fixed top-0 justify-between flex flex-row w-full bg-dark-blue items-center h-24 z-50 p-4">
+      <header className="mt-[-24px] sticky top-0 justify-between flex flex-row w-full bg-dark-blue items-center h-24 z-50 p-4">
         <a
           className="left-[128px] md:left-[84px]"
           id="mlh-trust-badge"
           style={{
             display: 'inline-block',
-            position: 'fixed',
+            position: 'absolute',
             top: '0px',
             width: '54px',
             zIndex: '0',
           }}
           href={
-            'https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2023-season&utm_content=gray'
+            'https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2024-season&utm_content=gray'
           }
           target="_blank"
           rel="noreferrer"
         >
           <img
-            src="https://s3.amazonaws.com/logged-assets/trust-badge/2023/mlh-trust-badge-2023-gray.svg"
-            alt="Major League Hacking 2023 Hackathon Season"
+            src="https://s3.amazonaws.com/logged-assets/trust-badge/2024/mlh-trust-badge-2024-gray.svg"
+            alt="Major League Hacking 2024 Hackathon Season"
             style={{ width: '100%' }}
           />
         </a>

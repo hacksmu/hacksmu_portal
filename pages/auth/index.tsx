@@ -117,7 +117,7 @@ export default function AuthPage() {
       <section className="bg-secondary min-h-screen">
         <div className="p-4">
           <Link href="/" passHref>
-            <div className="cursor-pointer items-center inline-flex text-primaryDark font-medium">
+            <div className="cursor-pointer items-center inline-flex text-dark-blue font-medium">
               <ChevronLeftIcon />
               return to event site
             </div>
@@ -131,7 +131,7 @@ export default function AuthPage() {
             >
               {!passwordResetDialog ? (
                 <>
-                  <h1 className="md:text-3xl text-2xl font-black text-center text-primaryDark mt-4">
+                  <h1 className="md:text-3xl text-2xl font-black text-center text-dark-blue mt-4">
                     {signInOption ? 'Sign in' : 'Create an account'}
                   </h1>
                   <div className="text-center text-complementary/60 mt-4 mb-12">
@@ -140,7 +140,7 @@ export default function AuthPage() {
                       onClick={() =>
                         signInOption ? setSignInOption(false) : setSignInOption(true)
                       }
-                      className="text-primary cursor-pointer"
+                      className="text-medium-blue cursor-pointer"
                     >
                       {signInOption ? 'Create an account' : 'Sign in'}
                     </span>
@@ -176,9 +176,9 @@ export default function AuthPage() {
                         >
                           Forgot password?
                         </div>
-                        <div className="text-primaryDark text-base">
+                        <div className="text-dark-blue text-base">
                           <input
-                            className="mr-2 rounded-md text-primaryDark focus:ring-0 border border-primaryDark"
+                            className="mr-2 rounded-md text-dark-blue focus:ring-0 border border-dark-blue"
                             type="checkbox"
                             onClick={() => setShowPassword(!showPassword)}
                           />
@@ -189,7 +189,7 @@ export default function AuthPage() {
                       <div className="flex justify-center mt-6 mb-4">
                         <button
                           type="button"
-                          className="rounded-full text-base w-full text-white bg-primaryDark hover:brightness-90 px-4 py-2"
+                          className="rounded-full text-base w-full text-white bg-dark-blue hover:brightness-90 px-4 py-2"
                           onClick={() => {
                             handleSubmit();
                           }}
@@ -222,14 +222,14 @@ export default function AuthPage() {
                 <React.Fragment>
                   <div className="text-left">
                     <ArrowBackIcon
-                      className="cursor-pointer text-primaryDark"
+                      className="cursor-pointer text-dark-blue"
                       onClick={() => {
                         setPasswordResetDialog(false);
                         setErrorMsg('');
                       }}
                     />
                   </div>
-                  <h1 className="md:text-3xl text-2xl font-black text-center text-primaryDark mt-4">
+                  <h1 className="md:text-3xl text-2xl font-black text-center text-dark-blue mt-4">
                     Reset Password
                   </h1>
                   <div className="text-center text-complementary/60 mt-4 mb-12">
@@ -248,7 +248,7 @@ export default function AuthPage() {
                   <div className="flex justify-center mt-6 mb-4">
                     <button
                       type="button"
-                      className="rounded-full text-base w-full text-white bg-primaryDark hover:brightness-90 px-4 py-2"
+                      className="rounded-full text-base w-full text-white bg-dark-blue hover:brightness-90 px-4 py-2"
                       onClick={() => {
                         sendResetEmail();
                         setErrorMsg('');

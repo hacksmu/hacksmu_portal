@@ -1,5 +1,6 @@
 import schools from './public/schools.json';
 import majors from './public/majors.json';
+import countries from './public/countries.json';
 
 export const hackPortalConfig: HackPortalConfig = {
   //registration fields are separated by question topics (general, school, hackathon experience, etc. )
@@ -35,6 +36,28 @@ export const hackPortalConfig: HackPortalConfig = {
             name: 'preferredEmail',
             required: true,
             initialValue: '',
+          },
+          {
+            //don't remove; for user account info
+            question: 'Phone Number',
+            id: 'phoneNumber',
+            name: 'phoneNumber',
+            required: true,
+            initialValue: '',
+          },
+        ],
+        dropdownQuestions: [
+          {
+            //University question
+            question: 'Country of Residence',
+            id: 'country',
+            name: 'country',
+            required: true,
+            options: countries.map((country) => ({
+              title: country.Name,
+              value: country.Code,
+            })),
+            initialValue: 'US',
           },
         ],
       },
@@ -184,24 +207,48 @@ export const hackPortalConfig: HackPortalConfig = {
             initialValue: '',
             options: [
               {
-                title: 'Freshman',
-                value: 'freshman',
+                title: 'Less than Secondary / High School',
+                value: 'lessThanSecondary',
               },
               {
-                title: 'Sophomore',
-                value: 'sophomore',
+                title: 'Secondary / High School',
+                value: 'secondary',
               },
               {
-                title: 'Junior',
-                value: 'junior',
+                title: 'Undergraduate University (2 year - community college or similar)',
+                value: 'undergrad2Year',
               },
               {
-                title: 'Senior',
-                value: 'senior',
+                title: 'Undergraduate University (3+ year)',
+                value: 'undergrad4Year',
               },
               {
-                title: 'Graduate Student',
-                value: 'grad',
+                title: 'Graduate University (Masters, Professional, Doctoral, etc)',
+                value: 'graduate',
+              },
+              {
+                title: 'Code School / Bootcamp',
+                value: 'codeSchool',
+              },
+              {
+                title: 'Other Vocational / Trade Program or Apprenticeship',
+                value: 'vocationalProgram',
+              },
+              {
+                title: 'Post Doctorate',
+                value: 'postDoctorate',
+              },
+              {
+                title: 'Other',
+                value: 'other',
+              },
+              {
+                title: 'I’m not currently a student',
+                value: 'notStudent',
+              },
+              {
+                title: 'Prefer not to answer',
+                value: 'preferNotToSay',
               },
             ],
           },
@@ -255,7 +302,7 @@ export const hackPortalConfig: HackPortalConfig = {
           },
           {
             //Heard from question
-            question: 'Where did you hear about HackPortal?',
+            question: 'Where did you hear about HackSMU?',
             required: true,
             id: 'heardFrom',
             name: 'heardFrom',
@@ -415,24 +462,74 @@ export const hackPortalConfig: HackPortalConfig = {
             initialValue: [],
             options: [
               {
-                title: 'State Farm',
-                value: 'State Farm',
+                title: 'Sponsor 1',
+                value: 'Sponsor 1',
               },
               {
-                title: 'American Airlines',
-                value: 'American Airlines',
+                title: 'Sponsor 2',
+                value: 'Sponsor 2',
               },
               {
-                title: 'Capital One',
-                value: 'Capital One',
+                title: 'Sponsor 3',
+                value: 'Sponsor 3',
               },
               {
-                title: 'Ebay',
-                value: 'Ebay',
+                title: 'Sponsor 4',
+                value: 'Sponsor 4',
               },
               {
-                title: 'Facebook',
-                value: 'Facebook',
+                title: 'Sponsor 5',
+                value: 'Sponsor 5',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    agreementQuestions: [
+      {
+        checkboxQuestions: [
+          {
+            //Agreement question
+            question: 'I have read and agree to the MLH Code of Conduct.',
+            required: true,
+            id: 'codeOfConduct',
+            name: 'codeOfConduct',
+            initialValue: [],
+            options: [
+              {
+                title: 'I agree',
+                value: 'I agree',
+              },
+            ],
+          },
+          {
+            //Agreement question
+            question:
+              'I authorize you to share my application/registration information with Major League Hacking for event administration, ranking, MLH administration, and occasional messages about hackathons in-line with the MLH Privacy Policy. I further agree to the terms of both the MLH Contest Terms and Conditions and the MLH Privacy Policy.',
+            required: true,
+            id: 'privacyPolicy',
+            name: 'privacyPolicy',
+            initialValue: [],
+            options: [
+              {
+                title: 'I agree',
+                value: 'I agree',
+              },
+            ],
+          },
+          {
+            //Agreement question
+            question:
+              'I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements.',
+            required: false,
+            id: 'emailConsent',
+            name: 'emailConsent',
+            initialValue: [],
+            options: [
+              {
+                title: 'I agree',
+                value: 'I agree',
               },
             ],
           },
@@ -503,6 +600,7 @@ export interface HackPortalConfig {
     hackathonExperienceQuestions: QuestionTypes[];
     eventInfoQuestions: QuestionTypes[];
     sponsorInfoQuestions: QuestionTypes[];
+    agreementQuestions: QuestionTypes[];
   };
 }
 
