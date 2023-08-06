@@ -44,64 +44,40 @@ export default function FaqPage({ fetchedFaqs }: { fetchedFaqs: AnsweredQuestion
   }
 
   return (
-    <div className="z-0 relative bg-cool-white min-h-[100vh] pt-[5rem] xl:pt-[6rem]">
-      <div className="flex flex-col w-[calc(100vw + 2px)] xl:w-[85vw] xl:mx-auto pt-8 xl:pt-0 pb-24 xl:pb-64 px-0 relative container">
-        <div className="flex flex-row w-full items-center">
-          <div className="hidden xl:block relative self-start top-[5.5rem] left-[-6.5rem] mr-2">
-            <NextImage
-              className="transform-gpu rotate-[-30deg] scale-x-[-1]"
-              src="/assets/Charlotte.svg"
-              width={192}
-              height={192}
-            />
+    <div className="z-0 relative bg-gradient-to-tl from-purple to-teal min-h-[105vh] xl:py-[6rem]">
+      <div className="hidden lg:block z-[2]">
+        <NextImage src="/assets2023/faq_building.svg" layout="fill" objectFit="cover" />
+      </div>
+      <div className="flex flex-grow">
+        <div className="top-6 p-4 px-8">
+          {/* FAQ for lg-md */}
+          {/* Uses different section for mobile because using 2 columns is buggy when expanding FAQs */}
+          <div className="xl:block hidden absolute left-[40%] mr-[5rem]">
+            <FaqDisplay faqs={faqs} />
           </div>
-          <div className="flex-1" />
-          <div className="hidden xl:block relative self-end top-[5.5rem] right-[-6.5rem] mr-2">
-            <NextImage
-              className="transform-gpu rotate-[30deg]"
-              src="/assets/Charlotte.svg"
-              width={192}
-              height={192}
-            />
-          </div>
-        </div>
-        <div className="rounded-[3rem] bg-light-red w-[90%] xl:w-[100%] relative z-10 mx-auto left-[-0.5rem] xl:left-[-1.5rem]">
-          <div className="rounded-[3rem] bg-white w-[100%] z-20 relative left-4 xl:left-10 top-3 pb-8 pt-1 px-2">
-            <h1 className="text-4xl text-left tracking-widest mt-[2rem] pl-[2rem] text-dark-red font-bold">
-              FAQ
-              <span className="border-dark-red border-solid w-[7.5%] border-t-[4px] self-left block rounded" />
-            </h1>
-            <div className="flex flex-col flex-grow">
-              <div className="top-6 p-4 px-8">
-                {/* FAQ for lg-md */}
-                {/* Uses different section for mobile because using 2 columns is buggy when expanding FAQs */}
-                <div className="xl:flex hidden justify-between">
-                  <FaqDisplay faqs={faqs} />
-                </div>
-                {/* FAQ for mobile */}
-                <div className="xl:hidden">
-                  <div className="w-full my-3 space-y-4 > * + *">
-                    {faqs.map(({ question, answer }, idx) => (
-                      <FaqDisclosure
-                        key={idx}
-                        question={question}
-                        answer={answer}
-                        isOpen={disclosuresStatus[idx]}
-                        toggleDisclosure={() => {
-                          const currDisclosure = [...disclosuresStatus];
-                          currDisclosure[idx] = !currDisclosure[idx];
-                          setDisclosureStatus(currDisclosure);
-                        }}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
+          {/* FAQ for mobile */}
+          <div className="bg-dark-teal xl:hidden p-4 mt-10 rounded-lg border-4 border-dark-teal z-20">
+            <h2 className="text-4xl font-bold text-tan">FAQ</h2>
+            <div className="w-full my-3 space-y-4 > * + *">
+              {faqs.map(({ question, answer }, idx) => (
+                <FaqDisclosure
+                  key={idx}
+                  question={question}
+                  answer={answer}
+                  isOpen={disclosuresStatus[idx]}
+                  toggleDisclosure={() => {
+                    const currDisclosure = [...disclosuresStatus];
+                    currDisclosure[idx] = !currDisclosure[idx];
+                    setDisclosureStatus(currDisclosure);
+                  }}
+                />
+              ))}
             </div>
           </div>
         </div>
       </div>
     </div>
+
   );
 }
 

@@ -54,7 +54,7 @@ export default function Home(props: {
         <meta name="description" content="HackSMU Portal" /> {/* !change */}
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <section id="" className=" bg-contain bg-hero-pattern smooth-scroll">
+      <section id="" className="bg-contain bg-hero-pattern">
         <div className="flex min-h-[95vh] flex-col bg-purple w-[calc(100vw + 2px)] py-16 px-0 relative">
           <h1 className="lg:text-9xl text-6xl text-center text-tan font-bold font-rampart-one">HackSMU V</h1>
           <NextImage src="/assets2023/buildings.svg" layout='fill' objectFit="cover" className="hidden lg:block" />
@@ -131,6 +131,7 @@ export default function Home(props: {
 
       {/* FAQ section */}
       <section id="faq">
+        <div className='mt-4' />
         <FaqPage fetchedFaqs={props.answeredQuestion} />
       </section>
 
