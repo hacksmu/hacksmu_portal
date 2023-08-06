@@ -67,39 +67,31 @@ export default function Home(props: {
       </section>
 
       {/* About HackSMU */}
-      <section id="about" className="z-0 relative bg-cool-white min-h-[95vh]">
-        <div className="flex flex-col w-[calc(100vw + 2px)] xl:w-[50vw] xl:mx-auto pt-8 xl:pt-0 pb-24 xl:pb-64 px-0 relative container justify-center items-end">
-          <div className="hidden xl:block relative top-[6rem] mr-12">
-            <NextImage
-              className="transform-gpu rotate-[20deg]"
-              src="/assets/Robin.svg"
-              width={256}
-              height={256}
-            />
-          </div>
-          <div className="rounded-[3rem] bg-light-red w-[90%] xl:w-[100%] relative z-10 mx-auto left-[-.5rem]">
-            <div className="rounded-[3rem] bg-white w-[100%] z-20 relative left-4 top-3 pb-8 pt-1 px-2">
-              <h1 className="text-3xl text-center mt-[2rem] text-dark-red font-bold">
+      <section id="about" className="z-0 relative bg-purple min-h-[100vh]">
+        <div className="flex flex-col w-[calc(100vw + 2px)] xl:w-[50vw] xl:mx-auto pb-24 pt-[10rem] xl:pb-64 px-0 relative container justify-center items-end">
+          <div className="rounded-[3rem] bg-teal w-[90%] xl:w-[100%] relative z-10 mx-auto left-[-.5rem]">
+            <div className="rounded-[3rem] bg-tan w-[100%] z-20 relative left-4 top-3 pb-8 pt-1 px-2">
+              <h1 className="text-3xl text-center mt-[2rem] text-black font-bold">
                 {"We are SMU's Annual 36-hour Hackathon."}
-                <span className="border-dark-red border-solid w-[75%] mt-2 ml-4 border-t-[4px] self-left inline-block rounded" />
+                <span className="border-black border-solid w-[75%] mt-2 ml-4 border-t-[4px] self-left inline-block rounded" />
               </h1>
 
               <div className="grid xl:grid-cols-3 gap-0 mt-4 relative px-6">
                 <div>
-                  <h2 className="font-jetbrains text-6xl text-dark-red text-center">150+</h2>
-                  <h3 className="text-3xl text-dark-red text-center">Hackers</h3>
+                  <h2 className="font-jetbrains text-6xl text-black text-center">150+</h2>
+                  <h3 className="text-3xl text-black text-center">Hackers</h3>
                 </div>
                 <div>
-                  <h2 className="font-jetbrains text-6xl text-dark-red text-center">20+</h2>
-                  <h3 className="text-3xl text-dark-red text-center">Projects</h3>
+                  <h2 className="font-jetbrains text-6xl text-black text-center">20+</h2>
+                  <h3 className="text-3xl text-black text-center">Projects</h3>
                 </div>
                 <div>
-                  <h2 className="font-jetbrains text-6xl text-dark-red text-center">$1500+</h2>
-                  <h3 className="text-3xl text-dark-red text-center">In Prizes</h3>
+                  <h2 className="font-jetbrains text-6xl text-black text-center">$1500+</h2>
+                  <h3 className="text-3xl text-black text-center">In Prizes</h3>
                 </div>
               </div>
-              <h2 className="text-3xl text-dark-red font-bold ml-4 mt-8">HackSMU is...</h2>
-              <ul className="list-disc text-2xl text-dark-red ml-10 xl:ml-14 mt-4">
+              <h2 className="text-3xl text-black font-bold ml-4 mt-8">HackSMU is...</h2>
+              <ul className="list-disc text-2xl text-black ml-10 xl:ml-14 mt-4">
                 <li className="mb-4">
                   A space for enterpreneurs, designers, and developers to unleash their creativity
                   and spark positive social change.
