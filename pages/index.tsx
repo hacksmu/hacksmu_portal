@@ -122,29 +122,21 @@ export default function Home(props: {
       </section>
 
       {/* FAQ section */}
-      <section id="faq">
+      <section id="faq" className='bg-purple'>
         <div className='mt-4' />
         <FaqPage fetchedFaqs={props.answeredQuestion} />
       </section>
 
       {/* Resources for HackSMU */}
-      <section id="resources" className="z-0 relative bg-cool-white min-h-[100vh] flex flex-row">
+      <section id="resources" className="z-0 relative bg-purple min-h-[100vh] flex flex-row">
         <div className="flex flex-col w-[calc(100vw + 2px)] xl:w-[50vw] xl:mx-auto pt-8 xl:pt-0 pb-24 xl:pb-64 px-0 relative container justify-center items-start">
-          <div className="hidden xl:block relative top-[3rem] mr-12">
-            <NextImage
-              className="transform-gpu rotate-[-10deg]"
-              src="/assets/Momin.svg"
-              width={192}
-              height={192}
-            />
-          </div>
-          <div className="rounded-[3rem] bg-light-red w-[90%] xl:w-[100%]  relative z-10 mx-auto left-[-.5rem]">
-            <div className="rounded-[3rem] bg-white w-[100%] z-20 relative left-4 xl:left-8 top-3 pb-8 pt-1 px-4 ">
-              <h1 className="text-5xl text-start ms-4 mt-[2rem] text-dark-red font-bold">
+          <div className="rounded-[3rem] bg-teal w-[90%] xl:w-[100%] relative z-10 mx-auto left-[-.5rem]">
+            <div className="rounded-[3rem] bg-tan w-[100%] z-20 relative left-4 xl:left-8 top-3 pb-8 pt-1 px-4 ">
+              <h1 className="text-5xl text-start ms-4 mt-[2rem] text-black font-bold">
                 Info and Resources
-                <span className="border-dark-red border-solid w-[75%] border-t-[4px] self-left inline-block rounded top-[-1.5rem] relative" />
+                <span className="border-black border-solid w-[75%] border-t-[4px] self-left inline-block rounded top-[-1.5rem] relative" />
               </h1>
-              <p className="text-dark-red text-3xl ms-4">
+              <p className="text-black text-3xl ms-4">
                 HackSMU will take place fully in person on September 16-17, 2023. The address is{' '}
                 <span className="font-bold">717 N Harwood St, Dallas, TX 75201.</span> <br />
                 <br />
@@ -155,7 +147,7 @@ export default function Home(props: {
                 <br /> <br />
                 <div className="xl:w-[30%] mx-auto">
                   <Link passHref href="/auth">
-                    <div className="bg-medium-blue text-2xl text-center text-white font-bold py-3 px-2 rounded cursor-pointer">
+                    <div className="bg-teal text-2xl text-center text-tan font-bold py-3 px-2 rounded cursor-pointer">
                       Dashboard
                     </div>
                   </Link>
