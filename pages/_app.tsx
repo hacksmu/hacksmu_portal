@@ -52,7 +52,7 @@ function PortalApp({ Component, pageProps }: AppProps) {
               <link rel="preconnect" href="https://fonts.googleapis.com" />
               <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
               <link
-                href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Roboto:wght@400;600;700;900&display=swap"
+                href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Rampart+One&family=Roboto:wght@400;600;700;900&display=swap"
                 rel="stylesheet"
               />
               <meta name="theme-color" content="#5D5FEF" />

@@ -54,81 +54,15 @@ export default function Home(props: {
         <meta name="description" content="HackSMU Portal" /> {/* !change */}
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* Notification info pop up */}
-      {/* {checkNotif() && (
-        <div
-          id="popup"
-          className="fixed z-50 md:translate-x-0 translate-x-1/2 w-[22rem] rounded-md px-4 py-2 top-16 md:right-6 right-1/2 bg-red-200 md:text-base text-sm"
-        >
-          Turn on push notifications to recieve announcements!
-        </div>
-      )} */}
-      {/* Header section */}
-      <section id="" className=" bg-contain bg-hero-pattern">
-        <div className="flex flex-col w-[calc(100vw + 2px)] py-16 px-0 relative">
-          <div className="">
-            <NextImage src="/assets/hacksmu-photo1.png" layout="fill" objectFit="cover" />
-          </div>
-          <div className="w-screen xl:w-[50vw] min-h-[85vh] relative">
-            <div className="w-[90%]  bg-white relative top-[-2.5rem] md:top-[1rem] xl:top-[5%] right-[0.5rem] xl:left-24 z-10 mx-auto">
-              <div className="w-[100%] bg-dark-blue relative top-[1rem] left-4 z-20 mx-auto">
-                <div className="flex flex-col justify-center items-center relative">
-                  <div className="flex mt-3">
-                    <NextImage src="/assets/hacksmu.png" width="50" height="80" objectFit="cover" />
-                    <h1 className="text-white text-center text-4xl mt-4 ms-4 font-bold">
-                      HackSMU V
-                    </h1>
-                  </div>
-                  <span className="border-white w-11/12 mt-2 border-t-4" />
-                </div>
-                <p className="text-white text-2xl sm:text-3xl ml-8 sm:ml-12 mt-8">
-                  {'>>> MEET UP.'}
-                </p>
-                <p className="text-white text-2xl sm:text-3xl ml-12 sm:ml-20 mt-2">
-                  {'>>> HAVE FUN.'}
-                </p>
-                <p className="text-white text-2xl sm:text-3xl ml-16 sm:ml-28 mt-2">
-                  {'>>> CREATE AWESOME.'}
-                </p>
-                <h2 className="text-light-red text-5xl 2xl:text-7xl font-bold text-center mt-4 font-jetbrains">
-                  {'September 16-17, 2023'}
-                </h2>
-                <div className="w-full text-center">
-                  <NextImage
-                    className="block w-[10%] z-40 mx-auto p-3"
-                    src="/assets/robotcrew.svg"
-                    width="512"
-                    height="256"
-                  />
-                </div>
-                <div className="grid grid-cols-1 relative xl:w-[50%] xl:mx-auto mt-4 px-4 xl:space-x-8 space-y-4 xl:space-y-0 w-full xl:top-[75%] pb-8">
-                  <Link passHref href="/auth">
-                    <div className="bg-light-red text-2xl text-center text-white font-bold md:max-w-full py-3 px-2 rounded cursor-pointer">
-                      Apply here!
-                    </div>
-                  </Link>
-                  <a
-                    href="https://www.google.com"
-                    rel="noreferrer"
-                    target="_blank"
-                    className="hidden bg-medium-blue text-2xl text-center text-white font-bold md:max-w-full py-3 px-2 rounded"
-                    role="button"
-                  >
-                    Volunteer here!
-                  </a>
-                  <a
-                    href="https://www.google.com"
-                    rel="noreferrer"
-                    target="_blank"
-                    className="hidden bg-medium-blue text-2xl text-center text-white font-bold md:max-w-full py-3 px-2 rounded"
-                    role="button"
-                  >
-                    Become a mentor!
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+      <section id="" className=" bg-contain bg-hero-pattern smooth-scroll">
+        <div className="flex min-h-[95vh] flex-col bg-purple w-[calc(100vw + 2px)] py-16 px-0 relative">
+          <h1 className="lg:text-9xl text-6xl text-center text-tan font-bold font-rampart-one">HackSMU V</h1>
+          <NextImage src="/assets2023/buildings.svg" layout='fill' objectFit="cover" className="hidden lg:block" />
+          <NextImage src="/assets2023/blimp.svg" layout="fill" objectFit="cover" />
+          <NextImage src="/assets2023/sidebuilding.svg" layout="fill" objectFit="cover" className="hidden lg:block" />
+          <Link href='/auth' passHref ><button className='rounded-xl z-10 bg-teal hover:bg-dark-teal mx-auto text-4xl font-sans font-bold p-6 text-pink mt-8'>Apply Here!</button></Link>
+          <Link href='#about' passHref ><button className='rounded-xl border-4 border-brown bottom-[28vh] left-0 right-0 w-[12rem] absolute z-10 bg-tan hover:bg-dark-tan mx-auto text-4xl font-sans font-bold py-4 text-pink'>More Info</button></Link>
+          <Link href='#about' passHref ><button className='rounded-xl border-4 border-brown bottom-[7vh] left-0 right-0 w-[12rem] h-[12rem] absolute z-10 bg-tan hover:bg-dark-tan mx-auto text-4xl font-sans font-bold p-6 text-pink'><NextImage src="/assets2023/arrow.png" objectFit="scale-down" width="192" height="192" /></button></Link>
         </div>
       </section>
 

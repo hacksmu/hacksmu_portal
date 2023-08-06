@@ -12,6 +12,17 @@ module.exports = {
         'light-red': '#ff8787',
         'warm-white': '#ffebeb',
         red: '#cc0035',
+        "dark-green": "#205D1C",
+        "light-green": "#71B93A",
+        "medium-green": "#438E20",
+        "brown": "#89704B",
+        "tan": "#FFF5B5",
+        "dark-tan": "#D3CA90",
+        "teal": "#4FA3AB",
+        "dark-teal": "#40848A",
+        "pink": "#FF8787",
+        "purple": "#8888FF",
+        "gray": "#647684",
       },
       gradientColorStops: {
         'dark-blue': '#00034B',
@@ -29,6 +40,7 @@ module.exports = {
       fontFamily: {
         sans: ['Roboto'],
         jetbrains: ['JetBrains Mono'],
+        "rampart-one": ['Rampart One'],
       },
       width: {
         '1/8': '12.5%',
