@@ -56,13 +56,13 @@ export default function Home(props: {
       </Head>
       <section id="" className="bg-contain bg-hero-pattern">
         <div className="flex min-h-[95vh] flex-col bg-purple w-[calc(100vw + 2px)] py-16 px-0 relative">
-          <h1 className=" z-[1] lg:text-9xl text-6xl text-center text-tan font-bold font-rampart-one">HackSMU V</h1>
+          <h1 className="lg:text-9xl text-6xl text-center text-tan font-bold font-rampart-one">HackSMU V</h1>
           <NextImage src="/assets2023/buildings.svg" layout='fill' objectFit="cover" className="hidden lg:block" />
-          <NextImage className="transform-gpu translate-y-[-15%]" src="/assets2023/blimpdatechange.svg" layout="fill" objectFit="cover" />
+          <NextImage src="/assets2023/blimp.svg" layout="fill" objectFit="cover" />
           <NextImage src="/assets2023/sidebuilding.svg" layout="fill" objectFit="cover" className="hidden lg:block" />
           <Link href='/auth' passHref ><button className='rounded-xl z-10 bg-teal hover:bg-dark-teal mx-auto text-4xl font-sans font-bold p-6 text-pink mt-8'>Apply Here!</button></Link>
-          <Link href='#about' passHref ><button className='rounded-xl border-4 border-brown top-[55vh] left-0 right-0 w-[10rem] absolute z-10 bg-tan hover:bg-dark-tan mx-auto text-3xl font-sans font-bold py-4 text-pink'>More Info</button></Link>
-          <Link href='#about' passHref ><button className='rounded-xl border-4 border-brown top-[65vh] left-0 right-0 w-[10rem] h-[10rem] absolute z-10 bg-tan hover:bg-dark-tan mx-auto text-3xl font-sans font-bold p-6 text-pink'><NextImage className='transform-gpu scale-75' src="/assets2023/arrow.png" objectFit="scale-down" width="192" height="192" /></button></Link>
+          <Link href='#about' passHref ><button className='rounded-xl border-4 border-brown bottom-[28vh] left-0 right-0 w-[12rem] absolute z-10 bg-tan hover:bg-dark-tan mx-auto text-4xl font-sans font-bold py-4 text-pink'>More Info</button></Link>
+          <Link href='#about' passHref ><button className='rounded-xl border-4 border-brown bottom-[7vh] left-0 right-0 w-[12rem] h-[12rem] absolute z-10 bg-tan hover:bg-dark-tan mx-auto text-4xl font-sans font-bold p-6 text-pink'><NextImage src="/assets2023/arrow.png" objectFit="scale-down" width="192" height="192" /></button></Link>
         </div>
       </section>
 
@@ -137,7 +137,8 @@ export default function Home(props: {
                 <span className="border-black border-solid w-[75%] border-t-[4px] self-left inline-block rounded top-[-1.5rem] relative" />
               </h1>
               <p className="text-black text-3xl ms-4">
-                HackSMU will take place fully in person on <span className="text-red">October 14-15, 2023.</span> The address is <span className="font-bold text-red">3145 Dyer St, Dallas, Tx 75205</span> <br />
+                HackSMU will take place fully in person on September 16-17, 2023. The address is{' '}
+                <span className="font-bold">717 N Harwood St, Dallas, TX 75201.</span> <br />
                 <br />
                 <p>
                   Check out our live site for more information on schedule, location, events,
