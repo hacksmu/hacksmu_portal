@@ -73,8 +73,8 @@ export default function AppHeader() {
   });
 
   return (
-    <>
-      <header className="mt-[-24px] sticky top-0 justify-between flex flex-row w-full bg-dark-blue items-center h-24 z-50 p-4">
+    <header className="sticky top-0 mt-[-24px] z-20">
+      <div className="justify-between flex flex-row w-full bg-dark-blue items-center h-24 p-4">
         <a
           className="left-[128px] md:left-[84px]"
           id="mlh-trust-badge"
@@ -100,7 +100,7 @@ export default function AppHeader() {
         <div className="flex justify-between items-center md:max-w-full md:justify-start md:w-9/12">
           <Link href="/">
             <a className="flex gap-2 order-2 relative ml-[12px] font-display self-center items-center md:order-1 md:ml-0 z-[0]">
-              <Image src={'/assets/hacksmu.png'} width="50px" height="81px" />
+              <Image src={'/assets/hacksmu.png'} width="50px" height="81px" alt="hacksmu logo" />
             </a>
           </Link>
           {/* Smartphone nav */}
@@ -149,7 +149,8 @@ export default function AppHeader() {
           </button>
         </div>
         {showProfileDialog && <ProfileDialog onDismiss={dismissDialog} />}
-      </header>
-    </>
+      </div>
+      <div className="h-16 top-0 bg-[#ff8000] font-sans text-2xl font-bold text-center py-4 sticky">Date and venue change! <Link passHref href="/#resources"><button className="text-tan">More info</button></Link></div>
+    </header>
   );
 }
