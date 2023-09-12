@@ -101,7 +101,7 @@ export default function Home(props: {
           <div className="rounded-[3rem] bg-teal w-[90%] xl:w-[100%] relative z-10 mx-auto left-[-.5rem]">
             <div className="rounded-[3rem] bg-tan w-[100%] z-20 relative left-4 top-3 pb-8 pt-1 px-2">
               <h1 className="text-3xl text-center mt-[2rem] text-black font-bold">
-                {"We are SMU's Annual 36-hour Hackathon."}
+                {"We are SMU's Annual 24-hour Hackathon."}
                 <span className="border-black border-solid w-[75%] mt-2 ml-4 border-t-[4px] self-left inline-block rounded" />
               </h1>
 
