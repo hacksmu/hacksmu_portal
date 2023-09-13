@@ -107,10 +107,7 @@ const defaultCurrentDate = new Date(2023, 8, 16, 9, 0);
 const AppointmentContent = withStyles(styles, { name: 'AppointmentContent' })(
   ({ classes, data, ...restProps }: AppointmentContentProps) => {
     let Event = 'Event';
-    if (data.Event === 2) Event = 'Sponsor';
-    if (data.Event === 3) Event = 'Tech Talk';
-    if (data.Event === 4) Event = 'Workshop';
-    if (data.Event === 5) Event = 'Social';
+    if (data.type) Event = data.type.charAt(0).toUpperCase() + data.type.slice(1);
 
     return (
       <Appointments.AppointmentContent {...restProps} data={data}>

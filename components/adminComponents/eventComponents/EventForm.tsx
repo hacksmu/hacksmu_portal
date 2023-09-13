@@ -39,7 +39,9 @@ export default function EventForm({ event, onSubmitClick, formAction }: EventFor
         <option value="" disabled>
           Choose an event type
         </option>
+        <option value="general">General Event</option>
         <option value="social">Social Event</option>
+        <option value="speaker">Speaker Event</option>
         <option value="sponsor">Sponsor Event</option>
         <option value="workshop">Workshop Event</option>
       </select>
@@ -81,7 +83,7 @@ export default function EventForm({ event, onSubmitClick, formAction }: EventFor
         onChange={(newValue) => setEventForm((prev) => ({ ...prev, endDate: newValue }))}
         renderInput={(params) => <TextField {...params} />}
       />
-      {eventForm.speakers.map((speaker, idx) => (
+      {eventForm.speakers?.map((speaker, idx) => (
         <input
           className="border-2 p-3 rounded-lg"
           value={speaker}
