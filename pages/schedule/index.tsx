@@ -99,7 +99,7 @@ type AppointmentProps = Appointments.AppointmentProps & WithStyles<typeof styles
 type AppointmentContentProps = Appointments.AppointmentContentProps & WithStyles<typeof styles>;
 
 const isWeekEnd = (date: Date): boolean => date.getDay() === 0 || date.getDay() === 6;
-const defaultCurrentDate = new Date(2023, 9, 14, 9, 0);
+const defaultCurrentDate = new Date(2023, 8, 16, 9, 0);
 {
   /* !!!change */
 }
