@@ -143,11 +143,11 @@ export default function Calendar(props: { scheduleCard: ScheduleEvent[] }) {
       <Appointments.Appointment
         {...restProps}
         className={classNames({
-          [classes.EventTypeAppointment]: data.Event === 1,
-          [classes.SponsorTypeAppointment]: data.Event === 2,
-          [classes.TechTalkTypeAppointment]: data.Event === 3,
-          [classes.WorkshopTypeAppointment]: data.Event === 4,
-          [classes.SocialTypeAppointment]: data.Event === 5,
+          [classes.EventTypeAppointment]: data.type === "general",
+          [classes.SponsorTypeAppointment]: data.type === "sponsor",
+          [classes.TechTalkTypeAppointment]: data.type === "speaker",
+          [classes.WorkshopTypeAppointment]: data.type === "workshop",
+          [classes.SocialTypeAppointment]: data.type === "social",
           [classes.appointment]: true,
         })}
         data={data}
