@@ -1,18 +1,11 @@
 import Head from 'next/head';
 import NextImage from 'next/image';
 import { GetServerSideProps } from 'next';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { buttonDatas, stats } from '../lib/data';
 import { RequestHelper } from '../lib/request-helper';
-import firebase from 'firebase/app';
 import 'firebase/messaging';
 import 'firebase/storage';
-import KeynoteSpeaker from '../components/KeynoteSpeaker';
-import HomeChallengeCard from '../components/HomeChallengeCard';
-import MemberCards from '../components/MemberCards';
 import SponsorCard from '../components/SponsorCard';
-import FAQ from '../components/faq';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -26,8 +19,6 @@ import Link from 'next/link';
  *
  */
 export default function Home(props: {
-  keynoteSpeakers: KeynoteSpeaker[];
-  challenges: Challenge[];
   answeredQuestion: AnsweredQuestion[];
   fetchedMembers: TeamMember[];
   sponsorCard: Sponsor[];
@@ -308,14 +299,6 @@ export default function Home(props: {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const protocol = context.req.headers.referer?.split('://')[0] || 'http';
-  const { data: keynoteData } = await RequestHelper.get<KeynoteSpeaker[]>(
-    `${protocol}://${context.req.headers.host}/api/keynotespeakers`,
-    {},
-  );
-  const { data: challengeData } = await RequestHelper.get<Challenge[]>(
-    `${protocol}://${context.req.headers.host}/api/challenges/`,
-    {},
-  );
   const { data: answeredQuestion } = await RequestHelper.get<AnsweredQuestion[]>(
     `${protocol}://${context.req.headers.host}/api/questions/faq`,
     {},
@@ -330,8 +313,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   );
   return {
     props: {
-      keynoteSpeakers: keynoteData,
-      challenges: challengeData,
       answeredQuestion: answeredQuestion,
       fetchedMembers: memberData,
       sponsorCard: sponsorData,
