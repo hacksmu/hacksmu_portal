@@ -63,11 +63,11 @@ export default function Home(props: {
             objectFit="cover"
             className="hidden lg:block"
           />
-          <Link href="/auth" passHref>
-            <button className="rounded-xl z-10 bg-teal hover:bg-dark-teal mx-auto text-4xl font-sans font-bold p-6 text-pink mt-8">
-              Apply Here!
-            </button>
-          </Link>
+          {/* <Link href="/auth" passHref> */}
+            <div className="rounded-xl z-10 bg-pink mx-auto text-4xl font-sans font-bold p-6 text-teal mt-8">
+              Registrations Closed
+            </div>
+          {/* </Link> */}
           <Link href="#about" passHref>
             <button className="rounded-xl border-4 border-brown bottom-[28vh] left-0 right-0 w-[12rem] absolute z-10 bg-tan hover:bg-dark-tan mx-auto text-4xl font-sans font-bold py-4 text-pink">
               More Info
@@ -166,7 +166,7 @@ export default function Home(props: {
                 </p>{' '}
                 <br /> <br />
                 <div className="xl:w-[30%] mx-auto">
-                  <Link passHref href="/auth">
+                  <Link passHref href="/dashboard">
                     <div className="bg-teal text-2xl text-center text-tan font-bold py-3 px-2 rounded cursor-pointer">
                       Dashboard
                     </div>
