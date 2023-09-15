@@ -102,11 +102,11 @@ export default function Dashboard(props: {
             Be sure to join our Discord server!{' '}
             <a
               className="text-medium-blue"
-              href="https://discord.gg/VKgtMMXekJ"
+              href="https://hacksmu.org/discord"
               target="_blank"
               rel="noreferrer"
             >
-              https://discord.gg/VKgtMMXekJ
+              https://hacksmu.org/discord
             </a>
           </div>
           {/* Spotlight & Announcements */}
