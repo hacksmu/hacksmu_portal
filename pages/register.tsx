@@ -161,11 +161,11 @@ export default function Register() {
     return errors;
   };
 
-  return (
-    <div className="text-1xl my-4 font-bold font-small text-center">  
-      Thank you for your interest in HackSMU V! Registrations for HackSMU V are now closed. If you are an SMU student, you may show up at the door Saturday morning and be placed on a Waitlist.
-    </div>
-  )
+//  return (
+//    <div className="text-1xl my-4 font-bold font-small text-center">  
+//      Thank you for your interest in HackSMU V! Registrations for HackSMU V are now closed. If you are an SMU student, you may show up at the door Saturday morning and be placed on a Waitlist.
+//    </div>
+//  )
 
   return (
     <div className="flex flex-col flex-grow bg-white">
