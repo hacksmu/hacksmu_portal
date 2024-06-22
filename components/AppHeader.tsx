@@ -86,14 +86,14 @@ export default function AppHeader() {
             zIndex: '0',
           }}
           href={
-            'https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2024-season&utm_content=gray'
+            'https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2025-season&utm_content=gray'
           }
           target="_blank"
           rel="noreferrer"
         >
           <img
-            src="https://s3.amazonaws.com/logged-assets/trust-badge/2024/mlh-trust-badge-2024-gray.svg"
-            alt="Major League Hacking 2024 Hackathon Season"
+            src="https://s3.amazonaws.com/logged-assets/trust-badge/2025/mlh-trust-badge-2025-gray.svg"
+            alt="Major League Hacking 2025 Hackathon Season"
             style={{ width: '100%' }}
           />
         </a>
