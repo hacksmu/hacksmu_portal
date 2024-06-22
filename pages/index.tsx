@@ -41,14 +41,14 @@ export default function Home(props: {
   return (
     <>
       <Head>
-        <title>HackSMU V</title> {/* !change */}
+        <title>HackSMU VI</title> {/* !change */}
         <meta name="description" content="HackSMU Portal" /> {/* !change */}
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <section id="" className="bg-contain bg-hero-pattern">
         <div className="flex min-h-[95vh] flex-col bg-purple w-[calc(100vw + 2px)] py-16 px-0 relative">
           <h1 className="lg:text-9xl text-6xl text-center text-tan font-bold font-rampart-one">
-            HackSMU V
+            HackSMU VI
           </h1>
           <NextImage
             src="/assets2023/buildings.svg"
