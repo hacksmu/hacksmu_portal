@@ -49,7 +49,7 @@ export default function Home(props: {
         <div className="flex min-h-[95vh] flex-col bg-purple w-[calc(100vw + 2px)] py-16 px-0 relative">
         <div className="text-center">
         <NextImage
-            src="public/assets2023/Title.png"  // Replace with the actual path to your image
+            src="/assets2023/Title.png"  // Replace with the actual path to your image
             alt="HackSMU VI"
             width={500}  // Specify the desired width
             height={150} // Specify the desired height
