@@ -51,8 +51,8 @@ export default function Home(props: {
         <NextImage
             src="/assets2023/Title.png"  // Replace with the actual path to your image
             alt="HackSMU VI"
-            width={500}  // Specify the desired width
-            height={150} // Specify the desired height
+            width={1000}  // Specify the desired width
+            height={300} // Specify the desired height
             objectFit="contain"
           />
           </div>
