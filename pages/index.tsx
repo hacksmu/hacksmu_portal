@@ -47,9 +47,15 @@ export default function Home(props: {
       </Head>
       <section id="" className="bg-contain bg-hero-pattern">
         <div className="flex min-h-[95vh] flex-col bg-purple w-[calc(100vw + 2px)] py-16 px-0 relative">
-          <h1 className="lg:text-9xl text-6xl text-center text-tan font-bold font-rampart-one">
-            HackSMU VI
-          </h1>
+        <div className="text-center">
+        <NextImage
+            src="/path/to/your/image.jpg"  // Replace with the actual path to your image
+            alt="HackSMU VI"
+            width={500}  // Specify the desired width
+            height={150} // Specify the desired height
+            objectFit="contain"
+          />
+          </div>
           <NextImage
             src="/assets2023/buildings.svg"
             layout="fill"
