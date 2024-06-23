@@ -47,14 +47,13 @@ export default function Home(props: {
       </Head>
       <section id="" className="bg-contain bg-hero-pattern">
         <div className="flex min-h-[95vh] flex-col bg-purple w-[calc(100vw + 2px)] py-16 px-0 relative">
-        <div className="text-center">
-        <NextImage
-            src="/assets2023/Title.png"  // Replace with the actual path to your image
-            alt="HackSMU VI"
-            width={1000}  // Specify the desired width
-            height={300} // Specify the desired height
-            objectFit="contain"
-          />
+          <div className="text-center">
+            <h1 className="lg:text-9xl text-6xl text-center text-tan font-bold font-rampart-one">
+              HackSMU VI
+            </h1>
+            <p className="lg:text-6xl text-3xl text-center text-tan font-bold font-rampart-one mt-4 lg:mt-8">
+              October 5-6, 2024
+            </p>
           </div>
           <NextImage
             src="/assets2023/buildings.svg"
@@ -62,18 +61,19 @@ export default function Home(props: {
             objectFit="cover"
             className="hidden lg:block"
           />
-          <NextImage src="/assets2023/blimp.svg" layout="fill" objectFit="cover" />
+
+          {/* <NextImage src="/assets2023/blimp.svg" layout="fill" objectFit="cover" />
           <NextImage
             src="/assets2023/sidebuilding.svg"
             layout="fill"
             objectFit="cover"
             className="hidden lg:block"
-          />
-          {/* <Link href="/auth" passHref> */}
-            <div className="rounded-xl z-10 bg-pink mx-auto text-4xl font-sans font-bold p-6 text-teal mt-8">
-              Registrations Closed
-            </div>
-          {/* </Link> */}
+          /> */}
+          <Link href="/auth" passHref>
+            <button className="rounded-xl z-10 bg-teal hover:bg-dark-teal mx-auto text-4xl font-sans font-bold p-6 text-pink mt-8">
+              Apply Here!
+            </button>
+          </Link>
           <Link href="#about" passHref>
             <button className="rounded-xl border-4 border-brown bottom-[28vh] left-0 right-0 w-[12rem] absolute z-10 bg-tan hover:bg-dark-tan mx-auto text-4xl font-sans font-bold py-4 text-pink">
               More Info
@@ -163,7 +163,7 @@ export default function Home(props: {
                 <span className="border-black border-solid w-[75%] border-t-[4px] self-left inline-block rounded top-[-1.5rem] relative" />
               </h1>
               <p className="text-black text-3xl ms-4">
-                HackSMU will take place fully in person on September 16-17, 2023. The address is{' '}
+                HackSMU will take place fully in person on October 5-6, 2024. The address is{' '}
                 <span className="font-bold">3140 Dyer St, Dallas, TX 75205.</span> <br />
                 <br />
                 <p>
@@ -221,9 +221,9 @@ export default function Home(props: {
           </h4>
           {/* Sponsor Card */}
           <section className="flex flex-wrap justify-center p-4">
-            {props.sponsorCard.map(({ link, reference }, idx) => (
-              <SponsorCard key={idx} link={link} reference={reference} />
-            ))}
+            {/* {props.sponsorCard.map(({ link, reference }, idx) => (
+              <SponsorCard key={idx} link={link} reference={reference} /> 
+            ))} */}
           </section>
           <section className="mx-auto xl:max-w-[80%] mb-16">
             <div className="rounded-[3rem] bg-medium-blue w-[90%] xl:w-[100%] relative z-10 mx-auto left-[-.5rem]">
@@ -272,7 +272,7 @@ export default function Home(props: {
           {/* Text */}
           <div className="absolute bottom-0 right-0">
             {' '}
-            {/* !change */}© 2023 SMU Computer Science Club
+            {/* !change */}© 2024 SMU Computer Science Club
           </div>
         </div>
         {/* Lower Content */}
