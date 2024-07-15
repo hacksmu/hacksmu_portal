@@ -75,7 +75,7 @@ export default function Home(props: {
                 <div className="flex flex-col justify-center items-center relative">
                   <div className="flex mt-3">
                     <NextImage src="/assets/hacksmu.png" width="50" height="80" objectFit="cover" />
-                    <h1 className="text-white text-center text-4xl mt-4 ms-4 font-bold">
+                    <h1 className="text-medium-blue text-center text-4xl mt-4 ms-4 font-bold">
                       HackSMU V
                     </h1>
                   </div>
@@ -90,8 +90,8 @@ export default function Home(props: {
                 <p className="text-white text-2xl sm:text-3xl ml-16 sm:ml-28 mt-2">
                   {'>>> CREATE AWESOME.'}
                 </p>
-                <h2 className="text-light-red text-5xl 2xl:text-7xl font-bold text-center mt-4 font-jetbrains">
-                  {'September 16-17, 2023'}
+                <h2 className="text-vanilla text-5xl 2xl:text-7xl font-bold text-center mt-4 font-jetbrains">
+                  {'Sept 16-17'}
                 </h2>
                 <div className="w-full text-center">
                   <NextImage
@@ -103,7 +103,7 @@ export default function Home(props: {
                 </div>
                 <div className="grid grid-cols-1 relative xl:w-[50%] xl:mx-auto mt-4 px-4 xl:space-x-8 space-y-4 xl:space-y-0 w-full xl:top-[75%] pb-8">
                   <Link passHref href="/auth">
-                    <div className="bg-light-red text-2xl text-center text-white font-bold md:max-w-full py-3 px-2 rounded cursor-pointer">
+                    <div className="bg-emerald text-2xl text-center text-light-red font-bold md:max-w-full py-3 px-2 rounded-3xl cursor-pointer">
                       Apply here!
                     </div>
                   </Link>

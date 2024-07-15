@@ -5,6 +5,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        'tiffany-blue': '#60D2CE',
+        'antique-white': '#F9EDDC',
+        vanilla: '#FFF5B5',
+        coyote: '#89704B',
+        'pigment-green': '#269E4C',
+        emerald: '#6ec180',
+        'car-poly-green': '#12580E',
         'dark-blue': '#00034B',
         'medium-blue': '#8888ff',
         'cool-white': '#ebebff',
@@ -14,6 +21,13 @@ module.exports = {
         red: '#cc0035',
       },
       gradientColorStops: {
+        'tiffany-blue': '#60D2CE',
+        'antique-white': '#F9EDDC',
+        vanilla: '#FFF5B5',
+        coyote: '#89704B',
+        'pigment-green': '#269E4C',
+        emerald: '#6ec180',
+        'car-poly-green': '#12580E',
         'dark-blue': '#00034B',
         'medium-blue': '#8888ff',
         'cool-white': '#ebebff',
