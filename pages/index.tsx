@@ -119,7 +119,7 @@ export default function Home(props: {
             </div>
             <div className="md:w-1/2 bg-dark-blue-lighter p-8 rounded-xl shadow-neon flex justify-center items-center">
               <NextImage
-                src="/backgrounds2024/DallasTX.gif"
+                src="/backgrounds2024/Dallas.gif"
                 alt="Dallas, TX location"
                 width={450}
                 height={450}
