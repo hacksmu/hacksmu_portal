@@ -5,7 +5,9 @@ import AppHeader from '../components/AppHeader';
 import { initFirebase } from '../lib/firebase-client';
 import { AuthProvider } from '../lib/user/AuthContext';
 import '../styles/globals.css';
+import '../styles/tokyo-theme.css';
 import '../styles/tailwind.css';
+import '../styles/animations.css';
 import { FCMProvider } from '../lib/service-worker/FCMContext';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -40,7 +42,7 @@ function PortalApp({ Component, pageProps }: AppProps) {
                 name="viewport"
                 content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
               />
-              <title>HackSMU V</title> {/* !change */}
+              <title>HackSMU VI</title> {/* !change */}
               <meta name="description" content="Your all-in-one guide to this hackathon." />
               {process.env.ENABLE_PWA ||
                 (process.env.NODE_ENV !== 'development' && (
@@ -52,7 +54,7 @@ function PortalApp({ Component, pageProps }: AppProps) {
               <link rel="preconnect" href="https://fonts.googleapis.com" />
               <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
               <link
-                href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Rampart+One&family=Roboto:wght@400;600;700;900&display=swap"
+                href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Rampart+One&family=Roboto:wght@400;600;700;900&family=Orbitron:wght@400;700&display=swap"
                 rel="stylesheet"
               />
               <meta name="theme-color" content="#5D5FEF" />

@@ -1,0 +1,244 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@300&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --neon-purple: #b829ff;
+    --neon-blue: #29b7ff;
+    --neon-yellow: #da8803;
+}
+
+body {
+    background-color: #000033;
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: rgba(0, 0, 51, 0.8);
+    /* Adjust the last value (0.8) to control transparency */
+    background-image: linear-gradient(rgba(0, 0, 51, 0.8), rgba(0, 0, 51, 0.8)), url('/backgrounds2024/TokyoCity.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.neon-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 5rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple);
+    margin-bottom: 1rem;
+}
+
+.neon-date {
+    font-family: 'Roboto', sans-serif;
+    font-size: 2rem;
+    color: #ffffff;
+    margin-bottom: 2rem;
+}
+
+.neon-button {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff;
+    background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
+    border: none;
+    border-radius: 50px;
+    padding: 15px 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.neon-button:hover {
+    box-shadow: 0 0 15px var(--neon-purple);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .neon-title {
+        font-size: 3rem;
+    }
+
+    .neon-date {
+        font-size: 1.5rem;
+    }
+
+    .neon-button {
+        font-size: 1.2rem;
+        padding: 12px 30px;
+    }
+}
+
+.about-section {
+    background-color: rgba(0, 54, 136, 0.753);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 0 20px rgba(41, 183, 255, 0.5);
+    color: #ffffff;
+    margin: 2rem 0;
+    font-size: 1.2rem;
+    /* Increased base font size */
+}
+
+.about-title,
+.about-subtitle {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 3rem;
+    color: #ffffff;
+    text-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple);
+}
+
+.about-title {
+    font-size: 2.5rem;
+    /* Increased from 2rem */
+    text-align: center;
+    /* Center the main title */
+}
+
+.about-subtitle {
+    font-size: 2rem;
+    /* Increased from 1.5rem */
+}
+
+.stats-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 2rem 0;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3rem;
+    color: #ffdd01;
+}
+
+.stat-label {
+    font-family: 'Roboto', sans-serif;
+    color: #ffffff;
+    font-size: 1.5rem;
+    /* Increased label size */
+}
+
+.about-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.about-list li {
+    margin-bottom: 1.2rem;
+    /* Increased from 1rem for better spacing */
+    position: relative;
+    padding-left: 1.8rem;
+    /* Increased to accommodate larger text */
+    font-size: 1.3rem;
+    /* Increased list item text size */
+}
+
+.about-list li::before {
+    content: '>';
+    position: absolute;
+    left: 0;
+    color: #b829ff;
+    font-size: 1.3rem;
+    /* Match the list item size */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .about-title {
+        font-size: 2rem;
+    }
+
+    .about-subtitle {
+        font-size: 1.75rem;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+    }
+
+    .about-list li {
+        font-size: 1.1rem;
+    }
+}
+
+.bg-dark-blue {
+    background-color: #000033;
+}
+
+.bg-dark-blue-lighter {
+    background-color: #000044;
+}
+
+.bg-dark-blue-lightest {
+    background-color: #000055;
+}
+
+.text-neon-blue {
+    color: #29b7ff;
+}
+
+.text-neon-pink {
+    color: #ff00de;
+}
+
+.border-neon-blue {
+    border-color: #29b7ff;
+}
+
+.border-neon-pink {
+    border-color: #ff00de;
+}
+
+.neon-text {
+    text-shadow: 0 0 5px #ff00de, 0 0 10px #ff00de, 0 0 15px #ff00de, 0 0 20px #ff00de;
+}
+
+.shadow-neon {
+    box-shadow: 0 0 5px rgba(41, 183, 255, 0.5), 0 0 10px rgba(41, 183, 255, 0.5);
+}
+
+.hover\:text-neon-pink:hover {
+    color: #ff00de;
+}
+
+.hover\:bg-dark-blue-lightest:hover {
+    background-color: #000055;
+}
+
+
+.faq-title {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 3rem;
+    color: #ffffff;
+    text-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple);
+}
+
+
+.font-orbitron {
+    font-family: 'Orbitron', sans-serif;
+}
+
+.resources-title {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 2.5rem;
+    color: #ffdd01;
+    text-shadow: 0 0 10px var(--neon-yellow), 0 0 20px var(--neon-yellow);
+}

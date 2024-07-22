@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Glowing text effect */
+@keyframes glow {
+    0% { text-shadow: 0 0 5px #ff00de, 0 0 10px #ff00de; }
+    50% { text-shadow: 0 0 20px #ff00de, 0 0 30px #ff00de; }
+    100% { text-shadow: 0 0 5px #ff00de, 0 0 10px #ff00de; }
+}
+
+.glow-text {
+    animation: glow 2s ease-in-out infinite;
+}
+
+/* Animated gradient button */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.gradient-button {
+    background: linear-gradient(270deg, #ff00de, #29b7ff);
+    background-size: 200% 200%;
+    animation: gradientBG 3s ease infinite;
+}
+
+/* Glitch effect */
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-5px, 5px); }
+    40% { transform: translate(-5px, -5px); }
+    60% { transform: translate(5px, 5px); }
+    80% { transform: translate(5px, -5px); }
+    100% { transform: translate(0); }
+}
+
+.glitch-text {
+    animation: glitch 1s linear infinite;
+    display: inline-block;
+}
+
+/* Hover animation for cards */
+.hover-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px rgba(41, 183, 255, 0.8);
+}

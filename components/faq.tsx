@@ -26,58 +26,54 @@ export default function FaqPage({ fetchedFaqs }: { fetchedFaqs: AnsweredQuestion
     setLoading(false);
   }, [fetchedFaqs]);
 
-  /**
-   *
-   * Expand all FAQ disclosures
-   *
-   */
   const expandAll = () => {
     setDisclosureStatus(new Array(disclosuresStatus.length).fill(true));
   };
 
   if (loading) {
     return (
-      <div>
-        <h1>Loading...</h1>
+      <div className="flex justify-center items-center h-screen">
+        <h1 className="text-2xl text-neon-blue animate-pulse">Loading...</h1>
       </div>
     );
   }
 
   return (
-    <div className="z-0 relative bg-gradient-to-tl from-purple to-teal min-h-[105vh] xl:py-[6rem]">
-      <div className="hidden lg:block z-[2]">
-        <NextImage src="/assets2023/faq_building.svg" layout="fill" objectFit="cover" />
-      </div>
-      <div className="flex flex-grow">
-        <div className="top-6 p-4 px-8">
-          {/* FAQ for lg-md */}
-          {/* Uses different section for mobile because using 2 columns is buggy when expanding FAQs */}
-          <div className="xl:block hidden absolute left-[40%] mr-[5rem]">
-            <FaqDisplay faqs={faqs} />
-          </div>
-          {/* FAQ for mobile */}
-          <div className="bg-dark-teal xl:hidden p-4 mt-10 rounded-lg border-4 border-dark-teal z-20">
-            <h2 className="text-4xl font-bold text-tan">FAQ</h2>
-            <div className="w-full my-3 space-y-4 > * + *">
-              {faqs.map(({ question, answer }, idx) => (
-                <FaqDisclosure
-                  key={idx}
-                  question={question}
-                  answer={answer}
-                  isOpen={disclosuresStatus[idx]}
-                  toggleDisclosure={() => {
-                    const currDisclosure = [...disclosuresStatus];
-                    currDisclosure[idx] = !currDisclosure[idx];
-                    setDisclosureStatus(currDisclosure);
-                  }}
-                />
-              ))}
-            </div>
-          </div>
+    <div className="bg-dark-blue min-h-screen py-12 px-4 sm:px-6 lg:px-8 relative">
+      <div 
+        className="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-30 z-0"
+        style={{
+          backgroundImage: "url('/backgrounds2024/TokyoCity2.png')",
+          backgroundAttachment: "fixed"
+        }}
+      ></div>
+      <div className="max-w-3xl mx-auto relative z-10">
+        <h2 className="font-orbitron text-5xl font-bold text-center text-white mb-8 neon-text">
+          Frequently Asked Questions
+        </h2>
+        <div className="space-y-6">
+          {faqs.map(({ question, answer }, idx) => (
+            <FaqDisclosure
+              key={idx}
+              question={question}
+              answer={answer}
+              isOpen={disclosuresStatus[idx]}
+              toggleDisclosure={() => {
+                const currDisclosure = [...disclosuresStatus];
+                currDisclosure[idx] = !currDisclosure[idx];
+                setDisclosureStatus(currDisclosure);
+              }}
+            />
+          ))}
         </div>
+        <button
+          onClick={expandAll}
+          className="mt-8 w-full bg-gradient-to-r from-neon-pink to-neon-blue text-white font-bold py-2 px-4 rounded hover:from-neon-blue hover:to-neon-pink transition duration-300 ease-in-out"
+        >
+          Expand All
+        </button>
       </div>
     </div>
-
   );
 }
 

@@ -7,6 +7,7 @@ module.exports = {
       colors: {
         'dark-blue': '#123e6b',
         'medium-blue': '#8888ff',
+        'mute-blue': '#4668a7',
         'cool-white': '#ebebff',
         'dark-red': '#4a0000',
         'light-red': '#ff8787',
@@ -23,6 +24,8 @@ module.exports = {
         "pink": "#FF8787",
         "purple": "#8888FF",
         "gray": "#647684",
+        'neon-pink': '#ff00de',
+        'neon-blue': '#29b7ff',
       },
       gradientColorStops: {
         'dark-blue': '#00034B',
@@ -33,6 +36,8 @@ module.exports = {
         'warm-white': '#ffebeb',
         red: '#cc0035',
         'light-yellow': '#cac8c4',
+        'neon-pink': '#ff00de',
+        'neon-blue': '#29b7ff',
       },
       textColor: {
         'light-red': '#ff8787',
@@ -41,6 +46,7 @@ module.exports = {
         sans: ['Roboto'],
         jetbrains: ['JetBrains Mono'],
         "rampart-one": ['Rampart One'],
+        orbitron: ['Orbitron', 'sans-serif'],
       },
       width: {
         '1/8': '12.5%',
@@ -75,6 +81,15 @@ module.exports = {
       }),
       backgroundImage: {
         'hero-pattern': `url(${'/assets/bg2.jpeg'})`, // !change
+      },
+      keyframes: {
+        shimmer: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
+      },
+      animation: {
+        shimmer: 'shimmer 2s infinite',
       },
     },
   },

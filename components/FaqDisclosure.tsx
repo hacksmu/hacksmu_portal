@@ -1,16 +1,6 @@
 import { Disclosure } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/solid';
 
-/**
- *
- * Represents props used by FaqDisclosure component
- *
- * @param question a frequently asked question
- * @param answer answer to corresponding question
- * @param isOpen boolean variable used to determine whether the disclosure should be open or not
- * @param toggleDisclosure function to call when user wants to open/close disclosure
- *
- */
 interface FaqDisclosureProps {
   question: string;
   answer: string | string[] | { type: string; text: string; url: string }[];
@@ -18,11 +8,6 @@ interface FaqDisclosureProps {
   toggleDisclosure: () => void;
 }
 
-/**
- *
- * Component representing a FAQ question in /about/faq
- *
- */
 export default function FaqDisclosure({
   question,
   answer,
@@ -31,9 +16,9 @@ export default function FaqDisclosure({
 }: FaqDisclosureProps) {
   return (
     <Disclosure>
-      <div className="z-10">
+      <div className="z-10 mb-4">
         <Disclosure.Button
-          className="sm:p-2 z-20 text-left rounded-md w-full bg-teal p-2 text-tan"
+          className="sm:p-3 z-20 text-left rounded-md w-full bg-dark-blue-lighter p-3 text-neon-blue border border-neon-blue transition-all duration-300 hover:bg-dark-blue-lightest"
           as="div"
         >
           <button
@@ -42,25 +27,27 @@ export default function FaqDisclosure({
               toggleDisclosure();
             }}
           >
-            <span className="text-tan text-lg sm:text-2xl font-bold">{question}</span>
-            <ChevronUpIcon className={`${isOpen ? 'transform rotate-180' : ''} w-5 h-5`} />
+            <span className="text-neon-blue text-lg sm:text-xl font-bold">{question}</span>
+            <ChevronUpIcon 
+              className={`${isOpen ? 'transform rotate-180' : ''} w-5 h-5 text-neon-pink transition-transform duration-300`} 
+            />
           </button>
         </Disclosure.Button>
         {isOpen && (
-          <Disclosure.Panel className="rounded-md my-2 py-2 bg-teal p-2 text-tan" static>
+          <Disclosure.Panel className="rounded-md mt-2 py-3 bg-dark-blue-lightest p-3 text-white border-t border-neon-pink" static>
             {typeof answer === 'string'
               ? answer
               : typeof answer === 'object'
-                ? answer.map((section) => {
+                ? answer.map((section, index) => {
                   if (section?.type === 'link') {
                     return (
-                      <a className="text-tan" href={section.url}>
+                      <a key={index} className="text-neon-blue hover:text-neon-pink transition-colors duration-300" href={section.url}>
                         {section.text}
                       </a>
                     );
                   } else if (section?.type === 'plaintext') {
-                    return section.text;
-                  } else return 'test';
+                    return <span key={index}>{section.text}</span>;
+                  } else return null;
                 })
                 : null}
           </Disclosure.Panel>
@@ -69,3 +56,5 @@ export default function FaqDisclosure({
     </Disclosure>
   );
 }
+
+
