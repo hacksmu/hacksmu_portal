@@ -60,7 +60,7 @@ export default function Home(props: {
 
       {/* About HackSMU */}
       <section id="about" className="about-section">
-        <h2 className="about-title">We are SMU's Annual 24-hour Hackathon.</h2>
+        <h2 className="about-title">We are SMU&apos;s Annual 24-hour Hackathon.</h2>
         <div className="stats-container">
           <div className="stat-item">
             <div className="stat-number">150+</div>
@@ -170,7 +170,7 @@ export default function Home(props: {
           <div className="bg-dark-blue-lighter p-8 rounded-xl shadow-neon mb-8">
             <p className="text-xl mb-6">
               At HackSMU, our mission is to foster innovation, creativity, and collaboration among students.
-              By sponsoring us, you'll not only support the next generation of tech leaders but also gain visibility within a vibrant and dynamic community.
+              By sponsoring us, you&apos;ll not only support the next generation of tech leaders but also gain visibility within a vibrant and dynamic community.
               Join us in making a lasting impact and help us turn ideas into reality!
               Support Innovation. Empower Creativity. Inspire the Future.
             </p>
