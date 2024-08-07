@@ -13,13 +13,15 @@ import FaqPage from '../components/faq';
 import Link from 'next/link';
 import GradientDivider from '../components/GradientDivider';
 
+// Add a mock list of hackathons for the new section
+const moreHackathons = [
+  {
+    name: "CodeRED Astra",
+    date: "October 12-13, 2024",
+    link: "https://uhcode.red/",
+  }
+];
 
-/**
- * The home page.
- *
- * Landing: /
- *
- */
 export default function Home(props: {
   answeredQuestion: AnsweredQuestion[];
   fetchedMembers: TeamMember[];
@@ -28,7 +30,6 @@ export default function Home(props: {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Wait for all components to render before showing page
     setLoading(false);
   }, []);
 
@@ -155,6 +156,7 @@ export default function Home(props: {
           </div>
         </div>
       </section> */}
+
       {/* Sponsors */}
       <section id="sponsors" className="relative bg-dark-blue text-white py-16 overflow-hidden">
         <div
@@ -175,7 +177,6 @@ export default function Home(props: {
               Support Innovation. Empower Creativity. Inspire the Future.
             </p>
           </div>
-          {/* Add your SponsorCard component here if you have one */}
           <div className="text-center">
             <a
               href="mailto:hacksmu.team@gmail.com"
@@ -186,6 +187,29 @@ export default function Home(props: {
           </div>
         </div>
       </section>
+      <GradientDivider />
+      
+      {/* More Hackathons Section */}
+      <section id="more-hackathons" className="animated-gradient text-white py-15">
+        <div className="container mx-auto px-4 max-w-screen-md">
+          <h2 className="text-center mx-auto resources-title py-5">
+            More Hackathons...
+          </h2>
+          <p className="text-center mx-auto text-2xl mb-6">
+            Check out these other amazing hackathons happening soon!
+          </p>
+          <ul className="list-disc list-inside mx-auto text-center text-2xl">
+            {moreHackathons.map((hackathon, index) => (
+              <li key={index} className="my-4">
+                <a href={hackathon.link} className="text-white hover:underline" target="_blank" rel="noopener noreferrer">
+                  {hackathon.name} - {hackathon.date}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+      <GradientDivider />
 
       {/* Footer */}
       <section className="bg-gray-100 px-6 py-8 md:text-base text-xs">
@@ -243,23 +267,34 @@ export default function Home(props: {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const protocol = context.req.headers.referer?.split('://')[0] || 'http';
-  const { data: answeredQuestion } = await RequestHelper.get<AnsweredQuestion[]>(
-    `${protocol}://${context.req.headers.host}/api/questions/faq`,
-    {},
-  );
-  const { data: memberData } = await RequestHelper.get<TeamMember[]>(
-    `${protocol}://${context.req.headers.host}/api/members`,
-    {},
-  );
-  const { data: sponsorData } = await RequestHelper.get<Sponsor[]>(
-    `${protocol}://${context.req.headers.host}/api/sponsor`,
-    {},
-  );
-  return {
-    props: {
-      answeredQuestion: answeredQuestion,
-      fetchedMembers: memberData,
-      sponsorCard: sponsorData,
-    },
-  };
+  try {
+    const { data: answeredQuestion } = await RequestHelper.get<AnsweredQuestion[]>(
+      `${protocol}://${context.req.headers.host}/api/questions/faq`,
+      {},
+    );
+    const { data: memberData } = await RequestHelper.get<TeamMember[]>(
+      `${protocol}://${context.req.headers.host}/api/members`,
+      {},
+    );
+    const { data: sponsorData } = await RequestHelper.get<Sponsor[]>(
+      `${protocol}://${context.req.headers.host}/api/sponsor`,
+      {},
+    );
+    return {
+      props: {
+        answeredQuestion: answeredQuestion,
+        fetchedMembers: memberData,
+        sponsorCard: sponsorData,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return {
+      props: {
+        answeredQuestion: [],
+        fetchedMembers: [],
+        sponsorCard: [],
+      },
+    };
+  }
 };

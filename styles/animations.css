@@ -50,3 +50,21 @@
     transform: translateY(-10px);
     box-shadow: 0 0 20px rgba(41, 183, 255, 0.8);
 }
+
+@keyframes gradientBackground {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  .animated-gradient {
+    background: linear-gradient(270deg, #f819e0, #d050e8, #af6dee, #868cf5, #6b9cf9, #37b3fe);
+    background-size: 1200% 1200%;
+    animation: gradientBackground 15s ease infinite;
+  }
