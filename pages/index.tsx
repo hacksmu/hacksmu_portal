@@ -167,17 +167,54 @@ export default function Home(props: {
         ></div>
         <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-center mx-auto resources-title py-3">
-            Sponsors
+            Sponsors and Supporters
           </h2>
           <div className="bg-dark-blue-lighter p-8 rounded-xl shadow-neon mb-8">
             <p className="text-xl mb-6">
               At HackSMU, our mission is to foster innovation, creativity, and collaboration among students.
-              By sponsoring us, you&apos;ll not only support the next generation of tech leaders but also gain visibility within a vibrant and dynamic community.
+              By sponsoring us, you'll not only support the next generation of tech leaders but also gain visibility within a vibrant and dynamic community.
               Join us in making a lasting impact and help us turn ideas into reality!
               Support Innovation. Empower Creativity. Inspire the Future.
             </p>
           </div>
-          <div className="text-center">
+          <div className="sponsor-logos flex justify-center items-center gap-8">
+            <NextImage
+              src="/sponsors/PayPal.jpg"
+              alt="PayPal"
+              width={150}
+              height={100}
+              objectFit="contain"
+            />
+            <NextImage
+              src="/sponsors/IBM.png"
+              alt="IBM"
+              width={150}
+              height={100}
+              objectFit="contain"
+            />
+            <NextImage
+              src="/sponsors/ParkHub.jpg"
+              alt="ParkHub"
+              width={150}
+              height={100}
+              objectFit="contain"
+            />
+            <NextImage
+              src="/sponsors/SMUStudentSenate.jpg"
+              alt="SMU Student Senate"
+              width={150}
+              height={100}
+              objectFit="contain"
+            />
+            <NextImage
+              src="/sponsors/MLH.png"
+              alt="Major League Hacking"
+              width={150}
+              height={100}
+              objectFit="contain"
+            />
+          </div>
+          <div className="text-center mt-8">
             <a
               href="mailto:hacksmu.team@gmail.com"
               className="inline-block bg-gradient-to-r from-neon-pink to-neon-blue text-white font-bold py-3 px-8 rounded-full text-xl hover:shadow-neon transition duration-300"
@@ -187,8 +224,9 @@ export default function Home(props: {
           </div>
         </div>
       </section>
+
       <GradientDivider />
-      
+
       {/* More Hackathons Section */}
       <section id="more-hackathons" className="animated-gradient text-white py-15">
         <div className="container mx-auto px-4 max-w-screen-md">

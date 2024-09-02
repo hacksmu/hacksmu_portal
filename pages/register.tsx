@@ -157,7 +157,7 @@ export default function Register() {
           if (!values[inputObj.name]) errors[inputObj.name] = 'Required';
         }
       }
-
+      console.log(errors);
     return errors;
   };
 

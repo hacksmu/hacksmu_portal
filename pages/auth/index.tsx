@@ -56,10 +56,10 @@ export default function AuthPage() {
           .auth()
           .currentUser.sendEmailVerification()
           .then(() => {
-            router.push('/auth');
             alert(
               'Account created! Check your email/spam folder to verify your account and log in.',
             );
+            router.push('/auth');
           });
       })
       .catch((error) => {

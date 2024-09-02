@@ -110,7 +110,7 @@ async function handlePostApplications(req: NextApiRequest, res: NextApiResponse)
   }
 
   await db.collection(APPLICATIONS_COLLECTION).doc(body.user.id).set(body);
-  await updateAllUsersDoc(body.user.id, body);
+  //await updateAllUsersDoc(body.user.id, body);
   res.status(200).json({
     msg: 'Operation completed',
   });

@@ -462,24 +462,24 @@ export const hackPortalConfig: HackPortalConfig = {
             initialValue: [],
             options: [
               {
-                title: 'Sponsor 1',
-                value: 'Sponsor 1',
+                title: 'PayPal',
+                value: 'PayPal',
               },
               {
-                title: 'Sponsor 2',
-                value: 'Sponsor 2',
+                title: 'IBM',
+                value: 'IBM',
               },
               {
-                title: 'Sponsor 3',
-                value: 'Sponsor 3',
+                title: 'ParkHub',
+                value: 'ParkHub',
               },
               {
-                title: 'Sponsor 4',
-                value: 'Sponsor 4',
+                title: 'Sponsor 4 (TBH)',
+                value: 'Sponsor 4 (TBH)',
               },
               {
-                title: 'Sponsor 5',
-                value: 'Sponsor 5',
+                title: 'Sponsor 5 (TBH)',
+                value: 'Sponsor 5 (TBH)',
               },
             ],
           },
