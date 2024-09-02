@@ -167,7 +167,7 @@ export default function Home(props: {
         ></div>
         <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-center mx-auto resources-title py-3">
-            Sponsors and Supporters
+            Sponsors
           </h2>
           <div className="bg-dark-blue-lighter p-8 rounded-xl shadow-neon mb-8">
             <p className="text-xl mb-6">
@@ -178,41 +178,51 @@ export default function Home(props: {
             </p>
           </div>
           <div className="sponsor-logos flex justify-center items-center gap-8">
-            <NextImage
-              src="/sponsors/PayPal.jpg"
-              alt="PayPal"
-              width={150}
-              height={100}
-              objectFit="contain"
-            />
-            <NextImage
-              src="/sponsors/IBM.png"
-              alt="IBM"
-              width={150}
-              height={100}
-              objectFit="contain"
-            />
-            <NextImage
-              src="/sponsors/ParkHub.jpg"
-              alt="ParkHub"
-              width={150}
-              height={100}
-              objectFit="contain"
-            />
-            <NextImage
-              src="/sponsors/SMUStudentSenate.jpg"
-              alt="SMU Student Senate"
-              width={150}
-              height={100}
-              objectFit="contain"
-            />
-            <NextImage
-              src="/sponsors/MLH.png"
-              alt="Major League Hacking"
-              width={150}
-              height={100}
-              objectFit="contain"
-            />
+            <a href="https://www.paypal.com" target="_blank" rel="noopener noreferrer">
+              <NextImage
+                src="/sponsors/PayPal.jpg"
+                alt="PayPal"
+                width={150}
+                height={100}
+                objectFit="contain"
+              />
+            </a>
+            <a href="https://www.ibm.com/us-en" target="_blank" rel="noopener noreferrer">
+              <NextImage
+                src="/sponsors/IBM.png"
+                alt="IBM"
+                width={150}
+                height={100}
+                objectFit="contain"
+              />
+            </a>
+            <a href="https://parkhub.com" target="_blank" rel="noopener noreferrer">
+              <NextImage
+                src="/sponsors/ParkHub.jpg"
+                alt="ParkHub"
+                width={150}
+                height={100}
+                objectFit="contain"
+              />
+            </a>
+            <a href="http://www.smustudentsenate.com" target="_blank" rel="noopener noreferrer">
+              <NextImage
+                src="/sponsors/SMUStudentSenate.jpg"
+                alt="SMU Student Senate"
+                width={150}
+                height={100}
+                objectFit="contain"
+              />
+            </a>
+            <a href="https://mlh.io" target="_blank" rel="noopener noreferrer">
+              <NextImage
+                src="/sponsors/MLH.png"
+                alt="Major League Hacking"
+                width={150}
+                height={100}
+                objectFit="contain"
+              />
+            </a>
           </div>
           <div className="text-center mt-8">
             <a
@@ -224,6 +234,7 @@ export default function Home(props: {
           </div>
         </div>
       </section>
+
 
       <GradientDivider />
 
