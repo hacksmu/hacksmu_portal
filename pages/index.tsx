@@ -17,7 +17,7 @@ import GradientDivider from '../components/GradientDivider';
 const moreHackathons = [
   {
     name: "CodeRED Astra",
-    date: "September 27-28th, 2025",
+    date: "October 25-26th, 2025",
     link: "https://uhcode.red/",
   }
 ];
@@ -44,14 +44,14 @@ export default function Home(props: {
   return (
     <>
       <Head>
-        <title>HackSMU VI</title>
+        <title>HackSMU VII</title>
         <meta name="description" content="HackSMU Portal" />
         <link rel="icon" href="/favicon2.ico" />
       </Head>
       <section className="bg-contain bg-hero-pattern">
         <div className="hero-content">
           <h1 className="glow-text neon-title">HackSMU VI</h1>
-          <p className="neon-date">September 27-28th, 2025</p>
+          <p className="neon-date">October 25-26th, 2025</p>
           {/* <Link href="/auth" passHref> */} 
             <a className="gradient-button neon-button">Registrations Closed!</a>
           {/* </Link> */}
@@ -103,7 +103,7 @@ export default function Home(props: {
           <div className="flex flex-col md:flex-row items-stretch justify-between gap-8">
             <div className="md:w-1/2 bg-dark-blue-lighter p-8 rounded-xl shadow-neon">
               <p className="text-2xl mb-6">
-                HackSMU will take place fully in person on September 27-28th, 2025. The address is{' '}
+                HackSMU will take place fully in person on October 25-26th, 2025. The address is{' '}
                 <span className="font-bold text-neon-pink">3140 Dyer St, Dallas, TX 75205.</span>
               </p>
               <p className="text-2xl mb-8">
