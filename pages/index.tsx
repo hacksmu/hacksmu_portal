@@ -17,7 +17,7 @@ import GradientDivider from '../components/GradientDivider';
 const moreHackathons = [
   {
     name: "CodeRED Astra",
-    date: "October 12-13, 2024",
+    date: "September 27- 28th",
     link: "https://uhcode.red/",
   }
 ];
