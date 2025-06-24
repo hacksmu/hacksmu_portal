@@ -50,7 +50,7 @@ export default function Home(props: {
       </Head>
       <section className="bg-contain bg-hero-pattern">
         <div className="hero-content">
-          <h1 className="glow-text neon-title">HackSMU VI</h1>
+          <h1 className="glow-text neon-title">HackSMU VII</h1>
           <p className="neon-date">October 25-26th, 2025</p>
           {/* <Link href="/auth" passHref> */} 
             <a className="gradient-button neon-button">Registrations Closed!</a>
