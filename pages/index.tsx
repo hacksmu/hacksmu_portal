@@ -49,7 +49,7 @@ export default function Home(props: {
         <link rel="icon" href="/favicon2.ico" />
       </Head>
       
-      <section className="bg-[#0A0A0A] text-white py-16">
+      <section></section>
         <div className="hero-content">
           <h1 className="glow-text neon-title">HackSMU VI</h1>
           <p className="neon-date">October 5-6, 2024</p>
