@@ -74,14 +74,10 @@ module.exports = {
         '5/8': '62.5%',
         16: '4rem',
       },
-      backgroundColor: (theme) => ({
-        lightBackground: '#F4F4F4',
-        aqua: '#D8F8FF',
-        darkAqua: '#B0F1FF',
-      }),
-      backgroundImage: {
-        'hero-pattern': `url(${'/assets/bg2.jpeg'})`, // !change
-      },
+
+
+
+      
       keyframes: {
         shimmer: {
           '0%': { transform: 'translateX(-100%)' },
