@@ -48,7 +48,8 @@ export default function Home(props: {
         <meta name="description" content="HackSMU Portal" />
         <link rel="icon" href="/favicon2.ico" />
       </Head>
-      <section className="bg-contain bg-hero-pattern">
+      
+      <section className="bg-[#0A0A0A] text-white py-16">
         <div className="hero-content">
           <h1 className="glow-text neon-title">HackSMU VI</h1>
           <p className="neon-date">October 5-6, 2024</p>
