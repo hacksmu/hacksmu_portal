@@ -49,8 +49,7 @@ export default function Home(props: {
         <link rel="icon" href="/favicon2.ico" />
       </Head>
       
-      <section></section>
-        <div className="hero-content">
+      <section>
           <h1 className="glow-text neon-title">HackSMU VI</h1>
           <p className="neon-date">October 5-6, 2024</p>
           {/* <Link href="/auth" passHref> */} 
