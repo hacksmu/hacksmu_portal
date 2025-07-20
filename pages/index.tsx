@@ -52,9 +52,9 @@ export default function Home(props: {
         <div className="hero-content">
           <h1 className="glow-text neon-title">HackSMU VII</h1>
           <p className="neon-date">October 25-26th, 2025</p>
-          {/* <Link href="/auth" passHref> */} 
+          { <Link href="/auth" passHref> } 
             <a className="gradient-button neon-button">Apply here!</a>
-          {/* </Link> */}
+          { </Link> }
         </div>
       </section>
       <GradientDivider />
