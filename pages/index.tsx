@@ -53,7 +53,7 @@ export default function Home(props: {
           <h1 className="glow-text neon-title">HackSMU VII</h1>
           <p className="neon-date">October 25-26th, 2025</p>
           {/* <Link href="/auth" passHref> */} 
-            <a className="gradient-button neon-button">Registrations Closed!</a>
+            <a className="gradient-button neon-button">Apply here!</a>
           {/* </Link> */}
         </div>
       </section>
