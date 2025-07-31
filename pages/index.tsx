@@ -57,7 +57,7 @@ export default function Home(props: {
           loop
           playsInline
         >
-          <source src="/videos/hacksmu-background.mp4" type="video/mp4" />
+          <source src="/videos/turnon.mp4" type="video/mp4" />
         </video>
       
         <div className="relative z-10 flex flex-col justify-center items-center h-full text-center text-white">
