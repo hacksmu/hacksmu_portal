@@ -44,7 +44,7 @@ export default function Home(props: {
   return (
     <>
       <Head>
-        <title>HackSMU VII</title>
+        <title>HackSMU VI</title>
         <meta name="description" content="HackSMU Portal" />
         <link rel="icon" href="/favicon2.ico" />
       </Head>
