@@ -49,7 +49,6 @@ export default function Home(props: {
         <meta name="description" content="HackSMU Portal" />
         <link rel="icon" href="/favicon2.ico" />
       </Head>
-      {/*<section className="bg-contain bg-hero-pattern"? */}
       <section className="relative h-screen overflow-hidden">
         <video
           className="absolute top-0 left-0 w-full h-full object-cover z-0"
@@ -58,21 +57,18 @@ export default function Home(props: {
           loop
           playsInline
         >
-          <source src="/videos/background.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
+          <source src="/videos/hacksmu-background.mp4" type="video/mp4" />
         </video>
-        {/*
-        <div className="hero-content">
+      
+        <div className="relative z-10 flex flex-col justify-center items-center h-full text-center text-white">
           <h1 className="glow-text neon-title">HackSMU VII</h1>
-          <p className="neon-date">October 25-26th, 2025</p>
-          { <Link href="/auth" passHref> } 
+          <p className="neon-date">October 25–26th, 2025</p>
+          <Link href="/auth" passHref>
             <a className="gradient-button neon-button">Apply here!</a>
-          { </Link> }
+          </Link>
         </div>
       </section>
-      <GradientDivider />
-      */}
-
+      
       {/* About HackSMU */}
       <section id="about" className="about-section">
         <h2 className="about-title">We are SMU&apos;s Annual 24-hour Hackathon.</h2>
