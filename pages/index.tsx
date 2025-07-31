@@ -50,15 +50,21 @@ export default function Home(props: {
         <link rel="icon" href="/favicon2.ico" />
       </Head>
       <section className="relative h-screen overflow-hidden">
-        <video
-          className="absolute top-0 left-0 w-full h-full object-cover z-0"
-          autoPlay
-          muted
-          loop
-          playsInline
-        >
-          <source src="hacksmu_portal/videos/turnon.mp4" type="video/mp4" />
-        </video>
+        {stage !== 'done' ? (
+          <video
+            ref={videoRef}
+            className="absolute top-0 left-0 w-full h-full object-cover z-0"
+            muted
+            autoPlay
+            playsInline
+          />
+        ) : (
+          <img
+            src="/images/finalframe.png"
+            alt="Final Frame"
+            className="absolute top-0 left-0 w-full h-full object-cover z-0"
+          />
+        )}
       
         <div className="relative z-10 flex flex-col justify-center items-center h-full text-center text-white">
           <h1 className="glow-text neon-title">HackSMU VII</h1>
@@ -68,6 +74,7 @@ export default function Home(props: {
           </Link>
         </div>
       </section>
+
       
       {/* About HackSMU */}
       <section id="about" className="about-section">
