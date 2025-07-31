@@ -88,7 +88,7 @@ export default function Home(props: {
       <GradientDivider />
 
       {/* FAQ section */}
-      <section id="faq" className="bg-purple">
+      <section id="faq" className="bg-white text-black">
         <div className="mt-4" />
         <FaqPage fetchedFaqs={props.answeredQuestion} />
       </section>
