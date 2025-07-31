@@ -28,19 +28,38 @@ export default function Home(props: {
   fetchedMembers: TeamMember[];
   sponsorCard: Sponsor[];
 }) {
-  const [loading, setLoading] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [stage, setStage] = useState<'intro' | 'zoom' | 'done'>('intro');
 
   useEffect(() => {
-    setLoading(false);
-  }, []);
+    const handleInteraction = () => {
+      if (stage === 'intro') {
+        setStage('zoom');
+      }
+    };
+    window.addEventListener('click', handleInteraction);
+    window.addEventListener('keydown', handleInteraction);
+    return () => {
+      window.removeEventListener('click', handleInteraction);
+      window.removeEventListener('keydown', handleInteraction);
+    };
+  }, [stage]);
 
-  if (loading) {
-    return (
-      <div>
-        <h1>Loading...</h1>
-      </div>
-    );
-  }
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (stage === 'intro') {
+      video.src = '/videos/turnon.mp4';
+      video.loop = false;
+      video.play();
+    }
+    if (stage === 'zoom') {
+      video.src = '/videos/zoomin.mp4';
+      video.loop = false;
+      video.play();
+      video.onended = () => setStage('done');
+    }
+  }, [stage]);
 
   return (
     <>
@@ -49,6 +68,8 @@ export default function Home(props: {
         <meta name="description" content="HackSMU Portal" />
         <link rel="icon" href="/favicon2.ico" />
       </Head>
+
+      {/* 🟣 HERO SECTION with video */}
       <section className="relative h-screen overflow-hidden">
         {stage !== 'done' ? (
           <video
@@ -65,7 +86,7 @@ export default function Home(props: {
             className="absolute top-0 left-0 w-full h-full object-cover z-0"
           />
         )}
-      
+
         <div className="relative z-10 flex flex-col justify-center items-center h-full text-center text-white">
           <h1 className="glow-text neon-title">HackSMU VII</h1>
           <p className="neon-date">October 25–26th, 2025</p>
