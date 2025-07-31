@@ -1,33 +1,8 @@
 import Head from 'next/head';
-import NextImage from 'next/image';
-import { GetServerSideProps } from 'next';
-import { useEffect, useState } from 'react';
-import { RequestHelper } from '../lib/request-helper';
-import 'firebase/messaging';
-import 'firebase/storage';
-import SponsorCard from '../components/SponsorCard';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import FaqPage from '../components/faq';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import GradientDivider from '../components/GradientDivider';
 
-// Add a mock list of hackathons for the new section
-
-const moreHackathons = [
-  {
-    name: "CodeRED Astra",
-    date: "October 25-26th, 2025",
-    link: "https://uhcode.red/",
-  }
-];
-
-export default function Home(props: {
-  answeredQuestion: AnsweredQuestion[];
-  fetchedMembers: TeamMember[];
-  sponsorCard: Sponsor[];
-}) {
+export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [stage, setStage] = useState<'intro' | 'zoom' | 'done'>('intro');
 
@@ -69,21 +44,23 @@ export default function Home(props: {
         <link rel="icon" href="/favicon2.ico" />
       </Head>
 
-      {/* 🟣 HERO SECTION with video */}
-      <section className="relative h-screen overflow-hidden">
+      <section className="fixed inset-0 overflow-hidden z-0">
         {stage !== 'done' ? (
           <video
             ref={videoRef}
-            className="absolute top-0 left-0 w-full h-full object-cover z-0"
+            className="absolute top-0 left-0 w-full h-full object-cover"
             muted
             autoPlay
             playsInline
-          />
+          >
+            <source src="/videos/turnon.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
         ) : (
           <img
             src="/images/finalframe.png"
             alt="Final Frame"
-            className="absolute top-0 left-0 w-full h-full object-cover z-0"
+            className="absolute top-0 left-0 w-full h-full object-cover"
           />
         )}
 
@@ -95,6 +72,6 @@ export default function Home(props: {
           </Link>
         </div>
       </section>
-
-      
-     
+    </>
+  );
+}
