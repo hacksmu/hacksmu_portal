@@ -58,7 +58,7 @@ export default function Home() {
           </video>
         ) : (
           <img
-            src="/images/finalframe.png"
+            src="/videos/finalframe.png"
             alt="Final Frame"
             className="absolute top-0 left-0 w-full h-full object-cover"
           />
