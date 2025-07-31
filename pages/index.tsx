@@ -48,7 +48,7 @@ export default function Home(props: {
         <meta name="description" content="HackSMU Portal" />
         <link rel="icon" href="/favicon2.ico" />
       </Head>
-    //<section className="bg-contain bg-hero-pattern">
+     // section className="bg-contain bg-hero-pattern"
       <section className="relative h-screen overflow-hidden">
         <div className="hero-content">
           <h1 className="glow-text neon-title">HackSMU VII</h1>
