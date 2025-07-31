@@ -51,6 +51,17 @@ export default function Home(props: {
       </Head>
       {/*<section className="bg-contain bg-hero-pattern"? */}
       <section className="relative h-screen overflow-hidden">
+        <video
+          className="absolute top-0 left-0 w-full h-full object-cover z-0"
+          autoPlay
+          muted
+          loop
+          playsInline
+        >
+          <source src="/videos/background.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        {/*
         <div className="hero-content">
           <h1 className="glow-text neon-title">HackSMU VII</h1>
           <p className="neon-date">October 25-26th, 2025</p>
@@ -60,6 +71,7 @@ export default function Home(props: {
         </div>
       </section>
       <GradientDivider />
+      */}
 
       {/* About HackSMU */}
       <section id="about" className="about-section">
