@@ -384,6 +384,10 @@ export const hackPortalConfig: HackPortalConfig = {
                 value: 'Vegetarian',
               },
               {
+                title: 'Halal',
+                value: 'Halal',
+              },
+              {
                 title: 'Nuts',
                 value: 'Nuts',
               },
