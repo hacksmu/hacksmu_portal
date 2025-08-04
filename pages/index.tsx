@@ -56,8 +56,8 @@ export default function Home() {
         {stage === 'introStill' && (
           <div className="absolute top-0 left-0 w-full h-full">
             <Image
-              src="/videos/intro_still.png"
-              alt="Intro Still"
+              src="/videos/inter-screen.png"
+              alt="Intermediate Screen"
               layout="fill"        // Next.js 12
               objectFit="cover"
               priority
@@ -68,23 +68,14 @@ export default function Home() {
         {stage === 'finalStill' && (
           <div className="absolute top-0 left-0 w-full h-full">
             <Image
-              src="/videos/final_still.png"
-              alt="Final Still"
+              src="/videos/main-screen.png"
+              alt="Main Screen"
               layout="fill"
               objectFit="cover"
               priority
             />
           </div>
         )}
-
-        {/* Foreground content */}
-        <div className="relative z-10 flex flex-col justify-center items-center h-full text-center text-white">
-          <h1 className="glow-text neon-title">HackSMU VII</h1>
-          <p className="neon-date">October 25–26th, 2025</p>
-          <Link href="/auth" passHref>
-            <a className="gradient-button neon-button">Apply here!</a>
-          </Link>
-        </div>
       </section>
     </>
   );
