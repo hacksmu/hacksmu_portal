@@ -3,19 +3,21 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-export default function Home() {
-  const [stage, setStage] = useState<'intro' | 'zoom' | 'done'>('intro');
+type Stage = 'introVideo' | 'introStill' | 'zoomVideo' | 'finalStill';
 
-  // On first user interaction, switch from intro -> zoom
+export default function Home() {
+  const [stage, setStage] = useState<Stage>('introVideo');
+
+  // Only advance to zoom video when user interacts during the intro still
   useEffect(() => {
-    const goZoom = () => {
-      if (stage === 'intro') setStage('zoom');
+    const handleInteract = () => {
+      if (stage === 'introStill') setStage('zoomVideo');
     };
-    window.addEventListener('click', goZoom);
-    window.addEventListener('keydown', goZoom);
+    window.addEventListener('click', handleInteract);
+    window.addEventListener('keydown', handleInteract);
     return () => {
-      window.removeEventListener('click', goZoom);
-      window.removeEventListener('keydown', goZoom);
+      window.removeEventListener('click', handleInteract);
+      window.removeEventListener('keydown', handleInteract);
     };
   }, [stage]);
 
@@ -25,37 +27,45 @@ export default function Home() {
         <title>HackSMU VII</title>
         <meta name="description" content="HackSMU Portal" />
         <link rel="icon" href="/favicon2.ico" />
+        {/* (Optional) Preload stills to avoid any flicker */}
+        <link rel="preload" as="image" href="/videos/intro_still.png" />
+        <link rel="preload" as="image" href="/videos/final_still.png" />
       </Head>
 
-      {/* Fullscreen hero that prevents page scrolling */}
-      <section className="fixed inset-0 overflow-hidden z-0">
-
-        {/* One video element that swaps source by stage.
-           key={stage} forces the <video> to reload when stage changes. */}
-        {stage !== 'done' && (
+      {/* Fullscreen canvas; bg-black helps hide any brief swap */}
+      <section className="fixed inset-0 overflow-hidden z-0 bg-black">
+        {/* Video stages */}
+        {(stage === 'introVideo' || stage === 'zoomVideo') && (
           <video
-            key={stage}
+            key={stage} // force reload on stage change
             className="absolute top-0 left-0 w-full h-full object-cover"
-            src={stage === 'intro' ? '/videos/turnon.mp4' : '/videos/zoomin.mp4'}
+            src={stage === 'introVideo' ? '/videos/turnon.mp4' : '/videos/zoomin.mp4'}
             muted
             autoPlay
             playsInline
             loop={false}
             onEnded={() => {
-              // After zoom finishes, stop showing the video.
-              if (stage === 'zoom') setStage('done');
+              if (stage === 'introVideo') setStage('introStill');
+              else if (stage === 'zoomVideo') setStage('finalStill');
             }}
           />
         )}
 
-        {/* Foreground content */}
-        <div className="relative z-10 flex flex-col justify-center items-center h-full text-center text-white">
-          <h1 className="glow-text neon-title">HackSMU VII</h1>
-          <p className="neon-date">October 25–26th, 2025</p>
-          <Link href="/auth" passHref>
-            <a className="gradient-button neon-button">Apply here!</a>
-          </Link>
-        </div>
+        {/* Still image stages */}
+        {stage === 'introStill' && (
+          <img
+            src="/videos/inter-screen.png"
+            alt="Intermediate Screen"
+            className="absolute top-0 left-0 w-full h-full object-cover"
+          />
+        )}
+        {stage === 'finalStill' && (
+          <img
+            src="/videos/main-screen.png"
+            alt="Main Screen"
+            className="absolute top-0 left-0 w-full h-full object-cover"
+          />
+        )}
       </section>
     </>
   );
