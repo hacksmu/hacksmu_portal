@@ -1,26 +1,60 @@
-// pages/index.tsx
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-type Stage = 'introVideo' | 'introStill' | 'zoomVideo' | 'finalStill';
+type Phase = 'introPlaying' | 'introStill' | 'zoomPlaying' | 'finalStill';
 
 export default function Home() {
-  const [stage, setStage] = useState<Stage>('introVideo');
+  const [phase, setPhase] = useState<Phase>('introPlaying');
 
-  // Advance to zoom video only after the intro still, on first interaction
+  // video refs
+  const introRef = useRef<HTMLVideoElement>(null);
+  const zoomRef  = useRef<HTMLVideoElement>(null);
+
+  // visual fades
+  const [showIntroVid, setShowIntroVid] = useState(true);
+  const [showZoomVid, setShowZoomVid]   = useState(false);
+  const [showFinal, setShowFinal]       = useState(false); // controls final image fade-in
+
+  // intro video finished -> reveal intro still (no black frame)
+  const handleIntroEnded = () => {
+    setPhase('introStill');
+    setShowIntroVid(false); // fade out intro video; intro still underneath remains
+  };
+
+  // user interaction during intro still -> start zoom video and cross-fade
   useEffect(() => {
-    const handleInteract = () => {
-      if (stage === 'introStill') setStage('zoomVideo');
+    const beginZoom = () => {
+      if (phase === 'introStill') {
+        setPhase('zoomPlaying');
+        setShowZoomVid(true);
+        zoomRef.current?.play().catch(() => {});
+      }
     };
-    window.addEventListener('click', handleInteract);
-    window.addEventListener('keydown', handleInteract);
+    window.addEventListener('click', beginZoom);
+    window.addEventListener('keydown', beginZoom);
     return () => {
-      window.removeEventListener('click', handleInteract);
-      window.removeEventListener('keydown', handleInteract);
+      window.removeEventListener('click', beginZoom);
+      window.removeEventListener('keydown', beginZoom);
     };
-  }, [stage]);
+  }, [phase]);
+
+  // autoplay intro on mount
+  useEffect(() => {
+    introRef.current?.play().catch(() => {});
+  }, []);
+
+  // when we enter finalStill, fade the final image in
+  useEffect(() => {
+    if (phase === 'finalStill') {
+      // slight delay optional; remove setTimeout if you want instant start
+      const t = setTimeout(() => setShowFinal(true), 30);
+      return () => clearTimeout(t);
+    } else {
+      setShowFinal(false);
+    }
+  }, [phase]);
 
   return (
     <>
@@ -28,45 +62,61 @@ export default function Home() {
         <title>HackSMU VII</title>
         <meta name="description" content="HackSMU Portal" />
         <link rel="icon" href="/favicon2.ico" />
-        {/* Optional: preload stills to avoid any flicker */}
+        {/* Preload to minimize flashes */}
         <link rel="preload" as="image" href="/videos/intro_still.png" />
         <link rel="preload" as="image" href="/videos/final_still.png" />
+        <link rel="preload" as="video" href="/videos/zoomin.mp4" type="video/mp4" />
       </Head>
 
-      {/* Fullscreen stage area */}
       <section className="fixed inset-0 overflow-hidden z-0 bg-black">
-        {/* Video stages */}
-        {(stage === 'introVideo' || stage === 'zoomVideo') && (
-          <video
-            key={stage} // force reload when source changes
-            className="absolute top-0 left-0 w-full h-full object-cover"
-            src={stage === 'introVideo' ? '/videos/turnon.mp4' : '/videos/zoomin.mp4'}
-            muted
-            autoPlay
-            playsInline
-            loop={false}
-            onEnded={() => {
-              if (stage === 'introVideo') setStage('introStill');
-              else if (stage === 'zoomVideo') setStage('finalStill');
-            }}
+        {/* Base layer: intro still */}
+        <div className="absolute inset-0">
+          <Image
+            src="/videos/inter-screen.png"
+            alt="Intermediate Screen"
+            layout="fill"
+            objectFit="cover"
+            priority
           />
-        )}
+        </div>
 
-        {/* Still images (use next/image to satisfy lint rules) */}
-        {stage === 'introStill' && (
-          <div className="absolute top-0 left-0 w-full h-full">
-            <Image
-              src="/videos/inter-screen.png"
-              alt="Intermediate Screen"
-              layout="fill"        // Next.js 12
-              objectFit="cover"
-              priority
-            />
-          </div>
-        )}
+        {/* Intro video, fades out when ended */}
+        <video
+          ref={introRef}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+            showIntroVid ? 'opacity-100' : 'opacity-0'
+          }`}
+          src="/videos/turnon.mp4"
+          muted
+          autoPlay
+          playsInline
+          loop={false}
+          onEnded={handleIntroEnded}
+        />
 
-        {stage === 'finalStill' && (
-          <div className="absolute top-0 left-0 w-full h-full">
+        {/* Zoom video, fades in when starting */}
+        <video
+          ref={zoomRef}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+            showZoomVid ? 'opacity-100' : 'opacity-0'
+          }`}
+          src="/videos/zoomin.mp4"
+          muted
+          playsInline
+          loop={false}
+          onCanPlay={() => {
+            if (phase === 'zoomPlaying') zoomRef.current?.play().catch(() => {});
+          }}
+          onEnded={() => setPhase('finalStill')}
+        />
+
+        {/* Final still — fades IN smoothly */}
+        {phase === 'finalStill' && (
+          <div
+            className={`absolute inset-0 transition-opacity duration-500 ${
+              showFinal ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
             <Image
               src="/videos/main-screen.png"
               alt="Main Screen"
@@ -76,6 +126,16 @@ export default function Home() {
             />
           </div>
         )}
+
+        {/* Foreground content 
+        <div className="relative z-10 flex flex-col justify-center items-center h-full text-center text-white">
+          <h1 className="glow-text neon-title">HackSMU VII</h1>
+          <p className="neon-date">October 25–26th, 2025</p>
+          <Link href="/auth" passHref>
+            <a className="gradient-button neon-button">Apply here!</a>
+          </Link>
+        </div>
+        */}
       </section>
     </>
   );
