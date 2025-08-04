@@ -1,39 +1,22 @@
+// pages/index.tsx
 import Head from 'next/head';
-import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [stage, setStage] = useState<'intro' | 'zoom' | 'done'>('intro');
 
+  // On first user interaction, switch from intro -> zoom
   useEffect(() => {
-    const handleInteraction = () => {
-      if (stage === 'intro') {
-        setStage('zoom');
-      }
+    const goZoom = () => {
+      if (stage === 'intro') setStage('zoom');
     };
-    window.addEventListener('click', handleInteraction);
-    window.addEventListener('keydown', handleInteraction);
+    window.addEventListener('click', goZoom);
+    window.addEventListener('keydown', goZoom);
     return () => {
-      window.removeEventListener('click', handleInteraction);
-      window.removeEventListener('keydown', handleInteraction);
+      window.removeEventListener('click', goZoom);
+      window.removeEventListener('keydown', goZoom);
     };
-  }, [stage]);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    if (stage === 'intro') {
-      video.src = '/videos/turnon.mp4';
-      video.loop = false;
-      video.play();
-    }
-    if (stage === 'zoom') {
-      video.src = '/videos/zoomin.mp4';
-      video.loop = false;
-      video.play();
-      video.onended = () => setStage('done');
-    }
   }, [stage]);
 
   return (
@@ -44,26 +27,28 @@ export default function Home() {
         <link rel="icon" href="/favicon2.ico" />
       </Head>
 
+      {/* Fullscreen hero that prevents page scrolling */}
       <section className="fixed inset-0 overflow-hidden z-0">
-        {stage !== 'done' ? (
+
+        {/* One video element that swaps source by stage.
+           key={stage} forces the <video> to reload when stage changes. */}
+        {stage !== 'done' && (
           <video
-            ref={videoRef}
+            key={stage}
             className="absolute top-0 left-0 w-full h-full object-cover"
+            src={stage === 'intro' ? '/videos/turnon.mp4' : '/videos/zoomin.mp4'}
             muted
             autoPlay
             playsInline
-          >
-            <source src="/videos/turnon.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        ) : (
-          <img
-            src="/videos/finalframe.png"
-            alt="Final Frame"
-            className="absolute top-0 left-0 w-full h-full object-cover"
+            loop={false}
+            onEnded={() => {
+              // After zoom finishes, stop showing the video.
+              if (stage === 'zoom') setStage('done');
+            }}
           />
         )}
 
+        {/* Foreground content */}
         <div className="relative z-10 flex flex-col justify-center items-center h-full text-center text-white">
           <h1 className="glow-text neon-title">HackSMU VII</h1>
           <p className="neon-date">October 25–26th, 2025</p>
