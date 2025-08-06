@@ -1,3 +1,5 @@
+
+{/*
 import { ResponsiveBar } from '@nivo/bar';
 
 interface NivoBarChartProps {
@@ -47,3 +49,4 @@ export default function NivoBarChart({ name, items }: NivoBarChartProps) {
     </div>
   );
 }
+*/}
