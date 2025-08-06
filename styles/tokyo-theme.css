@@ -4,9 +4,10 @@
 @tailwind utilities;
 
 :root {
-    --neon-green: #009688; /* --neon-purple: #b829ff; */
+    --neon-green: #009688;
     --neon-blue: #007c92; /* --neon-blue: #29b7ff; */
     --neon-yellow: #da8803;
+    --neon-purple: #b829ff; 
 }
 
 body {
