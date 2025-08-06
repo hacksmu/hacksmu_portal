@@ -127,7 +127,7 @@ export default function Home() {
           </div>
         )}
 
-        {/* Foreground content 
+        {/* Foreground content */}
         <div className="relative z-10 flex flex-col justify-center items-center h-full text-center text-white">
           <h1 className="glow-text neon-title">HackSMU VII</h1>
           <p className="neon-date">October 25–26th, 2025</p>
@@ -135,7 +135,6 @@ export default function Home() {
             <a className="gradient-button neon-button">Apply here!</a>
           </Link>
         </div>
-        */}
       </section>
     </>
   );
