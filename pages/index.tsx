@@ -127,10 +127,18 @@ export default function Home() {
           </div>
         )}
 
-        {/* Foreground content */}
+        {/* Foreground content 
         <div className="relative z-10 flex flex-col justify-center items-center h-full text-center text-white">
           <h1 className="glow-text neon-title">HackSMU VII</h1>
           <p className="neon-date">October 25–26th, 2025</p>
+          <Link href="/auth" passHref>
+            <a className="gradient-button neon-button">Apply here!</a>
+          </Link>
+        </div>
+        */}
+        <div className="absolute z-10 flex flex-col items-center text-center text-white" style={{ top: '13%', left: '50%', transform: 'translateX(-50%)' }}>
+          <h1 className="glow-text text-5xl sm:text-6xl font-bold mb-2">HackSMU VII</h1>
+          <p className="neon-date text-xl sm:text-2xl mb-4">October 25–26th, 2025</p>
           <Link href="/auth" passHref>
             <a className="gradient-button neon-button">Apply here!</a>
           </Link>
