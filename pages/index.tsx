@@ -61,7 +61,7 @@ export default function Home() {
       <Head>
         <title>HackSMU VII</title>
         <meta name="description" content="HackSMU Portal" />
-        <link rel="icon" href="/hacksmu_fish.ico" />
+        <link rel="icon" href="public/hacksmu_fish.ico" />
         {/* Preload to minimize flashes */}
         <link rel="preload" as="image" href="/videos/intro_still.png" />
         <link rel="preload" as="image" href="/videos/final_still.png" />
