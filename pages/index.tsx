@@ -69,16 +69,22 @@ export default function Home() {
       </Head>
 
       <section className="fixed inset-0 overflow-hidden z-0 bg-black">
-        {/* Base layer: intro still */}
-        <div className="absolute inset-0">
-          <Image
-            src="/videos/inter-screen2.png"
-            alt="Intermediate Screen"
-            layout="fill"
-            objectFit="cover"
-            priority
-          />
-        </div>
+        {/* Intermediate PNG: fades in after intro video ends */}
+        {phase === 'introStill' && (
+          <div
+            className={`absolute inset-0 transition-opacity duration-500 ${
+              !showIntroVid ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <Image
+              src="/videos/inter-screen2.png"
+              alt="Intermediate Screen"
+              layout="fill"
+              objectFit="cover"
+              priority
+            />
+          </div>
+        )}
 
         {/* Intro video, fades out when ended */}
         <video
