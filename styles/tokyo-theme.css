@@ -33,7 +33,7 @@ body {
     font-size: 5rem;
     font-weight: 700;
     color: #ffffff;
-    text-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple);
+    text-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green);
     margin-bottom: 1rem;
 }
 
@@ -45,11 +45,11 @@ body {
 }
 
 .neon-button {
-    font-family: 'Arial', sans-serif; {/* formerly Roboto */}
+    font-family: 'Arial', sans-serif; /* formerly Roboto */
     font-size: 1.5rem;
     font-weight: bold;
     color: #ffffff;
-    background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
+    background: linear-gradient(90deg, var(--neon-green), var(--neon-blue));
     border: none;
     border-radius: 50px;
     padding: 15px 40px;
@@ -60,7 +60,7 @@ body {
 }
 
 .neon-button:hover {
-    box-shadow: 0 0 15px var(--neon-purple);
+    box-shadow: 0 0 15px var(--neon-green);
     transform: translateY(-2px);
 }
 
@@ -96,7 +96,7 @@ body {
     font-weight: 700;
     font-size: 3rem;
     color: #ffffff;
-    text-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple);
+    text-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green);
 }
 
 .about-title {
@@ -227,7 +227,7 @@ body {
     font-weight: 700;
     font-size: 3rem;
     color: #ffffff;
-    text-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple);
+    text-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green);
 }
 
 
