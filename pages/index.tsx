@@ -72,7 +72,7 @@ export default function Home() {
         {/* Base layer: intro still */}
         <div className="absolute inset-0">
           <Image
-            src="/videos/inter-screen.png"
+            src="/videos/inter-screen2.png"
             alt="Intermediate Screen"
             layout="fill"
             objectFit="cover"
