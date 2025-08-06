@@ -123,7 +123,7 @@ export default function Home() {
               showFinal ? 'opacity-100' : 'opacity-0'
             }`}
           >
-            {/* Final background image */}
+            {/* Final still image */}
             <Image
               src="/videos/main-screen2.png"
               alt="Main Screen"
@@ -132,7 +132,7 @@ export default function Home() {
               priority
             />
         
-            {/* Foreground content — fades in with the image */}
+            {/* Foreground content — fades in with finalStill */}
             <div
               className="absolute z-10 flex flex-col items-center text-center text-white fade-in-final"
               style={{ top: '13%', left: '50%', transform: 'translateX(-50%)' }}
@@ -143,7 +143,9 @@ export default function Home() {
                 <a className="gradient-button neon-button">Apply here!</a>
               </Link>
             </div>
+          </div>
         )}
+
 
 
         {/* Foreground content 
