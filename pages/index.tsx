@@ -135,7 +135,7 @@ export default function Home() {
             {/* Foreground content — fades in with finalStill */}
             <div
               className="absolute z-10 flex flex-col items-center text-center text-white fade-in-final"
-              style={{ top: '13%', left: '50%', transform: 'translateX(-50%)' }}
+              style={{ top: '7%', left: '50%', transform: 'translateX(-50%)' }}
             >
               <h1 className="neon-title mb-2">HackSMU VII</h1>
               <p className="neon-date text-xl sm:text-2xl mb-4">October 25–26th, 2025</p>
