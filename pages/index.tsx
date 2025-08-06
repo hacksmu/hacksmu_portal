@@ -113,7 +113,7 @@ export default function Home() {
         {/* Final still — fades IN smoothly */}
         {phase === 'finalStill' && (
           <div
-            className={`absolute inset-0 transition-opacity duration-500 ${
+            className={`absolute inset-0 bg-black transition-opacity duration-700 ${
               showFinal ? 'opacity-100' : 'opacity-0'
             }`}
           >
@@ -121,7 +121,7 @@ export default function Home() {
               src="/videos/main-screen2.png"
               alt="Main Screen"
               layout="fill"
-              objectFit="cover"
+              objectFit="contain"
               priority
             />
           </div>
