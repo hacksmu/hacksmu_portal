@@ -74,7 +74,7 @@ export default function AppHeader() {
 
   return (
     <>
-      <header className="mt-[-24px] sticky top-0 justify-between flex flex-row w-full bg-dark-blue items-center h-24 z-50 p-4">
+      <header className="mt-[-24px] sticky top-0 justify-between flex flex-row w-full bg-dark-blue items-center h-12 z-50 p-4">
         <a
           className="left-[128px] md:left-[84px]"
           id="mlh-trust-badge"
