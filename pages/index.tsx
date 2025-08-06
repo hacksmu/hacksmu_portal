@@ -140,7 +140,7 @@ export default function Home() {
               <h1 className="neon-title mb-2">HackSMU VII</h1>
               <p className="neon-date text-xl sm:text-2xl mb-4">October 25–26th, 2025</p>
               <Link href="/auth" passHref>
-                <a className="neon-button">Apply here!</a>
+                <a className="gradient-button neon-button">Apply here!</a>
               </Link>
             </div>
           </div>
