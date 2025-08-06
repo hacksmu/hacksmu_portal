@@ -118,7 +118,7 @@ export default function Home() {
             }`}
           >
             <Image
-              src="/videos/main-screen.png"
+              src="/videos/main-screen2.png"
               alt="Main Screen"
               layout="fill"
               objectFit="cover"
