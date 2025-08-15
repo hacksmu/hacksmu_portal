@@ -74,7 +74,7 @@ export default function AppHeader() {
 
   return (
     <>
-      <header className="mt-[-24px] sticky top-0 justify-between flex flex-row w-full bg-dark-blue items-center h-24 z-50 p-4">
+      <header className="mt-[-24px] sticky top-0 justify-between flex flex-row w-full bg-dark-blue items-center h-12 z-50 p-4">
         <a
           className="left-[128px] md:left-[84px]"
           id="mlh-trust-badge"
@@ -100,7 +100,7 @@ export default function AppHeader() {
         <div className="flex justify-between items-center md:max-w-full md:justify-start md:w-9/12">
           <Link href="/">
             <a className="flex gap-2 order-2 relative ml-[12px] font-display self-center items-center md:order-1 md:ml-0 z-[0]">
-              <Image src={'/assets/hacksmu.png'} width="50px" height="81px" />
+              <Image src={'/assets/hacksmu_fish.png'} width="50px" height="81px" />
             </a>
           </Link>
           {/* Smartphone nav */}

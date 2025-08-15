@@ -4,13 +4,26 @@
 @tailwind utilities;
 
 :root {
-    --neon-purple: #b829ff;
-    --neon-blue: #29b7ff;
+    --neon-green: #009688;
+    --neon-blue: #007c92; /* --neon-blue: #29b7ff; */
     --neon-yellow: #da8803;
+    --neon-purple: #b829ff; 
 }
 
 body {
     background-color: #000033;
+}
+
+.fade-in-final {
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+    animation-delay: 0.3s; /* adjust as needed */
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
 }
 
 .hero-content {
@@ -33,7 +46,7 @@ body {
     font-size: 5rem;
     font-weight: 700;
     color: #ffffff;
-    text-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple);
+    text-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green);
     margin-bottom: 1rem;
 }
 
@@ -45,11 +58,11 @@ body {
 }
 
 .neon-button {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Arial', sans-serif; /* formerly Roboto */
     font-size: 1.5rem;
     font-weight: bold;
     color: #ffffff;
-    background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
+    background: linear-gradient(90deg, var(--neon-green), var(--neon-blue));
     border: none;
     border-radius: 50px;
     padding: 15px 40px;
@@ -60,7 +73,7 @@ body {
 }
 
 .neon-button:hover {
-    box-shadow: 0 0 15px var(--neon-purple);
+    box-shadow: 0 0 15px var(--neon-green);
     transform: translateY(-2px);
 }
 
@@ -96,7 +109,7 @@ body {
     font-weight: 700;
     font-size: 3rem;
     color: #ffffff;
-    text-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple);
+    text-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green);
 }
 
 .about-title {
@@ -227,7 +240,7 @@ body {
     font-weight: 700;
     font-size: 3rem;
     color: #ffffff;
-    text-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple);
+    text-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green);
 }
 
 

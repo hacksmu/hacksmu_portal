@@ -21,7 +21,7 @@
 }
 
 .gradient-button {
-    background: linear-gradient(270deg, #ff00de, #29b7ff);
+    background: linear-gradient(270deg, #009688, #007c92);
     background-size: 200% 200%;
     animation: gradientBG 3s ease infinite;
 }

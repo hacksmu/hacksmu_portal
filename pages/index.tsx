@@ -1,388 +1,170 @@
 import Head from 'next/head';
-import NextImage from 'next/image';
-import { GetServerSideProps } from 'next';
-import { useEffect, useState } from 'react';
-import { RequestHelper } from '../lib/request-helper';
-import 'firebase/messaging';
-import 'firebase/storage';
-import SponsorCard from '../components/SponsorCard';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import FaqPage from '../components/faq';
 import Link from 'next/link';
-import GradientDivider from '../components/GradientDivider';
+import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
 
-// Add a mock list of hackathons for the new section
-const moreHackathons = [
-  {
-    name: "CodeRED Astra",
-    date: "October 12-13, 2024",
-    link: "https://uhcode.red/",
-  }
-];
+type Phase = 'introPlaying' | 'introStill' | 'zoomPlaying' | 'finalStill';
 
-export default function Home(props: {
-  answeredQuestion: AnsweredQuestion[];
-  fetchedMembers: TeamMember[];
-  sponsorCard: Sponsor[];
-}) {
-  const [loading, setLoading] = useState(true);
+export default function Home() {
+  const [phase, setPhase] = useState<Phase>('introPlaying');
+  const introRef = useRef<HTMLVideoElement>(null);
+  const zoomRef = useRef<HTMLVideoElement>(null);
 
+  const [showIntroVid, setShowIntroVid] = useState(true);
+  const [showZoomVid, setShowZoomVid] = useState(false);
+  const [showFinal, setShowFinal] = useState(false);
+
+  const [activeOverlay, setActiveOverlay] = useState<string | null>(null);
+  const [showOverlay, setShowOverlay] = useState(false);
+
+  // Play intro video on mount
   useEffect(() => {
-    setLoading(false);
+    introRef.current?.play().catch(() => {});
   }, []);
 
-  if (loading) {
-    return (
-      <div>
-        <h1>Loading...</h1>
-      </div>
-    );
-  }
+  // When intro ends, show intermediate still
+  const handleIntroEnded = () => {
+    setPhase('introStill');
+    setShowIntroVid(false);
+  };
+
+  // Click/keydown during introStill triggers zoom video
+  useEffect(() => {
+    const beginZoom = () => {
+      if (phase === 'introStill') {
+        setPhase('zoomPlaying');
+        setShowZoomVid(true);
+        zoomRef.current?.play().catch(() => {});
+      }
+    };
+    window.addEventListener('click', beginZoom);
+    window.addEventListener('keydown', beginZoom);
+    return () => {
+      window.removeEventListener('click', beginZoom);
+      window.removeEventListener('keydown', beginZoom);
+    };
+  }, [phase]);
+
+  // When finalStill phase is reached, fade in
+  useEffect(() => {
+    if (phase === 'finalStill') {
+      const t = setTimeout(() => setShowFinal(true), 30);
+      return () => clearTimeout(t);
+    } else {
+      setShowFinal(false);
+    }
+  }, [phase]);
+
+  // Fade in overlay when activeOverlay is set
+  useEffect(() => {
+    if (activeOverlay) {
+      const t = setTimeout(() => setShowOverlay(true), 30);
+      return () => clearTimeout(t);
+    } else {
+      setShowOverlay(false);
+    }
+  }, [activeOverlay]);
+
+  const clearOverlay = () => {
+    setShowOverlay(false);
+    setTimeout(() => setActiveOverlay(null), 300);
+  };
 
   return (
     <>
       <Head>
-        <title>HackSMU VI</title>
+        <title>HackSMU VII</title>
         <meta name="description" content="HackSMU Portal" />
-        <link rel="icon" href="/favicon2.ico" />
+        <link rel="icon" href="/hacksmu_fish.ico" />
+        <link rel="preload" as="image" href="/videos/intro_still.png" />
+        <link rel="preload" as="image" href="/videos/final_still.png" />
+        <link rel="preload" as="video" href="/videos/zoomin.mp4" type="video/mp4" />
       </Head>
-      <section className="bg-contain bg-hero-pattern">
-        <div className="hero-content">
-          <h1 className="glow-text neon-title">HackSMU VI</h1>
-          <p className="neon-date">October 5-6, 2024</p>
-          {/* <Link href="/auth" passHref> */} 
-            <a className="gradient-button neon-button">Registrations Closed!</a>
-          {/* </Link> */}
-        </div>
-      </section>
-      <GradientDivider />
 
-      {/* About HackSMU */}
-      <section id="about" className="about-section">
-        <h2 className="about-title">We are SMU&apos;s Annual 24-hour Hackathon.</h2>
-        <div className="stats-container">
-          <div className="stat-item">
-            <div className="stat-number">150+</div>
-            <div className="stat-label">Hackers</div>
+      <section className="fixed inset-0 overflow-hidden z-0 bg-black">
+        {/* Intermediate Still */}
+        {phase === 'introStill' && (
+          <div className={`absolute inset-0 transition-opacity duration-500 ${!showIntroVid ? 'opacity-100' : 'opacity-0'}`}>
+            <Image src="/videos/inter-screen2.png" alt="Intermediate Screen" layout="fill" objectFit="cover" priority />
           </div>
-          <div className="stat-item">
-            <div className="stat-number">20+</div>
-            <div className="stat-label">Projects</div>
-          </div>
-          <div className="stat-item">
-            <div className="stat-number">$1500+</div>
-            <div className="stat-label">In Prizes</div>
-          </div>
-        </div>
-        <h3 className="about-title py-2">HackSMU is...</h3>
-        <ul className="about-list">
-          <li>A platform for entrepreneurs, designers, and developers to unlock their creativity and drive positive social impact.</li>
-          <li>An opportunity to connect with like-minded individuals, network with companies, and advance your career.</li>
-          <li>Open to participants from all majors and experience levels (truly inclusive!).</li>
-          <li>Enjoy a variety of free food throughout the event (yum!).</li>
-          <li>Packed with fun and excitement!</li>
-        </ul>
-      </section>
-      <GradientDivider />
+        )}
 
-      {/* FAQ section */}
-      <section id="faq" className="bg-purple">
-        <div className="mt-4" />
-        <FaqPage fetchedFaqs={props.answeredQuestion} />
-      </section>
-      <GradientDivider />
+        {/* Intro Video */}
+        <video
+          ref={introRef}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${showIntroVid ? 'opacity-100' : 'opacity-0'}`}
+          src="/videos/turnon.mp4"
+          muted
+          autoPlay
+          playsInline
+          loop={false}
+          onEnded={handleIntroEnded}
+        />
 
-      {/* Resources for HackSMU */}
-      <section id="resources" className="bg-mute-blue text-white py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-center mx-auto resources-title py-3">
-            Info and Resources
-          </h2>
-          <div className="flex flex-col md:flex-row items-stretch justify-between gap-8">
-            <div className="md:w-1/2 bg-dark-blue-lighter p-8 rounded-xl shadow-neon">
-              <p className="text-2xl mb-6">
-                HackSMU will take place fully in person on October 5-6, 2024. The address is{' '}
-                <span className="font-bold text-neon-pink">3140 Dyer St, Dallas, TX 75205.</span>
-              </p>
-              <p className="text-2xl mb-8">
-                Check out our live site for more information on schedule, location, events,
-                prizes, and more!
-              </p>
-              <div className="text-center md:text-left">
-                <Link href="/dashboard">
-                  <a className="inline-block bg-gradient-to-r from-neon-pink to-neon-blue text-white font-bold py-3 px-8 rounded-full text-xl hover:shadow-neon transition duration-300">
-                    Dashboard
-                  </a>
-                </Link>
-              </div>
-            </div>
-            <div className="md:w-1/2 bg-dark-blue-lighter p-8 rounded-xl shadow-neon flex justify-center items-center">
-              <NextImage
-                src="/backgrounds2024/Dallas.gif"
-                alt="Dallas, TX location"
-                width={450}
-                height={450}
-              />
+        {/* Zoom Video */}
+        <video
+          ref={zoomRef}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${showZoomVid ? 'opacity-100' : 'opacity-0'}`}
+          src="/videos/zoomin.mp4"
+          muted
+          playsInline
+          loop={false}
+          onCanPlay={() => phase === 'zoomPlaying' && zoomRef.current?.play().catch(() => {})}
+          onEnded={() => setPhase('finalStill')}
+        />
+
+        {/* Final Still */}
+        {phase === 'finalStill' && (
+          <div className={`absolute inset-0 bg-black transition-opacity duration-700 ${showFinal ? 'opacity-100' : 'opacity-0'}`}>
+            <Image src="/videos/main-screen2.png" alt="Main Screen" layout="fill" objectFit="contain" priority />
+            <div className="absolute z-10 flex flex-col items-center text-center text-white fade-in-final"
+              style={{ top: '7%', left: '50%', transform: 'translateX(-50%)' }}>
+              <h1 className="neon-title mb-2 text-2xl sm:text-3xl">HackSMU VII</h1>
+              <p className="neon-date text-md sm:text-xl mb-4">October 25–26th, 2025</p>
+              <Link href="/auth" passHref>
+                <a className="gradient-button neon-button text-sm sm:text-base">Apply here!</a>
+              </Link>
             </div>
           </div>
-        </div>
-      </section>
-      <GradientDivider />
+        )}
 
-      {/* Team Members */}
+        {/* Folder Click Zones with Red Borders */}
+        <div onClick={() => setActiveOverlay('about.png')} className="absolute z-20 cursor-pointer"
+          style={{ top: '13%', left: '70%', width: '5%', height: '8%', border: '2px solid red' }}></div>
 
-      {/* <section>
-        <div className="flex flex-col flex-grow bg-white">
-          <div className="my-2">
-            <h4 className="font-bold p-6 md:text-4xl text-2xl my-4">Meet Our Team :)</h4>{' '}
-            <div className="flex flex-wrap justify-center md:px-2">
+        <div onClick={() => setActiveOverlay('faq.png')} className="absolute z-20 cursor-pointer"
+          style={{ top: '23%', left: '14%', width: '6%', height: '10%', border: '2px solid red' }}></div>
 
-              {members.map(
-                ({ name, description, linkedin, github, personalSite, fileName }, idx) => (
-                  <MemberCards
-                    key={idx}
-                    name={name}
-                    description={description}
-                    fileName={fileName}
-                    linkedin={linkedin}
-                    github={github}
-                    personalSite={personalSite}
-                  />
-                ),
-              )}
-            </div>
+        <div onClick={() => setActiveOverlay('resources.png')} className="absolute z-20 cursor-pointer"
+          style={{ top: '35%', left: '45%', width: '6%', height: '10%', border: '2px solid red' }}></div>
+
+        <div onClick={() => setActiveOverlay('sponsors.png')} className="absolute z-20 cursor-pointer"
+          style={{ top: '58%', left: '57%', width: '6%', height: '10%', border: '2px solid red' }}></div>
+
+        <div onClick={() => setActiveOverlay('schedule.png')} className="absolute z-20 cursor-pointer"
+          style={{ top: '75%', left: '66%', width: '6%', height: '10%', border: '2px solid red' }}></div>
+
+        <div onClick={() => setActiveOverlay('dashboard.png')} className="absolute z-20 cursor-pointer"
+          style={{ top: '75%', left: '24%', width: '6%', height: '10%', border: '2px solid red' }}></div>
+
+        {/* Overlay PNG (when folder is clicked) */}
+        {activeOverlay && (
+          <div
+            className={`absolute inset-0 bg-black transition-opacity duration-700 z-30 ${
+              showOverlay ? 'opacity-100' : 'opacity-0'
+            }`}
+            onClick={clearOverlay}
+          >
+            <Image
+              src={`/videos/${activeOverlay}`}
+              alt="Overlay"
+              layout="fill"
+              objectFit="contain"
+              priority
+            />
           </div>
-        </div>
-      </section> */}
-
-      {/* Sponsors */}
-      <section id="sponsors" className="relative bg-dark-blue text-white py-16 overflow-hidden">
-        <div
-          className="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-30 z-0"
-          style={{
-            backgroundImage: "url('/backgrounds2024/City3.png')"
-          }}
-        ></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-center mx-auto resources-title py-3">
-            Sponsors
-          </h2>
-          <div className="bg-dark-blue-lighter p-8 rounded-xl shadow-neon mb-8">
-            <p className="text-xl mb-6">
-              At HackSMU, our mission is to foster innovation, creativity, and collaboration among students.
-              By sponsoring us, you&apos;ll not only support the next generation of tech leaders but also gain visibility within a vibrant and dynamic community.
-              Join us in making a lasting impact and help us turn ideas into reality!
-              Support Innovation. Empower Creativity. Inspire the Future.
-            </p>
-          </div>
-          <div className="sponsor-logos grid grid-cols-3 gap-1 justify-center items-center">
-            {/* Row 1: Parkhub and PayPal */}
-            <div className="col-span-3 flex justify-center gap-8">
-              <a href="https://www.paypal.com" target="_blank" rel="noopener noreferrer">
-                <NextImage
-                  src="/sponsors/PayPal.jpg"
-                  alt="PayPal"
-                  width={300}
-                  height={200}
-                  objectFit="contain"
-                />
-              </a>
-              <a href="https://parkhub.com" target="_blank" rel="noopener noreferrer">
-                <NextImage
-                  src="/sponsors/ParkHub.jpg"
-                  alt="ParkHub"
-                  width={300}
-                  height={200}
-                  objectFit="contain"
-                />
-              </a>
-            </div>
-            {/* Row 2: Cartesi and IBM */}
-            <div className="col-span-3 flex justify-center gap-8">
-              <a href="https://cartesi.io" target="_blank" rel="noopener noreferrer">
-                <NextImage
-                  src="/sponsors/Cartesi.png"
-                  alt="Cartesi"
-                  width={200}
-                  height={150}
-                  objectFit="contain"
-                />
-              </a>
-              <a href="https://www.ibm.com/us-en" target="_blank" rel="noopener noreferrer">
-                <NextImage
-                  src="/sponsors/IBM.png"
-                  alt="IBM"
-                  width={200}
-                  height={150}
-                  objectFit="contain"
-                />
-              </a>
-            </div>
-            {/* Row 3: Invesco */}
-            <div className="col-span-3 flex justify-center">
-              <a href="https://www.invesco.com" target="_blank" rel="noopener noreferrer">
-                <NextImage
-                  src="/sponsors/Invesco.jpg"
-                  alt="Invesco"
-                  width={180}
-                  height={120}
-                  objectFit="contain"
-                />
-              </a>
-            </div>
-            {/* Row 4: StandOutStickers, MLH, SMU Student Senate */}
-            <div className="col-span-3 flex justify-center gap-4">
-              <a href="https://www.standoutstickers.com" target="_blank" rel="noopener noreferrer">
-                <NextImage
-                  src="/sponsors/StandOutStickers.png"
-                  alt="StandOut Stickers"
-                  width={120}
-                  height={80}
-                  objectFit="contain"
-                />
-              </a>
-              <a href="https://mlh.io" target="_blank" rel="noopener noreferrer">
-                <NextImage
-                  src="/sponsors/MLH.png"
-                  alt="Major League Hacking"
-                  width={120}
-                  height={80}
-                  objectFit="contain"
-                />
-              </a>
-              <a href="http://www.smustudentsenate.com" target="_blank" rel="noopener noreferrer">
-                <NextImage
-                  src="/sponsors/SMUStudentSenate.jpg"
-                  alt="SMU Student Senate"
-                  width={120}
-                  height={80}
-                  objectFit="contain"
-                />
-              </a>
-            </div>
-          </div>
-          {/* Sponsor Us Button */}
-          <div className="text-center mt-8">
-            <a
-              href="mailto:hacksmu.team@gmail.com"
-              className="inline-block bg-gradient-to-r from-neon-pink to-neon-blue text-white font-bold py-6 px-16 rounded-full text-3xl hover:shadow-neon transition duration-300"
-            >
-              Sponsor Us!
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <GradientDivider />
-
-      {/* More Hackathons Section
-      <section id="more-hackathons" className="animated-gradient text-white py-15">
-        <div className="container mx-auto px-4 max-w-screen-md">
-          <h2 className="text-center mx-auto resources-title py-5">
-            More Hackathons...
-          </h2>
-          <p className="text-center mx-auto text-2xl mb-6">
-            Check out these other amazing hackathons happening soon!
-          </p>
-          <ul className="list-disc list-inside mx-auto text-center text-2xl">
-            {moreHackathons.map((hackathon, index) => (
-              <li key={index} className="my-4">
-                <a href={hackathon.link} className="text-white hover:underline" target="_blank" rel="noopener noreferrer">
-                  {hackathon.name} - {hackathon.date}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-      <GradientDivider /> */}
-
-      {/* Footer */}
-      <section className="bg-gray-100 px-6 py-8 md:text-base text-xs">
-        {/* Upper Content */}
-        <div className="my-2 relative">
-          {/* Social icons */} {/* !change */}
-          <div className="space-x-4 > * + *">
-            <a href="https://twitter.com/officialhacksmu" rel="noopener noreferrer" target="_blank">
-              <TwitterIcon className="footerIcon" />
-            </a>
-            <a href="https://www.instagram.com/hack.smu" rel="noopener noreferrer" target="_blank">
-              <InstagramIcon className="footerIcon" />
-            </a>
-            <a
-              href="https://www.facebook.com/smuhackathon/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <FacebookIcon className="footerIcon" />
-            </a>
-          </div>
-          {/* Text */}
-          <div className="absolute bottom-0 right-0">
-            {' '}
-            {/* !change */}© 2024 SMU Computer Science Club
-          </div>
-        </div>
-        {/* Lower Content */}
-        <div className="flex justify-between border-t-[1px] py-2 border-black">
-          <p>
-            Website designed by <p className="font-black inline">HackSMU</p> <br /> {/* !change */}
-            {/* PLEASE DO NOT CHANGE <3 */}
-            HackPortal developed with &lt;3 by <p className="font-black inline">HackUTD</p> and{' '}
-            <p className="font-black inline">ACM Development</p>
-            {/* PLEASE DO NOT CHANGE <3 */}
-          </p>
-
-          <div className="flex md:flex-row flex-col md:ml-0 ml-6">
-            {/* !change */}
-            <a
-              href="mailto:hacksmu.team@gmail.com"
-              rel="noopener noreferrer"
-              target="_blank"
-              className="hover:underline font-bold z-10"
-            >
-              Contact Us
-            </a>
-            {/* !change */}
-          </div>
-        </div>
+        )}
       </section>
     </>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const protocol = context.req.headers.referer?.split('://')[0] || 'http';
-  try {
-    const { data: answeredQuestion } = await RequestHelper.get<AnsweredQuestion[]>(
-      `${protocol}://${context.req.headers.host}/api/questions/faq`,
-      {},
-    );
-    const { data: memberData } = await RequestHelper.get<TeamMember[]>(
-      `${protocol}://${context.req.headers.host}/api/members`,
-      {},
-    );
-    const { data: sponsorData } = await RequestHelper.get<Sponsor[]>(
-      `${protocol}://${context.req.headers.host}/api/sponsor`,
-      {},
-    );
-    return {
-      props: {
-        answeredQuestion: answeredQuestion,
-        fetchedMembers: memberData,
-        sponsorCard: sponsorData,
-      },
-    };
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    return {
-      props: {
-        answeredQuestion: [],
-        fetchedMembers: [],
-        sponsorCard: [],
-      },
-    };
-  }
-};
