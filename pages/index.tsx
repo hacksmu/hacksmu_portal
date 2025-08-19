@@ -116,7 +116,7 @@ export default function Home() {
         {/* Final Still */}
         {phase === 'finalStill' && (
           <div className={`absolute inset-0 bg-black transition-opacity duration-700 ${showFinal ? 'opacity-100' : 'opacity-0'}`}>
-            <Image src="/videos/main-screen2.png" alt="Main Screen" layout="fill" objectFit="contain" priority />
+            <Image src="/videos/main-screenS.png" alt="Main Screen" layout="fill" objectFit="contain" priority />
             <div className="absolute z-10 flex flex-col items-center text-center text-white fade-in-final"
               style={{ top: '7%', left: '50%', transform: 'translateX(-50%)' }}>
               <h1 className="neon-title mb-2 text-2xl sm:text-3xl">HackSMU VII</h1>
