@@ -129,7 +129,7 @@ export default function Home() {
         )}
 
         {/* Folder Click Zones with Red Borders */}
-        <div onClick={() => setActiveOverlay('about.png')} className="absolute z-20 cursor-pointer"
+        <div onClick={() => setActiveOverlay('about1.png')} className="absolute z-20 cursor-pointer"
           style={{ top: '13%', left: '70%', width: '5%', height: '8%', border: '2px solid red' }}></div>
 
         <div onClick={() => setActiveOverlay('faq.png')} className="absolute z-20 cursor-pointer"
