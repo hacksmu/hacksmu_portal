@@ -38,6 +38,7 @@ module.exports = {
         'light-yellow': '#cac8c4',
         'neon-pink': '#ff00de',
         'neon-blue': '#29b7ff',
+        'orange': '#f86e19',
       },
       textColor: {
         'light-red': '#ff8787',

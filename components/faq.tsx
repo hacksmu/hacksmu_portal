@@ -43,12 +43,12 @@ export default function FaqPage({ fetchedFaqs }: { fetchedFaqs: AnsweredQuestion
       <div 
         className="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-30 z-0"
         style={{
-          backgroundImage: "url('/backgrounds2024/TokyoCity2.png')",
+          backgroundImage: "url('/assets2025/TitleBackground.png')",
           backgroundAttachment: "fixed"
         }}
       ></div>
       <div className="max-w-3xl mx-auto relative z-10">
-        <h2 className="font-orbitron text-5xl font-bold text-center text-white mb-8 neon-text">
+        <h2 className="text-center mx-auto resources-title py-3">
           Frequently Asked Questions
         </h2>
         <div className="space-y-6">
@@ -68,7 +68,7 @@ export default function FaqPage({ fetchedFaqs }: { fetchedFaqs: AnsweredQuestion
         </div>
         <button
           onClick={expandAll}
-          className="mt-8 w-full bg-gradient-to-r from-neon-pink to-neon-blue text-white font-bold py-2 px-4 rounded hover:from-neon-blue hover:to-neon-pink transition duration-300 ease-in-out"
+          className="mt-8 w-full bg-gradient-to-r from-orange to-neon-blue text-white font-bold py-2 px-4 rounded hover:from-neon-blue hover:to-orange transition duration-300 ease-in-out"
         >
           Expand All
         </button>

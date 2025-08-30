@@ -74,7 +74,7 @@ export default function AppHeader() {
 
   return (
     <>
-      <header className="mt-[-24px] sticky top-0 justify-between flex flex-row w-full bg-dark-blue items-center h-12 z-50 p-4">
+      <header className="mt-[-24px] sticky top-0 justify-between flex flex-row w-full bg-teal items-center h-12 z-50 p-4">
         <a
           className="left-[128px] md:left-[84px]"
           id="mlh-trust-badge"
@@ -109,11 +109,11 @@ export default function AppHeader() {
             <ul
               className={`${
                 showMenu ? 'translate-x-0' : '-translate-x-full'
-              } transform transition-all ease-out duration-300 flex w-6/12 h-screen border-2 border-white flex-col bg-medium-blue fixed top-0 left-0 z-[-1] pt-16`}
+              } transform transition-all ease-out duration-300 flex w-6/12 h-screen border-2 border-white flex-col bg-teal fixed top-0 left-0 z-[-1] pt-16`}
             >
               {dynamicNavItems.map((item) => (
                 <Link key={item.text} href={item.path}>
-                  <a className="border-b-2 first:border-t-2 text-white border-white p-4 py-6 hover:bg-dark-blue">
+                  <a className="border-b-2 first:border-t-2 text-white border-white p-4 py-6 hover:bg-green-700">
                     <p className="text-sm font-bold">{item.text}</p>
                   </a>
                 </Link>

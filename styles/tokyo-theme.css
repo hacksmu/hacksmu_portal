@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,7 +7,7 @@
 :root {
     --neon-green: #009688;
     --neon-blue: #007c92; /* --neon-blue: #29b7ff; */
-    --neon-yellow: #da8803;
+    --neon-yellow: #7e5103;
     --neon-purple: #b829ff; 
 }
 
@@ -34,11 +35,24 @@ body {
     height: 100vh;
     background-color: rgba(0, 0, 51, 0.8);
     /* Adjust the last value (0.8) to control transparency */
-    background-image: linear-gradient(rgba(0, 0, 51, 0.8), rgba(0, 0, 51, 0.8)), url('/backgrounds2024/TokyoCity.png');
+    background-image: linear-gradient(rgba(0, 0, 51, 0.5), rgba(0, 0, 51, 0.8)), url('/assets2025/FishBowl.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
+}
+
+.pixel-neon-title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 4rem; /* smaller since pixel fonts are wide/blocky */
+  font-weight: 400;
+  color: #ffffff;
+  text-shadow:
+    0 0 10px var(--neon-green),
+    0 0 20px var(--neon-green),
+    0 0 30px var(--neon-green);
+  margin-bottom: 1rem;
+  text-transform: uppercase; /* optional for blocky effect */
 }
 
 .neon-title {
@@ -93,7 +107,8 @@ body {
 }
 
 .about-section {
-    background-color: rgba(0, 54, 136, 0.753);
+    background-color: rgb(255, 138, 70);
+    background-image: linear-gradient(rgba(0, 0, 51, 0.5), rgba(0, 0, 51, 0.8)), url('/assets2025/ButterfliesWater.png');
     border-radius: 20px;
     padding: 2rem;
     box-shadow: 0 0 20px rgba(41, 183, 255, 0.5);
@@ -105,7 +120,7 @@ body {
 
 .about-title,
 .about-subtitle {
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Press Start 2P', sans-serif;
     font-weight: 700;
     font-size: 3rem;
     color: #ffffff;
@@ -166,7 +181,7 @@ body {
     content: '>';
     position: absolute;
     left: 0;
-    color: #b829ff;
+    color: #f86e19;
     font-size: 1.3rem;
     /* Match the list item size */
 }
@@ -207,7 +222,11 @@ body {
 }
 
 .text-neon-pink {
-    color: #ff00de;
+    color: #ff46cb;
+}
+
+.text-orange {
+    color: #f86e19;
 }
 
 .border-neon-blue {
@@ -219,7 +238,7 @@ body {
 }
 
 .neon-text {
-    text-shadow: 0 0 5px #ff00de, 0 0 10px #ff00de, 0 0 15px #ff00de, 0 0 20px #ff00de;
+    text-shadow: 0 0 5px #73a64a, 0 0 10px #73a64a, 0 0 15px #73a64a, 0 0 20px #73a64a;
 }
 
 .shadow-neon {
@@ -248,10 +267,14 @@ body {
     font-family: 'Orbitron', sans-serif;
 }
 
+.font-pixel {
+    font-family: 'Press Start 2P', sans-serif;
+}
+
 .resources-title {
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Press Start 2P', sans-serif;
     font-weight: 700;
     font-size: 2.5rem;
-    color: #ffdd01;
+    color: #ffaf01;
     text-shadow: 0 0 10px var(--neon-yellow), 0 0 20px var(--neon-yellow);
 }

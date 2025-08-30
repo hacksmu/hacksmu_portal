@@ -21,7 +21,7 @@
 }
 
 .gradient-button {
-    background: linear-gradient(270deg, #009688, #007c92);
+    background: linear-gradient(270deg, #f4b898, #cc642c);
     background-size: 200% 200%;
     animation: gradientBG 3s ease infinite;
 }
@@ -62,9 +62,50 @@
       background-position: 0% 50%;
     }
   }
+
+/* Butterfly gentle up-and-down float */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* Optional glowing pulse */
+@keyframes glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 5px rgba(255, 105, 180, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px rgba(255, 105, 180, 0.9));
+  }
+}
+
+/* Butterfly class */
+.butterfly {
+  position: absolute;
+  width: 128px;
+  height: 128px;
+}
+
+.butterfly-left {
+  top: 70%;
+  left: 10%;
+  transform: rotate(-30deg);
+}
+
+.butterfly-right {
+  top: 10%;
+  right: 10%;
+  transform: rotate(15deg);
+}
   
   .animated-gradient {
-    background: linear-gradient(270deg, #f819e0, #d050e8, #af6dee, #868cf5, #6b9cf9, #37b3fe);
+    background: linear-gradient(270deg, #f86e19, #e8a650, #a7ee6d, #86bef5, #6b9cf9, #37b3fe);
     background-size: 1200% 1200%;
     animation: gradientBackground 15s ease infinite;
   }
+
+
