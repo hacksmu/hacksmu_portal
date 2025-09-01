@@ -16,40 +16,16 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import FaqPage from '../components/faq';
 import GradientDivider from '../components/GradientDivider';
 
-// ---- Minimal type stubs (remove if you already define these elsewhere) ----
-export interface AnsweredQuestion {
-  id?: string | number;
-  question: string;
-  answer: string;
-}
-export interface TeamMember {
-  name: string;
-  description?: string;
-  linkedin?: string;
-  github?: string;
-  personalSite?: string;
-  fileName?: string;
-}
-export interface Sponsor {
-  name?: string;
-  logoUrl?: string;
-  url?: string;
-}
-// ---------------------------------------------------------------------------
-
-// Optional: keep for future usage (currently not rendered)
+// Keep this local list if you plan to re-enable the section later
 const moreHackathons = [
-  {
-    name: 'CodeRED Astra',
-    date: 'October 25-26th, 2025',
-    link: 'https://uhcode.red/',
-  },
+  { name: 'CodeRED Astra', date: 'October 25-26th, 2025', link: 'https://uhcode.red/' },
 ];
 
+// Avoid type collisions with other modules (FaqPage likely has its own types)
 type HomeProps = {
-  answeredQuestion: AnsweredQuestion[];
-  fetchedMembers: TeamMember[];
-  sponsorCard: Sponsor[];
+  answeredQuestion: any[]; // matches FaqPage expected shape at runtime
+  fetchedMembers: any[];
+  sponsorCard: any[];
 };
 
 export default function Home(props: HomeProps) {
@@ -80,7 +56,7 @@ export default function Home(props: HomeProps) {
         <div className="hero-content">
           <h1 className="glow-text neon-title">HackSMU VII</h1>
           <p className="neon-date">October 25-26th, 2025</p>
-          <Link href="/auth" passHref legacyBehavior>
+          <Link href="/auth" legacyBehavior passHref>
             <a className="gradient-button neon-button" aria-label="Apply to HackSMU VII">
               Apply here!
             </a>
@@ -111,8 +87,13 @@ export default function Home(props: HomeProps) {
 
         <h3 className="about-title py-2">HackSMU is...</h3>
         <ul className="about-list">
-          <li>A platform for entrepreneurs, designers, and developers to unlock their creativity and drive positive social impact.</li>
-          <li>An opportunity to connect with like-minded individuals, network with companies, and advance your career.</li>
+          <li>
+            A platform for entrepreneurs, designers, and developers to unlock their creativity and drive positive social
+            impact.
+          </li>
+          <li>
+            An opportunity to connect with like-minded individuals, network with companies, and advance your career.
+          </li>
           <li>Open to participants from all majors and experience levels (truly inclusive!).</li>
           <li>Enjoy a variety of free food throughout the event (yum!).</li>
           <li>Packed with fun and excitement!</li>
@@ -124,6 +105,7 @@ export default function Home(props: HomeProps) {
       {/* FAQ */}
       <section id="faq" className="bg-purple">
         <div className="mt-4" />
+        {/* Avoids type-name conflicts by not importing/redeclaring AnsweredQuestion here */}
         <FaqPage fetchedFaqs={props.answeredQuestion} />
       </section>
 
@@ -144,7 +126,7 @@ export default function Home(props: HomeProps) {
                 Check out our live site for more information on schedule, location, events, prizes, and more!
               </p>
               <div className="text-center md:text-left">
-                <Link href="/dashboard" legacyBehavior>
+                <Link href="/dashboard" legacyBehavior passHref>
                   <a className="inline-block bg-gradient-to-r from-neon-pink to-neon-blue text-white font-bold py-3 px-8 rounded-full text-xl hover:shadow-neon transition duration-300">
                     Dashboard
                   </a>
@@ -304,24 +286,13 @@ export default function Home(props: HomeProps) {
 }
 
 export const getServerSideProps: GetServerSideProps<HomeProps> = async (context) => {
-  // Prefer referer protocol if present; fallback to http
   const protocol = context.req.headers.referer?.split('://')[0] || 'http';
   const base = `${protocol}://${context.req.headers.host}`;
 
   try {
-    const { data: answeredQuestion } = await RequestHelper.get<AnsweredQuestion[]>(
-      `${base}/api/questions/faq`,
-      {},
-    );
-    const { data: memberData } = await RequestHelper.get<TeamMember[]>(
-      `${base}/api/members`,
-      {},
-    );
-    const { data: sponsorData } = await RequestHelper.get<Sponsor[]>(
-      `${base}/api/sponsor`,
-      {},
-    );
-
+    const { data: answeredQuestion } = await RequestHelper.get<any[]>(`${base}/api/questions/faq`, {});
+    const { data: memberData } = await RequestHelper.get<any[]>(`${base}/api/members`, {});
+    const { data: sponsorData } = await RequestHelper.get<any[]>(`${base}/api/sponsor`, {});
     return {
       props: {
         answeredQuestion,
