@@ -48,9 +48,9 @@ function PortalApp({ Component, pageProps }: AppProps) {
                 (process.env.NODE_ENV !== 'development' && (
                   <link rel="manifest" href="/manifest.json" />
                 ))}
-              <link href="/icons/favicon-16x16.png" rel="icon" type="image/png" sizes="16x16" />
-              <link href="/icons/favicon-32x32.png" rel="icon" type="image/png" sizes="32x32" />
-              <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+              <link href="/icons/favicon-16x16V3.png" rel="icon" type="image/png" sizes="16x16" />
+              <link href="/icons/favicon-32x32V3.png" rel="icon" type="image/png" sizes="32x32" />
+              <link rel="apple-touch-icon" href="/icons/apple-touch-iconV3.png" />
               <link rel="preconnect" href="https://fonts.googleapis.com" />
               <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
               <link
