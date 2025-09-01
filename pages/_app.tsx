@@ -55,8 +55,8 @@ function PortalApp({ Component, pageProps }: AppProps) {
 
               {/* --- Favicons (make sure these files exist in /public or /public/icons) --- */}
               {/* Root ICO for maximum compatibility */}
-              <link rel="icon" href="/favicon.v3.ico" />
-              <link rel="shortcut icon" href="/favicon.v3.ico" />
+              <link rel="icon" href="/icons/favicon.v3.ico" />
+              <link rel="shortcut icon" href="/icons/favicon.v3.ico" />
 
               {/* PNG sizes */}
               <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32V3.png?v=3" />
