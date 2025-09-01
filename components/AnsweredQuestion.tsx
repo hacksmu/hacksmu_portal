@@ -13,8 +13,10 @@ import { ChevronUpIcon } from '@heroicons/react/solid';
  *
  */
 interface AnsweredQuestionProps {
+  id: string | number;
   question: string;
   answer: string;
+  order: number;
   colorCode: string;
   iconColorCode: string;
   isOpen: boolean;
@@ -29,6 +31,7 @@ interface AnsweredQuestionProps {
 export default function AnsweredQuestion({
   question,
   answer,
+  order,
   colorCode,
   iconColorCode,
   isOpen,

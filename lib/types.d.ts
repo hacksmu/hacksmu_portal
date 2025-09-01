@@ -121,6 +121,8 @@ type Registration = {
 type AnsweredQuestion = {
   question: string;
   answer: string;
+  order: number;
+  id: string | number;
 };
 
 /**

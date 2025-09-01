@@ -15,6 +15,7 @@ export type AnsweredQuestion = {
   id: string | number;
   question: string;
   answer: string;
+  order: number;
 };
 export type TeamMember = {
   name: string;

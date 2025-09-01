@@ -16,19 +16,21 @@ import NextImage from 'next/image';
  * Route: /about/faq
  */
 export default function FaqPage({ fetchedFaqs }: { fetchedFaqs: AnsweredQuestion[] }) {
-  const [loading, setLoading] = useState(true);
-  const [faqs, setFaqs] = useState<AnsweredQuestion[]>([]);
-  const [disclosuresStatus, setDisclosureStatus] = useState<boolean[]>();
+  const [loading, setLoading] = useState(true)
+  const [faqs, setFaqs] = useState<AnsweredQuestion[]>([])
+  const [disclosuresStatus, setDisclosureStatus] = useState<boolean[]>([])
 
   useEffect(() => {
-    setFaqs(fetchedFaqs);
-    setDisclosureStatus(fetchedFaqs.map(() => false));
-    setLoading(false);
-  }, [fetchedFaqs]);
+    // Fallback sort (keeps docs without 'order' at the end)
+    const sorted = [...fetchedFaqs].sort(
+      (a, b) => (a.order ?? Number.MAX_SAFE_INTEGER) - (b.order ?? Number.MAX_SAFE_INTEGER)
+    )
+    setFaqs(sorted)
+    setDisclosureStatus(sorted.map(() => false))
+    setLoading(false)
+  }, [fetchedFaqs])
 
-  const expandAll = () => {
-    setDisclosureStatus(new Array(disclosuresStatus.length).fill(true));
-  };
+  const expandAll = () => setDisclosureStatus(Array.from({ length: disclosuresStatus.length }, () => true))
 
   if (loading) {
     return (
@@ -52,23 +54,23 @@ export default function FaqPage({ fetchedFaqs }: { fetchedFaqs: AnsweredQuestion
           Frequently Asked Questions
         </h2>
         <div className="space-y-6">
-          {faqs.map(({ question, answer }, idx) => (
-            <FaqDisclosure
-              key={idx}
-              question={question}
-              answer={answer}
-              isOpen={disclosuresStatus[idx]}
-              toggleDisclosure={() => {
-                const currDisclosure = [...disclosuresStatus];
-                currDisclosure[idx] = !currDisclosure[idx];
-                setDisclosureStatus(currDisclosure);
-              }}
-            />
+          {faqs.map(({id, question, answer}, idx) => (
+              <FaqDisclosure
+                  key={id ?? idx}
+                  question={question}
+                  answer={answer}
+                  isOpen={disclosuresStatus[idx]}
+                  toggleDisclosure={() => {
+                    const curr = [...disclosuresStatus]
+                    curr[idx] = !curr[idx]
+                    setDisclosureStatus(curr)
+                  }}
+              />
           ))}
         </div>
         <button
-          onClick={expandAll}
-          className="mt-8 w-full bg-gradient-to-r from-orange to-neon-blue text-white font-bold py-2 px-4 rounded hover:from-neon-blue hover:to-orange transition duration-300 ease-in-out"
+            onClick={expandAll}
+            className="mt-8 w-full bg-gradient-to-r from-orange to-neon-blue text-white font-bold py-2 px-4 rounded hover:from-neon-blue hover:to-orange transition duration-300 ease-in-out"
         >
           Expand All
         </button>
@@ -84,8 +86,8 @@ export default function FaqPage({ fetchedFaqs }: { fetchedFaqs: AnsweredQuestion
  */
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const protocol = context.req.headers.referer?.split('://')[0] || 'http';
-  const { data } = await RequestHelper.get<AnsweredQuestion[]>(
-    `${protocol}://${context.req.headers.host}/api/questions/faq`,
+  const {data} = await RequestHelper.get<AnsweredQuestion[]>(
+      `${protocol}://${context.req.headers.host}/api/questions/faq`,
     {},
   );
   return {
@@ -94,3 +96,5 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   };
 };
+
+
