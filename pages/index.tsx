@@ -192,12 +192,12 @@ export default function Home() {
         )}
 
         {/* Red Box Folders */}
-        <div onClick={() => setActiveOverlayKey('about')} className="absolute z-20 cursor-pointer" style={{ top: '19%', left: '62%', width: '5%', height: '9%', border: '2px solid red' }} />
-        <div onClick={() => setActiveOverlayKey('faq')} className="absolute z-20 cursor-pointer" style={{ top: '22%', left: '27%', width: '5%', height: '9%', border: '2px solid red' }} />
-        <div onClick={() => setActiveOverlayKey('resources')} className="absolute z-20 cursor-pointer" style={{ top: '40%', left: '45%', width: '5%', height: '9%', border: '2px solid red' }} />
-        <div onClick={() => setActiveOverlayKey('sponsors')} className="absolute z-20 cursor-pointer" style={{ top: '67%', left: '50%', width: '5%', height: '9%', border: '2px solid red' }} />
-        <div onClick={() => setActiveOverlayKey('schedule')} className="absolute z-20 cursor-pointer" style={{ top: '80%', left: '59%', width: '5%', height: '9%', border: '2px solid red' }} />
-        <div onClick={() => setActiveOverlayKey('dashboard')} className="absolute z-20 cursor-pointer" style={{ top: '75%', left: '35%', width: '5%', height: '9%', border: '2px solid red' }} />
+        <div onClick={() => setActiveOverlayKey('about')} className="absolute z-20 cursor-pointer" style={{ top: '17%', left: '60%', width: '5%', height: '9%', border: '2px solid red' }} />
+        <div onClick={() => setActiveOverlayKey('faq')} className="absolute z-20 cursor-pointer" style={{ top: '22%', left: '26%', width: '5%', height: '9%', border: '2px solid red' }} />
+        <div onClick={() => setActiveOverlayKey('resources')} className="absolute z-20 cursor-pointer" style={{ top: '41%', left: '46%', width: '5%', height: '9%', border: '2px solid red' }} />
+        <div onClick={() => setActiveOverlayKey('sponsors')} className="absolute z-20 cursor-pointer" style={{ top: '66%', left: '51%', width: '5%', height: '9%', border: '2px solid red' }} />
+        <div onClick={() => setActiveOverlayKey('schedule')} className="absolute z-20 cursor-pointer" style={{ top: '81%', left: '62%', width: '5%', height: '9%', border: '2px solid red' }} />
+        <div onClick={() => setActiveOverlayKey('dashboard')} className="absolute z-20 cursor-pointer" style={{ top: '76%', left: '34%', width: '5%', height: '9%', border: '2px solid red' }} />
 
         {/* Overlay Image Display */}
         {activeOverlayKey && (
@@ -226,12 +226,12 @@ export default function Home() {
                     }}
                     className="absolute z-40 text-white text-4xl"
                     style={{
-                      top: '50%',
-                      left: '42%',
+                      top: '70%',
+                      left: '50%',
                       transform: 'translate(-50%, -50%)',
                       border: '2px solid red',
                       background: 'transparent',
-                      padding: '10px',
+                      padding: '20px',
                       cursor: 'pointer',
                     }}
                   >
@@ -246,12 +246,12 @@ export default function Home() {
                     }}
                     className="absolute z-40 text-white text-4xl"
                     style={{
-                      top: '50%',
-                      right: '42%',
+                      top: '70%',
+                      right: '50%',
                       transform: 'translate(50%, -50%)',
                       border: '2px solid red',
                       background: 'transparent',
-                      padding: '10px',
+                      padding: '20px',
                       cursor: 'pointer',
                     }}
                   >
