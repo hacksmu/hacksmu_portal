@@ -193,11 +193,11 @@ export default function Home() {
 
         {/* Red Box Folders */}
         <div onClick={() => setActiveOverlayKey('about')} className="absolute z-20 cursor-pointer" style={{ top: '19%', left: '62%', width: '5%', height: '9%', border: '2px solid red' }} />
-        <div onClick={() => setActiveOverlayKey('faq')} className="absolute z-20 cursor-pointer" style={{ top: '22%', left: '20%', width: '5%', height: '9%', border: '2px solid red' }} />
-        <div onClick={() => setActiveOverlayKey('resources')} className="absolute z-20 cursor-pointer" style={{ top: '37%', left: '46%', width: '5%', height: '9%', border: '2px solid red' }} />
-        <div onClick={() => setActiveOverlayKey('sponsors')} className="absolute z-20 cursor-pointer" style={{ top: '62%', left: '54%', width: '5%', height: '9%', border: '2px solid red' }} />
-        <div onClick={() => setActiveOverlayKey('schedule')} className="absolute z-20 cursor-pointer" style={{ top: '77%', left: '62%', width: '5%', height: '19%', border: '2px solid red' }} />
-        <div onClick={() => setActiveOverlayKey('dashboard')} className="absolute z-20 cursor-pointer" style={{ top: '75%', left: '30%', width: '5%', height: '9%', border: '2px solid red' }} />
+        <div onClick={() => setActiveOverlayKey('faq')} className="absolute z-20 cursor-pointer" style={{ top: '22%', left: '27%', width: '5%', height: '9%', border: '2px solid red' }} />
+        <div onClick={() => setActiveOverlayKey('resources')} className="absolute z-20 cursor-pointer" style={{ top: '40%', left: '45%', width: '5%', height: '9%', border: '2px solid red' }} />
+        <div onClick={() => setActiveOverlayKey('sponsors')} className="absolute z-20 cursor-pointer" style={{ top: '67%', left: '50%', width: '5%', height: '9%', border: '2px solid red' }} />
+        <div onClick={() => setActiveOverlayKey('schedule')} className="absolute z-20 cursor-pointer" style={{ top: '80%', left: '59%', width: '5%', height: '9%', border: '2px solid red' }} />
+        <div onClick={() => setActiveOverlayKey('dashboard')} className="absolute z-20 cursor-pointer" style={{ top: '75%', left: '35%', width: '5%', height: '9%', border: '2px solid red' }} />
 
         {/* Overlay Image Display */}
         {activeOverlayKey && (
