@@ -66,7 +66,7 @@ const Home: NextPage<HomeProps> = (props) => {
         <Head>
           <title>HackSMU VII</title>
           <meta name="description" content="HackSMU Portal"/>
-          <link rel="icon" href="/favicon2.ico"/>
+          <link rel="icon" href="/favicon.ico"/>
         </Head>
 
         {/* HERO */}
