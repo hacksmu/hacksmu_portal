@@ -207,14 +207,6 @@ export const hackPortalConfig: HackPortalConfig = {
             initialValue: '',
             options: [
               {
-                title: 'Less than Secondary / High School',
-                value: 'lessThanSecondary',
-              },
-              {
-                title: 'Secondary / High School',
-                value: 'secondary',
-              },
-              {
                 title: 'Undergraduate University (2 year - community college or similar)',
                 value: 'undergrad2Year',
               },
@@ -400,6 +392,10 @@ export const hackPortalConfig: HackPortalConfig = {
                 value: 'Wheat',
               },
               {
+                title: 'Gluten',
+                value: 'Gluten',
+              },
+              {
                 title: 'Dairy',
                 value: 'Dairy',
               },
@@ -466,24 +462,24 @@ export const hackPortalConfig: HackPortalConfig = {
             initialValue: [],
             options: [
               {
-                title: 'PayPal',
-                value: 'PayPal',
+                title: 'Invesco',
+                value: 'Invesco',
               },
               {
-                title: 'IBM',
-                value: 'IBM',
+                title: 'Sponsor 2 (TBD)',
+                value: 'Sponsor 2 (TBD)',
               },
               {
-                title: 'ParkHub',
-                value: 'ParkHub',
+                title: 'Sponsor 3 (TBD)',
+                value: 'Sponsor 3 (TBD)',
               },
               {
-                title: 'Sponsor 4 (TBH)',
-                value: 'Sponsor 4 (TBH)',
+                title: 'Sponsor 4 (TBD)',
+                value: 'Sponsor 4 (TBD)',
               },
               {
-                title: 'Sponsor 5 (TBH)',
-                value: 'Sponsor 5 (TBH)',
+                title: 'Sponsor 5 (TBD)',
+                value: 'Sponsor 5 (TBD)',
               },
             ],
           },
