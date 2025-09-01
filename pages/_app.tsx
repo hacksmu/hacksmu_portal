@@ -42,22 +42,41 @@ function PortalApp({ Component, pageProps }: AppProps) {
                 name="viewport"
                 content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
               />
-              <title>HackSMU VI</title> {/* !change */}
+
+              {/* Update the title while you're here */}
+              <title>HackSMU VII</title>
+
               <meta name="description" content="Your all-in-one guide to this hackathon." />
-              {process.env.ENABLE_PWA ||
-                (process.env.NODE_ENV !== 'development' && (
-                  <link rel="manifest" href="/manifest.json" />
-                ))}
-              <link href="/icons/favicon-16x16V3.png" rel="icon" type="image/png" sizes="16x16" />
-              <link href="/icons/favicon-32x32V3.png" rel="icon" type="image/png" sizes="32x32" />
-              <link rel="apple-touch-icon" href="/icons/apple-touch-iconV3.png" />
+
+              {/* PWA manifest (keep this if you actually have /manifest.json) */}
+              {(process.env.ENABLE_PWA || process.env.NODE_ENV !== 'development') && (
+                <link rel="manifest" href="/manifest.json?v=3" />
+              )}
+
+              {/* --- Favicons (make sure these files exist in /public or /public/icons) --- */}
+              {/* Root ICO for maximum compatibility */}
+              <link rel="icon" href="/favicon.v3.ico" />
+              <link rel="shortcut icon" href="/favicon.v3.ico" />
+
+              {/* PNG sizes */}
+              <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32V3.png?v=3" />
+              <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16V3.png?v=3" />
+
+              {/* iOS home screen */}
+              <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-iconV3.png?v=3" />
+
+              {/* (Optional) Safari pinned tab (add this file if you have it) */}
+              {/* <link rel="mask-icon" href="/icons/safari-pinned-tab.svg?v=3" color="#5D5FEF" /> */}
+
+              <meta name="theme-color" content="#5D5FEF" />
+
+              {/* Fonts */}
               <link rel="preconnect" href="https://fonts.googleapis.com" />
-              <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+              <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
               <link
                 href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Rampart+One&family=Roboto:wght@400;600;700;900&family=Orbitron:wght@400;700&family=Press+Start+2P&display=swap"
                 rel="stylesheet"
               />
-              <meta name="theme-color" content="#5D5FEF" />
             </Head>
 
             {/* Apply the font variable here so it’s available everywhere */}

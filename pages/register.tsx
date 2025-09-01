@@ -172,7 +172,7 @@ export default function Register() {
       <Head>
         <title>Hacker Registration</title>
         <meta name="description" content="Register for [HACKATHON NAME]" />
-        <link rel="icon" href="/icons/favicon.ico" />
+        <link rel="icon" href="/icons/favicon.v3.ico" />
       </Head>
 
       <section id="jumbotron" className="p-2 px-6">
