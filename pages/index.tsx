@@ -1,5 +1,3 @@
-// pages/index.tsx
-
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -34,15 +32,18 @@ export default function Home() {
   const [overlayIndex, setOverlayIndex] = useState<number>(0);
   const [showOverlay, setShowOverlay] = useState(false);
 
+  // Play intro video on mount
   useEffect(() => {
     introRef.current?.play().catch(() => {});
   }, []);
 
+  // Transition to still image after intro ends
   const handleIntroEnded = () => {
     setPhase('introStill');
     setShowIntroVid(false);
   };
 
+  // Start zoom video on click or keydown during introStill
   useEffect(() => {
     const beginZoom = () => {
       if (phase === 'introStill') {
@@ -59,6 +60,7 @@ export default function Home() {
     };
   }, [phase]);
 
+  // Fade in final still image
   useEffect(() => {
     if (phase === 'finalStill') {
       const t = setTimeout(() => setShowFinal(true), 30);
@@ -68,6 +70,7 @@ export default function Home() {
     }
   }, [phase]);
 
+  // Handle overlay appearance
   useEffect(() => {
     if (activeOverlayKey !== null) {
       setOverlayIndex(0);
@@ -115,7 +118,8 @@ export default function Home() {
       </Head>
 
       <section className="fixed inset-0 overflow-hidden z-0 bg-black">
-        {/* Intermediate Still */}
+
+        {/* Still image between intro and zoom */}
         {phase === 'introStill' && (
           <div
             className={`absolute inset-0 transition-opacity duration-500 ${
@@ -132,7 +136,7 @@ export default function Home() {
           </div>
         )}
 
-        {/* Intro Video */}
+        {/* Intro video */}
         <video
           ref={introRef}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
@@ -146,7 +150,7 @@ export default function Home() {
           onEnded={handleIntroEnded}
         />
 
-        {/* Zoom Video */}
+        {/* Zoom-in video */}
         <video
           ref={zoomRef}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
@@ -187,8 +191,8 @@ export default function Home() {
           </div>
         )}
 
-        {/* Red Bordered Folder Click Zones */}
-        <div onClick={() => setActiveOverlayKey('about')} className="absolute z-20 cursor-pointer" style={{ top: '13%', left: '70%', width: '5%', height: '8%', border: '2px solid red' }} />
+        {/* Red Box Folders */}
+        <div onClick={() => setActiveOverlayKey('about')} className="absolute z-20 cursor-pointer" style={{ top: '20%', left: '60%', width: '5%', height: '8%', border: '2px solid red' }} />
         <div onClick={() => setActiveOverlayKey('faq')} className="absolute z-20 cursor-pointer" style={{ top: '23%', left: '14%', width: '6%', height: '10%', border: '2px solid red' }} />
         <div onClick={() => setActiveOverlayKey('resources')} className="absolute z-20 cursor-pointer" style={{ top: '35%', left: '45%', width: '6%', height: '10%', border: '2px solid red' }} />
         <div onClick={() => setActiveOverlayKey('sponsors')} className="absolute z-20 cursor-pointer" style={{ top: '58%', left: '57%', width: '6%', height: '10%', border: '2px solid red' }} />
@@ -211,7 +215,7 @@ export default function Home() {
               onClick={clearOverlay}
             />
 
-            {/* Navigation Arrows */}
+            {/* Custom Centered Navigation Arrows */}
             {overlaySequences[activeOverlayKey].length > 1 && (
               <>
                 {overlayIndex > 0 && (
@@ -220,7 +224,16 @@ export default function Home() {
                       e.stopPropagation();
                       prevOverlay();
                     }}
-                    className="absolute left-6 top-1/2 transform -translate-y-1/2 z-40 text-white text-4xl"
+                    className="absolute z-40 text-white text-4xl"
+                    style={{
+                      top: '50%',
+                      left: '42%',
+                      transform: 'translate(-50%, -50%)',
+                      border: '2px solid red',
+                      background: 'transparent',
+                      padding: '10px',
+                      cursor: 'pointer',
+                    }}
                   >
                     ⬅️
                   </button>
@@ -231,7 +244,16 @@ export default function Home() {
                       e.stopPropagation();
                       nextOverlay();
                     }}
-                    className="absolute right-6 top-1/2 transform -translate-y-1/2 z-40 text-white text-4xl"
+                    className="absolute z-40 text-white text-4xl"
+                    style={{
+                      top: '50%',
+                      right: '42%',
+                      transform: 'translate(50%, -50%)',
+                      border: '2px solid red',
+                      background: 'transparent',
+                      padding: '10px',
+                      cursor: 'pointer',
+                    }}
                   >
                     ➡️
                   </button>
@@ -244,7 +266,3 @@ export default function Home() {
     </>
   );
 }
-
-{/*
-import Head from 'next/head'; import Link from 'next/link'; import Image from 'next/image'; import { useEffect, useRef, useState } from 'react'; type Phase = 'introPlaying' | 'introStill' | 'zoomPlaying' | 'finalStill'; export default function Home() { const [phase, setPhase] = useState<Phase>('introPlaying'); const introRef = useRef<HTMLVideoElement>(null); const zoomRef = useRef<HTMLVideoElement>(null); const [showIntroVid, setShowIntroVid] = useState(true); const [showZoomVid, setShowZoomVid] = useState(false); const [showFinal, setShowFinal] = useState(false); const [activeOverlay, setActiveOverlay] = useState<string | null>(null); const [showOverlay, setShowOverlay] = useState(false); // Play intro video on mount useEffect(() => { introRef.current?.play().catch(() => {}); }, []); // When intro ends, show intermediate still const handleIntroEnded = () => { setPhase('introStill'); setShowIntroVid(false); }; // Click/keydown during introStill triggers zoom video useEffect(() => { const beginZoom = () => { if (phase === 'introStill') { setPhase('zoomPlaying'); setShowZoomVid(true); zoomRef.current?.play().catch(() => {}); } }; window.addEventListener('click', beginZoom); window.addEventListener('keydown', beginZoom); return () => { window.removeEventListener('click', beginZoom); window.removeEventListener('keydown', beginZoom); }; }, [phase]); // When finalStill phase is reached, fade in useEffect(() => { if (phase === 'finalStill') { const t = setTimeout(() => setShowFinal(true), 30); return () => clearTimeout(t); } else { setShowFinal(false); } }, [phase]); // Fade in overlay when activeOverlay is set useEffect(() => { if (activeOverlay) { const t = setTimeout(() => setShowOverlay(true), 30); return () => clearTimeout(t); } else { setShowOverlay(false); } }, [activeOverlay]); const clearOverlay = () => { setShowOverlay(false); setTimeout(() => setActiveOverlay(null), 300); }; return ( <> <Head> <title>HackSMU VII</title> <meta name="description" content="HackSMU Portal" /> <link rel="icon" href="/hacksmu_fish.ico" /> <link rel="preload" as="image" href="/videos/intro_still.png" /> <link rel="preload" as="image" href="/videos/final_still.png" /> <link rel="preload" as="video" href="/videos/zoomin.mp4" type="video/mp4" /> </Head> <section className="fixed inset-0 overflow-hidden z-0 bg-black"> {phase === 'introStill' && ( <div className={absolute inset-0 transition-opacity duration-500 ${!showIntroVid ? 'opacity-100' : 'opacity-0'}}> <Image src="/videos/inter-screen2.png" alt="Intermediate Screen" layout="fill" objectFit="cover" priority /> </div> )} <video ref={introRef} className={absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${showIntroVid ? 'opacity-100' : 'opacity-0'}} src="/videos/turnon.mp4" muted autoPlay playsInline loop={false} onEnded={handleIntroEnded} /> <video ref={zoomRef} className={absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${showZoomVid ? 'opacity-100' : 'opacity-0'}} src="/videos/zoomin.mp4" muted playsInline loop={false} onCanPlay={() => phase === 'zoomPlaying' && zoomRef.current?.play().catch(() => {})} onEnded={() => setPhase('finalStill')} /> {phase === 'finalStill' && ( <div className={absolute inset-0 bg-black transition-opacity duration-700 ${showFinal ? 'opacity-100' : 'opacity-0'}}> <Image src="/videos/main-screenS.png" alt="Main Screen" layout="fill" objectFit="contain" priority /> <div className="absolute z-10 flex flex-col items-center text-center text-white fade-in-final" style={{ top: '7%', left: '50%', transform: 'translateX(-50%)' }}> <h1 className="neon-title mb-2 text-2xl sm:text-3xl">HackSMU VII</h1> <p className="neon-date text-md sm:text-xl mb-4">October 25–26th, 2025</p> <Link href="/auth" passHref> <a className="gradient-button neon-button text-sm sm:text-base">Apply here!</a> </Link> </div> </div> )} <div onClick={() => setActiveOverlay('about1.png')} className="absolute z-20 cursor-pointer" style={{ top: '13%', left: '70%', width: '5%', height: '8%', border: '2px solid red' }}></div> <div onClick={() => setActiveOverlay('faq.png')} className="absolute z-20 cursor-pointer" style={{ top: '23%', left: '14%', width: '6%', height: '10%', border: '2px solid red' }}></div> <div onClick={() => setActiveOverlay('resources.png')} className="absolute z-20 cursor-pointer" style={{ top: '35%', left: '45%', width: '6%', height: '10%', border: '2px solid red' }}></div> <div onClick={() => setActiveOverlay('sponsors.png')} className="absolute z-20 cursor-pointer" style={{ top: '58%', left: '57%', width: '6%', height: '10%', border: '2px solid red' }}></div> <div onClick={() => setActiveOverlay('schedule.png')} className="absolute z-20 cursor-pointer" style={{ top: '75%', left: '66%', width: '6%', height: '10%', border: '2px solid red' }}></div> <div onClick={() => setActiveOverlay('dashboard.png')} className="absolute z-20 cursor-pointer" style={{ top: '75%', left: '24%', width: '6%', height: '10%', border: '2px solid red' }}></div> {activeOverlay && ( <div className={absolute inset-0 bg-black transition-opacity duration-700 z-30 ${ showOverlay ? 'opacity-100' : 'opacity-0' }} onClick={clearOverlay} > <Image src={/videos/${activeOverlay}} alt="Overlay" layout="fill" objectFit="contain" priority /> </div> )} </section> </> ); }
-*/}
