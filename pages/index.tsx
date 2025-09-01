@@ -79,18 +79,28 @@ const Home: NextPage<HomeProps> = (props) => {
           </div>
 
            {/* Butterflies positioned independently */}
-          <img
-            src="/assets2025/pixel_butterfly_flap_clean.webp"
-            alt="Pink pixel butterfly flapping"
-            className="butterfly butterfly-left"
-          />
-          <img
-            src="/assets2025/pixel_butterfly_flap_clean.webp"
-            alt="Pink pixel butterfly flapping"
-            className="butterfly butterfly-right"
-          />
-        </section>
+          <div className="butterfly butterfly-left relative w-[160px] h-[160px]" aria-hidden>
+            <Image
+              src="/assets2025/pixel_butterfly_flap_clean.webp"
+              alt=""                 // decorative
+              layout="fill"                   // fills the wrapper box
+              sizes="160px"
+              priority
+              unoptimized            // keep animation frames as-is
+            />
+          </div>
 
+          <div className="butterfly butterfly-right relative w-[160px] h-[160px]" aria-hidden>
+            <Image
+              src="/assets2025/pixel_butterfly_flap_clean.webp"
+              alt=""
+              layout="fill"
+              sizes="160px"
+              priority
+              unoptimized
+            />
+          </div>
+        </section>
 
         <GradientDivider/>
 
