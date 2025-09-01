@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@300&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -44,7 +43,7 @@ body {
 
 .pixel-neon-title {
   font-family: 'Press Start 2P', cursive;
-  font-size: 4rem; /* smaller since pixel fonts are wide/blocky */
+  font-size: 4rem;
   font-weight: 400;
   color: #ffffff;
   text-shadow:
@@ -52,8 +51,9 @@ body {
     0 0 20px var(--neon-green),
     0 0 30px var(--neon-green);
   margin-bottom: 1rem;
-  text-transform: uppercase; /* optional for blocky effect */
+  text-transform: uppercase;
 }
+
 
 .neon-title {
     font-family: 'Orbitron', sans-serif;

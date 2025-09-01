@@ -12,7 +12,7 @@ import { FCMProvider } from '../lib/service-worker/FCMContext';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 // core styles shared by all of react-notion-x (required)
 import 'react-notion-x/src/styles.css';
@@ -54,12 +54,14 @@ function PortalApp({ Component, pageProps }: AppProps) {
               <link rel="preconnect" href="https://fonts.googleapis.com" />
               <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
               <link
-                href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Rampart+One&family=Roboto:wght@400;600;700;900&family=Orbitron:wght@400;700&display=swap"
+                href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Rampart+One&family=Roboto:wght@400;600;700;900&family=Orbitron:wght@400;700&family=Press+Start+2P&display=swap"
                 rel="stylesheet"
               />
               <meta name="theme-color" content="#5D5FEF" />
             </Head>
-            <div className="min-h-screen flex flex-col bg-white mt-5">
+
+            {/* Apply the font variable here so it’s available everywhere */}
+            <div className={`min-h-screen flex flex-col bg-white mt-5`}>
               <AppHeader />
               <Component {...pageProps} />
             </div>
