@@ -21,30 +21,35 @@ const overlaySequences: Record<string, string[]> = {
   dashboard: ['dashboard.png'],
 };
 
+// flip to false later after everything loads fine
+const DEBUG_FORCE_FINAL = true;
+
 export default function Home() {
   const router = useRouter();
-  // If next.config.js sets basePath, this auto-prefixes all public/ URLs
   const prefix = router.basePath ?? '';
 
-  const [phase, setPhase] = useState<Phase>('introPlaying');
+  const [phase, setPhase] = useState<Phase>(DEBUG_FORCE_FINAL ? 'finalStill' : 'introPlaying');
   const introRef = useRef<HTMLVideoElement>(null);
   const zoomRef = useRef<HTMLVideoElement>(null);
 
-  const [showIntroVid, setShowIntroVid] = useState(true);
+  const [showIntroVid, setShowIntroVid] = useState(!DEBUG_FORCE_FINAL);
   const [showZoomVid, setShowZoomVid] = useState(false);
-  const [showFinal, setShowFinal] = useState(false);
+  const [showFinal, setShowFinal] = useState(DEBUG_FORCE_FINAL);
 
   const [activeOverlayKey, setActiveOverlayKey] = useState<string | null>(null);
   const [overlayIndex, setOverlayIndex] = useState<number>(0);
   const [showOverlay, setShowOverlay] = useState(false);
 
-  // Fallbacks so you never get a black screen if assets are missing
-  const [finalImgOk, setFinalImgOk] = useState(true);
-  const [interImgOk, setInterImgOk] = useState(true);
+  // fallbacks so it never blanks
+  const [interOk, setInterOk] = useState(true);
+  const [finalOk, setFinalOk] = useState(true);
+  const [introErr, setIntroErr] = useState<string | null>(null);
+  const [zoomErr, setZoomErr] = useState<string | null>(null);
 
-  // Try to play intro on mount
   useEffect(() => {
-    introRef.current?.play().catch(() => {});
+    if (!DEBUG_FORCE_FINAL) {
+      introRef.current?.play().catch(() => {});
+    }
   }, []);
 
   const handleIntroEnded = () => {
@@ -52,7 +57,6 @@ export default function Home() {
     setShowIntroVid(false);
   };
 
-  // Click/keydown during introStill triggers zoom video
   useEffect(() => {
     const beginZoom = () => {
       if (phase === 'introStill') {
@@ -69,7 +73,6 @@ export default function Home() {
     };
   }, [phase]);
 
-  // Fade in final still image
   useEffect(() => {
     if (phase === 'finalStill') {
       const t = setTimeout(() => setShowFinal(true), 30);
@@ -79,7 +82,6 @@ export default function Home() {
     }
   }, [phase]);
 
-  // Handle overlay appearance
   useEffect(() => {
     if (activeOverlayKey !== null) {
       setOverlayIndex(0);
@@ -100,14 +102,11 @@ export default function Home() {
 
   const nextOverlay = () => {
     if (activeOverlayKey && overlayIndex < overlaySequences[activeOverlayKey].length - 1) {
-      setOverlayIndex((prev) => prev + 1);
+      setOverlayIndex((p) => p + 1);
     }
   };
-
   const prevOverlay = () => {
-    if (activeOverlayKey && overlayIndex > 0) {
-      setOverlayIndex((prev) => prev - 1);
-    }
+    if (activeOverlayKey && overlayIndex > 0) setOverlayIndex((p) => p - 1);
   };
 
   const currentOverlayImage =
@@ -121,7 +120,32 @@ export default function Home() {
         <link rel="icon" href="/hacksmu_fish.ico" />
       </Head>
 
-      <section className="fixed inset-0 overflow-hidden z-0 bg-black">
+      {/* Debug HUD (remove later) */}
+      <div
+        style={{
+          position: 'fixed',
+          top: 8,
+          left: 8,
+          zIndex: 50,
+          fontFamily: 'monospace',
+          fontSize: 12,
+          background: 'rgba(0,0,0,0.6)',
+          color: 'white',
+          padding: '8px 10px',
+          borderRadius: 6,
+          border: '1px solid #f00',
+        }}
+      >
+        <div>phase: {phase}</div>
+        <div>basePath: {prefix || '/'}</div>
+        <div>interOk: {String(interOk)}</div>
+        <div>finalOk: {String(finalOk)}</div>
+        {introErr && <div>introErr: {introErr}</div>}
+        {zoomErr && <div>zoomErr: {zoomErr}</div>}
+      </div>
+
+      {/* Use a gradient base so it never looks pure black */}
+      <section className="fixed inset-0 overflow-hidden z-0 bg-gradient-to-br from-purple-700 via-blue-700 to-black">
         {/* Intermediate Still */}
         {phase === 'introStill' && (
           <div
@@ -129,55 +153,62 @@ export default function Home() {
               !showIntroVid ? 'opacity-100' : 'opacity-0'
             }`}
           >
-            {interImgOk ? (
+            {interOk ? (
               <Image
                 src={`${prefix}/videos/inter-screen2.png`}
                 alt="Intermediate Screen"
                 layout="fill"
                 objectFit="cover"
                 priority
-                onError={() => setInterImgOk(false)}
+                onError={() => setInterOk(false)}
               />
             ) : (
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-700 via-blue-700 to-black" />
+              <div className="absolute inset-0" /> // gradient already behind
             )}
           </div>
         )}
 
         {/* Intro Video */}
-        <video
-          ref={introRef}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
-            showIntroVid ? 'opacity-100' : 'opacity-0'
-          }`}
-          src={`${prefix}/videos/turnon.mp4`}
-          muted
-          autoPlay
-          playsInline
-          loop={false}
-          onEnded={handleIntroEnded}
-          onError={() => {
-            // If the video file isn't found, jump to final still
-            setShowIntroVid(false);
-            setPhase('finalStill');
-          }}
-          onLoadedData={() => introRef.current?.play().catch(() => {})}
-        />
+        {!DEBUG_FORCE_FINAL && (
+          <video
+            ref={introRef}
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+              showIntroVid ? 'opacity-100' : 'opacity-0'
+            }`}
+            src={`${prefix}/videos/turnon.mp4`}
+            muted
+            autoPlay
+            playsInline
+            loop={false}
+            onEnded={handleIntroEnded}
+            onError={(e) => {
+              setIntroErr('intro video failed');
+              setShowIntroVid(false);
+              setPhase('finalStill');
+            }}
+            onLoadedData={() => introRef.current?.play().catch(() => {})}
+          />
+        )}
 
         {/* Zoom Video */}
-        <video
-          ref={zoomRef}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
-            showZoomVid ? 'opacity-100' : 'opacity-0'
-          }`}
-          src={`${prefix}/videos/zoomin.mp4`}
-          muted
-          playsInline
-          loop={false}
-          onCanPlay={() => phase === 'zoomPlaying' && zoomRef.current?.play().catch(() => {})}
-          onEnded={() => setPhase('finalStill')}
-          onError={() => setPhase('finalStill')}
-        />
+        {!DEBUG_FORCE_FINAL && (
+          <video
+            ref={zoomRef}
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+              showZoomVid ? 'opacity-100' : 'opacity-0'
+            }`}
+            src={`${prefix}/videos/zoomin.mp4`}
+            muted
+            playsInline
+            loop={false}
+            onCanPlay={() => phase === 'zoomPlaying' && zoomRef.current?.play().catch(() => {})}
+            onEnded={() => setPhase('finalStill')}
+            onError={() => {
+              setZoomErr('zoom video failed');
+              setPhase('finalStill');
+            }}
+          />
+        )}
 
         {/* Final Still */}
         {phase === 'finalStill' && (
@@ -186,25 +217,25 @@ export default function Home() {
               showFinal ? 'opacity-100' : 'opacity-0'
             }`}
           >
-            {finalImgOk ? (
+            {finalOk ? (
               <Image
                 src={`${prefix}/videos/main-screenS.png`}
                 alt="Main Screen"
                 layout="fill"
                 objectFit="contain"
                 priority
-                onError={() => setFinalImgOk(false)}
+                onError={() => setFinalOk(false)}
               />
             ) : (
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-700 via-blue-700 to-black" />
+              <div className="absolute inset-0" /> // gradient already behind
             )}
 
             <div
-              className="absolute z-10 flex flex-col items-center text-center text-white fade-in-final"
+              className="absolute z-10 flex flex-col items-center text-center text-white"
               style={{ top: '7%', left: '50%', transform: 'translateX(-50%)' }}
             >
-              <h1 className="neon-title mb-2 text-2xl sm:text-3xl">HackSMU VII</h1>
-              <p className="neon-date text-md sm:text-xl mb-4">October 25–26th, 2025</p>
+              <h1 className="mb-2 text-2xl sm:text-3xl">HackSMU VII</h1>
+              <p className="text-md sm:text-xl mb-4">October 25–26th, 2025</p>
               <Link href="/auth" passHref>
                 <a className="gradient-button neon-button text-sm sm:text-base">Apply here!</a>
               </Link>
@@ -212,7 +243,7 @@ export default function Home() {
           </div>
         )}
 
-        {/* Red Bordered Folder Click Zones */}
+        {/* Click Zones */}
         <div onClick={() => setActiveOverlayKey('about')} className="absolute z-20 cursor-pointer" style={{ top: '17%', left: '60%', width: '5%', height: '9%', border: '2px solid red' }} />
         <div onClick={() => setActiveOverlayKey('faq')} className="absolute z-20 cursor-pointer" style={{ top: '22%', left: '26%', width: '5%', height: '9%', border: '2px solid red' }} />
         <div onClick={() => setActiveOverlayKey('resources')} className="absolute z-20 cursor-pointer" style={{ top: '41%', left: '46%', width: '5%', height: '9%', border: '2px solid red' }} />
@@ -237,7 +268,6 @@ export default function Home() {
               onError={clearOverlay}
             />
 
-            {/* Centered Navigation "hotspots" with red borders for positioning */}
             {overlaySequences[activeOverlayKey].length > 1 && (
               <>
                 {overlayIndex > 0 && (
