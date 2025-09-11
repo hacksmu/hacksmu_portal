@@ -289,9 +289,9 @@ export default function Home(props: HomeProps) {
   );
 
   // Provide `order` so it satisfies AnsweredQuestion[]
-  const faqAnswered = useMemo(
+  const faqAnswered: AnsweredQuestion[] = useMemo(
     () =>
-      (faqs || []).map((f: any, i: number) => ({
+      (faqs || []).map((f: any, i: number): AnsweredQuestion => ({
         id: f.id ?? i,
         question: String(f.question ?? ''),
         answer: String(f.answer ?? ''),
