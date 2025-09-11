@@ -534,7 +534,7 @@ export default function Home(props: HomeProps) {
                     )}
 
                     {(faqs.length > 0 || (!faqLoading && !faqError)) && (
-                      <FaqPage fetchedFaqs={faqs} answeredQuestion={faqAnswered} />
+                      <FaqPage fetchedFaqs={faqAnswered} answeredQuestion={faqAnswered} />
                     )}
                   </div>
                 </div>
