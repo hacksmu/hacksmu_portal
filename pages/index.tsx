@@ -281,11 +281,24 @@ export default function Home(props: HomeProps) {
   const [faqLoading, setFaqLoading] = useState(false);
   const [faqError, setFaqError] = useState<string | null>(null);
 
+
+  // Normalize the raw FAQ data coming from SSR or client fetch
   const faqs = useMemo(
-    () => (faqsRaw || []).map(normalizeFaq).filter((f) => f.question || f.answer),
+    () => (faqsRaw || []).map(normalizeFaq).filter(f => f.question || f.answer),
     [faqsRaw]
   );
 
+  // Provide `order` so it satisfies AnsweredQuestion[]
+  const faqAnswered = useMemo(
+    () =>
+      (faqs || []).map((f: any, i: number) => ({
+        id: f.id ?? i,
+        question: String(f.question ?? ''),
+        answer: String(f.answer ?? ''),
+        order: typeof f.order === 'number' ? f.order : i,
+      })),
+    [faqs]
+  );
 
   // intro handling
   useEffect(() => {
