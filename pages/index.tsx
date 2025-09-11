@@ -276,7 +276,18 @@ export default function Home(props: HomeProps) {
   const [faqLoading, setFaqLoading] = useState(false);
   const [faqError, setFaqError] = useState<string | null>(null);
 
-  const faqs = useMemo(() => (faqsRaw || []).map(normalizeFaq).filter(f => f.question || f.answer), [faqsRaw]);
+  // Always provide `order` so it satisfies FaqPage's AnsweredQuestion[]
+  const faqAnswered = useMemo(
+    () =>
+      (faqs || []).map((f: any, i: number) => ({
+        id: f.id ?? i,
+        question: String(f.question ?? ''),
+        answer: String(f.answer ?? ''),
+        order: typeof f.order === 'number' ? f.order : i,
+      })),
+    [faqs]
+  );
+
 
   // intro handling
   useEffect(() => {
@@ -512,7 +523,7 @@ export default function Home(props: HomeProps) {
                     )}
 
                     {(faqs.length > 0 || (!faqLoading && !faqError)) && (
-                      <FaqPage fetchedFaqs={faqs} answeredQuestion={toAnsweredQuestions(faqs as Faq[])} />
+                      <FaqPage fetchedFaqs={faqs} answeredQuestion={faqAnswered} />
                     )}
                   </div>
                 </div>
