@@ -94,6 +94,19 @@ function normalizeFaq(x: AnyFaq, i: number) {
   };
 }
 
+// Explicit types to satisfy FaqPage's AnsweredQuestion[] requirement
+type Faq = { id: string | number; question: string; answer: string; order?: number };
+type AnsweredQuestion = { id: string | number; question: string; answer: string; order: number };
+
+// helper to satisfy the prop type by providing an `order`
+const toAnsweredQuestions = (faqs: Faq[]): AnsweredQuestion[] =>
+  (faqs || []).map((f, idx) => ({
+    id: f.id,
+    question: f.question,
+    answer: f.answer,
+    order: typeof f.order === 'number' ? f.order : idx,
+  }));
+
 async function fetchFaqsClient(): Promise<AnyFaq[]> {
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
   const endpoints = ['/api/questions/faq', '/api/faqs', '/api/faq', '/api/questions'];
@@ -499,7 +512,7 @@ export default function Home(props: HomeProps) {
                     )}
 
                     {(faqs.length > 0 || (!faqLoading && !faqError)) && (
-                      <FaqPage fetchedFaqs={faqs} answeredQuestion={faqs} />
+                      <FaqPage fetchedFaqs={faqs} answeredQuestion={toAnsweredQuestions(faqs as Faq[])} />
                     )}
                   </div>
                 </div>
