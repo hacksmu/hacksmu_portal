@@ -107,24 +107,29 @@ const toAnsweredQuestions = (faqs: Faq[]): AnsweredQuestion[] =>
     order: typeof f.order === 'number' ? f.order : idx,
   }));
 
+// ---------- FAQ helpers ----------
+// (keep pickArray/normalizeFaq/types above as-is)
+
 async function fetchFaqsClient(): Promise<AnyFaq[]> {
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
-  const endpoints = ['/api/questions/faq', '/api/faqs', '/api/faq', '/api/questions'];
+  const path = '/api/questions/faq';
 
-  for (const path of endpoints) {
-    try {
-      const url = origin ? new URL(path, origin).toString() : path;
-      const res = await fetch(url, { headers: { accept: 'application/json' }, credentials: 'same-origin' });
-      if (!res.ok) continue;
-      const json = await res.json();
-      const arr = pickArray(json);
-      if (arr.length) return arr;
-    } catch (e) {
-      console.warn('FAQ endpoint failed:', path, e);
-    }
+  try {
+    const url = origin ? new URL(path, origin).toString() : path;
+    const res = await fetch(url, {
+      headers: { accept: 'application/json' },
+      credentials: 'same-origin',
+    });
+    if (!res.ok) return [];
+    const json = await res.json();
+    // previous code expected { data: [...] } or a raw array
+    return pickArray(json);
+  } catch (e) {
+    console.warn('FAQ endpoint failed:', path, e);
+    return [];
   }
-  return [];
 }
+
 
 // --- Arrow layouts ---
 // Three single-button positions (match your art): center, more-left, more-right.
@@ -573,33 +578,14 @@ export default function Home(props: HomeProps) {
 
 // SSR warm start (client fetch is primary)
 export const getServerSideProps: GetServerSideProps<HomeProps> = async (context) => {
-  const protoHeader =
-    (context.req.headers['x-forwarded-proto'] as string) ||
-    (context.req.headers['x-forwarded-protocol'] as string) ||
-    'http';
-  const hostHeader =
-    (context.req.headers['x-forwarded-host'] as string) ||
-    context.req.headers.host ||
-    'localhost:3000';
-  const proto = protoHeader.split(',')[0];
-  const host = hostHeader.split(',')[0];
-  const base = `${proto}://${host}`;
+  const protocol = context.req.headers.referer?.split('://')[0] || 'http';
+  const base = `${protocol}://${context.req.headers.host}`;
 
   try {
-    let answeredQuestion: AnyFaq[] = [];
-    try {
-      const r1 = await RequestHelper.get<any>(`${base}/api/questions/faq`, {});
-      answeredQuestion = pickArray(r1?.data ?? r1);
-    } catch {}
-    if (!answeredQuestion?.length) {
-      try {
-        const r2 = await RequestHelper.get<any>(`${base}/api/faqs`, {});
-        answeredQuestion = pickArray(r2?.data ?? r2);
-      } catch {}
-    }
-
-    const { data: memberData } = await RequestHelper.get<any[]>(`${base}/api/members`, {}).catch(() => ({ data: [] }));
-    const { data: sponsorData } = await RequestHelper.get<any[]>(`${base}/api/sponsor`, {}).catch(() => ({ data: [] }));
+    // fetch FAQs exactly like the previous working code
+    const { data: answeredQuestion } = await RequestHelper.get<any[]>(`${base}/api/questions/faq`, {});
+    const { data: memberData } = await RequestHelper.get<any[]>(`${base}/api/members`, {});
+    const { data: sponsorData } = await RequestHelper.get<any[]>(`${base}/api/sponsor`, {});
 
     return {
       props: {
@@ -609,7 +595,13 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async (context)
       },
     };
   } catch (error) {
-    console.error('SSR fetch error:', error);
-    return { props: { answeredQuestion: [], fetchedMembers: [], sponsorCard: [] } };
+    console.error('Error fetching data:', error);
+    return {
+      props: {
+        answeredQuestion: [],
+        fetchedMembers: [],
+        sponsorCard: [],
+      },
+    };
   }
 };
