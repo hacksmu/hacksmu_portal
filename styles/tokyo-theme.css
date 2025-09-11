@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -57,7 +57,7 @@ body {
 
 .neon-title {
     font-family: 'Orbitron', sans-serif;
-    font-size: 5rem;
+    font-size: 50rem;
     font-weight: 700;
     color: #ffffff;
     text-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green);
