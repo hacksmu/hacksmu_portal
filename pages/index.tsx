@@ -754,7 +754,7 @@ function AboutContent() {
       }}>
         <p style={{ color: 'rgba(220,240,255,0.90)', fontSize: 14, lineHeight: 1.7, margin: 0 }}>
           HackSMU is Southern Methodist University's annual hackathon hosted by{' '}
-          <strong style={{ color: 'rgba(100,230,255,0.95)' }}>ACM @ SMU</strong>. Over 24 hours, hundreds of
+          <strong style={{ color: 'rgba(100,230,255,0.95)' }}>SMU CS Club</strong>. Over 24 hours, hundreds of
           students collaborate, build, and ship incredible projects — from AI applications and mobile apps to
           hardware hacks and social impact tools. Whether you're a first-time hacker or a seasoned engineer,
           HackSMU is the place for you.

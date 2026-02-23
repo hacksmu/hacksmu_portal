@@ -112,7 +112,7 @@ export default function AboutPage() {
             What is HackSMU?
           </h2>
           <p style={{ color: 'rgba(210,235,255,0.80)', fontSize: 15, lineHeight: 1.8, marginBottom: 16 }}>
-            HackSMU is an annual hackathon organized by ACM @ SMU that brings together hundreds of students from universities across the country. Over 24 hours, participants form teams, dream up ideas, and build working projects from scratch — competing for prizes across multiple tracks.
+            HackSMU is an annual hackathon organized by SMU CS Club that brings together hundreds of students from universities across the country. Over 24 hours, participants form teams, dream up ideas, and build working projects from scratch — competing for prizes across multiple tracks.
           </p>
           <p style={{ color: 'rgba(210,235,255,0.80)', fontSize: 15, lineHeight: 1.8, margin: 0 }}>
             Whether you want to build a web app, hardware project, mobile game, or anything in between — HackSMU VII is your opportunity to turn an idea into reality, make friends, learn new skills, and have an unforgettable weekend.

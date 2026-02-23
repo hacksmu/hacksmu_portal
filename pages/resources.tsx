@@ -63,7 +63,7 @@ const CATEGORIES: Category[] = [
         tagColor: '#60c8ff',
       },
       {
-        label: 'GitHub — ACM@SMU',
+        label: 'GitHub — SMU CS Club',
         href: 'https://github.com/acm-smu',
         emoji: '🐙',
         desc: 'Open-source repos from ACM at SMU including this very portal. Fork, star, or contribute.',
