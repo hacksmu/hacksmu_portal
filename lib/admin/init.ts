@@ -26,12 +26,32 @@ export default function initializeApi() {
  */
 function initializeFirebase() {
   if (admin.apps.length < 1) {
-    admin.initializeApp({
-      credential: admin.credential.cert({
-        projectId: process.env.SERVICE_ACCOUNT_PROJECT_ID,
-        clientEmail: process.env.SERVICE_ACCOUNT_CLIENT_EMAIL,
-        privateKey: process.env.SERVICE_ACCOUNT_PRIVATE_KEY.replace(/\\n/g, '\n'),
-      }),
-    });
+    try {
+      // Validate required environment variables
+      const requiredEnvVars = [
+        'SERVICE_ACCOUNT_PROJECT_ID',
+        'SERVICE_ACCOUNT_CLIENT_EMAIL',
+        'SERVICE_ACCOUNT_PRIVATE_KEY'
+      ];
+      
+      for (const envVar of requiredEnvVars) {
+        if (!process.env[envVar]) {
+          throw new Error(`Missing required environment variable: ${envVar}`);
+        }
+      }
+
+      admin.initializeApp({
+        credential: admin.credential.cert({
+          projectId: process.env.SERVICE_ACCOUNT_PROJECT_ID,
+          clientEmail: process.env.SERVICE_ACCOUNT_CLIENT_EMAIL,
+          privateKey: process.env.SERVICE_ACCOUNT_PRIVATE_KEY.replace(/\\n/g, '\n'),
+        }),
+      });
+      
+      console.log('Firebase Admin SDK initialized successfully');
+    } catch (error) {
+      console.error('Failed to initialize Firebase Admin SDK:', error);
+      throw error;
+    }
   }
 }

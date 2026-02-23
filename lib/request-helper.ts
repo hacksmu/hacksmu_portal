@@ -50,6 +50,16 @@ export class RequestHelper {
       method: 'GET',
       mode: 'cors',
     });
+    
+    // Check if response is actually JSON
+    const contentType = temp.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      const text = await temp.text();
+      console.error(`Expected JSON but received ${contentType} from ${url}`);
+      console.error('Response body:', text.substring(0, 500));
+      throw new Error(`API endpoint ${url} returned ${contentType} instead of JSON. Response: ${text.substring(0, 200)}`);
+    }
+    
     const data = await temp.json();
     return {
       status: temp.status,

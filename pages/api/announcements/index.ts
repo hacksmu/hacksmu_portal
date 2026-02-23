@@ -85,17 +85,25 @@ async function postAnnouncementToDB(req: NextApiRequest, res: NextApiResponse) {
  *
  */
 async function getAllAnnouncements(req: NextApiRequest, res: NextApiResponse) {
-  const snapshot = await db.collection(ANNOUNCEMENTS_COLLECTION).orderBy('timestamp', 'desc').get();
-  let data = [];
-  snapshot.forEach((doc) => {
-    data.push(doc.data());
-  });
-  data.sort((a, b) => {
-    const timeA = new Date(a.timestamp),
-      timeB = new Date(b.timestamp);
-    return timeB.getTime() - timeA.getTime();
-  });
-  res.json(data);
+  try {
+    const snapshot = await db.collection(ANNOUNCEMENTS_COLLECTION).orderBy('timestamp', 'desc').get();
+    let data = [];
+    snapshot.forEach((doc) => {
+      data.push(doc.data());
+    });
+    data.sort((a, b) => {
+      const timeA = new Date(a.timestamp),
+        timeB = new Date(b.timestamp);
+      return timeB.getTime() - timeA.getTime();
+    });
+    res.json(data);
+  } catch (error) {
+    console.error('Error fetching announcements:', error);
+    res.status(500).json({
+      error: 'Failed to fetch announcements',
+      message: error.message || 'An unexpected error occurred'
+    });
+  }
 }
 
 function handlePostRequest(req: NextApiRequest, res: NextApiResponse) {
@@ -106,14 +114,28 @@ function handleGetRequest(req: NextApiRequest, res: NextApiResponse) {
   return getAllAnnouncements(req, res);
 }
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { method } = req;
-  switch (method) {
-    case 'GET': {
-      return handleGetRequest(req, res);
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    const { method } = req;
+    switch (method) {
+      case 'GET': {
+        return await handleGetRequest(req, res);
+      }
+      case 'POST': {
+        return await handlePostRequest(req, res);
+      }
+      default: {
+        return res.status(405).json({
+          error: 'Method not allowed',
+          message: `Method ${method} is not supported for this endpoint`
+        });
+      }
     }
-    case 'POST': {
-      return handlePostRequest(req, res);
-    }
+  } catch (error) {
+    console.error('Error in announcements API handler:', error);
+    return res.status(500).json({
+      error: 'Internal server error',
+      message: 'An unexpected error occurred while processing the request'
+    });
   }
 }

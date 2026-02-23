@@ -264,11 +264,12 @@ export default function Home(props: HomeProps) {
   const router = useRouter();
 
   // video / phase
-  const [phase, setPhase] = useState<Phase>('introPlaying');
-  const introRef = useRef<HTMLVideoElement>(null);
-  const zoomRef = useRef<HTMLVideoElement>(null);
-  const [showIntroVid, setShowIntroVid] = useState(true);
-  const [showZoomVid, setShowZoomVid] = useState(false);
+  // const [phase, setPhase] = useState<Phase>('introPlaying');
+  // const introRef = useRef<HTMLVideoElement>(null);
+  // const zoomRef = useRef<HTMLVideoElement>(null);
+  // const [showIntroVid, setShowIntroVid] = useState(true);
+  // const [showZoomVid, setShowZoomVid] = useState(false);
+  const phase: Phase = 'finalStill';
   const [showFinal, setShowFinal] = useState(false);
 
   // overlay state
@@ -301,29 +302,29 @@ export default function Home(props: HomeProps) {
   );
 
   // intro handling
-  useEffect(() => {
-    introRef.current?.play().catch(() => {});
-  }, []);
-  const handleIntroEnded = () => {
-    setPhase('introStill');
-    setShowIntroVid(false);
-  };
+  // useEffect(() => {
+  //   introRef.current?.play().catch(() => {});
+  // }, []);
+  // const handleIntroEnded = () => {
+  //   setPhase('introStill');
+  //   setShowIntroVid(false);
+  // };
 
-  useEffect(() => {
-    const beginZoom = () => {
-      if (phase === 'introStill') {
-        setPhase('zoomPlaying');
-        setShowZoomVid(true);
-        zoomRef.current?.play().catch(() => {});
-      }
-    };
-    window.addEventListener('click', beginZoom);
-    window.addEventListener('keydown', beginZoom);
-    return () => {
-      window.removeEventListener('click', beginZoom);
-      window.removeEventListener('keydown', beginZoom);
-    };
-  }, [phase]);
+  // useEffect(() => {
+  //   const beginZoom = () => {
+  //     if (phase === 'introStill') {
+  //       setPhase('zoomPlaying');
+  //       setShowZoomVid(true);
+  //       zoomRef.current?.play().catch(() => {});
+  //     }
+  //   };
+  //   window.addEventListener('click', beginZoom);
+  //   window.addEventListener('keydown', beginZoom);
+  //   return () => {
+  //     window.removeEventListener('click', beginZoom);
+  //     window.removeEventListener('keydown', beginZoom);
+  //   };
+  // }, [phase]);
 
   useEffect(() => {
     if (phase === 'finalStill') {
@@ -445,7 +446,7 @@ export default function Home(props: HomeProps) {
       </Head>
 
       <section className="fixed inset-0 overflow-hidden z-0 bg-black">
-        {phase === 'introStill' && (
+        {/* {phase === 'introStill' && (
           <div className={`absolute inset-0 transition-opacity duration-500 ${!showIntroVid ? 'opacity-100' : 'opacity-0'}`}>
             <NextImage src="/videos/inter-screen2.png" alt="Intermediate Screen" layout="fill" objectFit="cover" priority />
           </div>
@@ -470,27 +471,69 @@ export default function Home(props: HomeProps) {
           loop={false}
           onCanPlay={() => phase === 'zoomPlaying' && zoomRef.current?.play().catch(() => {})}
           onEnded={() => setPhase('finalStill')}
-        />
+        /> */}
 
         {phase === 'finalStill' && (
           <div className={`absolute inset-0 bg-black transition-opacity duration-700 ${showFinal ? 'opacity-100' : 'opacity-0'}`}>
-            <NextImage src="/videos/main-screenVII.png" alt="Main Screen" layout="fill" objectFit="contain" priority />
+            <NextImage src="/videos/dascreen.png" alt="Main Screen" layout="fill" objectFit="contain" priority />
             <div className="absolute z-10 flex flex-col items-center text-center text-white" style={{ top: '7%', left: '50%', transform: 'translateX(-50%)' }}>
-              <h1 className="pixel-neon-title mb-2 text-2xxl sm:text-6xl">HackSMU VII</h1>
+              {/* <h1 className="pixel-neon-title mb-2 text-2xxl sm:text-6xl">HackSMU VII</h1>
               <p className="neon-date text-md sm:text-2xl mb-4">October 25–26th, 2025</p>
               <Link href="/auth" passHref>
                 <a className="gradient-button neon-button text-sm sm:text-base">Apply here!</a>
-              </Link>
+              </Link> */}
             </div>
 
-            {/* Click zones */}
-            <div onClick={() => handleFolder('about')} className="absolute z-20 cursor-pointer" style={{ top: '17%', left: '60%', width: '5%', height: '9%' }} />
-            <div onClick={() => handleFolder('faq')} className="absolute z-20 cursor-pointer" style={{ top: '22%', left: '26%', width: '5%', height: '9%' }} />
-            <div onClick={() => handleFolder('resources')} className="absolute z-20 cursor-pointer" style={{ top: '41%', left: '46%', width: '5%', height: '9%' }} />
-            <div onClick={() => handleFolder('sponsors')} className="absolute z-20 cursor-pointer" style={{ top: '66%', left: '50%', width: '5%', height: '9%' }} />
-            <div onClick={() => handleFolder('schedule')} className="absolute z-20 cursor-pointer" style={{ top: '81%', left: '61%', width: '5%', height: '9%' }} />
-            <div onClick={() => handleFolder('dashboard')} className="absolute z-20 cursor-pointer" style={{ top: '76%', left: '34%', width: '5%', height: '9%' }} />
-            <div onClick={() => handleFolder('team')} className="absolute z-20 cursor-pointer" style={{ top: '52%', left: '29.5%', width: '5%', height: '9%' }} />
+            {/* Click zones (visible) */}
+            <div
+              onClick={() => handleFolder('about')}
+              className="absolute z-20 cursor-pointer flex items-center justify-center text-[10px] font-bold text-white bg-white/20 border border-white/70 rounded"
+              style={{ top: '18.6%', left: '62.7%', width: '5%', height: '9%' }}
+            >
+              ABOUT
+            </div>
+            <div
+              onClick={() => handleFolder('faq')}
+              className="absolute z-20 cursor-pointer flex items-center justify-center text-[10px] font-bold text-white bg-white/20 border border-white/70 rounded"
+              style={{ top: '23.3%', left: '22.85%', width: '5%', height: '9%' }}
+            >
+              FAQ
+            </div>
+            <div
+              onClick={() => handleFolder('resources')}
+              className="absolute z-20 cursor-pointer flex items-center justify-center text-[10px] font-bold text-white bg-white/20 border border-white/70 rounded"
+              style={{ top: '41%', left: '45%', width: '5%', height: '9%' }}
+            >
+              RES
+            </div>
+            <div
+              onClick={() => handleFolder('sponsors')}
+              className="absolute z-20 cursor-pointer flex items-center justify-center text-[10px] font-bold text-white bg-white/20 border border-white/70 rounded"
+              style={{ top: '66%', left: '50%', width: '5%', height: '9%' }}
+            >
+              SPON
+            </div>
+            <div
+              onClick={() => handleFolder('schedule')}
+              className="absolute z-20 cursor-pointer flex items-center justify-center text-[10px] font-bold text-white bg-white/20 border border-white/70 rounded"
+              style={{ top: '81%', left: '61%', width: '5%', height: '9%' }}
+            >
+              SCH
+            </div>
+            <div
+              onClick={() => handleFolder('dashboard')}
+              className="absolute z-20 cursor-pointer flex items-center justify-center text-[10px] font-bold text-white bg-white/20 border border-white/70 rounded"
+              style={{ top: '76%', left: '34%', width: '5%', height: '9%' }}
+            >
+              DASH
+            </div>
+            <div
+              onClick={() => handleFolder('team')}
+              className="absolute z-20 cursor-pointer flex items-center justify-center text-[10px] font-bold text-white bg-white/20 border border-white/70 rounded"
+              style={{ top: '52%', left: '29.5%', width: '5%', height: '9%' }}
+            >
+              TEAM
+            </div>
           </div>
         )}
 

@@ -18,12 +18,20 @@ const CHALLENGES = '/challenges';
  *
  */
 async function getChallenges(req: NextApiRequest, res: NextApiResponse) {
-  const snapshot = await db.collection(CHALLENGES).get();
-  let data = [];
-  snapshot.forEach((doc) => {
-    data.push(doc.data());
-  });
-  res.json(data);
+  try {
+    const snapshot = await db.collection(CHALLENGES).get();
+    let data = [];
+    snapshot.forEach((doc) => {
+      data.push(doc.data());
+    });
+    res.json(data);
+  } catch (error) {
+    console.error('Error fetching challenges:', error);
+    res.status(500).json({
+      error: 'Failed to fetch challenges',
+      message: error.message || 'An unexpected error occurred'
+    });
+  }
 }
 
 async function updateChallengeDatabase(req: NextApiRequest, res: NextApiResponse) {
@@ -87,22 +95,31 @@ function handleDeleteRequest(req: NextApiRequest, res: NextApiResponse) {
   return deleteChallenge(req, res);
 }
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { method } = req;
-  switch (method) {
-    case 'GET': {
-      return handleGetRequest(req, res);
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    const { method } = req;
+    switch (method) {
+      case 'GET': {
+        return await handleGetRequest(req, res);
+      }
+      case 'POST': {
+        return await handlePostRequest(req, res);
+      }
+      case 'DELETE': {
+        return await handleDeleteRequest(req, res);
+      }
+      default: {
+        return res.status(405).json({
+          error: 'Method not allowed',
+          message: `Method ${method} is not supported for this endpoint`
+        });
+      }
     }
-    case 'POST': {
-      return handlePostRequest(req, res);
-    }
-    case 'DELETE': {
-      return handleDeleteRequest(req, res);
-    }
-    default: {
-      return res.status(404).json({
-        msg: 'Route not found',
-      });
-    }
+  } catch (error) {
+    console.error('Error in challenges API handler:', error);
+    return res.status(500).json({
+      error: 'Internal server error',
+      message: 'An unexpected error occurred while processing the request'
+    });
   }
 }

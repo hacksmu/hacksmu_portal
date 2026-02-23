@@ -44,7 +44,11 @@ export default function Dashboard(props: {
   useEffect(() => {
     setAnnouncements(props.announcements);
     // ordering challenges as speficied in firebase
-    setChallenges(props.challenges.sort((a, b) => (a.rank > b.rank ? 1 : -1)));
+    if (Array.isArray(props.challenges)) {
+      setChallenges(props.challenges.sort((a, b) => (a.rank > b.rank ? 1 : -1)));
+    } else {
+      setChallenges([]);
+    }
     if (firebase.messaging.isSupported()) {
       firebase.messaging().onMessage((payload) => {
         setAnnouncements((prev) => [
@@ -186,24 +190,67 @@ export default function Dashboard(props: {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const protocol = context.req.headers.referer?.split('://')[0] || 'http';
-  const { data: announcementData } = await RequestHelper.get<Announcement[]>(
-    `${protocol}://${context.req.headers.host}/api/announcements/`,
-    {},
-  );
-  const { data: eventData } = await RequestHelper.get<ScheduleEvent[]>(
-    `${protocol}://${context.req.headers.host}/api/schedule/`,
-    {},
-  );
-  const { data: challengeData } = await RequestHelper.get<Challenge[]>(
-    `${protocol}://${context.req.headers.host}/api/challenges/`,
-    {},
-  );
+  const baseUrl = `${protocol}://${context.req.headers.host}`;
+  
+  try {
+    console.log('Fetching data for dashboard...');
+    
+    // Fetch announcements
+    let announcementData: Announcement[] = [];
+    try {
+      const announcementResponse = await RequestHelper.get<Announcement[]>(
+        `${baseUrl}/api/announcements/`,
+        {},
+      );
+      announcementData = announcementResponse.data;
+      console.log('Successfully fetched announcements');
+    } catch (error) {
+      console.error('Failed to fetch announcements:', error);
+    }
 
-  return {
-    props: {
-      announcements: announcementData,
-      scheduleEvents: eventData,
-      challenges: challengeData,
-    },
-  };
+    // Fetch schedule events
+    let eventData: ScheduleEvent[] = [];
+    try {
+      const eventResponse = await RequestHelper.get<ScheduleEvent[]>(
+        `${baseUrl}/api/schedule/`,
+        {},
+      );
+      eventData = eventResponse.data;
+      console.log('Successfully fetched schedule events');
+    } catch (error) {
+      console.error('Failed to fetch schedule events:', error);
+    }
+
+    // Fetch challenges
+    let challengeData: Challenge[] = [];
+    try {
+      const challengeResponse = await RequestHelper.get<Challenge[]>(
+        `${baseUrl}/api/challenges/`,
+        {},
+      );
+      challengeData = challengeResponse.data;
+      console.log('Successfully fetched challenges');
+    } catch (error) {
+      console.error('Failed to fetch challenges:', error);
+    }
+
+    return {
+      props: {
+        announcements: announcementData,
+        scheduleEvents: eventData,
+        challenges: challengeData,
+      },
+    };
+  } catch (error) {
+    console.error('Critical error in getServerSideProps:', error);
+    
+    // Return empty data instead of crashing
+    return {
+      props: {
+        announcements: [],
+        scheduleEvents: [],
+        challenges: [],
+      },
+    };
+  }
 };
