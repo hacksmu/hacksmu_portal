@@ -1,0 +1,980 @@
+/* ============================================================
+   FRUTIGER AERO — Windows Vista / 7 Era Glassmorphism Theme
+   HackSMU VII Portal
+   ============================================================ */
+
+/* ── Aurora wave animations ── */
+@keyframes aurora-1 {
+  0%, 100% { transform: translateX(-15%) skewX(-4deg) scaleY(1); opacity: 0.35; }
+  33% { transform: translateX(5%) skewX(2deg) scaleY(1.05); opacity: 0.5; }
+  66% { transform: translateX(15%) skewX(4deg) scaleY(0.98); opacity: 0.3; }
+}
+@keyframes aurora-2 {
+  0%, 100% { transform: translateX(20%) skewX(5deg) scaleY(1.02); opacity: 0.25; }
+  50% { transform: translateX(-20%) skewX(-5deg) scaleY(0.97); opacity: 0.45; }
+}
+@keyframes aurora-3 {
+  0%, 100% { transform: rotate(-8deg) translateX(-10%); opacity: 0.2; }
+  50% { transform: rotate(8deg) translateX(10%); opacity: 0.38; }
+}
+
+/* ── Bubble float ── */
+@keyframes bubble-rise {
+  0%   { transform: translateY(0) scale(1); opacity: 0; }
+  5%   { opacity: 0.45; }
+  85%  { opacity: 0.25; }
+  100% { transform: translateY(-110vh) scale(1.25); opacity: 0; }
+}
+@keyframes bubble-sway {
+  0%, 100% { margin-left: 0px; }
+  50%       { margin-left: 28px; }
+}
+
+/* ── Central orb glow ── */
+@keyframes orb-breathe {
+  0%, 100% {
+    box-shadow:
+      inset 0 6px 16px rgba(255,255,255,0.45),
+      0 0 50px rgba(0,200,255,0.55),
+      0 0 100px rgba(0,200,255,0.30),
+      0 0 160px rgba(0,200,255,0.12);
+  }
+  50% {
+    box-shadow:
+      inset 0 6px 20px rgba(255,255,255,0.6),
+      0 0 70px rgba(0,220,255,0.75),
+      0 0 140px rgba(0,220,255,0.45),
+      0 0 220px rgba(0,220,255,0.20);
+  }
+}
+
+/* ── Icon hover lift ── */
+@keyframes icon-hover-glow {
+  0%, 100% { filter: drop-shadow(0 0 10px rgba(0,200,255,0.55)); }
+  50%       { filter: drop-shadow(0 0 20px rgba(0,220,255,0.90)); }
+}
+
+/* ── Ripple on click ── */
+@keyframes ripple-expand {
+  0%   { transform: scale(0); opacity: 0.7; }
+  100% { transform: scale(5); opacity: 0; }
+}
+
+/* ── Modal entrance ── */
+@keyframes modal-enter {
+  0%   { transform: scale(0.88) translateY(24px); opacity: 0; }
+  60%  { transform: scale(1.02) translateY(-4px); opacity: 1; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* ── Lens-flare pulse ── */
+@keyframes flare-pulse {
+  0%, 100% { opacity: 0.25; transform: scale(1); }
+  50%       { opacity: 0.45; transform: scale(1.08); }
+}
+
+/* ── Shine sweep on cards ── */
+@keyframes shine-sweep {
+  0%   { left: -80%; }
+  100% { left: 120%; }
+}
+
+/* ── Countdown digits ── */
+@keyframes digit-tick {
+  0%  { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+  100%{ transform: translateY(0); }
+}
+
+/* ── Taskbar glow ── */
+@keyframes taskbar-shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
+}
+
+/* ============================================================
+   BASE LAYERS
+   ============================================================ */
+
+.aero-desktop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  overflow: hidden;
+  font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+}
+
+/* Scale down the orbital rig on small viewports */
+.orbital-rig {
+  transform-origin: center center;
+}
+@media (max-height: 700px), (max-width: 700px) {
+  .orbital-rig { transform: scale(0.72); }
+}
+@media (max-height: 560px), (max-width: 520px) {
+  .orbital-rig { transform: scale(0.55); }
+}
+
+/* Deep aurora gradient base */
+.aero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 15% 40%, rgba(0, 140, 220, 0.22) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 25%, rgba(0, 200, 140, 0.18) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 90%, rgba(0, 100, 200, 0.15) 0%, transparent 55%),
+    linear-gradient(165deg,
+      #030d22 0%,
+      #061a44 15%,
+      #082e5c 30%,
+      #094a42 55%,
+      #061c34 75%,
+      #040f24 100%
+    );
+  z-index: 0;
+}
+
+/* Aurora waves — rendered as large gradient planes */
+.aurora-wave {
+  position: absolute;
+  width: 200%;
+  height: 70%;
+  left: -50%;
+  top: 15%;
+  pointer-events: none;
+  z-index: 1;
+}
+.aurora-wave-1 {
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(0, 230, 190, 0.13) 30%,
+    rgba(0, 180, 255, 0.10) 60%,
+    transparent 100%
+  );
+  animation: aurora-1 14s ease-in-out infinite;
+}
+.aurora-wave-2 {
+  background: linear-gradient(
+    250deg,
+    transparent 0%,
+    rgba(50, 200, 255, 0.10) 35%,
+    rgba(100, 230, 140, 0.08) 65%,
+    transparent 100%
+  );
+  animation: aurora-2 20s ease-in-out infinite;
+  top: 5%;
+}
+.aurora-wave-3 {
+  background: linear-gradient(
+    195deg,
+    transparent 0%,
+    rgba(0, 150, 255, 0.08) 40%,
+    rgba(0, 230, 200, 0.07) 70%,
+    transparent 100%
+  );
+  animation: aurora-3 28s ease-in-out infinite;
+  top: 30%;
+  height: 80%;
+}
+
+/* Lens flares */
+.lens-flare {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: flare-pulse 7s ease-in-out infinite;
+  z-index: 2;
+}
+.lens-flare-tl {
+  width: 320px; height: 320px;
+  top: -80px; left: -80px;
+  background: radial-gradient(ellipse, rgba(150, 230, 255, 0.18) 0%, transparent 65%);
+  animation-delay: 0s;
+}
+.lens-flare-tr {
+  width: 240px; height: 240px;
+  top: -40px; right: -40px;
+  background: radial-gradient(ellipse, rgba(180, 255, 200, 0.14) 0%, transparent 65%);
+  animation-delay: 2.5s;
+}
+.lens-flare-br {
+  width: 360px; height: 360px;
+  bottom: -100px; right: -60px;
+  background: radial-gradient(ellipse, rgba(100, 200, 255, 0.15) 0%, transparent 65%);
+  animation-delay: 5s;
+}
+.lens-flare-bl {
+  width: 280px; height: 280px;
+  bottom: -60px; left: -40px;
+  background: radial-gradient(ellipse, rgba(0, 230, 180, 0.12) 0%, transparent 65%);
+  animation-delay: 1.5s;
+}
+
+/* Soap bubbles */
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 3;
+  background: radial-gradient(
+    ellipse at 32% 28%,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(200, 240, 255, 0.20) 40%,
+    rgba(100, 200, 255, 0.06) 70%,
+    transparent 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  animation:
+    bubble-rise linear infinite,
+    bubble-sway ease-in-out infinite alternate;
+}
+
+/* ============================================================
+   GLASS PANEL — the core Aero material
+   ============================================================ */
+
+.glass-panel {
+  position: relative;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background: linear-gradient(
+    140deg,
+    rgba(255, 255, 255, 0.20) 0%,
+    rgba(200, 235, 255, 0.12) 40%,
+    rgba(150, 220, 255, 0.08) 70%,
+    rgba(100, 200, 240, 0.06) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+  border-right-color: rgba(255, 255, 255, 0.18);
+  box-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.10),
+    0 10px 40px rgba(0, 0, 0, 0.45),
+    0 2px 8px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Top specular highlight on glass */
+.glass-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 48%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.06) 60%,
+    rgba(255, 255, 255, 0.00) 100%
+  );
+  border-radius: 12px 12px 0 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Thick glossy border on glass (inner ring) */
+.glass-panel-thick {
+  border: 1.5px solid rgba(255, 255, 255, 0.50);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.15),
+    inset 1px 0 0 rgba(255, 255, 255, 0.25),
+    inset -1px 0 0 rgba(255, 255, 255, 0.10),
+    0 12px 48px rgba(0, 0, 0, 0.50),
+    0 4px 12px rgba(0, 0, 0, 0.30);
+}
+
+/* ============================================================
+   CENTRAL ORB
+   ============================================================ */
+
+.aero-orb {
+  position: relative;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at 36% 28%,
+    rgba(255, 255, 255, 0.92) 0%,
+    rgba(210, 248, 255, 0.75) 12%,
+    rgba(80, 215, 255, 0.65) 28%,
+    rgba(20, 150, 255, 0.75) 50%,
+    rgba(5, 70, 200, 0.88) 72%,
+    rgba(2, 25, 80, 0.96) 100%
+  );
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  animation: orb-breathe 4s ease-in-out infinite;
+  cursor: default;
+}
+.aero-orb::after {
+  content: '';
+  position: absolute;
+  top: 8%; left: 12%; right: 20%;
+  height: 38%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(255, 255, 255, 0.10) 100%
+  );
+  border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
+  pointer-events: none;
+}
+
+/* ============================================================
+   DESKTOP ICON BUTTONS
+   ============================================================ */
+
+.desktop-icon-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 10px;
+  transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), background 0.2s;
+}
+.desktop-icon-btn:hover {
+  transform: translateY(-6px) scale(1.07);
+  background: rgba(255, 255, 255, 0.08);
+}
+.desktop-icon-btn:active {
+  transform: translateY(-2px) scale(0.98);
+}
+
+/* Glossy skeuomorphic icon circle */
+.icon-orb {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  position: relative;
+  border: 1.5px solid rgba(255,255,255,0.55);
+  box-shadow:
+    inset 0 2px 6px rgba(255,255,255,0.45),
+    0 6px 20px rgba(0,0,0,0.45),
+    0 0 18px rgba(0, 180, 255, 0.20);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  transition: box-shadow 0.25s ease;
+  overflow: hidden;
+}
+.icon-orb::after {
+  content: '';
+  position: absolute;
+  top: 5%; left: 8%; right: 8%;
+  height: 42%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.50) 0%,
+    rgba(255,255,255,0.05) 100%
+  );
+  border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
+  pointer-events: none;
+}
+.desktop-icon-btn:hover .icon-orb {
+  box-shadow:
+    inset 0 2px 8px rgba(255,255,255,0.60),
+    0 8px 28px rgba(0,0,0,0.55),
+    0 0 35px rgba(0, 210, 255, 0.45);
+  animation: icon-hover-glow 1.6s ease-in-out infinite;
+}
+
+.icon-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow:
+    0 1px 6px rgba(0,0,0,0.9),
+    0 0 12px rgba(0, 200, 255, 0.5);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* ============================================================
+   MODAL SYSTEM
+   ============================================================ */
+
+.aero-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2, 10, 28, 0.62);
+  backdrop-filter: blur(6px) saturate(130%);
+  -webkit-backdrop-filter: blur(6px) saturate(130%);
+}
+
+.aero-modal-window {
+  position: relative;
+  width: 90vw;
+  max-width: 780px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  animation: modal-enter 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards;
+  z-index: 5;
+}
+
+/* Title bar — Vista-style gradient */
+.aero-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px 10px 18px;
+  border-radius: 14px 14px 0 0;
+  background: linear-gradient(
+    180deg,
+    rgba(160, 220, 255, 0.75) 0%,
+    rgba(80, 170, 255, 0.55) 35%,
+    rgba(40, 120, 230, 0.42) 60%,
+    rgba(20, 80, 200, 0.32) 100%
+  );
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.30);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 3;
+}
+.aero-titlebar-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.96);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 0 12px rgba(0, 200, 255, 0.4);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.aero-close-btn {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.5);
+  background: radial-gradient(ellipse at 40% 30%, rgba(255,180,180,0.9), rgba(200,50,50,0.8));
+  color: rgba(255,255,255,0.9);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 6px rgba(0,0,0,0.4);
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.aero-close-btn:hover {
+  background: radial-gradient(ellipse at 40% 30%, rgba(255,220,220,1), rgba(230,80,80,0.9));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 3px 10px rgba(200,0,0,0.4);
+}
+
+/* Modal body scroll */
+.aero-modal-body {
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  padding: 0;
+  position: relative;
+  z-index: 2;
+}
+.aero-modal-body::-webkit-scrollbar { width: 5px; }
+.aero-modal-body::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 3px; }
+.aero-modal-body::-webkit-scrollbar-thumb { background: rgba(100,200,255,0.45); border-radius: 3px; }
+.aero-modal-body::-webkit-scrollbar-thumb:hover { background: rgba(100,200,255,0.70); }
+
+/* ============================================================
+   WATER DROPLET BUTTONS (Resources)
+   ============================================================ */
+
+.water-drop-btn {
+  position: relative;
+  overflow: hidden;
+  border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+  border: 1.5px solid rgba(255, 255, 255, 0.60);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.30s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow:
+    inset 0 3px 8px rgba(255,255,255,0.50),
+    inset 0 -3px 8px rgba(0,100,200,0.25),
+    0 10px 30px rgba(0,80,180,0.45);
+  text-decoration: none;
+}
+.water-drop-btn::before {
+  content: '';
+  position: absolute;
+  top: 6%; left: 10%; right: 10%;
+  height: 40%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.55) 0%,
+    rgba(255,255,255,0.05) 100%
+  );
+  border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
+  pointer-events: none;
+}
+.water-drop-btn .ripple-ring {
+  position: absolute;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.6);
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%) scale(0);
+  pointer-events: none;
+  opacity: 0;
+}
+.water-drop-btn:active .ripple-ring {
+  animation: ripple-expand 0.55s ease-out forwards;
+}
+.water-drop-btn:hover {
+  transform: translateY(-6px) scale(1.05);
+  box-shadow:
+    inset 0 4px 10px rgba(255,255,255,0.65),
+    inset 0 -3px 8px rgba(0,100,200,0.30),
+    0 16px 40px rgba(0,100,220,0.55),
+    0 0 40px rgba(0,200,255,0.25);
+}
+
+/* ============================================================
+   SPONSOR CARDS
+   ============================================================ */
+
+.sponsor-glass-card {
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px) saturate(150%);
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(220, 240, 255, 0.10) 60%,
+    rgba(180, 230, 255, 0.06) 100%
+  );
+  border: 1px solid rgba(255,255,255,0.38);
+  border-bottom-color: rgba(255,255,255,0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.45),
+    0 6px 24px rgba(0,0,0,0.35),
+    0 0 0 0.5px rgba(0,0,0,0.2);
+  border-radius: 14px;
+  transition: all 0.38s cubic-bezier(0.34,1.56,0.64,1);
+}
+.sponsor-glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 45%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.20) 0%,
+    rgba(255,255,255,0.00) 100%
+  );
+  border-radius: 14px 14px 0 0;
+  pointer-events: none;
+}
+/* Sunlight lens flare on hover */
+.sponsor-glass-card::after {
+  content: '';
+  position: absolute;
+  top: -40%; left: -60%;
+  width: 60%; height: 180%;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255,255,220,0.18) 50%,
+    transparent 60%
+  );
+  pointer-events: none;
+  transition: left 0.5s ease;
+}
+.sponsor-glass-card:hover::after { left: 120%; }
+.sponsor-glass-card:hover {
+  transform: translateY(-5px) scale(1.04);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.65),
+    0 12px 36px rgba(0,0,0,0.45),
+    0 0 50px rgba(255,220,80,0.18);
+}
+
+/* Tier badges */
+.tier-gold   { color: #FFD700; text-shadow: 0 0 16px rgba(255,215,0,0.7); }
+.tier-silver { color: #C0C0C0; text-shadow: 0 0 12px rgba(200,200,200,0.5); }
+.tier-bronze { color: #CD7F32; text-shadow: 0 0 12px rgba(205,127,50,0.5); }
+
+/* ============================================================
+   FAQ GLASS DRAWER
+   ============================================================ */
+
+.faq-item {
+  border-radius: 10px;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.10) 0%,
+    rgba(200,235,255,0.06) 100%
+  );
+  border: 1px solid rgba(255,255,255,0.25);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.22);
+  margin-bottom: 8px;
+  transition: box-shadow 0.25s;
+}
+.faq-item:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 4px 16px rgba(0,150,255,0.15); }
+
+.faq-question-btn {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+}
+.faq-question-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(160, 230, 255, 0.95);
+  text-shadow: 0 0 12px rgba(0, 180, 255, 0.4);
+  flex: 1;
+  line-height: 1.4;
+}
+.faq-chevron {
+  flex-shrink: 0;
+  width: 18px; height: 18px;
+  color: rgba(100, 220, 255, 0.80);
+  transition: transform 0.30s cubic-bezier(0.4,0,0.2,1);
+}
+.faq-chevron.open { transform: rotate(180deg); }
+
+.faq-answer-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.40s cubic-bezier(0.4,0,0.2,1);
+}
+.faq-answer-panel.open { max-height: 400px; }
+
+.faq-answer-text {
+  padding: 0 18px 16px 18px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: rgba(210, 235, 255, 0.88);
+  border-top: 1px solid rgba(0, 200, 255, 0.18);
+  padding-top: 12px;
+}
+
+/* ============================================================
+   TEAM TABS & CARDS
+   ============================================================ */
+
+.team-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 12px 18px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.14);
+  overflow-x: auto;
+}
+.team-tab {
+  padding: 8px 16px;
+  border-radius: 8px 8px 0 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  border: none;
+  background: rgba(255,255,255,0.06);
+  color: rgba(200,230,255,0.65);
+  transition: all 0.22s;
+  white-space: nowrap;
+}
+.team-tab:hover {
+  background: rgba(255,255,255,0.12);
+  color: rgba(200,240,255,0.90);
+}
+.team-tab.active {
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.28) 0%,
+    rgba(255,255,255,0.10) 100%
+  );
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.42);
+  border-bottom-color: transparent;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.50);
+}
+
+.member-glass-card {
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.12) 0%,
+    rgba(200,235,255,0.06) 100%
+  );
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 12px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), 0 4px 14px rgba(0,0,0,0.22);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.28s cubic-bezier(0.34,1.56,0.64,1);
+  overflow: hidden;
+  text-align: center;
+  padding: 16px 12px;
+}
+.member-glass-card:hover {
+  transform: translateY(-5px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 10px 28px rgba(0,150,255,0.28);
+}
+
+/* ============================================================
+   SCHEDULE TIMELINE
+   ============================================================ */
+
+.schedule-row {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 12px 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  transition: background 0.2s;
+}
+.schedule-row:hover { background: rgba(0,200,255,0.05); }
+.schedule-time {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(100,220,255,0.85);
+  min-width: 52px;
+  text-shadow: 0 0 8px rgba(0,200,255,0.4);
+  padding-top: 2px;
+}
+.schedule-bubble {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  margin-top: 4px;
+  flex-shrink: 0;
+  box-shadow: 0 0 8px currentColor;
+}
+.schedule-event-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(230,245,255,0.95);
+}
+.schedule-event-loc {
+  font-size: 11px;
+  color: rgba(160,210,255,0.70);
+  margin-top: 2px;
+}
+
+/* ============================================================
+   ABOUT SECTION
+   ============================================================ */
+
+.about-stat-card {
+  background: linear-gradient(
+    135deg,
+    rgba(0,150,255,0.18) 0%,
+    rgba(0,80,180,0.10) 100%
+  );
+  border: 1px solid rgba(100,200,255,0.35);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 4px 16px rgba(0,100,200,0.20);
+}
+.about-stat-number {
+  font-size: 32px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #a0f0ff, #60c8ff, #2090ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+.about-stat-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(180,225,255,0.80);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* ============================================================
+   AERO TASKBAR (bottom bar)
+   ============================================================ */
+
+.aero-taskbar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 52px;
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.14) 0%,
+    rgba(180,220,255,0.10) 40%,
+    rgba(100,170,255,0.06) 100%
+  );
+  border-top: 1px solid rgba(255,255,255,0.28);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 10;
+}
+.taskbar-logo {
+  font-size: 14px;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 0 12px rgba(0,200,255,0.6), 0 1px 4px rgba(0,0,0,0.6);
+  letter-spacing: 0.08em;
+}
+.taskbar-time {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(200,235,255,0.85);
+  text-align: right;
+  text-shadow: 0 0 8px rgba(0,180,255,0.4);
+}
+
+/* ============================================================
+   GLOSSY BUTTON (generic)
+   ============================================================ */
+
+.aero-btn {
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(
+    ellipse at 50% 30%,
+    rgba(255,255,255,0.55) 0%,
+    rgba(120,210,255,0.40) 35%,
+    rgba(30,130,255,0.60) 65%,
+    rgba(10,60,200,0.80) 100%
+  );
+  border: 1px solid rgba(255,255,255,0.55);
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  padding: 9px 22px;
+  cursor: pointer;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.65),
+    0 4px 14px rgba(0,60,200,0.45);
+  transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+.aero-btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.30) 0%,
+    rgba(255,255,255,0.00) 100%
+  );
+  pointer-events: none;
+}
+.aero-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.80),
+    0 7px 22px rgba(0,80,230,0.55),
+    0 0 30px rgba(0,200,255,0.25);
+}
+.aero-btn:active { transform: translateY(0) scale(0.97); }
+
+/* ============================================================
+   COUNTDOWN DIGITS
+   ============================================================ */
+
+.countdown-digit {
+  display: inline-block;
+  background: radial-gradient(
+    ellipse at 40% 30%,
+    rgba(255,255,255,0.8) 0%,
+    rgba(150,230,255,0.4) 30%,
+    rgba(0,140,255,0.6) 65%,
+    rgba(0,40,140,0.9) 100%
+  );
+  border: 1px solid rgba(255,255,255,0.45);
+  border-radius: 6px;
+  font-size: 28px;
+  font-weight: 900;
+  color: #fff;
+  padding: 4px 10px;
+  text-shadow: 0 0 16px rgba(0,220,255,0.8), 0 1px 4px rgba(0,0,0,0.7);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.5),
+    0 4px 12px rgba(0,0,0,0.4);
+  font-family: 'Orbitron', 'JetBrains Mono', monospace;
+  min-width: 52px;
+  text-align: center;
+  animation: digit-tick 1s ease-in-out infinite;
+}
+
+/* ============================================================
+   UTILITY
+   ============================================================ */
+
+.text-aero-cyan {
+  color: rgba(100, 230, 255, 0.95);
+  text-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
+}
+.text-aero-white {
+  color: rgba(240, 248, 255, 0.95);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+}
+.text-aero-gold {
+  color: #FFE066;
+  text-shadow: 0 0 14px rgba(255, 220, 50, 0.6);
+}
+.divider-aero {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(100,220,255,0.45) 30%,
+    rgba(100,220,255,0.45) 70%,
+    transparent 100%
+  );
+  margin: 0;
+}
+
+/* ── Shine sweep utility ── */
+.shine-card {
+  position: relative;
+  overflow: hidden;
+}
+.shine-card::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: -80%; width: 40%;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255,255,255,0.15) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+  animation: shine-sweep 4s ease-in-out infinite;
+}
+
+/* scrollbar global for aero pages */
+.aero-scroll::-webkit-scrollbar { width: 5px; height: 5px; }
+.aero-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); }
+.aero-scroll::-webkit-scrollbar-thumb { background: rgba(100,200,255,0.40); border-radius: 3px; }
+.aero-scroll::-webkit-scrollbar-thumb:hover { background: rgba(100,200,255,0.65); }

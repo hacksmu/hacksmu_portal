@@ -37,25 +37,30 @@ export default function Register() {
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(true);
   const [formValid, setFormValid] = useState(true);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+
+  // Merge user account fields into the config-derived initial values reactively,
+  // so Formik receives them even when user data loads asynchronously.
+  const initialValues = React.useMemo(() => ({
+    ...formInitialValues,
+    id: user?.id || '',
+    preferredEmail: user?.preferredEmail || '',
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
+    permissions: user?.permissions || ['hacker'],
+  }), [user]);
+
   const checkRedirect = async () => {
     if (hasProfile) router.push('/profile');
     else setLoading(false);
   };
 
   useEffect(() => {
-    //setting user specific initial values
-    formInitialValues['id'] = user?.id || '';
-    formInitialValues['preferredEmail'] = user?.preferredEmail || '';
-    formInitialValues['firstName'] = user?.firstName || '';
-    formInitialValues['lastName'] = user?.lastName || '';
-    formInitialValues['permissions'] = user?.permissions || ['hacker'];
-  }, []);
-
-  useEffect(() => {
     checkRedirect();
   }, [user]);
 
   const handleSubmit = async (registrationData) => {
+    setSubmitStatus('submitting');
     try {
       if (resumeFile) {
         const formData = new FormData();
@@ -70,12 +75,12 @@ export default function Register() {
         });
       }
       await RequestHelper.post<Registration, any>('/api/applications', {}, registrationData);
-      alert('Registered successfully');
+      setSubmitStatus('success');
       updateProfile(registrationData);
-      router.push('/profile');
+      setTimeout(() => router.push('/profile'), 2500);
     } catch (error) {
       console.error(error);
-      console.log('Request creation error');
+      setSubmitStatus('error');
     }
   };
 
@@ -189,7 +194,8 @@ export default function Register() {
 
       <section className="flex justify-center">
         <Formik
-          initialValues={formInitialValues}
+          enableReinitialize
+          initialValues={initialValues}
           //validation
           //Get condition in which values.[value] is invalid and set error message in errors.[value]. Value is a value from the form(look at initialValues)
           validate={(values) => {
@@ -254,7 +260,7 @@ export default function Register() {
             // alert(JSON.stringify(values, null, 2)); //Displays form results on submit for testing purposes
           }}
         >
-          {({ values, handleChange, isValid, dirty }) => (
+          {({ values, handleChange, isValid, dirty, errors, isSubmitting }) => (
             // Field component automatically hooks input to form values. Use name attribute to match corresponding value
             // ErrorMessage component automatically displays error based on validation above. Use name attribute to match corresponding value
             <Form
@@ -339,13 +345,53 @@ export default function Register() {
               <div className="my-8">
                 <button
                   type="submit"
-                  className="mr-auto cursor-pointer px-4 py-2 rounded-md bg-blue-200 hover:bg-blue-300"
+                  disabled={isSubmitting || submitStatus === 'submitting'}
+                  className="mr-auto cursor-pointer px-4 py-2 rounded-md bg-blue-200 hover:bg-blue-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   onClick={() => setFormValid(!(!isValid || !dirty))}
                 >
-                  Submit
+                  {isSubmitting || submitStatus === 'submitting' ? 'Submitting…' : 'Submit'}
                 </button>
+
+                {/* Validation errors */}
                 {!isValid && !formValid && (
-                  <div className="text-red-600">Error: The form has invalid fields</div>
+                  <div className="text-red-600 mt-3">
+                    <div className="font-bold mb-1">Please fix the following fields:</div>
+                    <ul className="list-disc list-inside text-sm space-y-0.5">
+                      {Object.entries(errors).map(([field, msg]) => (
+                        <li key={field}>
+                          <span className="font-semibold">
+                            {field.replace(/([A-Z])/g, ' $1').replace(/^./, (s) => s.toUpperCase())}
+                          </span>
+                          {': '}
+                          {msg as string}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Submission status banner */}
+                {submitStatus === 'success' && (
+                  <div className="mt-4 flex items-center gap-3 rounded-lg border border-green-400 bg-green-50 px-4 py-3 text-green-800">
+                    <svg className="h-5 w-5 shrink-0 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <div>
+                      <div className="font-semibold">Registration saved!</div>
+                      <div className="text-sm">Your application was successfully submitted to Firebase. Redirecting to your profile…</div>
+                    </div>
+                  </div>
+                )}
+                {submitStatus === 'error' && (
+                  <div className="mt-4 flex items-center gap-3 rounded-lg border border-red-400 bg-red-50 px-4 py-3 text-red-800">
+                    <svg className="h-5 w-5 shrink-0 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    </svg>
+                    <div>
+                      <div className="font-semibold">Submission failed</div>
+                      <div className="text-sm">Could not save to Firebase. Please try again or contact an organizer.</div>
+                    </div>
+                  </div>
                 )}
               </div>
             </Form>

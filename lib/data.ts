@@ -5,9 +5,10 @@ export const buttonDatas = [
 ];
 
 export const navItems = [
-  { text: 'About', path: '/#about' },
-  { text: 'FAQ', path: '/#faq' },
-  { text: 'Resources', path: '/#resources' },
+  { text: 'Home', path: '/' },
+  { text: 'About', path: '/about' },
+  { text: 'FAQ', path: '/faq' },
+  { text: 'Resources', path: '/resources' },
   { text: 'Schedule', path: '/schedule' },
   { text: 'Dashboard', path: '/dashboard' },
 ];

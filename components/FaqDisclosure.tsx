@@ -1,5 +1,4 @@
-import { Disclosure } from '@headlessui/react';
-import { ChevronUpIcon } from '@heroicons/react/solid';
+import { useState } from 'react';
 
 interface FaqDisclosureProps {
   question: string;
@@ -15,46 +14,46 @@ export default function FaqDisclosure({
   toggleDisclosure,
 }: FaqDisclosureProps) {
   return (
-    <Disclosure>
-      <div className="z-10 mb-4">
-        <Disclosure.Button
-          className="sm:p-3 z-20 text-left rounded-md w-full bg-dark-blue-lighter p-3 text-neon-blue border border-neon-blue transition-all duration-300 hover:bg-dark-blue-lightest"
-          as="div"
+    <div className="faq-item">
+      <button className="faq-question-btn" onClick={toggleDisclosure}>
+        <span className="faq-question-text">{question}</span>
+        <svg
+          className={`faq-chevron${isOpen ? ' open' : ''}`}
+          viewBox="0 0 20 20"
+          fill="currentColor"
         >
-          <button
-            className="w-full flex flex-row justify-between items-center"
-            onClick={() => {
-              toggleDisclosure();
-            }}
-          >
-            <span className="text-neon-blue text-lg sm:text-xl font-bold">{question}</span>
-            <ChevronUpIcon 
-              className={`${isOpen ? 'transform rotate-180' : ''} w-5 h-5 text-neon-pink transition-transform duration-300`} 
-            />
-          </button>
-        </Disclosure.Button>
-        {isOpen && (
-          <Disclosure.Panel className="rounded-md mt-2 py-3 bg-dark-blue-lightest p-3 text-white border-t border-neon-pink" static>
-            {typeof answer === 'string'
-              ? answer
-              : typeof answer === 'object'
-                ? answer.map((section, index) => {
-                  if (section?.type === 'link') {
-                    return (
-                      <a key={index} className="text-neon-blue hover:text-neon-pink transition-colors duration-300" href={section.url}>
-                        {section.text}
-                      </a>
-                    );
-                  } else if (section?.type === 'plaintext') {
-                    return <span key={index}>{section.text}</span>;
-                  } else return null;
-                })
-                : null}
-          </Disclosure.Panel>
-        )}
+          <path
+            fillRule="evenodd"
+            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+            clipRule="evenodd"
+          />
+        </svg>
+      </button>
+
+      <div className={`faq-answer-panel${isOpen ? ' open' : ''}`}>
+        <div className="faq-answer-text">
+          {typeof answer === 'string' ? (
+            answer
+          ) : Array.isArray(answer) ? (
+            (answer as any[]).map((section: any, index: number) => {
+              if (section?.type === 'link') {
+                return (
+                  <a
+                    key={index}
+                    href={section.url}
+                    style={{ color: 'rgba(80,200,255,0.95)', textDecoration: 'underline' }}
+                  >
+                    {section.text}
+                  </a>
+                );
+              } else if (section?.type === 'plaintext') {
+                return <span key={index}>{section.text}</span>;
+              }
+              return null;
+            })
+          ) : null}
+        </div>
       </div>
-    </Disclosure>
+    </div>
   );
 }
-
-

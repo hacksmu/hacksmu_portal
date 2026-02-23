@@ -241,89 +241,158 @@ export default function Calendar(props: { scheduleCard: ScheduleEvent[] }) {
     },
   ];
 
+  const glassPanel: React.CSSProperties = {
+    background: 'linear-gradient(135deg, rgba(255,255,255,0.16) 0%, rgba(100,160,255,0.09) 100%)',
+    backdropFilter: 'blur(18px) saturate(180%)',
+    WebkitBackdropFilter: 'blur(18px) saturate(180%)',
+    border: '1px solid rgba(255,255,255,0.26)',
+    borderRadius: 16,
+    boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.30), 0 8px 32px rgba(0,20,60,0.28)',
+  };
+
+  const infoRow = (icon: React.ReactNode, label: string, value: string) => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'rgba(200,232,255,0.60)', fontSize: 11, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase' }}>
+        {icon}{label}
+      </div>
+      <div style={{ color: '#e8f4ff', fontSize: 14, fontWeight: 500 }}>{value || '—'}</div>
+    </div>
+  );
+
   return (
     <>
-      <div className="text-6xl font-black p-6">Schedule</div>
-      <div className="flex flex-wrap lg:justify-between px-6 h-[75vh]">
-        {/* Calendar */}
-        <div className="overflow-y-auto overflow-x-hidden lg:w-[62%] w-full h-full border-2 border-black rounded-md">
-          <Paper>
-            <div className="flex flex-row">
-              <Scheduler data={props.scheduleCard}>
-                <ViewState defaultCurrentDate={defaultCurrentDate} />
-                <DayView startDayHour={8} endDayHour={24} intervalCount={1} />
-                <Appointments
-                  appointmentComponent={Appointment}
-                  appointmentContentComponent={AppointmentContent}
-                />
-                <Resources data={resources} mainResourceName={'track'} />
-                <Toolbar />
-                <DateNavigator />
-                <TodayButton />
-                <GroupingState grouping={grouping} groupByDate={() => true} />
-                {/* since tracks are computed from entries, only show grouping if there are any tracks */}
-                {uniqueTracks.size > 0 ? <IntegratedGrouping /> : null}
-                {uniqueTracks.size > 0 ? <GroupingPanel /> : null}
-              </Scheduler>
-            </div>
-          </Paper>
+      {/* Page title */}
+      <div style={{
+        fontFamily: "'Orbitron', 'Roboto', sans-serif",
+        fontSize: 30,
+        fontWeight: 900,
+        color: '#fff',
+        textShadow: '0 0 20px rgba(0,200,255,0.55)',
+        letterSpacing: '0.05em',
+        padding: '20px 24px 16px',
+      }}>
+        Schedule
+      </div>
+
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, padding: '0 24px 48px', alignItems: 'flex-start' }}>
+        {/* Calendar — keep all existing logic intact */}
+        <div style={{
+          ...glassPanel,
+          flex: '1 1 580px',
+          minWidth: 0,
+          height: '75vh',
+          overflow: 'hidden',
+        }}>
+          <div style={{ height: '100%', overflowY: 'auto', overflowX: 'hidden', borderRadius: 16 }}>
+            <Paper>
+              <div className="flex flex-row">
+                <Scheduler data={props.scheduleCard}>
+                  <ViewState defaultCurrentDate={defaultCurrentDate} />
+                  <DayView startDayHour={8} endDayHour={24} intervalCount={1} />
+                  <Appointments
+                    appointmentComponent={Appointment}
+                    appointmentContentComponent={AppointmentContent}
+                  />
+                  <Resources data={resources} mainResourceName={'track'} />
+                  <Toolbar />
+                  <DateNavigator />
+                  <TodayButton />
+                  <GroupingState grouping={grouping} groupByDate={() => true} />
+                  {uniqueTracks.size > 0 ? <IntegratedGrouping /> : null}
+                  {uniqueTracks.size > 0 ? <GroupingPanel /> : null}
+                </Scheduler>
+              </div>
+            </Paper>
+          </div>
         </div>
 
         {/* Event info card */}
-        <div className="overflow-y-auto flex flex-col justify-between lg:w-[36%] w-full h-full lg:my-0 my-2 border-2 border-black rounded-md bg-white p-4">
-          <section>
-            {eventData.title === '' ? (
-              <div className="text-2xl">Click on an event for more info</div>
-            ) : (
-              <div />
-            )}
-            <h1 className="md:text-4xl text-2xl font-bold">{eventData.title}</h1>
-            <div className="md:text-lg text-sm mb-4">{eventData.speakers}</div>
-
-            {/* Shows card info if user has clicked on an event */}
-            <div className={eventData.title === '' ? 'hidden' : 'inline'}>
-              <div className="grid grid-cols-2 gap-y-2 md:my-8 my-6 md:text-lg text-sm">
-                <div className="">
-                  <p className="flex items-center font-semibold">
-                    {<CalendarIcon style={{ fontSize: 'medium', margin: '2px' }} />}
-                    Date
-                  </p>
-                  <p>{eventData.date}</p>
-                </div>
-                <div className="">
-                  <p className="flex items-center font-semibold">
-                    {<PinDrop style={{ fontSize: 'medium', margin: '2px' }} />}
-                    Location
-                  </p>
-                  <p>{eventData.location}</p>
-                </div>
-                <div className="">
-                  <p className="flex items-center font-semibold">
-                    {<ClockIcon style={{ fontSize: 'large', margin: '2px' }} />}
-                    Time
-                  </p>
-                  <p>{eventData.time}</p>
-                </div>
-                <div className="">
-                  <p className="flex items-center font-semibold">
-                    {<Backpack style={{ fontSize: 'medium', margin: '2px' }} />}
-                    Page
-                  </p>
-                  <p>{eventData.page}</p>
-                </div>
-              </div>
-
-              <div className="lg:text-base text-sm">
-                <p className="flex items-center font-semibold">
-                  {<Description style={{ fontSize: 'medium', margin: '2px' }} />}
-                  Description
-                </p>
-                <p>{eventDescription}</p>
+        <div style={{
+          ...glassPanel,
+          flex: '0 0 320px',
+          height: '75vh',
+          overflowY: 'auto',
+          padding: '22px 20px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 16,
+        }}>
+          {eventData.title === '' ? (
+            <div style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textAlign: 'center',
+              gap: 12,
+            }}>
+              <div style={{ fontSize: 36, opacity: 0.5 }}>📅</div>
+              <div style={{ color: 'rgba(200,232,255,0.50)', fontSize: 14 }}>
+                Click on an event for more info
               </div>
             </div>
-          </section>
+          ) : (
+            <>
+              {/* Event title */}
+              <div>
+                <div style={{
+                  fontFamily: "'Orbitron', 'Roboto', sans-serif",
+                  fontSize: 18,
+                  fontWeight: 800,
+                  color: '#fff',
+                  textShadow: '0 0 12px rgba(0,180,255,0.40)',
+                  marginBottom: 6,
+                  lineHeight: 1.3,
+                }}>
+                  {eventData.title}
+                </div>
+                {eventData.speakers && (
+                  <div style={{ color: 'rgba(200,232,255,0.65)', fontSize: 13 }}>
+                    {eventData.speakers}
+                  </div>
+                )}
+              </div>
 
-          <div className="text-right">*All events are given in CST</div>
+              {/* Info grid */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                gap: '14px 12px',
+                padding: '16px',
+                borderRadius: 12,
+                background: 'rgba(255,255,255,0.06)',
+                border: '1px solid rgba(255,255,255,0.12)',
+              }}>
+                {infoRow(<CalendarIcon style={{ fontSize: 12 }} />, 'Date', eventData.date)}
+                {infoRow(<PinDrop style={{ fontSize: 12 }} />, 'Location', eventData.location)}
+                {infoRow(<ClockIcon style={{ fontSize: 12 }} />, 'Time', eventData.time)}
+                {infoRow(<Backpack style={{ fontSize: 12 }} />, 'Page', eventData.page)}
+              </div>
+
+              {/* Description */}
+              {eventData.description && (
+                <div style={{
+                  padding: '14px 16px',
+                  borderRadius: 12,
+                  background: 'rgba(255,255,255,0.05)',
+                  border: '1px solid rgba(255,255,255,0.10)',
+                  flex: 1,
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'rgba(200,232,255,0.60)', fontSize: 11, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', marginBottom: 8 }}>
+                    <Description style={{ fontSize: 12 }} /> Description
+                  </div>
+                  <div style={{ color: 'rgba(220,240,255,0.82)', fontSize: 13, lineHeight: 1.6 }}>
+                    {eventDescription}
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+
+          <div style={{ color: 'rgba(200,232,255,0.38)', fontSize: 11, textAlign: 'right', marginTop: 'auto' }}>
+            *All times in CST
+          </div>
         </div>
       </div>
     </>

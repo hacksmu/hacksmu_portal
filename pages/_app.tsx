@@ -8,6 +8,7 @@ import '../styles/globals.css';
 import '../styles/tokyo-theme.css';
 import '../styles/tailwind.css';
 import '../styles/animations.css';
+import '../styles/frutiger-aero.css';
 import { FCMProvider } from '../lib/service-worker/FCMContext';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -80,7 +81,7 @@ function PortalApp({ Component, pageProps }: AppProps) {
             </Head>
 
             {/* Apply the font variable here so it’s available everywhere */}
-            <div className={`min-h-screen flex flex-col bg-white mt-5`}>
+            <div className={`min-h-screen flex flex-col mt-5`} style={{ background: '#040d22' }}>
               <AppHeader />
               <Component {...pageProps} />
             </div>

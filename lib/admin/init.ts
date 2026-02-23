@@ -44,7 +44,9 @@ function initializeFirebase() {
         credential: admin.credential.cert({
           projectId: process.env.SERVICE_ACCOUNT_PROJECT_ID,
           clientEmail: process.env.SERVICE_ACCOUNT_CLIENT_EMAIL,
-          privateKey: process.env.SERVICE_ACCOUNT_PRIVATE_KEY.replace(/\\n/g, '\n'),
+          privateKey: process.env.SERVICE_ACCOUNT_PRIVATE_KEY
+              .replace(/^"+|"+$/g, '')  // strip surrounding quotes added by some env editors
+              .replace(/\\n/g, '\n'),
         }),
       });
       

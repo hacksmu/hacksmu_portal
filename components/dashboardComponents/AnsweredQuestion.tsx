@@ -1,17 +1,5 @@
-import { Disclosure } from '@headlessui/react';
-import { CheckCircleFilled } from '@ant-design/icons';
 import { ChevronUpIcon } from '@heroicons/react/solid';
 
-/**
- *
- * Props used by AnsweredQuestion component used in /about/questions
- *
- * @param question question asked by current user
- * @param answer answer from organizer for corresponding question
- * @param colorCode color code used for background of component
- * @param iconColorCode color code used for checkmark icon that goes with the component
- *
- */
 interface AnsweredQuestionProps {
   question: string;
   answer: string;
@@ -21,51 +9,80 @@ interface AnsweredQuestionProps {
   toggleDisclosure: () => void;
 }
 
-/**
- *
- * Component representing an answered question in /about/questions
- *
- */
 export default function AnsweredQuestion({
   question,
   answer,
-  colorCode,
-  iconColorCode,
   isOpen,
   toggleDisclosure,
 }: AnsweredQuestionProps) {
   return (
-    <div className="my-4">
-      <Disclosure>
-        {({ open }) => (
-          <div className="w-full">
-            <div className="flex flex-row items-center gap-x-2">
-              <CheckCircleFilled style={{ color: iconColorCode }} />
-              <Disclosure.Button className="w-full" as="div">
-                <button
-                  className="w-full"
-                  onClick={() => {
-                    toggleDisclosure();
-                  }}
-                >
-                  <div
-                    className="rounded-lg py-2 px-3 flex flex-row justify-between"
-                    style={{ backgroundColor: colorCode }}
-                  >
-                    <h1 className="text-left font-semibold">{question}</h1>
-                    <ChevronUpIcon className={`${isOpen ? 'transform rotate-180' : ''} w-5 h-5`} />
-                  </div>
-                </button>
-              </Disclosure.Button>
-            </div>
-            {isOpen && (
-              <Disclosure.Panel className="py-2 px-6" static>
-                {answer}
-              </Disclosure.Panel>
-            )}
-          </div>
-        )}
-      </Disclosure>
+    <div style={{
+      borderRadius: 12,
+      overflow: 'hidden',
+      border: '1px solid rgba(64,255,154,0.28)',
+      background: 'linear-gradient(135deg, rgba(255,255,255,0.10) 0%, rgba(64,255,154,0.06) 100%)',
+      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.18)',
+    }}>
+      {/* Question row */}
+      <button
+        onClick={toggleDisclosure}
+        style={{
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 10,
+          padding: '12px 16px',
+          background: 'transparent',
+          border: 'none',
+          cursor: 'pointer',
+          textAlign: 'left',
+        }}
+      >
+        {/* Check icon */}
+        <span style={{
+          width: 20, height: 20, borderRadius: '50%',
+          background: 'rgba(64,255,154,0.20)',
+          border: '1.5px solid rgba(64,255,154,0.55)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          flexShrink: 0,
+          fontSize: 11, color: '#40ff9a',
+        }}>
+          ✓
+        </span>
+        <span style={{
+          flex: 1,
+          color: '#e8f4ff',
+          fontSize: 14,
+          fontWeight: 600,
+          lineHeight: 1.4,
+        }}>
+          {question}
+        </span>
+        <ChevronUpIcon
+          className={isOpen ? '' : 'rotate-180'}
+          style={{
+            width: 18, height: 18,
+            color: 'rgba(200,232,255,0.55)',
+            flexShrink: 0,
+            transform: isOpen ? 'none' : 'rotate(180deg)',
+            transition: 'transform 0.2s',
+          }}
+        />
+      </button>
+
+      {/* Answer panel */}
+      {isOpen && (
+        <div style={{
+          padding: '10px 16px 14px 46px',
+          borderTop: '1px solid rgba(64,255,154,0.15)',
+          color: 'rgba(200,232,255,0.80)',
+          fontSize: 13,
+          lineHeight: 1.6,
+          background: 'rgba(64,255,154,0.05)',
+        }}>
+          {answer}
+        </div>
+      )}
     </div>
   );
 }
