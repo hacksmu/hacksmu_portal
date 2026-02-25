@@ -115,23 +115,94 @@
   .orbital-rig { transform: scale(0.55); }
 }
 
-/* Deep aurora gradient base */
+/* Deep aurora gradient base with image fallback: the layered gradients sit above the image,
+   so when the image is not available the original aurora gradient appearance remains. */
 .aero-bg {
   position: absolute;
   inset: 0;
-  background:
+  background-image:
     radial-gradient(ellipse at 15% 40%, rgba(0, 140, 220, 0.22) 0%, transparent 55%),
     radial-gradient(ellipse at 85% 25%, rgba(0, 200, 140, 0.18) 0%, transparent 50%),
     radial-gradient(ellipse at 50% 90%, rgba(0, 100, 200, 0.15) 0%, transparent 55%),
     linear-gradient(165deg,
-      #030d22 0%,
-      #061a44 15%,
-      #082e5c 30%,
-      #094a42 55%,
-      #061c34 75%,
-      #040f24 100%
-    );
+      rgba(3,13,34,0.85) 0%,
+      rgba(6,26,68,0.65) 15%,
+      rgba(8,46,92,0.50) 30%,
+      rgba(9,74,66,0.40) 55%,
+      rgba(6,28,52,0.45) 75%,
+      rgba(4,15,36,0.85) 100%
+    ),
+    url('/backgrounds2024/sky_bg.jpg');
+  background-size: auto, auto, auto, cover, cover;
+  background-position: left 15% top 40%, right 85% top 25%, center 50% 90%, center center, center center;
+  background-repeat: no-repeat;
   z-index: 0;
+}
+
+/* Top-left translucent reserved panel (under header) */
+.top-left-panel {
+  position: absolute;
+  top: 140px; /* sits beneath the sticky header (approx header height) */
+  left: 70px;
+  width: 420px;
+  height: 380px;
+  max-height: calc(100vh - 140px - 120px); /* responsive: leave space for taskbar + margin */
+  background: rgba(85, 110, 128, 0.52);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  backdrop-filter: blur(8px) saturate(140%);
+  -webkit-backdrop-filter: blur(8px) saturate(140%);
+  z-index: 40; /* below header (110) but above background */
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .top-left-panel { display: none; }
+}
+
+/* Second panel (below the first) */
+.top-left-panel-2 {
+  position: absolute;
+  top: 560px; /* placed just below the first panel (100 + 420 + ~20) */
+  left: 70px;
+  width: 480px;
+  height: 220px;
+  max-height: calc(100vh - 560px - 120px); /* responsive: leave space for taskbar + margin */
+  background: rgba(85, 110, 128, 0.52);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.05);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.45);
+  backdrop-filter: blur(6px) saturate(130%);
+  -webkit-backdrop-filter: blur(6px) saturate(130%);
+  z-index: 38;
+  overflow: hidden;
+}
+
+/* Third panel (below the second) — constrained to avoid taskbar overlap */
+.top-left-panel-3 {
+  position: absolute;
+  top: 820px; /* placed just below the second panel */
+  left: 70px;
+  width: 580px;
+  height: 450px;
+  max-height: calc(100vh - 820px - 120px); /* leave space for taskbar (96px) + margin */
+  background: rgba(85, 110, 128, 0.52);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  backdrop-filter: blur(5px) saturate(125%);
+  -webkit-backdrop-filter: blur(5px) saturate(125%);
+  z-index: 37;
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .top-left-panel-3 { display: none; }
+}
+
+@media (max-width: 900px) {
+  .top-left-panel-2 { display: none; }
 }
 
 /* Aurora waves — rendered as large gradient planes */
@@ -219,12 +290,13 @@
   z-index: 3;
   background: radial-gradient(
     ellipse at 32% 28%,
-    rgba(255, 255, 255, 0.55) 0%,
-    rgba(200, 240, 255, 0.20) 40%,
-    rgba(100, 200, 255, 0.06) 70%,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(200, 240, 255, 0.35) 35%,
+    rgba(100, 200, 255, 0.18) 65%,
     transparent 100%
   );
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 4px 18px rgba(80, 190, 255, 0.18), inset 0 1px 6px rgba(255,255,255,0.6);
   animation:
     bubble-rise linear infinite,
     bubble-sway ease-in-out infinite alternate;
@@ -384,7 +456,7 @@
 }
 
 .icon-label {
-  font-size: 11px;
+  font-size: 22px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.92);
   text-shadow:
@@ -816,7 +888,7 @@
 .aero-taskbar {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  height: 52px;
+  height: 96px;
   backdrop-filter: blur(18px) saturate(160%);
   -webkit-backdrop-filter: blur(18px) saturate(160%);
   background: linear-gradient(
@@ -829,22 +901,22 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 28px;
   z-index: 10;
 }
 .taskbar-logo {
-  font-size: 14px;
+  font-size: 22px;
   font-weight: 900;
   color: #fff;
-  text-shadow: 0 0 12px rgba(0,200,255,0.6), 0 1px 4px rgba(0,0,0,0.6);
+  text-shadow: 0 0 16px rgba(0,200,255,0.7), 0 1px 6px rgba(0,0,0,0.6);
   letter-spacing: 0.08em;
 }
 .taskbar-time {
-  font-size: 12px;
-  font-weight: 700;
-  color: rgba(200,235,255,0.85);
+  font-size: 18px;
+  font-weight: 800;
+  color: rgba(200,235,255,0.95);
   text-align: right;
-  text-shadow: 0 0 8px rgba(0,180,255,0.4);
+  text-shadow: 0 0 10px rgba(0,180,255,0.45);
 }
 
 /* ============================================================

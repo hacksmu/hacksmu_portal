@@ -51,7 +51,7 @@ async function fetchFaqsClient(): Promise<AnyFaq[]> {
 }
 
 // ─── Countdown ───────────────────────────────────────────────
-const EVENT_DATE = new Date('2026-03-25T09:00:00');
+const EVENT_DATE = new Date('2026-04-11T09:00:00');
 function getCountdown() {
   const diff = EVENT_DATE.getTime() - Date.now();
   if (diff <= 0) return null;
@@ -253,6 +253,26 @@ export default function Home({ answeredQuestion, fetchedMembers, sponsorCard }: 
   const [countdown, setCountdown] = useState(getCountdown());
   const [clockStr, setClockStr] = useState('');
 
+  // ── Carousel state ──
+  const [carouselIndex, setCarouselIndex] = useState(0);
+  const hackathonPhotos = [
+    // Add your hackathon photos here
+    '/hacksmuPhotos/36140D_71.jpg',
+    '/hacksmuPhotos/36140D_99.jpg',
+    '/hacksmuPhotos/36140D_150.jpg',
+    '/hacksmuPhotos/36140D_180.jpg',
+    '/hacksmuPhotos/36140D_352.jpg',
+    '/hacksmuPhotos/36140D_406.jpg'
+  ];
+
+  const handleCarouselPrev = useCallback(() => {
+    setCarouselIndex((prev) => (prev - 1 + hackathonPhotos.length) % hackathonPhotos.length);
+  }, [hackathonPhotos.length]);
+
+  const handleCarouselNext = useCallback(() => {
+    setCarouselIndex((prev) => (prev + 1) % hackathonPhotos.length);
+  }, [hackathonPhotos.length]);
+
   // ── Clock ──
   useEffect(() => {
     const tick = () => {
@@ -341,7 +361,7 @@ export default function Home({ answeredQuestion, fetchedMembers, sponsorCard }: 
     <>
       <Head>
         <title>HackSMU VII — Frutiger Aero</title>
-        <meta name="description" content="HackSMU VII — ion remember, 2026 · Dallas, TX" />
+        <meta name="description" content="HackSMU VII — April 11-12, 2026 · Dallas, TX" />
         <link rel="icon" href="/hacksmu_fish.ico" />
         <link
           href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap"
@@ -354,6 +374,117 @@ export default function Home({ answeredQuestion, fetchedMembers, sponsorCard }: 
 
         {/* ── Background stack ── */}
         <div className="aero-bg" />
+        {/* Top-left reserved panel (sponsor logos) */}
+        <div className="top-left-panel">
+          <div style={{ padding: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', gap: 0 }}>
+            <div style={{ fontSize: 12, color: 'rgba(200,235,255,0.85)', fontWeight: 700, letterSpacing: '0.08em', marginBottom: -150, marginTop: 120 }}>Powered by</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 0, alignItems: 'center' }}>
+              <img src="/sponsors/SMULyleLogo.png" alt="SMU Lyle School of Engineering" style={{ height: 450, objectFit: 'contain' }} />
+              <img src="/sponsors/iMasonsLogo.png" alt="iMason's" style={{ height: 450, objectFit: 'contain', marginTop: -350 }} />
+            </div>
+          </div>
+        </div>
+        {/* Second panel underneath the first (reserved) — countdown will render here */}
+        <div className="top-left-panel-2">
+          {countdown ? (
+            <div style={{ padding: 18, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+              <div style={{ fontSize: 14, color: 'rgba(200,235,255,0.92)', fontWeight: 800, letterSpacing: '0.06em' }}>Countdown to HackSMU</div>
+              <div style={{ display: 'flex', gap: 10, marginTop: 12 }}>
+                {[
+                  { v: countdown.d, u: 'd' },
+                  { v: countdown.h, u: 'h' },
+                  { v: countdown.m, u: 'm' },
+                  { v: countdown.s, u: 's' },
+                ].map(({ v, u }) => (
+                  <div key={u} style={{ textAlign: 'center' }}>
+                    <div style={{
+                      fontFamily: "'Orbitron', monospace",
+                      fontSize: 44,
+                      fontWeight: 900,
+                      color: '#fff',
+                      textShadow: '0 0 10px rgba(0,200,255,0.85)',
+                      background: 'rgba(0,80,160,0.60)',
+                      border: '1px solid rgba(255,255,255,0.32)',
+                      borderRadius: 6,
+                      padding: '6px 10px',
+                      minWidth: 48,
+                      display: 'block',
+                    }}>
+                      {String(v).padStart(2, '0')}
+                    </div>
+                    <div style={{ fontSize: 12, color: 'rgba(160,230,255,0.85)', fontWeight: 700, marginTop: 6, letterSpacing: '0.04em' }}>{u}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div style={{ padding: 18, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+              <div style={{ fontSize: 16, color: 'rgba(200,255,200,0.95)', fontWeight: 800 }}>HACKING LIVE 🚀</div>
+            </div>
+          )}
+        </div>
+        {/* Carousel panel */}
+        <div className="top-left-panel-3">
+          {hackathonPhotos.length > 0 ? (
+            <div style={{ padding: 16, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+              <div style={{ fontSize: 13, color: 'rgba(200,235,255,0.85)', fontWeight: 700, letterSpacing: '0.08em', marginBottom: 3 }}>HackSMU VI Photo Gallery</div>
+              <div style={{ position: 'relative', width: '100%', flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 12 }}>
+                <img 
+                  src={hackathonPhotos[carouselIndex]} 
+                  alt={`Hackathon photo ${carouselIndex + 1}`}
+                  style={{ maxWidth: '97%', maxHeight: '92%', borderRadius: 8, objectFit: 'cover' }}
+                />
+              </div>
+              <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                <button 
+                  onClick={handleCarouselPrev}
+                  style={{
+                    background: 'rgba(0,120,200,0.7)',
+                    border: '1px solid rgba(255,255,255,0.3)',
+                    color: '#fff',
+                    width: 40,
+                    height: 40,
+                    borderRadius: 6,
+                    cursor: hackathonPhotos.length > 0 ? 'pointer' : 'default',
+                    fontSize: 18,
+                    fontWeight: 700,
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,150,230,0.9)'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(0,120,200,0.7)'}
+                >
+                  ◀
+                </button>
+                <div style={{ fontSize: 12, color: 'rgba(160,230,255,0.85)', fontWeight: 600, minWidth: 40, textAlign: 'center' }}>
+                  {hackathonPhotos.length > 0 ? `${carouselIndex + 1}/${hackathonPhotos.length}` : '0/0'}
+                </div>
+                <button 
+                  onClick={handleCarouselNext}
+                  style={{
+                    background: 'rgba(0,120,200,0.7)',
+                    border: '1px solid rgba(255,255,255,0.3)',
+                    color: '#fff',
+                    width: 40,
+                    height: 40,
+                    borderRadius: 6,
+                    cursor: hackathonPhotos.length > 0 ? 'pointer' : 'default',
+                    fontSize: 18,
+                    fontWeight: 700,
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,150,230,0.9)'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(0,120,200,0.7)'}
+                >
+                  ▶
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div style={{ padding: 16, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+              <div style={{ fontSize: 13, color: 'rgba(160,180,200,0.7)', fontWeight: 600, textAlign: 'center' }}>Add hackathon photos to display</div>
+            </div>
+          )}
+        </div>
         <div className="aurora-wave aurora-wave-1" />
         <div className="aurora-wave aurora-wave-2" />
         <div className="aurora-wave aurora-wave-3" />
@@ -397,16 +528,18 @@ export default function Home({ answeredQuestion, fetchedMembers, sponsorCard }: 
         >
           {/* ── ORBITAL SYSTEM ── */}
           {(() => {
-            const ORB_SIZE = 200;
-            const ORBIT_R = 220; // radius from orb centre to file icon centre
-            const ICON_SIZE = 64; // kept for CONTAINER calc (file icon height ~64)
-            const CONTAINER = ORB_SIZE + ORBIT_R * 2 + ICON_SIZE + 80; // extra for label below file
+            const ORB_SIZE = 720;
+            // Use separate horizontal and vertical radii to form an ellipse
+            const ORBIT_RX = 528; // horizontal radius (x-axis)
+            const ORBIT_RY = 440; // vertical radius (y-axis) — smaller so top/bottom sit closer
+            const ICON_SIZE = 180; // scaled icon size for layout
+            const CONTAINER = ORB_SIZE + Math.max(ORBIT_RX, ORBIT_RY) * 2 + ICON_SIZE + 160; // adjusted padding
             const cx = CONTAINER / 2;
             const cy = CONTAINER / 2;
             const n = DESKTOP_ICONS.length; // 7
 
             return (
-              <div className="orbital-rig" style={{ position: 'relative', width: CONTAINER, height: CONTAINER, flexShrink: 0 }}>
+              <div className="orbital-rig" style={{ position: 'relative', width: CONTAINER, height: CONTAINER, flexShrink: 0, marginLeft: 620 }}>
 
                 {/* Orbit ring */}
                 {/* <div style={{
@@ -428,98 +561,75 @@ export default function Home({ answeredQuestion, fetchedMembers, sponsorCard }: 
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  gap: 16,
+                  gap: 20,
                 }}>
-                  <div
+                    <div
                     className="aero-orb"
-                    style={{ width: ORB_SIZE, height: ORB_SIZE, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 4 }}
+                    style={{ width: ORB_SIZE, height: ORB_SIZE, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 6 }}
                   >
                     <div style={{
                       fontFamily: "'Orbitron', sans-serif",
-                      fontSize: 15,
+                      fontSize: 72,
                       fontWeight: 900,
                       color: '#fff',
-                      textShadow: '0 0 16px rgba(0,200,255,0.8), 0 1px 4px rgba(0,0,0,0.8)',
+                      textShadow: '0 0 16px rgba(0,200,255,0.85), 0 1px 6px rgba(0,0,0,0.85)',
                       letterSpacing: '0.12em',
                       textTransform: 'uppercase',
                       zIndex: 1,
                       textAlign: 'center',
-                      lineHeight: 1.2,
-                      paddingTop: 20,
+                      lineHeight: 1.15,
+                      paddingTop: 48,
                     }}>
                       HackSMU VII
                     </div>
                     <div style={{
-                      fontSize: 10,
+                      fontSize: 52,
                       fontWeight: 700,
-                      color: 'rgba(180,240,255,0.90)',
-                      textShadow: '0 0 8px rgba(0,200,255,0.5)',
+                      color: 'rgba(0, 0, 241, 0.6)',
+                      textShadow: '0 0 10px rgba(198, 238, 244, 0.55)',
                       letterSpacing: '0.10em',
                       textTransform: 'uppercase',
                       zIndex: 1,
                     }}>
-                      ion remember, 2026
+                      April 11-12, 2026
                     </div>
 
-                    {/* Countdown inside orb */}
-                    {countdown ? (
-                      <div style={{ display: 'flex', gap: 6, marginTop: 8, zIndex: 1 }}>
-                        {[
-                          { v: countdown.d, u: 'd' },
-                          { v: countdown.h, u: 'h' },
-                          { v: countdown.m, u: 'm' },
-                          { v: countdown.s, u: 's' },
-                        ].map(({ v, u }) => (
-                          <div key={u} style={{ textAlign: 'center' }}>
-                            <div style={{
-                              fontFamily: "'Orbitron', monospace",
-                              fontSize: 16,
-                              fontWeight: 900,
-                              color: '#fff',
-                              textShadow: '0 0 12px rgba(0,220,255,0.9)',
-                              background: 'rgba(0,80,160,0.55)',
-                              border: '1px solid rgba(255,255,255,0.30)',
-                              borderRadius: 4,
-                              padding: '2px 5px',
-                              minWidth: 28,
-                              display: 'block',
-                              textAlign: 'center',
-                            }}>
-                              {String(v).padStart(2, '0')}
-                            </div>
-                            <div style={{ fontSize: 8, color: 'rgba(160,230,255,0.7)', fontWeight: 700, marginTop: 2, letterSpacing: '0.05em' }}>
-                              {u}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div style={{ fontSize: 11, color: 'rgba(100,255,180,0.9)', fontWeight: 700, zIndex: 1, marginTop: 6, textShadow: '0 0 10px rgba(0,255,150,0.6)' }}>
-                        HACKING LIVE 🚀
-                      </div>
-                    )}
-                  </div>
+                    {/* Countdown moved to the top-left reserved panel */}
 
-                  {/* Register CTA — below the orb, inside orbital container */}
-                  <Link href={registerHref} passHref>
-                    <a className="aero-btn" style={{ fontSize: 13, letterSpacing: '0.08em', whiteSpace: 'nowrap' }}>
-                      Apply Now →
-                    </a>
-                  </Link>
+                    {/* Register CTA — inside the orb, below countdown */}
+                    <Link href={registerHref} passHref>
+                      <a
+                        className="aero-btn"
+                        style={{
+                          fontSize: 44,
+                          letterSpacing: '0.08em',
+                          whiteSpace: 'nowrap',
+                          marginTop: 15,
+                          background: 'radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.75) 0%, rgba(160,255,180,0.40) 30%, rgba(20,190,100,0.80) 60%, rgba(6,120,60,0.98) 100%)',
+                          border: '1px solid rgba(255,255,255,0.56)',
+                          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.65), 0 6px 22px rgba(0,160,100,0.28)',
+                          color: '#fff',
+                          padding: '14px 45px'
+                        }}
+                      >
+                        Apply Now →
+                      </a>
+                    </Link>
+                  </div>
                 </div>
 
                 {/* Orbiting folder icons */}
                 {DESKTOP_ICONS.map((icon, i) => {
-                  const angleDeg = -90 + (360 / n) * i;
+                  const angleDeg = -70 + (360 / n) * i;
                   const angleRad = (angleDeg * Math.PI) / 180;
-                  const orbCx = cx + ORBIT_R * Math.cos(angleRad);
-                  const orbCy = cy + ORBIT_R * Math.sin(angleRad);
+                  const orbCx = cx + ORBIT_RX * Math.cos(angleRad);
+                  const orbCy = cy + ORBIT_RY * Math.sin(angleRad);
                   // Folder dimensions
-                  const FW = 64;   // folder body width
-                  const FH = 52;   // folder body height
-                  const TAB_W = 24; // tab width
-                  const TAB_H = 8;  // tab height
-                  const R = 4;      // corner radius
+                  const FW = 150;  // folder body width
+                  const FH = 123;  // folder body height
+                  const TAB_W = 57; // tab width
+                  const TAB_H = 18; // tab height
+                  const R = 9;      // corner radius
                   const TOTAL_H = FH + TAB_H;
                   return (
                     <button
@@ -592,7 +702,7 @@ export default function Home({ answeredQuestion, fetchedMembers, sponsorCard }: 
                           top: TAB_H + FH * 0.5,
                           left: '50%',
                           transform: 'translate(-50%, -50%)',
-                          fontSize: 22,
+                          fontSize: 72,
                           lineHeight: 1,
                           pointerEvents: 'none',
                         }}>
@@ -614,27 +724,27 @@ export default function Home({ answeredQuestion, fetchedMembers, sponsorCard }: 
 
         {/* ── TASKBAR ── */}
         <div className="aero-taskbar">
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <img src="/assets2025/FrutigerAero.png" alt="HackSMU" style={{ height: 28, borderRadius: 4 }} onError={e => (e.currentTarget.style.display = 'none')} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+            <img src="/assets2025/FrutigerAero.png" alt="HackSMU" style={{ height: 56, borderRadius: 6 }} onError={e => (e.currentTarget.style.display = 'none')} />
             <span className="taskbar-logo">HackSMU VII</span>
           </div>
-          <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: 64, alignItems: 'center' }}>
             {DESKTOP_ICONS.slice(0, 4).map(icon => (
               <button
                 key={icon.key}
                 onClick={() => openSection(icon.key)}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 18, opacity: 0.75, transition: 'opacity 0.2s', padding: 4 }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 56, opacity: 0.85, transition: 'opacity 0.18s', padding: 10 }}
                 title={icon.label}
                 onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
-                onMouseLeave={e => (e.currentTarget.style.opacity = '0.75')}
+                onMouseLeave={e => (e.currentTarget.style.opacity = '0.85')}
               >
                 {icon.emoji}
               </button>
             ))}
           </div>
           <div className="taskbar-time">
-            <div>{clockStr}</div>
-            <div style={{ fontSize: 10, opacity: 0.7 }}>Dallas, TX</div>
+            <div style={{ fontSize: 20 }}>{clockStr}</div>
+            <div style={{ fontSize: 18, opacity: 0.85 }}>Dallas, TX</div>
           </div>
         </div>
 

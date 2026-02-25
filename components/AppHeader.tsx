@@ -62,7 +62,7 @@ export default function AppHeader() {
           justifyContent: 'space-between',
           alignItems: 'center',
           width: '100%',
-          height: 48,
+          height: 90,
           padding: '0 16px',
           position: 'sticky',
         }}
@@ -88,18 +88,18 @@ export default function AppHeader() {
             <a
               style={{
                 display: 'flex',
-                gap: 8,
+                gap: 12,
                 alignItems: 'center',
                 marginLeft: 4,
                 textDecoration: 'none',
                 filter: 'drop-shadow(0 0 8px rgba(0,200,255,0.5))',
               }}
             >
-              <Image src="/assets/hacksmu_fish.png" width="38px" height="62px" alt="HackSMU" />
+              <Image src="/assets/hacksmu_fish.png" width="56px" height="90px" alt="HackSMU" />
               <span
                 style={{
                   fontFamily: "'Orbitron', 'Roboto', sans-serif",
-                  fontSize: 14,
+                  fontSize: 36,
                   fontWeight: 900,
                   color: '#fff',
                   textShadow: '0 0 12px rgba(0,200,255,0.7), 0 1px 4px rgba(0,0,0,0.8)',
@@ -147,7 +147,7 @@ export default function AppHeader() {
                       padding: '16px 24px',
                       color: 'rgba(200,235,255,0.90)',
                       fontWeight: 700,
-                      fontSize: 14,
+                      fontSize: 18,
                       letterSpacing: '0.06em',
                       borderBottom: '1px solid rgba(255,255,255,0.10)',
                       textDecoration: 'none',
@@ -172,11 +172,11 @@ export default function AppHeader() {
               >
                 <a
                   style={{
-                    padding: '6px 14px',
+                    padding: '12px 24px',
                     borderRadius: 6,
                     color: 'rgba(200,235,255,0.88)',
                     fontWeight: 700,
-                    fontSize: 13,
+                    fontSize: 24,
                     letterSpacing: '0.04em',
                     textDecoration: 'none',
                     transition: 'all 0.22s',
@@ -212,9 +212,9 @@ export default function AppHeader() {
               borderRadius: 20,
               color: '#fff',
               fontWeight: 700,
-              fontSize: 12,
+              fontSize: 24,
               letterSpacing: '0.05em',
-              padding: '7px 20px',
+              padding: '16px 44px',
               cursor: 'pointer',
               boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.55), 0 3px 12px rgba(0,50,180,0.45)',
               textShadow: '0 1px 4px rgba(0,0,0,0.5)',

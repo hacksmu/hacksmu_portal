@@ -34,7 +34,7 @@ export default function AboutPage() {
     <>
       <Head>
         <title>About — HackSMU VII</title>
-        <meta name="description" content="About HackSMU VII — ion remember, 2026 · Dallas, TX" />
+        <meta name="description" content="About HackSMU VII — April 11-12, 2026 · Dallas, TX" />
         <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet" />
       </Head>
 
@@ -154,7 +154,7 @@ export default function AboutPage() {
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px 24px' }}>
             {[
-              { label: 'Date', value: 'ion remember, 2026', icon: '📅' },
+              { label: 'Date', value: 'April 11-12, 2026', icon: '📅' },
               { label: 'Location', value: 'Hughes Trigg Student Center, SMU', icon: '📍' },
               { label: 'Format', value: 'In-Person', icon: '🏫' },
               { label: 'Team Size', value: '1–4 Hackers', icon: '👥' },
