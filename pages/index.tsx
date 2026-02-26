@@ -14,7 +14,6 @@ type AnsweredQuestion = { id: string | number; question: string; answer: string;
 type HomeProps = {
   answeredQuestion: AnyFaq[];
   fetchedMembers: any[];
-  sponsorCard: any[];
 };
 
 // ─── FAQ helpers ─────────────────────────────────────────────
@@ -175,42 +174,35 @@ const SCHEDULE_ITEMS = [
 const RESOURCES = [
   {
     label: 'Devpost',
-    href: 'https://hacksmu.devpost.com',
+    href: '',
     emoji: '🚀',
-    desc: 'Submit your project',
+    desc: 'Coming Soon',
     grad: 'radial-gradient(ellipse at 38% 28%, rgba(255,255,255,0.8) 0%, rgba(255,210,140,0.55) 30%, rgba(240,120,20,0.7) 65%, rgba(140,50,0,0.92) 100%)',
   },
   {
     label: 'Discord',
-    href: 'https://discord.gg/hacksmu',
+    href: 'https://discord.gg/Z9YPH4eaen',
     emoji: '💬',
     desc: 'Join the community',
     grad: 'radial-gradient(ellipse at 38% 28%, rgba(255,255,255,0.8) 0%, rgba(210,185,255,0.55) 30%, rgba(110,70,220,0.7) 65%, rgba(50,20,130,0.92) 100%)',
   },
   {
     label: 'GitHub',
-    href: 'https://github.com/acm-smu',
+    href: 'https://github.com/sahat/hackathon-starter.git',
     emoji: '🐙',
-    desc: 'Explore the code',
+    desc: 'Explore code for your project',
     grad: 'radial-gradient(ellipse at 38% 28%, rgba(255,255,255,0.8) 0%, rgba(180,180,180,0.55) 30%, rgba(60,60,60,0.7) 65%, rgba(10,10,10,0.92) 100%)',
   },
   {
-    label: 'MLH',
-    href: 'https://mlh.io',
-    emoji: '🎖️',
-    desc: 'Major League Hacking',
-    grad: 'radial-gradient(ellipse at 38% 28%, rgba(255,255,255,0.8) 0%, rgba(180,240,180,0.55) 30%, rgba(50,160,50,0.7) 65%, rgba(10,70,10,0.92) 100%)',
-  },
-  {
-    label: 'Notion',
-    href: 'https://notion.so',
-    emoji: '📓',
-    desc: 'Hacker resources hub',
+    label: 'Hacker Guide',
+    href: '',
+    emoji: '📖',
+    desc: 'Coming soon',
     grad: 'radial-gradient(ellipse at 38% 28%, rgba(255,255,255,0.95) 0%, rgba(230,230,230,0.6) 35%, rgba(90,90,90,0.7) 65%, rgba(20,20,20,0.92) 100%)',
   },
   {
     label: 'Slides',
-    href: '#',
+    href: 'https://docs.google.com/document/d/12UcFl9-JtPEkP_6LzSnpGxEyWOoll53z__3tsKc6a18/edit?usp=sharing',
     emoji: '📊',
     desc: 'Pitch deck templates',
     grad: 'radial-gradient(ellipse at 38% 28%, rgba(255,255,255,0.8) 0%, rgba(160,220,255,0.55) 30%, rgba(30,130,255,0.7) 65%, rgba(5,50,160,0.92) 100%)',
@@ -220,13 +212,13 @@ const RESOURCES = [
 // ─── About content ────────────────────────────────────────────
 const ABOUT_STATS = [
   { number: '24',   label: 'Hours of Hacking' },
-  { number: '500+', label: 'Hackers Expected' },
-  { number: '$10K+',label: 'in Prizes' },
+  { number: '200+', label: 'Hackers Expected' },
+  { number: 'Massive', label: 'Prize Pool' },
   { number: '50+',  label: 'Projects Built' },
 ];
 
 // ─── Main Component ───────────────────────────────────────────
-export default function Home({ answeredQuestion, fetchedMembers, sponsorCard }: HomeProps) {
+export default function Home({ answeredQuestion, fetchedMembers }: HomeProps) {
   const router = useRouter();
   const { isSignedIn } = useAuthContext();
   const registerHref = isSignedIn ? '/register' : '/auth';
@@ -343,19 +335,6 @@ export default function Home({ answeredQuestion, fetchedMembers, sponsorCard }: 
     return map;
   }, [fetchedMembers]);
 
-  // ── Sponsors by tier ──
-  const sponsorsByTier = useMemo(() => {
-    const tiers: Record<string, any[]> = { gold: [], silver: [], bronze: [], other: [] };
-    (sponsorCard || []).forEach((s: any) => {
-      const t = (s?.tier ?? s?.level ?? '').toLowerCase();
-      if (t.includes('gold') || t.includes('platinum')) tiers.gold.push(s);
-      else if (t.includes('silver')) tiers.silver.push(s);
-      else if (t.includes('bronze')) tiers.bronze.push(s);
-      else tiers.other.push(s);
-    });
-    return tiers;
-  }, [sponsorCard]);
-
   // ─────────────────────────────────────────────────────────────
   return (
     <>
@@ -377,7 +356,7 @@ export default function Home({ answeredQuestion, fetchedMembers, sponsorCard }: 
         {/* Top-left reserved panel (sponsor logos) */}
         <div className="top-left-panel">
           <div style={{ padding: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', gap: 0 }}>
-            <div style={{ fontSize: 12, color: 'rgba(200,235,255,0.85)', fontWeight: 700, letterSpacing: '0.08em', marginBottom: -150, marginTop: 120 }}>Powered by</div>
+            <div style={{ fontSize: 18, color: 'rgba(200,235,255,0.85)', fontWeight: 700, letterSpacing: '0.08em', marginBottom: -150, marginTop: 120 }}>Powered by</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 0, alignItems: 'center' }}>
               <img src="/sponsors/SMULyleLogo.png" alt="SMU Lyle School of Engineering" style={{ height: 450, objectFit: 'contain' }} />
               <img src="/sponsors/iMasonsLogo.png" alt="iMason's" style={{ height: 450, objectFit: 'contain', marginTop: -350 }} />
@@ -388,7 +367,7 @@ export default function Home({ answeredQuestion, fetchedMembers, sponsorCard }: 
         <div className="top-left-panel-2">
           {countdown ? (
             <div style={{ padding: 18, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-              <div style={{ fontSize: 14, color: 'rgba(200,235,255,0.92)', fontWeight: 800, letterSpacing: '0.06em' }}>Countdown to HackSMU</div>
+              <div style={{ fontSize: 18, color: 'rgba(200,235,255,0.92)', fontWeight: 800, letterSpacing: '0.06em' }}>Countdown to HackSMU</div>
               <div style={{ display: 'flex', gap: 10, marginTop: 12 }}>
                 {[
                   { v: countdown.d, u: 'd' },
@@ -412,7 +391,7 @@ export default function Home({ answeredQuestion, fetchedMembers, sponsorCard }: 
                     }}>
                       {String(v).padStart(2, '0')}
                     </div>
-                    <div style={{ fontSize: 12, color: 'rgba(160,230,255,0.85)', fontWeight: 700, marginTop: 6, letterSpacing: '0.04em' }}>{u}</div>
+                    <div style={{ fontSize: 15, color: 'rgba(160,230,255,0.85)', fontWeight: 700, marginTop: 6, letterSpacing: '0.04em' }}>{u}</div>
                   </div>
                 ))}
               </div>
@@ -515,6 +494,7 @@ export default function Home({ answeredQuestion, fetchedMembers, sponsorCard }: 
 
         {/* ── DESKTOP CONTENT ── */}
         <div
+          className="aero-main-stage"
           style={{
             position: 'absolute',
             inset: 0,
@@ -539,7 +519,7 @@ export default function Home({ answeredQuestion, fetchedMembers, sponsorCard }: 
             const n = DESKTOP_ICONS.length; // 7
 
             return (
-              <div className="orbital-rig" style={{ position: 'relative', width: CONTAINER, height: CONTAINER, flexShrink: 0, marginLeft: 620 }}>
+              <div className="orbital-rig desktop-orbital-rig" style={{ position: 'relative', width: CONTAINER, height: CONTAINER, flexShrink: 0, marginLeft: 620 }}>
 
                 {/* Orbit ring */}
                 {/* <div style={{
@@ -720,15 +700,38 @@ export default function Home({ answeredQuestion, fetchedMembers, sponsorCard }: 
               </div>
             );
           })()}
+
+          <div className="mobile-home-launcher">
+            <div className="mobile-home-title">HackSMU VII</div>
+            <div className="mobile-home-date">April 11-12, 2026</div>
+            <Link href={registerHref} passHref>
+              <a className="aero-btn" style={{ textDecoration: 'none', display: 'inline-block', marginTop: 10 }}>
+                Apply Now →
+              </a>
+            </Link>
+            <div className="mobile-icon-grid">
+              {DESKTOP_ICONS.map((icon) => (
+                <button
+                  key={icon.key}
+                  className="mobile-icon-btn"
+                  onClick={() => openSection(icon.key)}
+                  title={icon.label}
+                >
+                  <span style={{ fontSize: 24 }}>{icon.emoji}</span>
+                  <span>{icon.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* ── TASKBAR ── */}
         <div className="aero-taskbar">
-          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+          <div className="taskbar-brand" style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
             <img src="/assets2025/FrutigerAero.png" alt="HackSMU" style={{ height: 56, borderRadius: 6 }} onError={e => (e.currentTarget.style.display = 'none')} />
             <span className="taskbar-logo">HackSMU VII</span>
           </div>
-          <div style={{ display: 'flex', gap: 64, alignItems: 'center' }}>
+          <div className="taskbar-actions" style={{ display: 'flex', gap: 64, alignItems: 'center' }}>
             {DESKTOP_ICONS.slice(0, 4).map(icon => (
               <button
                 key={icon.key}
@@ -742,7 +745,7 @@ export default function Home({ answeredQuestion, fetchedMembers, sponsorCard }: 
               </button>
             ))}
           </div>
-          <div className="taskbar-time">
+          <div className="taskbar-time taskbar-meta">
             <div style={{ fontSize: 20 }}>{clockStr}</div>
             <div style={{ fontSize: 18, opacity: 0.85 }}>Dallas, TX</div>
           </div>
@@ -774,11 +777,23 @@ export default function Home({ answeredQuestion, fetchedMembers, sponsorCard }: 
                     faqs={faqs}
                     loading={faqLoading}
                     openState={faqOpen}
-                    toggle={(i) => setFaqOpen(prev => { const n = [...prev]; n[i] = !n[i]; return n; })}
+                    onToggleItem={(i) =>
+                      setFaqOpen(prev => {
+                        const n = [...prev];
+                        n[i] = !n[i];
+                        return n;
+                      })
+                    }
+                    onToggleAll={() =>
+                      setFaqOpen(prev => {
+                        const shouldExpandAll = !prev.every(Boolean);
+                        return prev.map(() => shouldExpandAll);
+                      })
+                    }
                   />
                 )}
                 {activeSection === 'resources' && <ResourcesContent />}
-                {activeSection === 'sponsors' && <SponsorsContent tiers={sponsorsByTier} />}
+                {activeSection === 'sponsors' && <SponsorsContent />}
                 {activeSection === 'schedule' && <ScheduleContent />}
                 {activeSection === 'team' && (
                   <TeamContent
@@ -793,20 +808,6 @@ export default function Home({ answeredQuestion, fetchedMembers, sponsorCard }: 
         )}
       </div>
 
-      {/* ── RESPONSIVE ICON GRID CSS ── */}
-      <style>{`
-        @media (max-width: 640px) {
-          .desktop-icons-grid {
-            grid-template-columns: repeat(4, 1fr) !important;
-          }
-          .icon-orb { width: 56px !important; height: 56px !important; font-size: 22px !important; }
-        }
-        @media (max-width: 400px) {
-          .desktop-icons-grid {
-            grid-template-columns: repeat(3, 1fr) !important;
-          }
-        }
-      `}</style>
     </>
   );
 }
@@ -826,7 +827,7 @@ function AboutContent() {
         <div style={{ fontSize: 40, marginBottom: 8 }}>🐟</div>
         <h1 style={{
           fontFamily: "'Orbitron', sans-serif",
-          fontSize: 26,
+          fontSize: 45,
           fontWeight: 900,
           background: 'linear-gradient(135deg, #a0f0ff, #60c8ff, #2090ff)',
           WebkitBackgroundClip: 'text',
@@ -837,15 +838,15 @@ function AboutContent() {
         }}>
           HackSMU VII
         </h1>
-        <p style={{ color: 'rgba(160,230,255,0.85)', fontSize: 14, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-          ion remember, 2026 · Dallas, Texas
+        <p style={{ color: 'rgba(160,230,255,0.85)', fontSize: 16, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+          April 11-12, 2026 · Dallas, Texas
         </p>
       </div>
 
       <div className="divider-aero" style={{ marginBottom: 20 }} />
 
       {/* Stats */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 10, marginBottom: 22 }}>
+      <div className="about-stats-grid" style={{ display: 'grid', gap: 10, marginBottom: 22 }}>
         {ABOUT_STATS.map(s => (
           <div key={s.label} className="about-stat-card">
             <div className="about-stat-number">{s.number}</div>
@@ -862,9 +863,9 @@ function AboutContent() {
         padding: '16px 18px',
         marginBottom: 18,
       }}>
-        <p style={{ color: 'rgba(220,240,255,0.90)', fontSize: 14, lineHeight: 1.7, margin: 0 }}>
+        <p style={{ color: 'rgba(220,240,255,0.90)', fontSize: 15, lineHeight: 1.7, margin: 0 }}>
           HackSMU is Southern Methodist University's annual hackathon hosted by{' '}
-          <strong style={{ color: 'rgba(100,230,255,0.95)' }}>ACM @ SMU</strong>. Over 24 hours, hundreds of
+          <strong style={{ color: 'rgba(100,230,255,0.95)' }}>the SMU Computer Science Club and iMasons</strong>. Over 24 hours, hundreds of
           students collaborate, build, and ship incredible projects — from AI applications and mobile apps to
           hardware hacks and social impact tools. Whether you're a first-time hacker or a seasoned engineer,
           HackSMU is the place for you.
@@ -872,14 +873,14 @@ function AboutContent() {
       </div>
 
       {/* Details grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+      <div className="about-details-grid" style={{ display: 'grid', gap: 10 }}>
         {[
           { icon: '📍', label: 'Location', value: 'Hughes Trigg Student Center, SMU' },
-          { icon: '📅', label: 'Dates', value: 'ion remember, 2026' },
+          { icon: '📅', label: 'Dates', value: 'April 11-12, 2026' },
           { icon: '🎓', label: 'Open To', value: 'All College Students' },
           { icon: '💰', label: 'Entry Fee', value: 'Free!' },
           { icon: '🍕', label: 'Food', value: 'Meals Provided' },
-          { icon: '🏆', label: 'Prizes', value: '$10,000+ in Awards' },
+          { icon: '🏆', label: 'Prizes', value: 'Massive Prize Pool!' },
         ].map(item => (
           <div key={item.label} style={{
             display: 'flex',
@@ -892,8 +893,8 @@ function AboutContent() {
           }}>
             <span style={{ fontSize: 20 }}>{item.icon}</span>
             <div>
-              <div style={{ fontSize: 10, fontWeight: 700, color: 'rgba(140,210,255,0.70)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{item.label}</div>
-              <div style={{ fontSize: 13, fontWeight: 600, color: 'rgba(230,245,255,0.95)' }}>{item.value}</div>
+              <div style={{ fontSize: 12, fontWeight: 700, color: 'rgba(140,210,255,0.70)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{item.label}</div>
+              <div style={{ fontSize: 15, fontWeight: 600, color: 'rgba(230,245,255,0.95)' }}>{item.value}</div>
             </div>
           </div>
         ))}
@@ -915,13 +916,16 @@ function FaqContent({
   faqs,
   loading,
   openState,
-  toggle,
+  onToggleItem,
+  onToggleAll,
 }: {
   faqs: AnsweredQuestion[];
   loading: boolean;
   openState: boolean[];
-  toggle: (i: number) => void;
+  onToggleItem: (i: number) => void;
+  onToggleAll: () => void;
 }) {
+  const allExpanded = openState.length > 0 && openState.every(Boolean);
   return (
     <div style={{ padding: '18px 18px' }}>
       {loading && faqs.length === 0 && (
@@ -937,7 +941,7 @@ function FaqContent({
       )}
       {faqs.map((faq, i) => (
         <div key={faq.id ?? i} className="faq-item">
-          <button className="faq-question-btn" onClick={() => toggle(i)}>
+          <button className="faq-question-btn" onClick={() => onToggleItem(i)}>
             <span className="faq-question-text">{faq.question}</span>
             <svg
               className={`faq-chevron${openState[i] ? ' open' : ''}`}
@@ -968,10 +972,10 @@ function FaqContent({
         <div style={{ marginTop: 10, textAlign: 'right' }}>
           <button
             className="aero-btn"
-            style={{ fontSize: 12, padding: '7px 16px' }}
-            onClick={() => toggle(-1)}
+            style={{ fontSize: 14, padding: '7px 16px' }}
+            onClick={onToggleAll}
           >
-            Expand All
+            {allExpanded ? 'Collapse All' : 'Expand All'}
           </button>
         </div>
       )}
@@ -981,20 +985,25 @@ function FaqContent({
 
 // ── Resources ─────────────────────────────────────────────────
 function ResourcesContent() {
+  const hasCenteredLastRow = RESOURCES.length % 3 === 2;
   return (
     <div style={{ padding: '24px 22px' }}>
-      <p style={{ color: 'rgba(180,225,255,0.80)', fontSize: 13, textAlign: 'center', marginBottom: 24 }}>
+      <p style={{ color: 'rgba(180,225,255,0.80)', fontSize: 15, textAlign: 'center', marginBottom: 24 }}>
         Everything you need to build something amazing at HackSMU VII.
       </p>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
-        {RESOURCES.map(r => (
+      <div className="resources-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(6, minmax(0, 1fr))', gap: 16 }}>
+        {RESOURCES.map((r, i) => {
+          const isInLastRowPair = hasCenteredLastRow && i >= RESOURCES.length - 2;
+          const centeredColumn = i === RESOURCES.length - 2 ? '2 / span 2' : '4 / span 2';
+          return (
           <a
             key={r.label}
             href={r.href}
             target="_blank"
             rel="noreferrer"
-            className="water-drop-btn"
+            className="water-drop-btn resource-card"
             style={{
+              gridColumn: isInLastRowPair ? centeredColumn : 'span 2',
               background: r.grad,
               width: '100%',
               aspectRatio: '1 / 1.1',
@@ -1004,7 +1013,7 @@ function ResourcesContent() {
             <div className="ripple-ring" />
             <span style={{ fontSize: 32, position: 'relative', zIndex: 1 }}>{r.emoji}</span>
             <span style={{
-              fontSize: 13,
+              fontSize: 17,
               fontWeight: 800,
               color: '#fff',
               textShadow: '0 1px 6px rgba(0,0,0,0.7)',
@@ -1013,7 +1022,7 @@ function ResourcesContent() {
               letterSpacing: '0.04em',
             }}>{r.label}</span>
             <span style={{
-              fontSize: 10,
+              fontSize: 14,
               color: 'rgba(255,255,255,0.75)',
               textAlign: 'center',
               position: 'relative',
@@ -1021,72 +1030,73 @@ function ResourcesContent() {
               lineHeight: 1.3,
             }}>{r.desc}</span>
           </a>
-        ))}
+        )})}
       </div>
     </div>
   );
 }
 
 // ── Sponsors ──────────────────────────────────────────────────
-function SponsorsContent({ tiers }: { tiers: Record<string, any[]> }) {
-  // Hardcoded fallback sponsor set if API returns nothing
-  const fallbackSponsors = {
-    gold: [
-      { name: 'IBM', logo: '/sponsors/IBM.png' },
-      { name: 'PayPal', logo: '/sponsors/PayPal.jpg' },
-      { name: 'Invesco', logo: '/sponsors/Invesco.jpg' },
-    ],
-    silver: [
-      { name: 'ParkHub', logo: '/sponsors/ParkHub.jpg' },
-    ],
-    bronze: [
-      { name: 'Cartesi', logo: '/sponsors/Cartesi.png' },
-      { name: 'MLH', logo: '/sponsors/MLH.png' },
-      { name: 'SMU Student Senate', logo: '/sponsors/SMUStudentSenate.jpg' },
-      { name: 'StandOut Stickers', logo: '/sponsors/StandOutStickers.png' },
-    ],
-    other: [],
-  };
+function SponsorsContent() {
+  const sponsors = [
+    { name: 'iMasons', logo: '/sponsors/iMasonsLogo.png' },
+    { name: 'SMU Lyle School of Engineering', logo: '/sponsors/SMULyleLogo.png' },
+    { name: 'SMU Student Senate', logo: '/sponsors/SMUStudentSenate.jpg' },
+  ];
 
-  const goldSponsors = tiers.gold.length > 0 ? tiers.gold : fallbackSponsors.gold;
-  const silverSponsors = tiers.silver.length > 0 ? tiers.silver : fallbackSponsors.silver;
-  const bronzeSponsors = tiers.bronze.length > 0 ? tiers.bronze : fallbackSponsors.bronze;
-  const otherSponsors = tiers.other.length > 0 ? tiers.other : fallbackSponsors.other;
-
-  const TierSection = ({ title, tierClass, sponsors, cols }: { title: string; tierClass: string; sponsors: any[]; cols: number }) => (
-    sponsors.length === 0 ? null : (
+  return (
+    <div style={{ padding: '22px 20px' }}>
       <div style={{ marginBottom: 24 }}>
-        <h3 style={{ fontSize: 13, fontWeight: 800, letterSpacing: '0.10em', textTransform: 'uppercase', marginBottom: 12 }} className={tierClass}>
-          {title}
+        <h3
+          style={{
+            fontSize: 16,
+            fontWeight: 800,
+            letterSpacing: '0.10em',
+            textTransform: 'uppercase',
+            marginBottom: 12,
+            color: 'rgba(200,245,255,0.95)',
+          }}
+        >
+          Sponsors
         </h3>
-        <div style={{ display: 'grid', gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: 12 }}>
-          {sponsors.map((s: any, i: number) => (
-            <div key={i} className="sponsor-glass-card shine-card" style={{ padding: '18px 12px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-              {(s.logo ?? s.imageLink) ? (
-                <img
-                  src={s.logo ?? s.imageLink}
-                  alt={s.name ?? s.company ?? 'Sponsor'}
-                  style={{ maxWidth: '100%', maxHeight: 60, objectFit: 'contain', filter: 'brightness(1.1)' }}
-                  onError={e => (e.currentTarget.style.display = 'none')}
-                />
-              ) : null}
-              <span style={{ fontSize: 12, fontWeight: 700, color: 'rgba(220,240,255,0.90)', textAlign: 'center', lineHeight: 1.3 }}>
-                {s.name ?? s.company ?? 'Sponsor'}
+        <div className="sponsors-grid" style={{ display: 'grid', gap: 12 }}>
+          {sponsors.map((s) => (
+            <div
+              key={s.name}
+              className="sponsor-glass-card shine-card"
+              style={{ padding: '18px 12px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}
+            >
+              <img
+                src={s.logo}
+                alt={s.name}
+                style={{
+                  maxWidth: '100%',
+                  maxHeight: 90,
+                  objectFit: 'contain',
+                  filter: 'brightness(1.1)',
+                  transform: s.name === 'SMU Lyle School of Engineering' ? 'scale(3)' : 'none',
+                  transformOrigin: 'center',
+                  marginTop: s.name === 'iMasons' ? 8 : 0,
+                }}
+                onError={e => (e.currentTarget.style.display = 'none')}
+              />
+              <span
+                style={{
+                  fontSize: 15,
+                  fontWeight: 700,
+                  color: 'rgba(220,240,255,0.90)',
+                  textAlign: 'center',
+                  lineHeight: 1.3,
+                  marginTop: s.name === 'iMasons' ? 10 : 0,
+                }}
+              >
+                {s.name}
               </span>
             </div>
           ))}
         </div>
       </div>
-    )
-  );
-
-  return (
-    <div style={{ padding: '22px 20px' }}>
-      <TierSection title="🥇 Gold Sponsors" tierClass="tier-gold" sponsors={goldSponsors} cols={3} />
-      <TierSection title="🥈 Silver Sponsors" tierClass="tier-silver" sponsors={silverSponsors} cols={3} />
-      <TierSection title="🥉 Bronze Sponsors" tierClass="tier-bronze" sponsors={bronzeSponsors} cols={4} />
-      <TierSection title="Partners" tierClass="text-aero-cyan" sponsors={otherSponsors} cols={4} />
-      <p style={{ textAlign: 'center', color: 'rgba(160,215,255,0.65)', fontSize: 12, marginTop: 8 }}>
+      <p style={{ textAlign: 'center', color: 'rgba(160,215,255,0.65)', fontSize: 14, marginTop: 8 }}>
         Interested in sponsoring? Email{' '}
         <a href="mailto:hacksmu@smu.edu" style={{ color: 'rgba(100,220,255,0.85)', textDecoration: 'underline' }}>
           hacksmu@smu.edu
@@ -1100,10 +1110,10 @@ function SponsorsContent({ tiers }: { tiers: Record<string, any[]> }) {
 function ScheduleContent() {
   return (
     <div style={{ padding: '16px 0' }}>
-      <div style={{ padding: '0 18px 14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <p style={{ color: 'rgba(160,225,255,0.75)', fontSize: 12 }}>All times Central Time (CT)</p>
+      <div className="schedule-header-row" style={{ padding: '0 18px 14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <p style={{ color: 'rgba(160,225,255,0.75)', fontSize: 13 }}>All times Central Time (CT)</p>
         <Link href="/dashboard#schedule" passHref>
-          <a className="aero-btn" style={{ fontSize: 11, padding: '6px 14px', textDecoration: 'none', display: 'inline-block' }}>
+          <a className="aero-btn" style={{ fontSize: 14, padding: '6px 14px', textDecoration: 'none', display: 'inline-block' }}>
             Full Schedule →
           </a>
         </Link>
@@ -1154,11 +1164,11 @@ function TeamContent({
 
       <div style={{ padding: '18px 18px' }}>
         {currentMembers.length === 0 ? (
-          <div style={{ textAlign: 'center', color: 'rgba(160,210,255,0.65)', padding: '28px 0', fontSize: 13 }}>
+          <div style={{ textAlign: 'center', color: 'rgba(160,210,255,0.65)', padding: '28px 0', fontSize: 19 }}>
             Team info coming soon!
           </div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: 12 }}>
+          <div className="team-members-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: 12 }}>
             {currentMembers.map((m: any, i: number) => (
               <div key={i} className="member-glass-card">
                 {(m.fileName ?? m.photo ?? m.image ?? m.imageLink) ? (
@@ -1213,19 +1223,17 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async (context)
   const protocol = context.req.headers.referer?.split('://')[0] || 'http';
   const base = `${protocol}://${context.req.headers.host}`;
   try {
-    const [faqRes, memberRes, sponsorRes] = await Promise.all([
+    const [faqRes, memberRes] = await Promise.all([
       RequestHelper.get<any[]>(`${base}/api/questions/faq`, {}),
       RequestHelper.get<any[]>(`${base}/api/members`, {}),
-      RequestHelper.get<any[]>(`${base}/api/sponsor`, {}),
     ]);
     return {
       props: {
         answeredQuestion: Array.isArray(faqRes.data) ? faqRes.data : [],
         fetchedMembers: Array.isArray(memberRes.data) ? memberRes.data : [],
-        sponsorCard: Array.isArray(sponsorRes.data) ? sponsorRes.data : [],
       },
     };
   } catch {
-    return { props: { answeredQuestion: [], fetchedMembers: [], sponsorCard: [] } };
+    return { props: { answeredQuestion: [], fetchedMembers: [] } };
   }
 };

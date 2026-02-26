@@ -34,10 +34,10 @@ function Sidebar() {
         className="hidden md:flex"
         style={{
           position: 'fixed',
-          top: 48,
+          top: 84,
           left: 0,
           width: 200,
-          height: 'calc(100vh - 48px)',
+          height: 'calc(100vh - 84px)',
           flexDirection: 'column',
           alignItems: 'stretch',
           padding: '24px 0',

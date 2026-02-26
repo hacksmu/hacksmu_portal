@@ -462,8 +462,8 @@ export const hackPortalConfig: HackPortalConfig = {
             initialValue: [],
             options: [
               {
-                title: 'Invesco',
-                value: 'Invesco',
+                title: 'iMasons',
+                value: 'iMasons',
               },
               {
                 title: 'Sponsor 2 (TBD)',

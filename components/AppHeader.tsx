@@ -67,21 +67,6 @@ export default function AppHeader() {
           position: 'sticky',
         }}
       >
-        {/* MLH trust badge — pinned to top-right corner, outside nav flow */}
-        <a
-          id="mlh-trust-badge"
-          style={{ display: 'inline-block', position: 'fixed', top: '0px', right: 0, width: 54, zIndex: 120 }}
-          href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2026-season&utm_content=gray"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <img
-            src="https://s3.amazonaws.com/logged-assets/trust-badge/2026/mlh-trust-badge-2026-gray.svg"
-            alt="Major League Hacking 2026 Hackathon Season"
-            style={{ width: '100%' }}
-          />
-        </a>
-
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           {/* Logo */}
           <Link href="/">
@@ -201,8 +186,9 @@ export default function AppHeader() {
         </div>
 
         {/* Auth button */}
-        <div style={{ display: 'flex', alignItems: 'center', marginRight: 62 }}>
+        <div style={{ display: 'flex', alignItems: 'center', marginRight: 16 }}>
           <button
+            className="auth-trigger-btn"
             onClick={toggleDialog}
             style={{
               position: 'relative',

@@ -13,8 +13,8 @@ const glass: React.CSSProperties = {
 
 const STATS = [
   { number: '24',    label: 'Hours of Hacking',   color: '#60c8ff' },
-  { number: '500+',  label: 'Hackers Expected',    color: '#40ffb8' },
-  { number: '$10K+', label: 'in Prizes',            color: '#ffd040' },
+  { number: '200+',  label: 'Hackers Expected',    color: '#40ffb8' },
+  { number: 'Massive', label: 'Prize Pool',         color: '#ffd040' },
   { number: '50+',   label: 'Projects Built',       color: '#b080ff' },
 ];
 
@@ -24,7 +24,7 @@ const HIGHLIGHTS = [
   { emoji: '🤝', title: 'All Skill Levels', desc: 'Whether you\'re a first-time hacker or a seasoned engineer, HackSMU welcomes everyone.' },
   { emoji: '🍕', title: 'Food & Swag', desc: 'Free meals, snacks, and exclusive HackSMU merch throughout the event.' },
   { emoji: '🎓', title: 'Workshops', desc: 'Learn from industry professionals and fellow hackers through hands-on technical workshops.' },
-  { emoji: '🏆', title: 'Prizes', desc: 'Compete for $10K+ in prizes across multiple tracks and sponsor challenges.' },
+  { emoji: '🏆', title: 'Prizes', desc: 'Compete for a massive prize pool across multiple tracks and sponsor challenges.' },
 ];
 
 export default function AboutPage() {
@@ -112,7 +112,7 @@ export default function AboutPage() {
             What is HackSMU?
           </h2>
           <p style={{ color: 'rgba(210,235,255,0.80)', fontSize: 15, lineHeight: 1.8, marginBottom: 16 }}>
-            HackSMU is an annual hackathon organized by ACM @ SMU that brings together hundreds of students from universities across the country. Over 24 hours, participants form teams, dream up ideas, and build working projects from scratch — competing for prizes across multiple tracks.
+            HackSMU is an annual hackathon organized by the SMU Computer Science Club and iMasons that brings together hundreds of students from universities across the country. Over 24 hours, participants form teams, dream up ideas, and build working projects from scratch — competing for prizes across multiple tracks.
           </p>
           <p style={{ color: 'rgba(210,235,255,0.80)', fontSize: 15, lineHeight: 1.8, margin: 0 }}>
             Whether you want to build a web app, hardware project, mobile game, or anything in between — HackSMU VII is your opportunity to turn an idea into reality, make friends, learn new skills, and have an unforgettable weekend.

@@ -12,7 +12,7 @@ export default function DashboardHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <div style={{ marginBottom: 20 }}>
+    <div style={{ marginTop: 14, marginBottom: 20 }}>
       {/* Desktop pill nav */}
       <div
         className="hidden md:flex"

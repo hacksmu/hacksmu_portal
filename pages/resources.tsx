@@ -39,14 +39,6 @@ const CATEGORIES: Category[] = [
         tag: 'Required',
         tagColor: '#ff6060',
       },
-      {
-        label: 'MLH',
-        href: 'https://mlh.io',
-        emoji: '🎖️',
-        desc: 'Major League Hacking — the official student hackathon league. Check rules and code of conduct.',
-        tag: 'Rules',
-        tagColor: '#40ffb8',
-      },
     ],
   },
   {
@@ -94,7 +86,6 @@ const CATEGORIES: Category[] = [
 ];
 
 const QUICK_LINKS = [
-  { label: 'Code of Conduct', href: 'https://mlh.io/code-of-conduct', emoji: '📋' },
   { label: 'Devpost FAQ', href: 'https://help.devpost.com', emoji: '❓' },
   { label: 'GitHub Student Pack', href: 'https://education.github.com/pack', emoji: '🎒' },
   { label: 'Vercel Deploy', href: 'https://vercel.com', emoji: '▲' },
