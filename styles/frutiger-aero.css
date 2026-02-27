@@ -2072,3 +2072,14 @@
     max-height: 82% !important;
   }
 }
+
+/* Mobile home: remove the bottom taskbar */
+@media (max-width: 900px) {
+  .aero-taskbar {
+    display: none !important;
+  }
+
+  .aero-main-stage {
+    bottom: 0 !important;
+  }
+}
