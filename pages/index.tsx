@@ -156,21 +156,29 @@ const TEAM_MEMBERS = [
   { name: 'Ayoola Olaosebikan', image: '/team/ayoola.PNG', title: 'Logistics & Technical Team' },
 ];
 
-// ─── Schedule data ────────────────────────────────────────────
+// ─── Public Schedule (HackSMU 2026) ─────────────────────────────
 const SCHEDULE_ITEMS = [
-  { time: 'Sat 9AM',  name: 'Check-in & Breakfast',       loc: 'Fondren Science Lobby',  color: '#40ffb8', current: false },
-  { time: 'Sat 10AM', name: 'Opening Ceremony',            loc: 'Fondren Science Atrium', color: '#60b8ff', current: false },
-  { time: 'Sat 11AM', name: 'Hacking Begins 🚀',            loc: 'Fondren Science',        color: '#b080ff', current: false },
-  { time: 'Sat 1PM',  name: 'Lunch',                        loc: 'Main Hall',              color: '#40ffb8', current: false },
-  { time: 'Sat 2PM',  name: 'Workshop: Intro to AI/ML',    loc: 'Room 160',               color: '#ffd040', current: false },
-  { time: 'Sat 4PM',  name: 'Sponsor Tech Talk',            loc: 'Auditorium',             color: '#ffd040', current: false },
-  { time: 'Sat 7PM',  name: 'Dinner',                       loc: 'Main Hall',              color: '#40ffb8', current: false },
-  { time: 'Sat 9PM',  name: 'Workshop: Web Dev Crash Course', loc: 'Room 160',            color: '#ffd040', current: false },
-  { time: 'Sat 11PM', name: 'Midnight Snack 🍕',             loc: 'Lobby',                 color: '#ff8060', current: false },
-  { time: 'Sun 6AM',  name: 'Breakfast',                    loc: 'Main Hall',              color: '#40ffb8', current: false },
-  { time: 'Sun 9AM',  name: 'Hacking Ends — Submissions',   loc: 'Devpost',                color: '#ff8060', current: false },
-  { time: 'Sun 10AM', name: 'Project Judging Begins',       loc: 'All Floors',             color: '#b080ff', current: false },
-  { time: 'Sun 12PM', name: 'Awards Ceremony 🏆',            loc: 'Fondren Science Atrium', color: '#ffd040', current: false },
+  // ─── Saturday, April 11 ───
+  { time: 'Sat 9:00 AM',  name: 'Doors Open for Hacker Check-in',        loc: 'HT Main Floor (Entryway)',        color: '#40ffb8', current: false },
+  { time: 'Sat 9:00 AM',  name: 'Sponsor Tabling',                        loc: 'HT 220 BC (Open Walls)',          color: '#40ffb8', current: false },
+  { time: 'Sat 11:00 AM', name: 'Opening Ceremony Begins',                loc: 'HT Oren Family Auditorium',       color: '#60b8ff', current: false },
+  { time: 'Sat 11:50 AM', name: 'Team Building',                          loc: 'HT Oren Family Auditorium',       color: '#60b8ff', current: false },
+  { time: 'Sat 12:00 PM', name: 'Hacking Begins (Competition Starts)',    loc: 'Event Spaces',                    color: '#b080ff', current: false },
+
+  { time: 'Sat 1:00 PM',  name: 'Lunch',                                   loc: 'HT Atrium',                       color: '#40ffb8', current: false },
+
+  { time: 'Sat 2:30 PM',  name: 'Workshop 1',                              loc: 'HT Chamber',                      color: '#ffd040', current: false },
+  { time: 'Sat 4:00 PM',  name: 'Workshop 2',                              loc: 'HT Chamber',                      color: '#ffd040', current: false },
+  { time: 'Sat 5:30 PM',  name: 'Workshop 3',                              loc: 'HT Chamber',                      color: '#ffd040', current: false },
+
+  { time: 'Sat 7:00 PM',  name: 'Dinner',                                  loc: 'HT Atrium',                       color: '#40ffb8', current: false },
+  { time: 'Sat 8:30 PM',  name: 'Event 1',                                 loc: 'HT Chamber',                      color: '#ffd040', current: false },
+  { time: 'Sat 10:00 PM', name: 'Event 2',                                 loc: 'HT Chamber',                      color: '#ffd040', current: false },
+
+  // ─── Sunday, April 12 ───
+  { time: 'Sun 9:00 AM',  name: 'Breakfast',                               loc: 'HT Atrium',                       color: '#40ffb8', current: false },
+  { time: 'Sun 1:00 PM',  name: 'Judging',                                 loc: 'HT Ballrooms',                    color: '#b080ff', current: false },
+  { time: 'Sun 5:00 PM',  name: 'Closing Ceremony',                        loc: 'HT Oren Family Auditorium',       color: '#60b8ff', current: false },
 ];
 
 // ─── Resources data ───────────────────────────────────────────
