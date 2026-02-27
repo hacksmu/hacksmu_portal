@@ -1186,6 +1186,134 @@
   }
 }
 
+/* 13" laptop range: tighten nav/taskbar and keep left panels evenly spaced */
+@media (min-width: 1100px) and (max-width: 1450px) and (max-height: 1000px) {
+  :root {
+    --mb13-panel-gap: 14px;
+  }
+
+  .app-topbar {
+    height: 72px !important;
+    padding: 0 10px !important;
+  }
+
+  .app-topbar .md\:inline {
+    font-size: 20px !important;
+  }
+
+  .app-topbar .md\:flex a {
+    font-size: 13px !important;
+    padding: 8px 10px !important;
+  }
+
+  .auth-trigger-btn {
+    font-size: 13px !important;
+    padding: 8px 14px !important;
+  }
+
+  .app-topbar a.app-brand-link > img.app-brand-logo {
+    width: 46px !important;
+    height: 70px !important;
+    min-width: 46px !important;
+  }
+
+  .aero-taskbar {
+    height: 70px !important;
+    padding: 0 14px !important;
+  }
+
+  .taskbar-logo {
+    font-size: 16px !important;
+  }
+
+  .taskbar-time {
+    font-size: 13px !important;
+  }
+
+  .taskbar-actions {
+    gap: 22px !important;
+  }
+
+  .taskbar-actions button {
+    font-size: 36px !important;
+    padding: 5px !important;
+  }
+
+  .desktop-orbital-rig {
+    margin-left: 470px !important;
+    transform: scale(0.50) !important;
+    transform-origin: center center !important;
+  }
+
+  .top-left-panel {
+    top: 88px !important;
+    left: 28px !important;
+    width: 246px !important;
+    height: 170px !important;
+    max-height: none !important;
+    z-index: 8 !important;
+  }
+
+  .powered-by-title {
+    font-size: 11px !important;
+    margin-top: 74px !important;
+    margin-bottom: -80px !important;
+  }
+
+  .powered-by-logo-smu {
+    height: 225px !important;
+  }
+
+  .powered-by-logo-imasons {
+    height: 225px !important;
+    margin-top: -180px !important;
+  }
+
+  .top-left-panel-2 {
+    top: calc(88px + 170px + var(--mb13-panel-gap)) !important;
+    left: 28px !important;
+    width: 280px !important;
+    height: 118px !important;
+    max-height: none !important;
+    z-index: 8 !important;
+  }
+
+  .countdown-title {
+    font-size: 11px !important;
+  }
+
+  .countdown-value {
+    font-size: 22px !important;
+    min-width: 32px !important;
+    padding: 4px 6px !important;
+  }
+
+  .countdown-unit {
+    font-size: 9px !important;
+    margin-top: 3px !important;
+  }
+
+  .top-left-panel-3 {
+    top: calc(88px + 170px + var(--mb13-panel-gap) + 118px + var(--mb13-panel-gap)) !important;
+    left: 28px !important;
+    width: 336px !important;
+    height: 300px !important;
+    max-height: none !important;
+    z-index: 8 !important;
+    transform: scale(0.65) !important;
+    transform-origin: top left !important;
+  }
+
+  .gallery-title {
+    font-size: 10px !important;
+  }
+
+  .gallery-photo {
+    max-width: 93% !important;
+    max-height: 92% !important;
+  }
+}
+
 @media (max-width: 1100px) {
   .desktop-orbital-rig {
     margin-left: 360px !important;
