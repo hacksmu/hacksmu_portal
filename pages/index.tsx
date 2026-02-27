@@ -1091,8 +1091,8 @@ function SponsorsContent() {
       </div>
       <p style={{ textAlign: 'center', color: 'rgba(160,215,255,0.65)', fontSize: 14, marginTop: 8 }}>
         Interested in sponsoring? Email{' '}
-        <a href="mailto:hacksmu@smu.edu" style={{ color: 'rgba(100,220,255,0.85)', textDecoration: 'underline' }}>
-          hacksmu@smu.edu
+        <a href="mailto:hacksmu.team@gmail.com" style={{ color: 'rgba(100,220,255,0.85)', textDecoration: 'underline' }}>
+          hacksmu.team@gmail.com
         </a>
       </p>
     </div>
