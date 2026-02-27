@@ -62,7 +62,7 @@ function getCountdown() {
   return { d, h, m, s };
 }
 
-// ─── Bubble config ───────────────────────────────────────────
+// ─── Bubble config ───────────────────────────────────────────-
 const BUBBLES = [
   { size: 38, left: '8%',  delay: '0s',   dur: '13s' },
   { size: 22, left: '18%', delay: '3.5s', dur: '16s' },
