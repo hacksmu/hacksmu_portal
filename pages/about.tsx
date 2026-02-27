@@ -35,7 +35,6 @@ export default function AboutPage() {
       <Head>
         <title>About — HackSMU VII</title>
         <meta name="description" content="About HackSMU VII — April 11-12, 2026 · Dallas, TX" />
-        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet" />
       </Head>
 
       <div style={{ maxWidth: 900, margin: '0 auto', padding: '40px 24px 80px' }}>
@@ -68,7 +67,7 @@ export default function AboutPage() {
             About HackSMU VII
           </h1>
           <p style={{ color: 'rgba(200,232,255,0.72)', fontSize: 18, maxWidth: 560, margin: '0 auto', lineHeight: 1.7 }}>
-            HackSMU is Southern Methodist University's premier hackathon — 24 hours of coding, creativity, and collaboration in the heart of Dallas.
+            HackSMU is Southern Methodist University&apos;s premier hackathon — 24 hours of coding, creativity, and collaboration in the heart of Dallas.
           </p>
         </div>
 

@@ -1,6 +1,7 @@
 // pages/index.tsx — HackSMU VII · Frutiger Aero Edition
 import Head from 'next/head';
 import Link from 'next/link';
+import Image from 'next/image';
 import type { GetServerSideProps } from 'next';
 import { useEffect, useMemo, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
@@ -351,8 +352,8 @@ export default function Home({ answeredQuestion }: HomeProps) {
           <div style={{ padding: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', gap: 0 }}>
             <div className="powered-by-title" style={{ fontSize: 18, color: 'rgba(200,235,255,0.85)', fontWeight: 700, letterSpacing: '0.08em', marginBottom: -150, marginTop: 120 }}>Powered by</div>
             <div className="powered-by-logos" style={{ display: 'flex', flexDirection: 'column', gap: 0, alignItems: 'center' }}>
-              <img className="powered-by-logo-smu" src="/sponsors/SMULyleLogo.png" alt="SMU Lyle School of Engineering" style={{ height: 450, objectFit: 'contain' }} />
-              <img className="powered-by-logo-imasons" src="/sponsors/iMasonsLogo.png" alt="iMason's" style={{ height: 450, objectFit: 'contain', marginTop: -350 }} />
+              <Image className="powered-by-logo-smu" src="/sponsors/SMULyleLogo.png" alt="SMU Lyle School of Engineering" width={450} height={450} style={{ objectFit: 'contain' }} />
+              <Image className="powered-by-logo-imasons" src="/sponsors/iMasonsLogo.png" alt="iMason's" width={450} height={450} style={{ objectFit: 'contain', marginTop: -350 }} />
             </div>
           </div>
         </div>
@@ -401,12 +402,13 @@ export default function Home({ answeredQuestion }: HomeProps) {
             <div style={{ padding: 16, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
               <div className="gallery-title" style={{ fontSize: 13, color: 'rgba(200,235,255,0.85)', fontWeight: 700, letterSpacing: '0.08em', marginBottom: 3 }}>HackSMU VI Photo Gallery</div>
               <div style={{ position: 'relative', width: '100%', flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 12 }}>
-                <img 
+                <Image 
                   className="gallery-photo"
                   src={hackathonPhotos[carouselIndex]} 
                   alt={`Hackathon photo ${carouselIndex + 1}`}
-                  style={{ maxWidth: '97%', maxHeight: '92%', borderRadius: 8, objectFit: 'cover' }}
-                />
+                  width={400}
+                  height={300}
+                  style={{ maxWidth: '97%', maxHeight: '92%', borderRadius: 8, objectFit: 'cover' }} />
               </div>
               <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
                 <button 
@@ -733,7 +735,7 @@ export default function Home({ answeredQuestion }: HomeProps) {
         {/* ── TASKBAR ── */}
         <div className="aero-taskbar">
           <div className="taskbar-brand" style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-            <img src="/assets2025/FrutigerAero.png" alt="HackSMU" style={{ height: 46, borderRadius: 6 }} onError={e => (e.currentTarget.style.display = 'none')} />
+            <Image src="/assets2025/FrutigerAero.png" alt="HackSMU" width={56} height={46} style={{ borderRadius: 6 }} onError={e => (e.currentTarget.style.display = 'none')} />
             <span className="taskbar-logo">HackSMU VII</span>
           </div>
           <div className="taskbar-actions" style={{ display: 'flex', gap: 42, alignItems: 'center' }}>
@@ -865,10 +867,10 @@ function AboutContent() {
         marginBottom: 18,
       }}>
         <p style={{ color: 'rgba(220,240,255,0.90)', fontSize: 15, lineHeight: 1.7, margin: 0 }}>
-          HackSMU is Southern Methodist University's annual hackathon hosted by{' '}
+          HackSMU is Southern Methodist University&apos;s annual hackathon hosted by{' '}
           <strong style={{ color: 'rgba(100,230,255,0.95)' }}>the SMU Computer Science Club and iMasons</strong>. Over 24 hours, hundreds of
           students collaborate, build, and ship incredible projects — from AI applications and mobile apps to
-          hardware hacks and social impact tools. Whether you're a first-time hacker or a seasoned engineer,
+          hardware hacks and social impact tools. Whether you&apos;re a first-time hacker or a seasoned engineer,
           HackSMU is the place for you.
         </p>
       </div>
@@ -1067,9 +1069,11 @@ function SponsorsContent() {
               className="sponsor-glass-card shine-card"
               style={{ padding: '18px 12px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}
             >
-              <img
+              <Image
                 src={s.logo}
                 alt={s.name}
+                width={120}
+                height={90}
                 style={{
                   maxWidth: '100%',
                   maxHeight: 90,
@@ -1148,12 +1152,12 @@ function TeamContent() {
       className="member-glass-card"
       style={{ width: teamCardWidth, padding: '22px 16px', minHeight: 220, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start' }}
     >
-      <img
+      <Image
         src={member.image}
         alt={member.name}
+        width={142}
+        height={142}
         style={{
-          width: 142,
-          height: 142,
           borderRadius: 12,
           objectFit: 'cover',
           border: '1px solid rgba(255,255,255,0.40)',
