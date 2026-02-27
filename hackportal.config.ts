@@ -491,10 +491,11 @@ export const hackPortalConfig: HackPortalConfig = {
         checkboxQuestions: [
           {
             //Agreement question
-            question: 'I have read and agree to the MLH Code of Conduct.',
+            question:
+              'I understand that HackSMU may photograph, record, or livestream portions of the event. I grant permission for my image, voice, and likeness to be used in event materials, social media, promotional content, and future marketing related to HackSMU and its collaborators (including SMU and event sponsors).',
             required: true,
-            id: 'codeOfConduct',
-            name: 'codeOfConduct',
+            id: 'mediaConsent',
+            name: 'mediaConsent',
             initialValue: [],
             options: [
               {
@@ -506,23 +507,8 @@ export const hackPortalConfig: HackPortalConfig = {
           {
             //Agreement question
             question:
-              'I authorize you to share my application/registration information with Major League Hacking for event administration, ranking, MLH administration, and occasional messages about hackathons in-line with the MLH Privacy Policy. I further agree to the terms of both the MLH Contest Terms and Conditions and the MLH Privacy Policy.',
+              'I agree to receive event-related emails from HackSMU regarding logistics, updates, and post-event information.',
             required: true,
-            id: 'privacyPolicy',
-            name: 'privacyPolicy',
-            initialValue: [],
-            options: [
-              {
-                title: 'I agree',
-                value: 'I agree',
-              },
-            ],
-          },
-          {
-            //Agreement question
-            question:
-              'I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements.',
-            required: false,
             id: 'emailConsent',
             name: 'emailConsent',
             initialValue: [],

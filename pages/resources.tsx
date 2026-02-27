@@ -33,9 +33,9 @@ const CATEGORIES: Category[] = [
     resources: [
       {
         label: 'Devpost',
-        href: 'https://hacksmu.devpost.com',
+        href: '',
         emoji: '🚀',
-        desc: 'Submit your project and browse other teams\' submissions. Required for judging.',
+        desc: 'Coming Soon.',
         tag: 'Required',
         tagColor: '#ff6060',
       },
@@ -48,17 +48,17 @@ const CATEGORIES: Category[] = [
     resources: [
       {
         label: 'Discord',
-        href: 'https://discord.gg/hacksmu',
+        href: 'https://discord.com/invite/Z9YPH4eaen',
         emoji: '💬',
         desc: 'The main hub during the event. Announcements, help channels, team-finding, and more.',
         tag: 'Live Event',
         tagColor: '#60c8ff',
       },
       {
-        label: 'GitHub — ACM@SMU',
+        label: 'GitHub — Hackathon Starter',
         href: 'https://github.com/acm-smu',
         emoji: '🐙',
-        desc: 'Open-source repos from ACM at SMU including this very portal. Fork, star, or contribute.',
+        desc: 'A boilerplate for Node.js web applications. Fork, star, or contribute.',
       },
     ],
   },
@@ -67,14 +67,6 @@ const CATEGORIES: Category[] = [
     icon: '🛠️',
     accent: '#40ffb8',
     resources: [
-      {
-        label: 'Notion — Hacker Hub',
-        href: 'https://notion.so',
-        emoji: '📓',
-        desc: 'Our curated Notion workspace with API guides, workshop notes, prize tracks, and mentorship info.',
-        tag: 'Must Read',
-        tagColor: '#ffd040',
-      },
       {
         label: 'Slides & Templates',
         href: '#',

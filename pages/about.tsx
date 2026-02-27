@@ -119,7 +119,7 @@ export default function AboutPage() {
           </p>
         </div>
 
-        {/* Highlights grid */}
+        {/* Highlights grid */} 
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
