@@ -145,12 +145,14 @@ const SECTION_TITLES: Record<string, string> = {
   dashboard: '✦ Hacker Dashboard',
 };
 
-// ─── Team tab definitions ─────────────────────────────────────
-const TEAM_TABS = [
-  { key: 'tech',      label: 'Tech',       accentColor: '#4488ff', emoji: '💻' },
-  { key: 'sponsor',   label: 'Sponsorship', accentColor: '#ffd040', emoji: '🤝' },
-  { key: 'logistics', label: 'Logistics',   accentColor: '#40ffb8', emoji: '📦' },
-  { key: 'marketing', label: 'Marketing',   accentColor: '#ff8844', emoji: '📢' },
+const TEAM_MEMBERS = [
+  { name: 'Alex Geer', image: '/team/alex.png', title: 'Hackathon Team Lead & Co-President of the CS Club' },
+  { name: 'Hamna Tameez', image: '/team/hamna.jpg', title: 'Logistics Team & Co-President of the CS Club' },
+  { name: 'Noah Brada', image: '/team/noah.jpeg', title: 'Technical Team & Vice President of the CS Club' },
+  { name: 'Mollie Hamman', image: '/team/mollie.jpeg', title: 'Marketing Team' },
+  { name: 'Grant Palmer', image: '/team/grant.jpeg', title: 'Marketing Team' },
+  { name: 'Rin Lu', image: '/team/rin.jpeg', title: 'Technical Team' },
+  { name: 'Ayoola Olaosebikan', image: '/team/ayoola.PNG', title: 'Logistics & Technical Team' },
 ];
 
 // ─── Schedule data ────────────────────────────────────────────
@@ -218,7 +220,7 @@ const ABOUT_STATS = [
 ];
 
 // ─── Main Component ───────────────────────────────────────────
-export default function Home({ answeredQuestion, fetchedMembers }: HomeProps) {
+export default function Home({ answeredQuestion }: HomeProps) {
   const router = useRouter();
   const { isSignedIn } = useAuthContext();
   const registerHref = isSignedIn ? '/register' : '/auth';
@@ -234,9 +236,6 @@ export default function Home({ answeredQuestion, fetchedMembers }: HomeProps) {
   // ── Active section modal ──
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
-
-  // ── Team tab ──
-  const [teamTab, setTeamTab] = useState<string>('tech');
 
   // ── FAQ open state ──
   const [faqOpen, setFaqOpen] = useState<boolean[]>([]);
@@ -320,20 +319,6 @@ export default function Home({ answeredQuestion, fetchedMembers }: HomeProps) {
       return faqs.map((_, i) => prev[i] ?? false);
     });
   }, [faqs]);
-
-  // ── Group members by team ──
-  const membersByTeam = useMemo(() => {
-    const map: Record<string, any[]> = { tech: [], sponsor: [], logistics: [], marketing: [] };
-    (fetchedMembers || []).forEach((m: any) => {
-      const t = (m?.team ?? '').toLowerCase();
-      if (t.includes('tech')) map.tech.push(m);
-      else if (t.includes('sponsor')) map.sponsor.push(m);
-      else if (t.includes('log') || t.includes('ops')) map.logistics.push(m);
-      else if (t.includes('market')) map.marketing.push(m);
-      else map.tech.push(m); // fallback
-    });
-    return map;
-  }, [fetchedMembers]);
 
   // ─────────────────────────────────────────────────────────────
   return (
@@ -808,11 +793,7 @@ export default function Home({ answeredQuestion, fetchedMembers }: HomeProps) {
                 {activeSection === 'sponsors' && <SponsorsContent />}
                 {activeSection === 'schedule' && <ScheduleContent />}
                 {activeSection === 'team' && (
-                  <TeamContent
-                    membersByTeam={membersByTeam}
-                    activeTab={teamTab}
-                    setTab={setTeamTab}
-                  />
+                  <TeamContent />
                 )}
               </div>
             </div>
@@ -1146,83 +1127,83 @@ function ScheduleContent() {
 }
 
 // ── Team ─────────────────────────────────────────────────────
-function TeamContent({
-  membersByTeam,
-  activeTab,
-  setTab,
-}: {
-  membersByTeam: Record<string, any[]>;
-  activeTab: string;
-  setTab: (t: string) => void;
-}) {
-  const currentMembers = membersByTeam[activeTab] ?? [];
-  const activeTabDef = TEAM_TABS.find(t => t.key === activeTab);
+function TeamContent() {
+  const [mobileTeamIndex, setMobileTeamIndex] = useState(0);
+  const mainTeamCards = TEAM_MEMBERS.slice(0, 6);
+  const lastTeamCard = TEAM_MEMBERS[6];
+  const teamCardWidth = 220;
+  const mobileMember = TEAM_MEMBERS[mobileTeamIndex];
+
+  const renderTeamCard = (member: { name: string; image: string; title: string }) => (
+    <div
+      key={member.name}
+      className="member-glass-card"
+      style={{ width: teamCardWidth, padding: '22px 16px', minHeight: 220, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start' }}
+    >
+      <img
+        src={member.image}
+        alt={member.name}
+        style={{
+          width: 142,
+          height: 142,
+          borderRadius: 12,
+          objectFit: 'cover',
+          border: '1px solid rgba(255,255,255,0.40)',
+          boxShadow: '0 0 18px rgba(80,190,255,0.30)',
+          margin: '0 auto 12px',
+        }}
+        onError={e => (e.currentTarget.style.display = 'none')}
+      />
+      <div style={{ fontSize: 15, fontWeight: 700, color: 'rgba(230,245,255,0.95)', lineHeight: 1.3, textAlign: 'center' }}>
+        {member.name}
+      </div>
+      <div style={{ fontSize: 12, color: 'rgba(170,220,255,0.88)', lineHeight: 1.35, textAlign: 'center', marginTop: 6 }}>
+        {member.title}
+      </div>
+    </div>
+  );
 
   return (
-    <div>
-      {/* Tabs */}
-      <div className="team-tabs">
-        {TEAM_TABS.map(tab => (
-          <button
-            key={tab.key}
-            className={`team-tab${activeTab === tab.key ? ' active' : ''}`}
-            onClick={() => setTab(tab.key)}
-            style={activeTab === tab.key ? { borderTopColor: tab.accentColor, color: tab.accentColor } : {}}
-          >
-            {tab.emoji} {tab.label}
-          </button>
-        ))}
-      </div>
-
-      <div style={{ padding: '18px 18px' }}>
-        {currentMembers.length === 0 ? (
-          <div style={{ textAlign: 'center', color: 'rgba(160,210,255,0.65)', padding: '28px 0', fontSize: 19 }}>
-            Team info coming soon!
-          </div>
-        ) : (
-          <div className="team-members-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: 12 }}>
-            {currentMembers.map((m: any, i: number) => (
-              <div key={i} className="member-glass-card">
-                {(m.fileName ?? m.photo ?? m.image ?? m.imageLink) ? (
-                  <img
-                    src={m.fileName ?? m.photo ?? m.image ?? m.imageLink}
-                    alt={m.name ?? m.fullName ?? ''}
-                    style={{
-                      width: 56, height: 56,
-                      borderRadius: '50%',
-                      objectFit: 'cover',
-                      border: `2px solid ${activeTabDef?.accentColor ?? 'rgba(255,255,255,0.35)'}55`,
-                      marginBottom: 8,
-                      boxShadow: `0 0 16px ${activeTabDef?.accentColor ?? '#60b8ff'}44`,
-                    }}
-                    onError={e => (e.currentTarget.style.display = 'none')}
-                  />
-                ) : (
-                  <div style={{
-                    width: 56, height: 56,
-                    borderRadius: '50%',
-                    background: `radial-gradient(ellipse at 38% 28%, rgba(255,255,255,0.6) 0%, ${activeTabDef?.accentColor ?? '#60b8ff'}88 50%, ${activeTabDef?.accentColor ?? '#60b8ff'} 100%)`,
-                    marginBottom: 8,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: 22,
-                  }}>
-                    👤
-                  </div>
-                )}
-                <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(230,245,255,0.95)', lineHeight: 1.3 }}>
-                  {m.name ?? m.fullName ?? m.displayName ?? 'Team Member'}
-                </div>
-                {(m.role ?? m.position ?? m.title) && (
-                  <div style={{ fontSize: 10, color: activeTabDef?.accentColor ?? 'rgba(100,200,255,0.75)', marginTop: 3 }}>
-                    {m.role ?? m.position ?? m.title}
-                  </div>
-                )}
-              </div>
-            ))}
+    <div style={{ padding: '18px' }}>
+      <div className="team-desktop-layout">
+        <div
+          className="team-members-grid"
+          style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit, minmax(${teamCardWidth}px, ${teamCardWidth}px))`, gap: 18, justifyContent: 'center' }}
+        >
+          {mainTeamCards.map((member) => renderTeamCard(member))}
+        </div>
+        {lastTeamCard && (
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: 18 }}>
+            {renderTeamCard(lastTeamCard)}
           </div>
         )}
+      </div>
+
+      <div className="team-mobile-slider">
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ width: '100%', maxWidth: 280, display: 'flex', justifyContent: 'center' }}>
+            {mobileMember && renderTeamCard(mobileMember)}
+          </div>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 10, marginTop: 12 }}>
+          <button
+            className="aero-btn"
+            style={{ fontSize: 13, padding: '6px 14px' }}
+            onClick={() => setMobileTeamIndex((prev) => (prev - 1 + TEAM_MEMBERS.length) % TEAM_MEMBERS.length)}
+          >
+            ← Prev
+          </button>
+          <button
+            className="aero-btn"
+            style={{ fontSize: 13, padding: '6px 14px' }}
+            onClick={() => setMobileTeamIndex((prev) => (prev + 1) % TEAM_MEMBERS.length)}
+          >
+            Next →
+          </button>
+        </div>
+        <div style={{ textAlign: 'center', marginTop: 8, fontSize: 12, color: 'rgba(185,225,255,0.8)' }}>
+          {mobileTeamIndex + 1} / {TEAM_MEMBERS.length}
+        </div>
       </div>
     </div>
   );
