@@ -1071,6 +1071,11 @@
   grid-template-columns: 1fr 1fr;
 }
 
+.desktop-orbital-rig {
+  transform: scale(0.78);
+  transform-origin: center center;
+}
+
 @media (max-width: 1100px) {
   .desktop-orbital-rig {
     margin-left: 420px !important;
