@@ -476,8 +476,10 @@
   inset: 0;
   z-index: 200;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  padding: clamp(98px, 11vh, 132px) 12px 24px;
+  overflow-y: auto;
   background: rgba(2, 10, 28, 0.62);
   backdrop-filter: blur(6px) saturate(130%);
   -webkit-backdrop-filter: blur(6px) saturate(130%);
@@ -487,7 +489,7 @@
   position: relative;
   width: 90vw;
   max-width: 780px;
-  max-height: 85vh;
+  max-height: calc(100vh - clamp(98px, 11vh, 132px) - 24px);
   display: flex;
   flex-direction: column;
   border-radius: 14px;
@@ -1076,10 +1078,17 @@
   transform-origin: center center;
 }
 
+@media (max-width: 1440px) {
+  .desktop-orbital-rig {
+    margin-left: 520px !important;
+    transform: scale(0.46);
+  }
+}
+
 @media (max-width: 1100px) {
   .desktop-orbital-rig {
-    margin-left: 420px !important;
-    transform: scale(0.8);
+    margin-left: 360px !important;
+    transform: scale(0.62);
   }
 
   .taskbar-actions {
@@ -1192,7 +1201,7 @@
 
   .aero-modal-window {
     width: 96vw;
-    max-height: 88vh;
+    max-height: calc(100vh - clamp(86px, 12vh, 108px) - 20px);
     border-radius: 12px;
   }
 
