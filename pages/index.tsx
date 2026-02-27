@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 // pages/index.tsx — HackSMU VII · Frutiger Aero Edition
 import Head from 'next/head';
 import Link from 'next/link';
@@ -857,10 +858,10 @@ function AboutContent() {
         marginBottom: 18,
       }}>
         <p style={{ color: 'rgba(220,240,255,0.90)', fontSize: 15, lineHeight: 1.7, margin: 0 }}>
-          HackSMU is Southern Methodist University's annual hackathon hosted by{' '}
+          HackSMU is Southern Methodist University&apos;s annual hackathon hosted by{' '}
           <strong style={{ color: 'rgba(100,230,255,0.95)' }}>the SMU Computer Science Club and iMasons</strong>. Over 24 hours, hundreds of
           students collaborate, build, and ship incredible projects — from AI applications and mobile apps to
-          hardware hacks and social impact tools. Whether you're a first-time hacker or a seasoned engineer,
+          hardware hacks and social impact tools. Whether you&apos;re a first-time hacker or a seasoned engineer,
           HackSMU is the place for you.
         </p>
       </div>
