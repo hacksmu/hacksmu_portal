@@ -1129,15 +1129,15 @@
   }
 
   .desktop-orbital-rig {
-    margin-left: 600px !important;
-    transform: scale(0.70) !important;
+    margin-left: 620px !important;
+    transform: scale(0.78) !important;
     transform-origin: center center;
   }
 
   .top-left-panel {
     top: 120px !important;
-    width: 330px !important;
-    height: 280px !important;
+    width: 388px !important;
+    height: 334px !important;
   }
 
   .powered-by-title {
@@ -1156,18 +1156,18 @@
   }
 
   .top-left-panel-2 {
-    top: 430px !important;
-    width: 330px !important;
-    height: 145px !important;
+    top: 476px !important;
+    width: 388px !important;
+    height: 176px !important;
   }
 
   .top-left-panel-3 {
-    top: 605px !important;
+    top: 688px !important;
     left: 70px !important;
-    width: 360px !important;
-    height: 300px !important;
+    width: 428px !important;
+    height: 368px !important;
     max-height: none !important;
-    transform: scale(0.75);
+    transform: scale(0.86);
     transform-origin: top left;
   }
 
@@ -1240,16 +1240,16 @@
   }
 
   .desktop-orbital-rig {
-    margin-left: 470px !important;
-    transform: scale(0.50) !important;
+    margin-left: 500px !important;
+    transform: scale(0.58) !important;
     transform-origin: center center !important;
   }
 
   .top-left-panel {
     top: 88px !important;
     left: 28px !important;
-    width: 246px !important;
-    height: 170px !important;
+    width: 294px !important;
+    height: 210px !important;
     max-height: none !important;
     z-index: 8 !important;
   }
@@ -1270,10 +1270,10 @@
   }
 
   .top-left-panel-2 {
-    top: calc(88px + 170px + var(--mb13-panel-gap)) !important;
+    top: calc(88px + 210px + var(--mb13-panel-gap)) !important;
     left: 28px !important;
-    width: 280px !important;
-    height: 118px !important;
+    width: 338px !important;
+    height: 146px !important;
     max-height: none !important;
     z-index: 8 !important;
   }
@@ -1294,13 +1294,13 @@
   }
 
   .top-left-panel-3 {
-    top: calc(88px + 170px + var(--mb13-panel-gap) + 118px + var(--mb13-panel-gap)) !important;
+    top: calc(88px + 210px + var(--mb13-panel-gap) + 146px + var(--mb13-panel-gap)) !important;
     left: 28px !important;
-    width: 336px !important;
-    height: 300px !important;
+    width: 402px !important;
+    height: 360px !important;
     max-height: none !important;
     z-index: 8 !important;
-    transform: scale(0.65) !important;
+    transform: scale(0.78) !important;
     transform-origin: top left !important;
   }
 
