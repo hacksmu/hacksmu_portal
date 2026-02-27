@@ -1221,28 +1221,6 @@
   }
 }
 
-/* Shorter large-laptop screens: slightly scale down the three left panels */
-@media (min-width: 1300px) and (max-width: 1500px) and (max-height: 1085px) {
-  .top-left-panel {
-    width: 364px !important;
-    height: 314px !important;
-  }
-
-  .top-left-panel-2 {
-    top: 456px !important;
-    width: 364px !important;
-    height: 166px !important;
-  }
-
-  .top-left-panel-3 {
-    top: 654px !important;
-    width: 402px !important;
-    height: 350px !important;
-    transform: scale(0.82) !important;
-    transform-origin: top left !important;
-  }
-}
-
 /* 13" laptop range: tighten nav/taskbar and keep left panels evenly spaced */
 @media (min-width: 1100px) and (max-width: 1450px) and (max-height: 1000px) {
   :root {
@@ -1371,42 +1349,6 @@
   .gallery-photo {
     max-width: 93% !important;
     max-height: 92% !important;
-  }
-}
-
-/* Extra-short laptop heights: override 1000px rule with further panel downsizing */
-@media (min-width: 1100px) and (max-width: 1450px) and (max-height: 1020px) {
-  :root {
-    --mb13-panel-top: 88px;
-    --mb13-panel-gap: 14px;
-    --mb13-panel-1-height: 230px;
-    --mb13-panel-2-height: 168px;
-  }
-
-  .top-left-panel {
-    top: var(--mb13-panel-top) !important;
-    left: 28px !important;
-    width: 332px !important;
-    height: var(--mb13-panel-1-height) !important;
-    max-height: none !important;
-  }
-
-  .top-left-panel-2 {
-    top: calc(var(--mb13-panel-top) + var(--mb13-panel-1-height) + var(--mb13-panel-gap)) !important;
-    left: 28px !important;
-    width: 400px !important;
-    height: var(--mb13-panel-2-height) !important;
-    max-height: none !important;
-  }
-
-  .top-left-panel-3 {
-    top: calc(var(--mb13-panel-top) + var(--mb13-panel-1-height) + var(--mb13-panel-gap) + var(--mb13-panel-2-height) + var(--mb13-panel-gap)) !important;
-    left: 28px !important;
-    width: 480px !important;
-    height: 410px !important;
-    max-height: none !important;
-    transform: scale(0.84) !important;
-    transform-origin: top left !important;
   }
 }
 

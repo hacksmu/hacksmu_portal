@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 // pages/index.tsx — HackSMU VII · Frutiger Aero Edition
 import Head from 'next/head';
 import Image from 'next/image';
