@@ -8,7 +8,6 @@ import { useUser } from '../lib/profile/user-data';
 import { useAuthContext } from '../lib/user/AuthContext';
 import { navItems } from '../lib/data';
 import firebase from 'firebase/app';
-import Image from 'next/image';
 
 /**
  * Global Frutiger Aero glass header — visible on all pages.
@@ -50,7 +49,7 @@ export default function AppHeader() {
   return (
     <>
       <header
-        className="mt-[-24px] sticky top-0 z-[110]"
+        className="app-topbar mt-[-24px] sticky top-0 z-[110]"
         style={{
           backdropFilter: 'blur(18px) saturate(180%)',
           WebkitBackdropFilter: 'blur(18px) saturate(180%)',
@@ -62,8 +61,8 @@ export default function AppHeader() {
           justifyContent: 'space-between',
           alignItems: 'center',
           width: '100%',
-          height: 90,
-          padding: '0 16px',
+          height: 82,
+          padding: '0 12px',
           position: 'sticky',
         }}
       >
@@ -71,6 +70,7 @@ export default function AppHeader() {
           {/* Logo */}
           <Link href="/">
             <a
+              className="app-brand-link"
               style={{
                 display: 'flex',
                 gap: 12,
@@ -80,11 +80,11 @@ export default function AppHeader() {
                 filter: 'drop-shadow(0 0 8px rgba(0,200,255,0.5))',
               }}
             >
-              <Image src="/assets/hacksmu_fish.png" width="56px" height="90px" alt="HackSMU" />
+              <img className="app-brand-logo" src="/assets/hacksmu_fish.png" width={56} height={90} alt="HackSMU" />
               <span
                 style={{
                   fontFamily: "'Orbitron', 'Roboto', sans-serif",
-                  fontSize: 36,
+                  fontSize: 30,
                   fontWeight: 900,
                   color: '#fff',
                   textShadow: '0 0 12px rgba(0,200,255,0.7), 0 1px 4px rgba(0,0,0,0.8)',
@@ -149,7 +149,7 @@ export default function AppHeader() {
           </div>
 
           {/* Desktop nav */}
-          <div className="hidden md:flex" style={{ alignItems: 'center', marginLeft: 48, gap: 4 }}>
+          <div className="hidden md:flex" style={{ alignItems: 'center', marginLeft: 48, gap: 3 }}>
             {dynamicNavItems.map((item) => (
               <Link
                 key={item.text}
@@ -157,11 +157,11 @@ export default function AppHeader() {
               >
                 <a
                   style={{
-                    padding: '12px 24px',
+                    padding: '10px 18px',
                     borderRadius: 6,
                     color: 'rgba(200,235,255,0.88)',
                     fontWeight: 700,
-                    fontSize: 24,
+                    fontSize: 20,
                     letterSpacing: '0.04em',
                     textDecoration: 'none',
                     transition: 'all 0.22s',
@@ -195,12 +195,12 @@ export default function AppHeader() {
               overflow: 'hidden',
               background: 'radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.55) 0%, rgba(100,190,255,0.40) 35%, rgba(20,110,240,0.65) 65%, rgba(5,50,180,0.85) 100%)',
               border: '1px solid rgba(255,255,255,0.55)',
-              borderRadius: 20,
+              borderRadius: 16,
               color: '#fff',
               fontWeight: 700,
-              fontSize: 24,
+              fontSize: 20,
               letterSpacing: '0.05em',
-              padding: '16px 44px',
+              padding: '12px 32px',
               cursor: 'pointer',
               boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.55), 0 3px 12px rgba(0,50,180,0.45)',
               textShadow: '0 1px 4px rgba(0,0,0,0.5)',

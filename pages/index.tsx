@@ -356,10 +356,10 @@ export default function Home({ answeredQuestion, fetchedMembers }: HomeProps) {
         {/* Top-left reserved panel (sponsor logos) */}
         <div className="top-left-panel">
           <div style={{ padding: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', gap: 0 }}>
-            <div style={{ fontSize: 18, color: 'rgba(200,235,255,0.85)', fontWeight: 700, letterSpacing: '0.08em', marginBottom: -150, marginTop: 120 }}>Powered by</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 0, alignItems: 'center' }}>
-              <img src="/sponsors/SMULyleLogo.png" alt="SMU Lyle School of Engineering" style={{ height: 450, objectFit: 'contain' }} />
-              <img src="/sponsors/iMasonsLogo.png" alt="iMason's" style={{ height: 450, objectFit: 'contain', marginTop: -350 }} />
+            <div className="powered-by-title" style={{ fontSize: 18, color: 'rgba(200,235,255,0.85)', fontWeight: 700, letterSpacing: '0.08em', marginBottom: -150, marginTop: 120 }}>Powered by</div>
+            <div className="powered-by-logos" style={{ display: 'flex', flexDirection: 'column', gap: 0, alignItems: 'center' }}>
+              <img className="powered-by-logo-smu" src="/sponsors/SMULyleLogo.png" alt="SMU Lyle School of Engineering" style={{ height: 450, objectFit: 'contain' }} />
+              <img className="powered-by-logo-imasons" src="/sponsors/iMasonsLogo.png" alt="iMason's" style={{ height: 450, objectFit: 'contain', marginTop: -350 }} />
             </div>
           </div>
         </div>
@@ -367,7 +367,7 @@ export default function Home({ answeredQuestion, fetchedMembers }: HomeProps) {
         <div className="top-left-panel-2">
           {countdown ? (
             <div style={{ padding: 18, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-              <div style={{ fontSize: 18, color: 'rgba(200,235,255,0.92)', fontWeight: 800, letterSpacing: '0.06em' }}>Countdown to HackSMU</div>
+              <div className="countdown-title" style={{ fontSize: 18, color: 'rgba(200,235,255,0.92)', fontWeight: 800, letterSpacing: '0.06em' }}>Countdown to HackSMU</div>
               <div style={{ display: 'flex', gap: 10, marginTop: 12 }}>
                 {[
                   { v: countdown.d, u: 'd' },
@@ -376,7 +376,7 @@ export default function Home({ answeredQuestion, fetchedMembers }: HomeProps) {
                   { v: countdown.s, u: 's' },
                 ].map(({ v, u }) => (
                   <div key={u} style={{ textAlign: 'center' }}>
-                    <div style={{
+                    <div className="countdown-value" style={{
                       fontFamily: "'Orbitron', monospace",
                       fontSize: 44,
                       fontWeight: 900,
@@ -391,7 +391,7 @@ export default function Home({ answeredQuestion, fetchedMembers }: HomeProps) {
                     }}>
                       {String(v).padStart(2, '0')}
                     </div>
-                    <div style={{ fontSize: 15, color: 'rgba(160,230,255,0.85)', fontWeight: 700, marginTop: 6, letterSpacing: '0.04em' }}>{u}</div>
+                    <div className="countdown-unit" style={{ fontSize: 15, color: 'rgba(160,230,255,0.85)', fontWeight: 700, marginTop: 6, letterSpacing: '0.04em' }}>{u}</div>
                   </div>
                 ))}
               </div>
@@ -406,9 +406,10 @@ export default function Home({ answeredQuestion, fetchedMembers }: HomeProps) {
         <div className="top-left-panel-3">
           {hackathonPhotos.length > 0 ? (
             <div style={{ padding: 16, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-              <div style={{ fontSize: 13, color: 'rgba(200,235,255,0.85)', fontWeight: 700, letterSpacing: '0.08em', marginBottom: 3 }}>HackSMU VI Photo Gallery</div>
+              <div className="gallery-title" style={{ fontSize: 13, color: 'rgba(200,235,255,0.85)', fontWeight: 700, letterSpacing: '0.08em', marginBottom: 3 }}>HackSMU VI Photo Gallery</div>
               <div style={{ position: 'relative', width: '100%', flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 12 }}>
                 <img 
+                  className="gallery-photo"
                   src={hackathonPhotos[carouselIndex]} 
                   alt={`Hackathon photo ${carouselIndex + 1}`}
                   style={{ maxWidth: '97%', maxHeight: '92%', borderRadius: 8, objectFit: 'cover' }}
@@ -710,7 +711,7 @@ export default function Home({ answeredQuestion, fetchedMembers }: HomeProps) {
               </a>
             </Link>
             <div className="mobile-icon-grid">
-              {DESKTOP_ICONS.map((icon) => (
+              {DESKTOP_ICONS.slice(0, -1).map((icon) => (
                 <button
                   key={icon.key}
                   className="mobile-icon-btn"
@@ -722,21 +723,32 @@ export default function Home({ answeredQuestion, fetchedMembers }: HomeProps) {
                 </button>
               ))}
             </div>
+            <div className="mobile-icon-last-row">
+              <button
+                key={DESKTOP_ICONS[DESKTOP_ICONS.length - 1].key}
+                className="mobile-icon-btn mobile-icon-last"
+                onClick={() => openSection(DESKTOP_ICONS[DESKTOP_ICONS.length - 1].key)}
+                title={DESKTOP_ICONS[DESKTOP_ICONS.length - 1].label}
+              >
+                <span style={{ fontSize: 24 }}>{DESKTOP_ICONS[DESKTOP_ICONS.length - 1].emoji}</span>
+                <span>{DESKTOP_ICONS[DESKTOP_ICONS.length - 1].label}</span>
+              </button>
+            </div>
           </div>
         </div>
 
         {/* ── TASKBAR ── */}
         <div className="aero-taskbar">
           <div className="taskbar-brand" style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-            <img src="/assets2025/FrutigerAero.png" alt="HackSMU" style={{ height: 56, borderRadius: 6 }} onError={e => (e.currentTarget.style.display = 'none')} />
+            <img src="/assets2025/FrutigerAero.png" alt="HackSMU" style={{ height: 46, borderRadius: 6 }} onError={e => (e.currentTarget.style.display = 'none')} />
             <span className="taskbar-logo">HackSMU VII</span>
           </div>
-          <div className="taskbar-actions" style={{ display: 'flex', gap: 64, alignItems: 'center' }}>
+          <div className="taskbar-actions" style={{ display: 'flex', gap: 42, alignItems: 'center' }}>
             {DESKTOP_ICONS.slice(0, 4).map(icon => (
               <button
                 key={icon.key}
                 onClick={() => openSection(icon.key)}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 56, opacity: 0.85, transition: 'opacity 0.18s', padding: 10 }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 44, opacity: 0.85, transition: 'opacity 0.18s', padding: 8 }}
                 title={icon.label}
                 onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
                 onMouseLeave={e => (e.currentTarget.style.opacity = '0.85')}
@@ -746,8 +758,8 @@ export default function Home({ answeredQuestion, fetchedMembers }: HomeProps) {
             ))}
           </div>
           <div className="taskbar-time taskbar-meta">
-            <div style={{ fontSize: 20 }}>{clockStr}</div>
-            <div style={{ fontSize: 18, opacity: 0.85 }}>Dallas, TX</div>
+            <div style={{ fontSize: 16 }}>{clockStr}</div>
+            <div style={{ fontSize: 14, opacity: 0.85 }}>Dallas, TX</div>
           </div>
         </div>
 
