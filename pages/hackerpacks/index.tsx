@@ -25,7 +25,9 @@ export const getStaticProps: GetStaticProps = async () => {
   // Load Notion page data from Notion API if using notion
   if (hackerpackSettings.mainContent === 'notion') {
     const notion = new NotionAPI();
-    const page = await notion.getPage(hackerpackSettings.notionPageId);
+    const page = await notion.getPage(hackerpackSettings.notionPageId, {
+      fetchCollections: false,
+    });
     return { props: { content: page } };
   }
   return { props: { content: null } };

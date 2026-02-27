@@ -29,7 +29,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     if (hackerpackSettings.mainContent === 'notion') {
       const notion = new NotionAPI();
-      const page = await notion.getPage(context.params['id'] as string);
+      const page = await notion.getPage(context.params['id'] as string, {
+        fetchCollections: false,
+      });
       return { props: { content: page, error: false } };
     }
   } catch (err) {}
