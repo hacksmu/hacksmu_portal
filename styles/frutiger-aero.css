@@ -140,69 +140,67 @@
 }
 
 /* Top-left translucent reserved panel (under header) */
-.top-left-panel {
+/* ── Left panels flex column ── */
+.left-panels-column {
   position: absolute;
-  top: 140px; /* sits beneath the sticky header (approx header height) */
+  top: 100px;
   left: 70px;
+  bottom: 120px;
   width: 420px;
-  height: 380px;
-  max-height: calc(100vh - 140px - 120px); /* responsive: leave space for taskbar + margin */
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 16px;
+  z-index: 40;
+}
+
+@media (max-width: 900px) {
+  .left-panels-column { display: none; }
+}
+
+.top-left-panel {
+  flex: 38; /* original height 380px — proportional to 38:22:45 */
+  min-height: 0;
+  min-width: 200px;
+  width: 100%;
   background: rgba(85, 110, 128, 0.52);
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.06);
   box-shadow: 0 10px 30px rgba(0,0,0,0.45);
   backdrop-filter: blur(8px) saturate(140%);
   -webkit-backdrop-filter: blur(8px) saturate(140%);
-  z-index: 40; /* below header (110) but above background */
   overflow: hidden;
 }
 
-@media (max-width: 900px) {
-  .top-left-panel { display: none; }
-}
-
-/* Second panel (below the first) */
+/* Second panel */
 .top-left-panel-2 {
-  position: absolute;
-  top: 560px; /* placed just below the first panel (100 + 420 + ~20) */
-  left: 70px;
-  width: 480px;
-  height: 220px;
-  max-height: calc(100vh - 560px - 120px); /* responsive: leave space for taskbar + margin */
+  flex: 22; /* original height 220px */
+  min-height: 0;
+  min-width: 200px;
+  width: calc(100% + 40px); /* wider than panels 1 and 3 */
   background: rgba(85, 110, 128, 0.52);
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.05);
   box-shadow: 0 8px 22px rgba(0,0,0,0.45);
   backdrop-filter: blur(6px) saturate(130%);
   -webkit-backdrop-filter: blur(6px) saturate(130%);
-  z-index: 38;
   overflow: hidden;
 }
 
-/* Third panel (below the second) — constrained to avoid taskbar overlap */
+/* Third panel */
 .top-left-panel-3 {
-  position: absolute;
-  top: 820px; /* placed just below the second panel */
-  left: 70px;
-  width: 580px;
-  height: 450px;
-  max-height: calc(100vh - 820px - 120px); /* leave space for taskbar (96px) + margin */
+  flex: 45; /* original height 450px */
+  min-height: 0;
+  min-width: 200px;
+  width: 100%;
   background: rgba(85, 110, 128, 0.52);
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.04);
   box-shadow: 0 6px 18px rgba(0,0,0,0.45);
   backdrop-filter: blur(5px) saturate(125%);
   -webkit-backdrop-filter: blur(5px) saturate(125%);
-  z-index: 37;
   overflow: hidden;
-}
-
-@media (max-width: 900px) {
-  .top-left-panel-3 { display: none; }
-}
-
-@media (max-width: 900px) {
-  .top-left-panel-2 { display: none; }
 }
 
 /* Aurora waves — rendered as large gradient planes */
@@ -1169,10 +1167,10 @@
     transform-origin: center center;
   }
 
-  .top-left-panel {
+  .left-panels-column {
     top: 120px !important;
+    left: 70px !important;
     width: 388px !important;
-    height: 334px !important;
   }
 
   .powered-by-title {
@@ -1188,22 +1186,6 @@
   .powered-by-logo-imasons {
     height: 340px !important;
     margin-top: -268px !important;
-  }
-
-  .top-left-panel-2 {
-    top: 476px !important;
-    width: 388px !important;
-    height: 176px !important;
-  }
-
-  .top-left-panel-3 {
-    top: 688px !important;
-    left: 70px !important;
-    width: 428px !important;
-    height: 368px !important;
-    max-height: none !important;
-    transform: scale(0.86);
-    transform-origin: top left;
   }
 
   .countdown-title {
@@ -1283,13 +1265,10 @@
     transform-origin: center center !important;
   }
 
-  .top-left-panel {
+  .left-panels-column {
     top: var(--mb13-panel-top) !important;
     left: 28px !important;
-    width: 250px !important;
-    height: var(--mb13-panel-1-height) !important;
-    max-height: none !important;
-    z-index: 8 !important;
+    width: 280px !important;
   }
 
   .powered-by-title {
@@ -1307,15 +1286,6 @@
     margin-top: -180px !important;
   }
 
-  .top-left-panel-2 {
-    top: calc(var(--mb13-panel-top) + var(--mb13-panel-1-height) + var(--mb13-panel-gap)) !important;
-    left: 28px !important;
-    width: 304px !important;
-    height: var(--mb13-panel-2-height) !important;
-    max-height: none !important;
-    z-index: 8 !important;
-  }
-
   .countdown-title {
     font-size: 11px !important;
   }
@@ -1329,17 +1299,6 @@
   .countdown-unit {
     font-size: 9px !important;
     margin-top: 3px !important;
-  }
-
-  .top-left-panel-3 {
-    top: calc(var(--mb13-panel-top) + var(--mb13-panel-1-height) + var(--mb13-panel-gap) + var(--mb13-panel-2-height) + var(--mb13-panel-gap)) !important;
-    left: 28px !important;
-    width: 362px !important;
-    height: 316px !important;
-    max-height: none !important;
-    z-index: 8 !important;
-    transform: scale(0.62) !important;
-    transform-origin: top left !important;
   }
 
   .gallery-title {
@@ -1749,13 +1708,11 @@
     padding: 10px 22px !important;
   }
 
-  .top-left-panel {
-    top: auto !important;
+  .left-panels-column {
+    top: 120px !important;
+    left: 40px !important;
     bottom: 132px !important;
-    left: auto !important;
-    right: 40px !important;
-    width: 330px !important;
-    height: 300px !important;
+    width: 340px !important;
   }
 
   .powered-by-title {
@@ -1773,14 +1730,6 @@
     margin-top: -252px !important;
   }
 
-  .top-left-panel-2 {
-    top: auto !important;
-    bottom: 482px !important;
-    left: 40px !important;
-    width: 330px !important;
-    height: 150px !important;
-  }
-
   .countdown-title {
     font-size: 13px !important;
   }
@@ -1794,14 +1743,6 @@
   .countdown-unit {
     font-size: 10px !important;
     margin-top: 4px !important;
-  }
-
-  .top-left-panel-3 {
-    top: auto !important;
-    bottom: 132px !important;
-    left: 40px !important;
-    width: 430px !important;
-    height: 330px !important;
   }
 
   .gallery-title {
@@ -1869,14 +1810,11 @@
     padding: 6px !important;
   }
 
-  .top-left-panel {
+  .left-panels-column {
     top: 104px !important;
     left: 24px !important;
-    right: auto !important;
-    bottom: auto !important;
-    width: 260px !important;
-    height: 220px !important;
-    max-height: none !important;
+    bottom: 116px !important;
+    width: 280px !important;
   }
 
   .powered-by-title {
@@ -1894,15 +1832,6 @@
     margin-top: -188px !important;
   }
 
-  .top-left-panel-2 {
-    top: 344px !important;
-    left: 24px !important;
-    bottom: auto !important;
-    width: 300px !important;
-    height: 140px !important;
-    max-height: none !important;
-  }
-
   .countdown-title {
     font-size: 12px !important;
   }
@@ -1918,15 +1847,6 @@
     margin-top: 3px !important;
   }
 
-  .top-left-panel-3 {
-    top: auto !important;
-    bottom: 116px !important;
-    left: 24px !important;
-    width: 380px !important;
-    height: 300px !important;
-    max-height: none !important;
-  }
-
   .gallery-title {
     font-size: 10px !important;
   }
@@ -1939,12 +1859,10 @@
 
 /* Desktop range (1501-1919px): make side panels smaller */
 @media (min-width: 1501px) and (max-width: 1919px) {
-  .top-left-panel {
+  .left-panels-column {
     top: 126px !important;
     left: 56px !important;
-    width: 366px !important;
-    height: 310px !important;
-    max-height: none !important;
+    width: 380px !important;
   }
 
   .powered-by-title {
@@ -1962,14 +1880,6 @@
     margin-top: -248px !important;
   }
 
-  .top-left-panel-2 {
-    top: 456px !important;
-    left: 56px !important;
-    width: 392px !important;
-    height: 166px !important;
-    max-height: none !important;
-  }
-
   .countdown-title {
     font-size: 13px !important;
   }
@@ -1985,16 +1895,6 @@
     margin-top: 4px !important;
   }
 
-  .top-left-panel-3 {
-    top: 642px !important;
-    left: 56px !important;
-    width: 392px !important;
-    height: 316px !important;
-    max-height: none !important;
-    transform: scale(0.92);
-    transform-origin: top left;
-  }
-
   .gallery-title {
     font-size: 11px !important;
   }
@@ -2007,12 +1907,10 @@
 
 /* Current large desktop/iMac sizing: compact left-side panels */
 @media (min-width: 1920px) {
-  .top-left-panel {
+  .left-panels-column {
     top: 126px !important;
     left: 56px !important;
-    width: 346px !important;
-    height: 292px !important;
-    max-height: none !important;
+    width: 360px !important;
   }
 
   .powered-by-title {
@@ -2030,14 +1928,6 @@
     margin-top: -228px !important;
   }
 
-  .top-left-panel-2 {
-    top: 438px !important;
-    left: 56px !important;
-    width: 372px !important;
-    height: 158px !important;
-    max-height: none !important;
-  }
-
   .countdown-title {
     font-size: 12px !important;
   }
@@ -2051,16 +1941,6 @@
   .countdown-unit {
     font-size: 10px !important;
     margin-top: 3px !important;
-  }
-
-  .top-left-panel-3 {
-    top: 616px !important;
-    left: 56px !important;
-    width: 372px !important;
-    height: 298px !important;
-    max-height: none !important;
-    transform: scale(0.92);
-    transform-origin: top left;
   }
 
   .gallery-title {

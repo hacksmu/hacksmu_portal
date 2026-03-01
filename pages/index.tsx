@@ -347,6 +347,8 @@ export default function Home({ answeredQuestion }: HomeProps) {
 
         {/* ── Background stack ── */}
         <div className="aero-bg" />
+        {/* ── LEFT PANELS COLUMN ── */}
+        <div className="left-panels-column">
         {/* Top-left reserved panel (sponsor logos) */}
         <div className="top-left-panel">
           <div style={{ padding: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', gap: 0 }}>
@@ -372,20 +374,20 @@ export default function Home({ answeredQuestion }: HomeProps) {
                   <div key={u} style={{ textAlign: 'center' }}>
                     <div className="countdown-value" style={{
                       fontFamily: "'Orbitron', monospace",
-                      fontSize: 44,
+                      fontSize: 56,
                       fontWeight: 900,
                       color: '#fff',
                       textShadow: '0 0 10px rgba(0,200,255,0.85)',
                       background: 'rgba(0,80,160,0.60)',
                       border: '1px solid rgba(255,255,255,0.32)',
                       borderRadius: 6,
-                      padding: '6px 10px',
-                      minWidth: 48,
+                      padding: '8px 12px',
+                      minWidth: 58,
                       display: 'block',
                     }}>
                       {String(v).padStart(2, '0')}
                     </div>
-                    <div className="countdown-unit" style={{ fontSize: 15, color: 'rgba(160,230,255,0.85)', fontWeight: 700, marginTop: 6, letterSpacing: '0.04em' }}>{u}</div>
+                    <div className="countdown-unit" style={{ fontSize: 18, color: 'rgba(160,230,255,0.85)', fontWeight: 700, marginTop: 6, letterSpacing: '0.04em' }}>{u}</div>
                   </div>
                 ))}
               </div>
@@ -461,6 +463,7 @@ export default function Home({ answeredQuestion }: HomeProps) {
             </div>
           )}
         </div>
+        </div>{/* end .left-panels-column */}
         <div className="aurora-wave aurora-wave-1" />
         <div className="aurora-wave aurora-wave-2" />
         <div className="aurora-wave aurora-wave-3" />
