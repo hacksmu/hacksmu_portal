@@ -9,6 +9,9 @@ body {
   margin: 0;
   font-family: sans-serif;
   scroll-behavior: smooth;
+  /* Matches the top colour of the nav bar gradient so the area behind the
+     Dynamic Island / status bar on iOS blends in naturally. */
+  background-color: rgb(10, 60, 140);
 }
 
 @font-face {
