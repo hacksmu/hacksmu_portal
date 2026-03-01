@@ -161,6 +161,7 @@
 
 .top-left-panel {
   flex: 38; /* original height 380px — proportional to 38:22:45 */
+  max-height: 360px;
   min-height: 0;
   min-width: 200px;
   width: 100%;
@@ -176,6 +177,7 @@
 /* Second panel */
 .top-left-panel-2 {
   flex: 22; /* original height 220px */
+  max-height: 175px;
   min-height: 0;
   min-width: 200px;
   width: calc(100% + 40px); /* wider than panels 1 and 3 */
@@ -1173,6 +1175,14 @@
     width: 388px !important;
   }
 
+  .top-left-panel {
+    max-height: 338px !important;
+  }
+
+  .top-left-panel-2 {
+    max-height: 163px !important;
+  }
+
   .powered-by-title {
     font-size: 15px !important;
     margin-top: 96px !important;
@@ -1269,6 +1279,14 @@
     top: var(--mb13-panel-top) !important;
     left: 28px !important;
     width: 280px !important;
+  }
+
+  .top-left-panel {
+    max-height: 244px !important;
+  }
+
+  .top-left-panel-2 {
+    max-height: 118px !important;
   }
 
   .powered-by-title {
@@ -1658,103 +1676,6 @@
   }
 }
 
-/* iPad Pro portrait (1024 x 1366): tighten nav and left-side panels */
-@media (min-width: 1000px) and (max-width: 1060px) and (min-height: 1300px) {
-  .aero-modal-window {
-    width: 94vw !important;
-    max-width: 980px !important;
-    max-height: 90vh !important;
-  }
-
-  .aero-titlebar-title {
-    font-size: 18px !important;
-  }
-
-  .desktop-orbital-rig .desktop-icon-btn {
-    transform: scale(1.08);
-    transform-origin: center center;
-  }
-
-  .desktop-orbital-rig .desktop-icon-btn:hover {
-    transform: translateY(-6px) scale(1.14);
-  }
-
-  .desktop-orbital-rig .icon-label {
-    font-size: 24px;
-  }
-
-  .desktop-orbital-rig {
-    margin-left: 0 !important;
-    transform: translateY(-220px) scale(0.62) !important;
-    transform-origin: center center;
-  }
-
-  .app-topbar {
-    height: 82px !important;
-    padding: 0 12px !important;
-  }
-
-  .app-topbar .md\:inline {
-    font-size: 30px !important;
-  }
-
-  .app-topbar .md\:flex a {
-    font-size: 19px !important;
-    padding: 10px 14px !important;
-  }
-
-  .auth-trigger-btn {
-    font-size: 16px !important;
-    padding: 10px 22px !important;
-  }
-
-  .left-panels-column {
-    top: 120px !important;
-    left: 40px !important;
-    bottom: 132px !important;
-    width: 340px !important;
-  }
-
-  .powered-by-title {
-    font-size: 15px !important;
-    margin-top: 124px !important;
-    margin-bottom: -112px !important;
-  }
-
-  .powered-by-logo-smu {
-    height: 330px !important;
-  }
-
-  .powered-by-logo-imasons {
-    height: 330px !important;
-    margin-top: -252px !important;
-  }
-
-  .countdown-title {
-    font-size: 13px !important;
-  }
-
-  .countdown-value {
-    font-size: 28px !important;
-    min-width: 36px !important;
-    padding: 4px 7px !important;
-  }
-
-  .countdown-unit {
-    font-size: 10px !important;
-    margin-top: 4px !important;
-  }
-
-  .gallery-title {
-    font-size: 12px !important;
-  }
-
-  .gallery-photo {
-    max-width: 95% !important;
-    max-height: 86% !important;
-  }
-}
-
 /* 1024px laptop range (shorter height than iPad Pro): compact nav + smaller side panels */
 @media (min-width: 1000px) and (max-width: 1060px) and (max-height: 1200px) {
   .desktop-orbital-rig {
@@ -1817,6 +1738,14 @@
     width: 280px !important;
   }
 
+  .top-left-panel {
+    max-height: 244px !important;
+  }
+
+  .top-left-panel-2 {
+    max-height: 118px !important;
+  }
+
   .powered-by-title {
     font-size: 12px !important;
     margin-top: 76px !important;
@@ -1863,6 +1792,14 @@
     top: 126px !important;
     left: 56px !important;
     width: 380px !important;
+  }
+
+  .top-left-panel {
+    max-height: 330px !important;
+  }
+
+  .top-left-panel-2 {
+    max-height: 160px !important;
   }
 
   .powered-by-title {
@@ -1913,6 +1850,14 @@
     width: 360px !important;
   }
 
+  .top-left-panel {
+    max-height: 313px !important;
+  }
+
+  .top-left-panel-2 {
+    max-height: 151px !important;
+  }
+
   .powered-by-title {
     font-size: 13px !important;
     margin-top: 86px !important;
@@ -1961,5 +1906,139 @@
 
   .aero-main-stage {
     bottom: 0 !important;
+  }
+}
+
+/* iPad Pro portrait (1024 x 1366): two panels bottom-left, one bottom-right */
+/* Placed last so it is never overridden by any earlier media query */
+@media (min-width: 1000px) and (max-width: 1060px) and (min-height: 1300px) {
+  .aero-modal-window {
+    width: 94vw !important;
+    max-width: 980px !important;
+    max-height: 90vh !important;
+  }
+
+  .aero-titlebar-title {
+    font-size: 18px !important;
+  }
+
+  .desktop-orbital-rig .desktop-icon-btn {
+    transform: scale(1.08);
+    transform-origin: center center;
+  }
+
+  .desktop-orbital-rig .desktop-icon-btn:hover {
+    transform: translateY(-6px) scale(1.14);
+  }
+
+  .desktop-orbital-rig .icon-label {
+    font-size: 24px;
+  }
+
+  .desktop-orbital-rig {
+    margin-left: 0 !important;
+    transform: translateY(-220px) scale(0.62) !important;
+    transform-origin: center center;
+  }
+
+  .app-topbar {
+    height: 82px !important;
+    padding: 0 12px !important;
+  }
+
+  .app-topbar .md\:inline {
+    font-size: 30px !important;
+  }
+
+  .app-topbar .md\:flex a {
+    font-size: 19px !important;
+    padding: 10px 14px !important;
+  }
+
+  .auth-trigger-btn {
+    font-size: 16px !important;
+    padding: 10px 22px !important;
+  }
+
+  /* Make the column a full-stage positioning context so children can use
+     position: absolute with bottom/left/right relative to the viewport */
+  .left-panels-column {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: auto !important;
+    display: block !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+
+  .top-left-panel {
+    position: absolute !important;
+    top: auto !important;
+    bottom: 132px !important;
+    left: auto !important;
+    right: 40px !important;
+    width: 330px !important;
+    height: 300px !important;
+  }
+
+  .powered-by-title {
+    font-size: 15px !important;
+    margin-top: 124px !important;
+    margin-bottom: -112px !important;
+  }
+
+  .powered-by-logo-smu {
+    height: 330px !important;
+  }
+
+  .powered-by-logo-imasons {
+    height: 330px !important;
+    margin-top: -252px !important;
+  }
+
+  .top-left-panel-2 {
+    position: absolute !important;
+    top: auto !important;
+    bottom: 482px !important;
+    left: 40px !important;
+    width: 330px !important;
+    height: 150px !important;
+  }
+
+  .countdown-title {
+    font-size: 13px !important;
+  }
+
+  .countdown-value {
+    font-size: 28px !important;
+    min-width: 36px !important;
+    padding: 4px 7px !important;
+  }
+
+  .countdown-unit {
+    font-size: 10px !important;
+    margin-top: 4px !important;
+  }
+
+  .top-left-panel-3 {
+    position: absolute !important;
+    top: auto !important;
+    bottom: 132px !important;
+    left: 40px !important;
+    width: 430px !important;
+    height: 330px !important;
+  }
+
+  .gallery-title {
+    font-size: 12px !important;
+  }
+
+  .gallery-photo {
+    max-width: 95% !important;
+    max-height: 86% !important;
   }
 }
