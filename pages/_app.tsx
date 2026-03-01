@@ -69,7 +69,7 @@ function PortalApp({ Component, pageProps }: AppProps) {
               {/* (Optional) Safari pinned tab (add this file if you have it) */}
               {/* <link rel="mask-icon" href="/icons/safari-pinned-tab.svg?v=3" color="#5D5FEF" /> */}
 
-              <meta name="theme-color" content="#5D5FEF" />
+              <meta name="theme-color" content="rgba(10,60,140,0.82)" />
 
               {/* Fonts */}
               <link rel="preconnect" href="https://fonts.googleapis.com" />
