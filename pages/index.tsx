@@ -401,17 +401,15 @@ export default function Home({ answeredQuestion }: HomeProps) {
         {/* Carousel panel */}
         <div className="top-left-panel-3">
           {hackathonPhotos.length > 0 ? (
-            <div style={{ padding: 16, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-              <div className="gallery-title" style={{ fontSize: 13, color: 'rgba(200,235,255,0.85)', fontWeight: 700, letterSpacing: '0.08em', marginBottom: 3 }}>HackSMU VI Photo Gallery</div>
-              <div style={{ position: 'relative', width: '100%', flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 12 }}>
-                <div style={{ position: 'relative', width: '97%', height: '92%' }}>
-                  <img
-                    className="gallery-photo"
-                    src={hackathonPhotos[carouselIndex]}
-                    alt={`Hackathon photo ${carouselIndex + 1}`}
-                    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', borderRadius: 8 }}
-                  />
-                </div>
+            <div style={{ padding: 16, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <div className="gallery-title" style={{ fontSize: 13, color: 'rgba(200,235,255,0.85)', fontWeight: 700, letterSpacing: '0.08em', marginBottom: 8 }}>HackSMU VI Photo Gallery</div>
+              <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 12 }}>
+                <img
+                  className="gallery-photo"
+                  src={hackathonPhotos[carouselIndex]}
+                  alt={`Hackathon photo ${carouselIndex + 1}`}
+                  style={{ width: '97%', height: 'auto', borderRadius: 8, display: 'block' }}
+                />
               </div>
               <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
                 <button 

@@ -190,7 +190,7 @@
 
 /* Third panel */
 .top-left-panel-3 {
-  flex: 45; /* original height 450px */
+  flex: none;
   min-height: 0;
   min-width: 200px;
   width: 100%;
