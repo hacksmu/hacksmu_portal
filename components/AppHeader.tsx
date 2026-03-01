@@ -55,7 +55,7 @@ export default function AppHeader() {
           WebkitBackdropFilter: 'blur(18px) saturate(180%)',
           background: 'linear-gradient(180deg, rgba(10,60,140,0.82) 0%, rgba(5,40,100,0.72) 50%, rgba(3,25,70,0.65) 100%)',
           borderBottom: '1px solid rgba(255,255,255,0.22)',
-          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.25), 0 4px 24px rgba(0,0,0,0.45)',
+          boxShadow: '0 4px 24px rgba(0,0,0,0.45)',
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-between',
