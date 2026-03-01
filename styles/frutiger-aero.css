@@ -1324,8 +1324,7 @@
   }
 
   .gallery-photo {
-    max-width: 93% !important;
-    max-height: 92% !important;
+    width: 70% !important;
   }
 }
 
@@ -1781,8 +1780,7 @@
   }
 
   .gallery-photo {
-    max-width: 94% !important;
-    max-height: 82% !important;
+    width: 70% !important;
   }
 }
 
