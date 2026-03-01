@@ -1,8 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/storage';
 import LoadIcon from './LoadIcon';
-import Image from 'next/image';
 
 interface SponsorCardProps {
   link: string;
@@ -40,7 +40,13 @@ export default function SponsorCard(props: SponsorCardProps) {
       {imgSrc !== undefined && (
         <div className="flex justify-center mx-4">
           <a href={props.link} target="_blank" className="" rel="noreferrer">
-            <Image src={imgSrc} alt="Sponsor logo" width={300} height={200} layout="fixed" objectFit="contain" />
+            <img
+              src={imgSrc}
+              alt="Sponsor logo"
+              width={300}
+              height={200}
+              style={{ objectFit: 'contain' }}
+            />
           </a>
           <br></br>
         </div>

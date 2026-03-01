@@ -1,5 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
-import Image from 'next/image';
 import React from 'react';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NotesIcon from '@material-ui/icons/Notes';
@@ -53,7 +53,7 @@ export default function ProfileDialog({ onDismiss }: ProfileDialogProps) {
       <div className="flex px-4 pt-4 pb-2">
         {/* TODO: Handle default undefined photo URL with default */}
         {user && user.photoUrl && (
-          <Image
+          <img
             className="rounded-full object-cover"
             src={user.photoUrl}
             height={64}

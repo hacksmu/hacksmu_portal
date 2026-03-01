@@ -1,4 +1,4 @@
-import Image from 'next/image';
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from 'react';
 import 'firebase/storage';
 import firebase from 'firebase';
@@ -28,13 +28,10 @@ export default function KeynoteSpeaker(props) {
     <div className="group flex flex-col items-center w-72 h-72 sm:h-80 rounded-xl shadow-xl relative transition duration-500 ease-in-out overflow-hidden bg-secondary text-white">
       <div className="rounded-t-sm">
         {props.imageLink !== undefined && imageLink !== undefined && (
-          <Image
+          <img
             src={imageLink}
-            // make sure width and height matches width and height of parent div
-            width={350}
-            height={350}
-            objectFit="cover"
             alt=""
+            style={{ width: 350, height: 350, objectFit: 'cover' }}
           />
         )}
       </div>

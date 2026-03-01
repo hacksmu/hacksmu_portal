@@ -1,7 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from 'react';
 import 'firebase/storage';
 import firebase from 'firebase';
-import Image from 'next/image';
 import defaultPFP from '../../public/assets/defaultPFP.jpg';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
@@ -33,13 +33,12 @@ export default function MemberCards(props) {
     <div className="md:w-52 w-44 mb-5 md:mx-3 mx-1 flex flex-col items-center justify-center">
       {/* Profile Image */}
       <div className="rounded-full">
-        <Image
+        <img
           className="rounded-full object-cover"
-          src={props.fileName !== undefined && imageLink !== undefined ? imageLink : defaultPFP}
+          src={props.fileName !== undefined && imageLink !== undefined ? imageLink : defaultPFP.src}
           height={120}
           width={120}
           alt="Your profile"
-          layout="fixed"
         />
       </div>
       {/* Main Body */}

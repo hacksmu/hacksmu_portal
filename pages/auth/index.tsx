@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import { useRouter } from 'next/router';
 import { useAuthContext } from '../../lib/user/AuthContext';
@@ -7,7 +8,6 @@ import Link from 'next/link';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import GoogleIcon from '../../public/icons/googleicon.png';
-import Image from 'next/image';
 /**
  * A page that allows the user to sign in.
  *
@@ -213,7 +213,7 @@ export default function AuthPage() {
                       className="mt-6 px-4 py-2 w-full rounded-full border border-complementary/20 text-complementary bg-white my-4 text-base font-bold text-center flex items-center justify-center"
                       onClick={() => signInWithGoogle()}
                     >
-                      <Image src={GoogleIcon} alt="GoogleIcon" width={25} height={25} />
+                      <img src={GoogleIcon.src} alt="GoogleIcon" width={25} height={25} />
                       <p className="mx-2">Sign in with Google</p>
                     </button>
                   </React.Fragment>

@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 // pages/index.tsx — HackSMU VII · Frutiger Aero Edition
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
 import type { GetServerSideProps } from 'next';
 import { useEffect, useMemo, useState, useCallback } from 'react';
@@ -353,8 +352,8 @@ export default function Home({ answeredQuestion }: HomeProps) {
           <div style={{ padding: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', gap: 0 }}>
             <div className="powered-by-title" style={{ fontSize: 18, color: 'rgba(200,235,255,0.85)', fontWeight: 700, letterSpacing: '0.08em', marginBottom: -150, marginTop: 120 }}>Powered by</div>
             <div className="powered-by-logos" style={{ display: 'flex', flexDirection: 'column', gap: 0, alignItems: 'center' }}>
-              <Image className="powered-by-logo-smu" src="/sponsors/SMULyleLogo.png" alt="SMU Lyle School of Engineering" width={1200} height={450} style={{ height: 450, width: 'auto', objectFit: 'contain' }} />
-              <Image className="powered-by-logo-imasons" src="/sponsors/iMasonsLogo.png" alt="iMason's" width={1200} height={450} style={{ height: 450, width: 'auto', objectFit: 'contain', marginTop: -350 }} />
+              <img className="powered-by-logo-smu" src="/sponsors/SMULyleLogo.png" alt="SMU Lyle School of Engineering" style={{ height: 450, width: 'auto', objectFit: 'contain' }} />
+              <img className="powered-by-logo-imasons" src="/sponsors/iMasonsLogo.png" alt="iMason's" style={{ height: 450, width: 'auto', objectFit: 'contain', marginTop: -350 }} />
             </div>
           </div>
         </div>
@@ -404,13 +403,11 @@ export default function Home({ answeredQuestion }: HomeProps) {
               <div className="gallery-title" style={{ fontSize: 13, color: 'rgba(200,235,255,0.85)', fontWeight: 700, letterSpacing: '0.08em', marginBottom: 3 }}>HackSMU VI Photo Gallery</div>
               <div style={{ position: 'relative', width: '100%', flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 12 }}>
                 <div style={{ position: 'relative', width: '97%', height: '92%' }}>
-                  <Image
+                  <img
                     className="gallery-photo"
                     src={hackathonPhotos[carouselIndex]}
                     alt={`Hackathon photo ${carouselIndex + 1}`}
-                    layout="fill"
-                    objectFit="cover"
-                    style={{ borderRadius: 8 }}
+                    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', borderRadius: 8 }}
                   />
                 </div>
               </div>
@@ -739,7 +736,7 @@ export default function Home({ answeredQuestion }: HomeProps) {
         {/* ── TASKBAR ── */}
         <div className="aero-taskbar">
           <div className="taskbar-brand" style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-            <Image src="/assets2025/FrutigerAero.png" alt="HackSMU" width={160} height={46} style={{ height: 46, width: 'auto', borderRadius: 6 }} onError={e => (e.currentTarget.style.display = 'none')} />
+            <img src="/assets2025/FrutigerAero.png" alt="HackSMU" style={{ height: 46, width: 'auto', borderRadius: 6 }} onError={e => (e.currentTarget.style.display = 'none')} />
             <span className="taskbar-logo">HackSMU VII</span>
           </div>
           <div className="taskbar-actions" style={{ display: 'flex', gap: 42, alignItems: 'center' }}>
@@ -1073,11 +1070,9 @@ function SponsorsContent() {
               className="sponsor-glass-card shine-card"
               style={{ padding: '18px 12px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}
             >
-              <Image
+              <img
                 src={s.logo}
                 alt={s.name}
-                width={360}
-                height={90}
                 style={{
                   width: '100%',
                   maxHeight: 90,
@@ -1156,11 +1151,9 @@ function TeamContent() {
       className="member-glass-card"
       style={{ width: teamCardWidth, padding: '22px 16px', minHeight: 220, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start' }}
     >
-      <Image
+      <img
         src={member.image}
         alt={member.name}
-        width={142}
-        height={142}
         style={{
           width: 142,
           height: 142,

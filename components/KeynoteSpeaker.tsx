@@ -1,4 +1,4 @@
-import Image from 'next/image';
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from 'react';
 import 'firebase/storage';
 import firebase from 'firebase';
@@ -31,13 +31,10 @@ export default function KeynoteSpeaker(props) {
         className="w-1/4 rounded-l-md"
       >
         {props.imageLink !== undefined && imageLink !== undefined && (
-          <Image
+          <img
             src={imageLink}
-            // make sure width and height matches width and height of parent div
-            width={112}
-            height={144}
-            objectFit="cover"
             alt=""
+            style={{ width: 112, height: 144, objectFit: 'cover' }}
           />
         )}
       </div>
