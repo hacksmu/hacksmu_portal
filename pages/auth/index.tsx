@@ -100,7 +100,8 @@ export default function AuthPage() {
     }
   };
 
-  function handleSubmit() {
+  function handleSubmit(event?: React.FormEvent) {
+    event?.preventDefault();
     if (signInOption) {
       signIn();
     } else {
@@ -146,7 +147,7 @@ export default function AuthPage() {
                     </span>
                   </div>
                   <React.Fragment>
-                    <form onSubmit={handleSubmit} className="mt-4">
+                    <form onSubmit={handleSubmit} method="POST" className="mt-4">
                       <input
                         className="w-full rounded-md border border-complementary/20 p-2 mb-4"
                         value={currentEmail}
@@ -184,15 +185,11 @@ export default function AuthPage() {
                           />
                           {showPassword ? 'Hide password' : 'Show password'}
                         </div>
-                        <input className="hidden" type="submit" value="Submit" />
                       </div>
                       <div className="flex justify-center mt-6 mb-4">
                         <button
-                          type="button"
+                          type="submit"
                           className="rounded-full text-base w-full text-white bg-dark-blue hover:brightness-90 px-4 py-2"
-                          onClick={() => {
-                            handleSubmit();
-                          }}
                         >
                           {signInOption ? 'Sign in' : 'Create an account'}
                         </button>
