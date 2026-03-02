@@ -42,7 +42,7 @@ export const hackPortalConfig: HackPortalConfig = {
             question: 'Phone Number',
             id: 'phoneNumber',
             name: 'phoneNumber',
-            required: true,
+            required: false,
             initialValue: '',
           },
         ],
