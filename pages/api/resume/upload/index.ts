@@ -1,8 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import firebase from 'firebase';
-import 'firebase/storage';
 import nc from 'next-connect';
 import multer from 'multer';
+import admin from 'firebase-admin';
+import { firestore } from 'firebase-admin';
+import initializeApi from '../../../../lib/admin/init';
+
+initializeApi();
+
+const db = firestore();
 
 interface NCNextApiRequest extends NextApiRequest {
   file: Express.Multer.File;
@@ -24,33 +29,27 @@ const handler = nc<NCNextApiRequest, NextApiResponse>({
 
 handler.use(multer().single('resume'));
 handler.post(async (req, res) => {
-  if (!req.file) res.end();
-  if (firebase.apps.length <= 0)
-    firebase.initializeApp({
-      apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-      authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-      storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-    });
+  if (!req.file) return res.status(400).json({ msg: 'No file provided' });
 
-  await firebase
-    .auth()
-    .signInWithEmailAndPassword(
-      process.env.NEXT_PUBLIC_RESUME_UPLOAD_SERVICE_ACCOUNT,
-      process.env.NEXT_PUBLIC_RESUME_UPLOAD_PASSWORD,
-    );
+  const { studyLevel, major, fileName, userId } = req.body;
+  const bucketName = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
+  const bucket = admin.storage().bucket(bucketName);
+  const filePath = `resumes/${studyLevel}/${major}/${fileName}`;
+  const fileRef = bucket.file(filePath);
 
-  const storageRef = firebase.storage().ref();
-  const studyLevelRef = storageRef.child('resumes/' + req.body.studyLevel);
-  const majorRef = studyLevelRef.child(req.body.major);
-  const fileRef = majorRef.child(req.body.fileName);
+  await fileRef.save(req.file.buffer);
+  await fileRef.makePublic();
 
-  await fileRef.put(req.file.buffer);
-  res.end();
+  const resumeUrl = `https://storage.googleapis.com/${bucketName}/${filePath}`;
+
+  await db.collection('/registrations').doc(userId).update({ resume: resumeUrl });
+
+  res.status(200).json({ resumeUrl });
 });
 
 export const config = {
   api: {
-    bodyParser: false, // Disallow body parsing, consume as stream
+    bodyParser: false,
   },
 };
 

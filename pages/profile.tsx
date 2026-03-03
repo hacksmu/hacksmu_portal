@@ -12,9 +12,10 @@ import QRCode from '../components/dashboardComponents/QRCode';
  */
 export default function ProfilePage() {
   const router = useRouter();
-  const { isSignedIn, hasProfile, user, profile } = useAuthContext();
+  const { isSignedIn, hasProfile, user, profile, updateProfile } = useAuthContext();
   const [uploading, setUploading] = useState(false);
   const [uploadMsg, setUploadMsg] = useState<{ ok: boolean; text: string } | null>(null);
+  const [removingResume, setRemovingResume] = useState(false);
   const resumeRef = useRef<HTMLInputElement>(null);
 
   const handleResumeUpload = () => {
@@ -34,13 +35,40 @@ export default function ProfilePage() {
     formData.append('fileName', `${user.id}${fileExtension}`);
     formData.append('studyLevel', profile.studyLevel);
     formData.append('major', profile.major);
+    formData.append('userId', user.id);
 
-    fetch('/api/resume/upload', { method: 'post', body: formData }).then((res) => {
+    fetch('/api/resume/upload', { method: 'post', body: formData }).then(async (res) => {
       setUploading(false);
-      setUploadMsg(res.status === 200
-        ? { ok: true, text: 'Resume updated successfully!' }
-        : { ok: false, text: 'Resume upload failed. Please try again.' });
+      if (res.status === 200) {
+        const { resumeUrl } = await res.json();
+        updateProfile({ ...profile, resume: resumeUrl });
+        setUploadMsg({ ok: true, text: 'Resume updated successfully!' });
+      } else {
+        setUploadMsg({ ok: false, text: 'Resume upload failed. Please try again.' });
+      }
     });
+  };
+
+  const handleRemoveResume = async () => {
+    if (!window.confirm('Are you sure you want to remove your resume?')) return;
+    setRemovingResume(true);
+    try {
+      const { default: firebase } = await import('firebase/app');
+      const token = await firebase.auth().currentUser.getIdToken();
+      const res = await fetch(`/api/resume/delete?userId=${user.id}`, {
+        method: 'DELETE',
+        headers: { Authorization: token },
+      });
+      if (res.status === 200) {
+        updateProfile({ ...profile, resume: undefined });
+      } else {
+        alert('Could not remove resume. Please try again.');
+      }
+    } catch {
+      alert('Could not remove resume. Please try again.');
+    } finally {
+      setRemovingResume(false);
+    }
   };
 
   if (!isSignedIn) {
@@ -260,27 +288,47 @@ export default function ProfilePage() {
             <SectionHeader icon="📄" label="Resume" />
             <div style={{ marginTop: 12 }}>
               {p.resume ? (
-                <a
-                  href={p.resume}
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: 6,
-                    padding: '8px 16px',
-                    borderRadius: 8,
-                    background: 'rgba(60,180,255,0.15)',
-                    border: '1px solid rgba(60,180,255,0.35)',
-                    color: 'rgba(100,210,255,0.9)',
-                    fontSize: 13,
-                    fontWeight: 600,
-                    textDecoration: 'none',
-                    marginBottom: 14,
-                  }}
-                >
-                  📎 View Current Resume
-                </a>
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 14 }}>
+                  <a
+                    href={p.resume}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 6,
+                      padding: '8px 16px',
+                      borderRadius: 8,
+                      background: 'rgba(60,180,255,0.15)',
+                      border: '1px solid rgba(60,180,255,0.35)',
+                      color: 'rgba(100,210,255,0.9)',
+                      fontSize: 13,
+                      fontWeight: 600,
+                      textDecoration: 'none',
+                    }}
+                  >
+                    📎 View Current Resume
+                  </a>
+                  <button
+                    onClick={handleRemoveResume}
+                    disabled={removingResume}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 6,
+                      padding: '8px 16px',
+                      borderRadius: 8,
+                      background: 'rgba(255,80,80,0.12)',
+                      border: '1px solid rgba(255,80,80,0.35)',
+                      color: 'rgba(255,120,120,0.9)',
+                      fontSize: 13,
+                      fontWeight: 600,
+                      cursor: removingResume ? 'wait' : 'pointer',
+                    }}
+                  >
+                    {removingResume ? '⏳ Removing...' : '🗑️ Remove Resume'}
+                  </button>
+                </div>
               ) : (
                 <div style={{ ...emptyStyle, marginBottom: 14 }}>No resume uploaded yet</div>
               )}
