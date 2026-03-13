@@ -266,7 +266,7 @@ export default function Register() {
             <Form
               onKeyDown={onKeyDown}
               noValidate
-              className="registrationForm flex flex-col max-w-4xl px-6 w-[56rem] text-lg"
+              className="registrationForm flex flex-col w-full max-w-4xl px-4 sm:px-6 text-base sm:text-lg"
             >
               <div className="text-2xl py-1 border-b-2 border-black mr-auto mt-8">General</div>
               {generalQuestions.map((obj, idx) => (
