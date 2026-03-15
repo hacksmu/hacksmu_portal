@@ -29,7 +29,7 @@ type JudgeApplicationRequest = {
 
 async function handleGetJudgeApplications(req: NextApiRequest, res: NextApiResponse) {
   const userToken = req.headers['authorization'] as string;
-  const isAuthorized = await userIsAuthorized(userToken, ['super_admin', 'admin']);
+  const isAuthorized = await userIsAuthorized(userToken, ['super_admin', 'admin', 'organizer']);
 
   if (!isAuthorized) {
     return res.status(403).json({

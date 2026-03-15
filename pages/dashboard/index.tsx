@@ -86,6 +86,11 @@ export default function Dashboard(props: {
   const { isSignedIn } = useAuthContext();
   const user = useUser();
   const role = user.permissions?.length > 0 ? user.permissions[0] : 'hacker';
+  const permissions = user.permissions ?? [];
+  const isOrganizerView =
+    permissions.includes('organizer') ||
+    permissions.includes('admin') ||
+    permissions.includes('super_admin');
   const roleColor = roleColors[role] ?? '#60c8ff';
 
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
@@ -264,13 +269,15 @@ export default function Dashboard(props: {
                   textShadow: '0 0 14px rgba(0,200,255,0.45)',
                 }}
               >
-                Interested in judging?
+                {isOrganizerView ? 'Organizer review tools' : 'Interested in judging?'}
               </div>
               <div style={{ marginTop: 6, color: 'rgba(200,232,255,0.78)', fontSize: 14 }}>
-                Apply to help review projects, support teams, and score submissions during HackSMU VII.
+                {isOrganizerView
+                  ? 'Open the admin review workspace to answer pending questions and review judge applications.'
+                  : 'Apply to help review projects, support teams, and score submissions during HackSMU VII.'}
               </div>
             </div>
-            <Link href="/dashboard/judge-apply">
+            <Link href={isOrganizerView ? '/admin' : '/dashboard/judge-apply'}>
               <a
                 className="aero-btn"
                 style={{
@@ -280,7 +287,7 @@ export default function Dashboard(props: {
                   whiteSpace: 'nowrap',
                 }}
               >
-                Apply to Be a Judge
+                {isOrganizerView ? 'Open Admin Review' : 'Apply to Be a Judge'}
               </a>
             </Link>
           </div>

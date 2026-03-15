@@ -28,9 +28,10 @@ const expertiseOptions = [
 ];
 
 const availabilityOptions = [
-  'I can attend the full judging block during the event',
-  'I can review projects fairly using the judging rubric',
-  'I am comfortable giving constructive feedback to student teams',
+  'I can attend judge orientation on Saturday, April 12th from 11:00 AM to 12:00 PM.',
+  'I can participate in the full judging process on Saturday, April 12th from 1:00 PM to 5:00 PM.',
+  'I can review projects fairly using the judging rubric.',
+  'I am comfortable giving constructive feedback to student teams.',
 ];
 
 type JudgeApplication = {
@@ -145,7 +146,9 @@ export default function JudgeApplyPage() {
     if (!values.judgingExperience) errors.judgingExperience = 'Required';
     if (values.expertiseAreas.length === 0) errors.expertiseAreas = 'Select at least one area';
     if (!values.whyJudge) errors.whyJudge = 'Required';
-    if (values.availability.length < 2) errors.availability = 'Please confirm the judge expectations';
+    if (values.availability.length !== availabilityOptions.length) {
+      errors.availability = 'Please confirm all judge availability and expectations checkboxes';
+    }
     if (!resumeFile) errors.resumeUrl = 'Resume upload is required';
     if (
       values.contactEmail &&

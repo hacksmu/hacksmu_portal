@@ -22,9 +22,18 @@ function Sidebar() {
   const { isSignedIn } = useAuthContext();
   const user = useUser();
   const role = user.permissions?.length > 0 ? user.permissions[0] : 'hacker';
+  const permissions = user.permissions ?? [];
+  const isOrganizerView =
+    permissions.includes('organizer') ||
+    permissions.includes('admin') ||
+    permissions.includes('super_admin');
   const roleColor = roleColors[role] ?? '#60c8ff';
   const displayName = !user || !isSignedIn ? 'Hacker' : user.firstName || 'Hacker';
   const initials = displayName.slice(0, 2).toUpperCase();
+  const dashboardLinks = [
+    ...navLinks,
+    ...(isOrganizerView ? [{ label: 'Admin Review', path: '/admin', icon: '🛠' }] : []),
+  ];
 
   return (
     <>
@@ -100,7 +109,7 @@ function Sidebar() {
 
         {/* Nav links */}
         <nav style={{ padding: '16px 8px', flex: 1 }}>
-          {navLinks.map((link) => (
+          {dashboardLinks.map((link) => (
             <Link key={link.label} href={link.path}>
               <a style={{
                 display: 'flex',

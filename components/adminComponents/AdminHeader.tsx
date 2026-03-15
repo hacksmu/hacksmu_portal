@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import NavLink from '../NavLink';
 import { useAuthContext } from '../../lib/user/AuthContext';
 import { useEffect } from 'react';
@@ -8,11 +9,29 @@ function isAuthorized(user): boolean {
   return (user.permissions as string[]).includes('super_admin');
 }
 
+function canReview(user): boolean {
+  if (!user || !user.permissions) return false;
+  return (
+    (user.permissions as string[]).includes('organizer') ||
+    (user.permissions as string[]).includes('admin') ||
+    (user.permissions as string[]).includes('super_admin')
+  );
+}
+
+function canManageAdmin(user): boolean {
+  if (!user || !user.permissions) return false;
+  return (
+    (user.permissions as string[]).includes('admin') ||
+    (user.permissions as string[]).includes('super_admin')
+  );
+}
+
 /**
  * A dashboard header.
  */
 export default function AdminHeader() {
   const { user } = useAuthContext();
+  const router = useRouter();
 
   useEffect(() => {
     accordion();
@@ -36,19 +55,30 @@ export default function AdminHeader() {
   return (
     <section className="">
       <header className="top-0 sticky hidden md:flex flex-row justify-between p-2 md:p-4 items-center">
-        <div className="mx-auto md:flex justify-center md:text-lg lg:text-xl font-header md:text-left">
+        <div className="mx-auto md:flex justify-center md:text-lg lg:text-xl font-header md:text-left gap-2">
           <NavLink href="/admin" exact={true} className="mx-4">
-            Event Dashboard
+            <span style={navPillStyle(router.pathname === '/admin')}>Event Dashboard</span>
           </NavLink>
-          <NavLink href="/admin/scan" exact={true} className="mx-4">
-            Scanner
-          </NavLink>
-          <NavLink href="/admin/users" exact={true} className="mx-4">
-            Users Dashboard
-          </NavLink>
+          {canReview(user) && (
+            <NavLink href="/admin/judge-applications" exact={true} className="mx-4">
+              <span style={navPillStyle(router.pathname === '/admin/judge-applications')}>
+                Judge Applications
+              </span>
+            </NavLink>
+          )}
+          {canManageAdmin(user) && (
+            <NavLink href="/admin/scan" exact={true} className="mx-4">
+              <span style={navPillStyle(router.pathname === '/admin/scan')}>Scanner</span>
+            </NavLink>
+          )}
+          {canManageAdmin(user) && (
+            <NavLink href="/admin/users" exact={true} className="mx-4">
+              <span style={navPillStyle(router.pathname === '/admin/users')}>Users Dashboard</span>
+            </NavLink>
+          )}
           {isAuthorized(user) && (
             <NavLink href="/admin/stats" exact={true} className="mx-4">
-              Stats at a Glance
+              <span style={navPillStyle(router.pathname === '/admin/stats')}>Stats at a Glance</span>
             </NavLink>
           )}
         </div>
@@ -60,12 +90,21 @@ export default function AdminHeader() {
             <li className="p-2 hover:bg-[#DCDEFF]">
               <Link href="/admin">Event Dashboard</Link>
             </li>
-            <li className="p-2 hover:bg-[#DCDEFF]">
-              <Link href="/admin/scan">Scanner</Link>
-            </li>
-            <li className="p-2 hover:bg-[#DCDEFF]">
-              <Link href="/admin/users">Users Dashboard</Link>
-            </li>
+            {canReview(user) && (
+              <li className="p-2 hover:bg-[#DCDEFF]">
+                <Link href="/admin/judge-applications">Judge Applications</Link>
+              </li>
+            )}
+            {canManageAdmin(user) && (
+              <li className="p-2 hover:bg-[#DCDEFF]">
+                <Link href="/admin/scan">Scanner</Link>
+              </li>
+            )}
+            {canManageAdmin(user) && (
+              <li className="p-2 hover:bg-[#DCDEFF]">
+                <Link href="/admin/users">Users Dashboard</Link>
+              </li>
+            )}
             {isAuthorized(user) && (
               <li className="p-2 hover:bg-[#DCDEFF]">
                 <Link href="/admin/stats">Stats at a Glance</Link>
@@ -76,4 +115,27 @@ export default function AdminHeader() {
       </div>
     </section>
   );
+}
+
+function navPillStyle(active: boolean): React.CSSProperties {
+  return {
+    display: 'inline-block',
+    padding: '7px 22px',
+    borderRadius: 24,
+    fontSize: 13,
+    fontWeight: 700,
+    letterSpacing: '0.04em',
+    textDecoration: 'none',
+    transition: 'all 0.22s',
+    background: active
+      ? 'linear-gradient(135deg, rgba(0,160,255,0.55) 0%, rgba(0,80,200,0.45) 100%)'
+      : 'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(100,160,255,0.07) 100%)',
+    border: active
+      ? '1px solid rgba(0,180,255,0.60)'
+      : '1px solid rgba(255,255,255,0.20)',
+    color: active ? '#fff' : 'rgba(200,232,255,0.82)',
+    boxShadow: active
+      ? 'inset 0 1px 0 rgba(255,255,255,0.30), 0 2px 12px rgba(0,100,255,0.30)'
+      : 'none',
+  };
 }

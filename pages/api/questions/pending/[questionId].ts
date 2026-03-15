@@ -18,6 +18,15 @@ const QUESTION_COLLECTION = '/questions';
  *
  */
 async function getPendingQuestionById(req: NextApiRequest, res: NextApiResponse) {
+  const userToken = req.headers['authorization'] as string;
+  const isAuthorized = await userIsAuthorized(userToken, ['super_admin', 'admin', 'organizer']);
+
+  if (!isAuthorized) {
+    return res.status(403).json({
+      msg: 'Request is not authorized to view this question.',
+    });
+  }
+
   const snapshot = await db
     .collection(QUESTION_COLLECTION)
     .doc(req.query.questionId as string)
@@ -38,7 +47,7 @@ async function resolvePendingQuestionById(req: NextApiRequest, res: NextApiRespo
   const { headers } = req;
   const userToken = headers['authorization'];
 
-  const isAuthorized = await userIsAuthorized(userToken, ['super_admin', 'admin']);
+  const isAuthorized = await userIsAuthorized(userToken, ['super_admin', 'admin', 'organizer']);
   if (!isAuthorized) {
     return res.status(403).json({
       msg: 'Request is not authorized to perform admin functionality.',
@@ -76,8 +85,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       return handlePostRequest(req, res);
     }
     default: {
-      return res.status(404).json({
-        msg: 'Route not found',
+      return res.status(405).json({
+        msg: 'Method not allowed',
       });
     }
   }
