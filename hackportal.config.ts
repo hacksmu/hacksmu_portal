@@ -170,7 +170,7 @@ export const hackPortalConfig: HackPortalConfig = {
           {
             //University question
             question:
-              'This event is for college students worldwide. Which university do you attend?',
+              'This event is for college students and recent graduates worldwide. Which university do/did you attend?',
             id: 'university',
             name: 'university',
             required: true,
@@ -183,7 +183,7 @@ export const hackPortalConfig: HackPortalConfig = {
           },
           {
             //Major question
-            question: 'All majors are welcome at this event. What is your major?',
+            question: 'All majors are welcome at this event. What is/was your major?',
             id: 'major',
             name: 'major',
             required: true,
