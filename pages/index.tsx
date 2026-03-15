@@ -10,7 +10,13 @@ import { useAuthContext } from '../lib/user/AuthContext';
 
 // ─── Types ───────────────────────────────────────────────────
 type AnyFaq = Record<string, any>;
-type AnsweredQuestion = { id: string | number; question: string; answer: string; order: number };
+type FaqAnswerChunk = { type: string; text: string; url?: string };
+type AnsweredQuestion = {
+  id: string | number;
+  question: string;
+  answer: string | string[] | FaqAnswerChunk[];
+  order: number;
+};
 
 type HomeProps = {
   answeredQuestion: AnyFaq[];
@@ -34,7 +40,7 @@ function normalizeFaq(x: AnyFaq, i: number): AnsweredQuestion {
   return {
     id: x?.id ?? x?._id ?? i,
     question: String(question ?? ''),
-    answer: String(answer ?? ''),
+    answer: Array.isArray(answer) ? answer : String(answer ?? ''),
     order: typeof x?.order === 'number' ? x.order : i,
   };
 }
@@ -931,6 +937,18 @@ function FaqContent({
   onToggleAll: () => void;
 }) {
   const allExpanded = openState.length > 0 && openState.every(Boolean);
+  const linkPattern = /(https?:\/\/[^\s)]+)/g;
+  const isUrl = (value: string) => /^https?:\/\/\S+$/.test(value);
+  const renderTextWithLinks = (text: string) =>
+    text.split(linkPattern).map((part, index) =>
+      isUrl(part) ? (
+        <a key={`${part}-${index}`} href={part} target="_blank" rel="noreferrer" style={{ color: 'rgba(80,200,255,0.95)', textDecoration: 'underline' }}>
+          {part}
+        </a>
+      ) : (
+        <span key={`${part}-${index}`}>{part}</span>
+      ),
+    );
   return (
     <div style={{ padding: '18px 18px' }}>
       {loading && faqs.length === 0 && (
@@ -959,13 +977,13 @@ function FaqContent({
           <div className={`faq-answer-panel${openState[i] ? ' open' : ''}`}>
             <div className="faq-answer-text">
               {typeof faq.answer === 'string'
-                ? faq.answer
+                ? renderTextWithLinks(faq.answer)
                 : Array.isArray(faq.answer)
                 ? (faq.answer as any[]).map((chunk: any, ci: number) =>
                     chunk?.type === 'link' ? (
                       <a key={ci} href={chunk.url} style={{ color: 'rgba(80,200,255,0.95)', textDecoration: 'underline' }}>{chunk.text}</a>
                     ) : (
-                      <span key={ci}>{chunk?.text ?? ''}</span>
+                      <span key={ci}>{renderTextWithLinks(chunk?.text ?? '')}</span>
                     )
                   )
                 : null}
