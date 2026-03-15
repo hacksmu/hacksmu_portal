@@ -211,6 +211,26 @@ type Announcement = {
   timestamp?: string;
 };
 
+type JudgeApplication = {
+  user: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    preferredEmail: string;
+  };
+  contactEmail: string;
+  organization: string;
+  roleTitle: string;
+  judgingExperience: string;
+  expertiseAreas: string[];
+  portfolioLinks?: string;
+  whyJudge: string;
+  availability: string[];
+  resumeUrl: string;
+  status: 'submitted' | 'reviewing' | 'accepted' | 'rejected';
+  submittedAt?: string;
+};
+
 /**
  *
  * Represent an event

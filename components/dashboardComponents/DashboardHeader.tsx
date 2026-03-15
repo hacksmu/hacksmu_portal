@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 const navItems = [
   { label: 'HackCenter', path: '/dashboard' },
   { label: 'Ask a Question', path: '/dashboard/questions' },
+  { label: 'Judge Application', path: '/dashboard/judge-apply' },
 ];
 
 export default function DashboardHeader() {

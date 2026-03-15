@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import DashboardHeader from '../../components/dashboardComponents/DashboardHeader';
 import { useUser } from '../../lib/profile/user-data';
@@ -240,6 +241,48 @@ export default function Dashboard(props: {
                 hacksmu.org/discord
               </a>
             </span>
+          </div>
+
+          <div
+            style={{
+              ...glassPanel,
+              padding: '18px 20px',
+              marginBottom: 24,
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: 14,
+            }}
+          >
+            <div>
+              <div
+                style={{
+                  color: '#fff',
+                  fontWeight: 800,
+                  fontSize: 18,
+                  textShadow: '0 0 14px rgba(0,200,255,0.45)',
+                }}
+              >
+                Interested in judging?
+              </div>
+              <div style={{ marginTop: 6, color: 'rgba(200,232,255,0.78)', fontSize: 14 }}>
+                Apply to help review projects, support teams, and score submissions during HackSMU VII.
+              </div>
+            </div>
+            <Link href="/dashboard/judge-apply">
+              <a
+                className="aero-btn"
+                style={{
+                  fontSize: 14,
+                  padding: '10px 18px',
+                  textDecoration: 'none',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                Apply to Be a Judge
+              </a>
+            </Link>
           </div>
 
           {/* Spotlight + Announcements */}

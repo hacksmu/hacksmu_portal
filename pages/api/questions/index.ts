@@ -18,6 +18,8 @@ export interface QADocument extends QAReqBody {
   id: string;
 }
 
+// TODO: Add organizer/admin functionality to answer user questions submitted through the Ask a Question feature.
+
 /**
  *
  * Post a question asked by user to the backend
