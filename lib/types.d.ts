@@ -229,6 +229,8 @@ type JudgeApplication = {
   resumeUrl: string;
   status: 'submitted' | 'reviewing' | 'accepted' | 'rejected';
   submittedAt?: string;
+  reviewedAt?: string;
+  reviewNotes?: string;
 };
 
 /**

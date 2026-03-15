@@ -89,6 +89,8 @@ type JudgeApplication = {
   resumeUrl: string;
   status: 'submitted' | 'reviewing' | 'accepted' | 'rejected';
   submittedAt?: string;
+  reviewedAt?: string;
+  reviewNotes?: string;
 };
 
 function isAuthorized(user): boolean {
@@ -105,6 +107,8 @@ export default function JudgeApplicationsPage() {
   const [applications, setApplications] = useState<JudgeApplication[]>([]);
   const [loading, setLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
+  const [reviewNotesById, setReviewNotesById] = useState<Record<string, string>>({});
+  const [reviewErrorsById, setReviewErrorsById] = useState<Record<string, string>>({});
 
   useEffect(() => {
     async function loadApplications() {
@@ -121,6 +125,14 @@ export default function JudgeApplicationsPage() {
         });
         const data = await response.json();
         setApplications(Array.isArray(data) ? data : []);
+        if (Array.isArray(data)) {
+          setReviewNotesById(
+            data.reduce((acc, application) => {
+              acc[application.user.id] = application.reviewNotes ?? '';
+              return acc;
+            }, {}),
+          );
+        }
       } catch (error) {
         console.error(error);
       } finally {
@@ -134,7 +146,18 @@ export default function JudgeApplicationsPage() {
   const updateStatus = async (applicationId: string, status: JudgeApplication['status']) => {
     if (!user?.token) return;
 
+    const reviewNotes = (reviewNotesById[applicationId] ?? '').trim();
+
+    if ((status === 'accepted' || status === 'rejected') && !reviewNotes) {
+      setReviewErrorsById((prev) => ({
+        ...prev,
+        [applicationId]: 'Review comments are required before accepting or rejecting this application.',
+      }));
+      return;
+    }
+
     setUpdatingId(applicationId);
+    setReviewErrorsById((prev) => ({ ...prev, [applicationId]: '' }));
     try {
       const response = await fetch(`/api/judge-applications/${applicationId}`, {
         method: 'PATCH',
@@ -142,18 +165,36 @@ export default function JudgeApplicationsPage() {
           Authorization: user.token,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ status }),
+        body: JSON.stringify({ status, reviewNotes }),
       });
 
-      if (response.status !== 200) return;
+      if (response.status !== 200) {
+        const data = await response.json().catch(() => null);
+        setReviewErrorsById((prev) => ({
+          ...prev,
+          [applicationId]: data?.msg ?? 'We could not update this application right now.',
+        }));
+        return;
+      }
 
       setApplications((prev) =>
         prev.map((application) =>
-          application.user.id === applicationId ? { ...application, status } : application,
+          application.user.id === applicationId
+            ? {
+                ...application,
+                status,
+                reviewNotes,
+                reviewedAt: new Date().toISOString(),
+              }
+            : application,
         ),
       );
     } catch (error) {
       console.error(error);
+      setReviewErrorsById((prev) => ({
+        ...prev,
+        [applicationId]: 'We could not update this application right now.',
+      }));
     } finally {
       setUpdatingId(null);
     }
@@ -287,6 +328,11 @@ export default function JudgeApplicationsPage() {
                         Submitted: {new Date(application.submittedAt).toLocaleString()}
                       </div>
                     )}
+                    {application.reviewedAt && (
+                      <div style={{ marginTop: 6 }}>
+                        Reviewed: {new Date(application.reviewedAt).toLocaleString()}
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -316,6 +362,50 @@ export default function JudgeApplicationsPage() {
                     <strong style={{ color: '#fff' }}>Links:</strong> {application.portfolioLinks}
                   </div>
                 )}
+                <div className="mt-4">
+                  <div
+                    style={{
+                      color: '#fff',
+                      fontSize: 13,
+                      fontWeight: 700,
+                      letterSpacing: '0.04em',
+                      marginBottom: 8,
+                    }}
+                  >
+                    Review Comments
+                  </div>
+                  <textarea
+                    rows={4}
+                    value={reviewNotesById[application.user.id] ?? ''}
+                    onChange={(e) => {
+                      const nextValue = e.target.value;
+                      setReviewNotesById((prev) => ({
+                        ...prev,
+                        [application.user.id]: nextValue,
+                      }));
+                      setReviewErrorsById((prev) => ({
+                        ...prev,
+                        [application.user.id]: '',
+                      }));
+                    }}
+                    style={{
+                      width: '100%',
+                      padding: '12px 14px',
+                      borderRadius: 12,
+                      background: 'rgba(255,255,255,0.08)',
+                      border: '1px solid rgba(255,255,255,0.18)',
+                      color: '#e8f4ff',
+                      lineHeight: 1.6,
+                      resize: 'vertical',
+                    }}
+                    placeholder="Leave review comments here. Required before accepting or rejecting."
+                  />
+                  {reviewErrorsById[application.user.id] && (
+                    <div style={{ color: '#ff9a9a', fontSize: 13, marginTop: 8 }}>
+                      {reviewErrorsById[application.user.id]}
+                    </div>
+                  )}
+                </div>
                 <div className="mt-3 flex flex-wrap gap-3 items-center">
                   <a
                     href={application.resumeUrl}
@@ -335,7 +425,7 @@ export default function JudgeApplicationsPage() {
                     onClick={() => updateStatus(application.user.id, 'reviewing')}
                     disabled={updatingId === application.user.id}
                   >
-                    Mark Reviewing
+                    Save Review / Mark Reviewing
                   </button>
                   <button
                     type="button"

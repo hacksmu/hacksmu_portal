@@ -2,6 +2,11 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { auth, firestore } from 'firebase-admin';
 import initializeApi from '../../../lib/admin/init';
 import { userIsAuthorized } from '../../../lib/authorization/check-authorization';
+import {
+  buildJudgeStatusEmail,
+  buildRejectedJudgeStatusEmail,
+  sendEmail,
+} from '../../../lib/email';
 
 initializeApi();
 
@@ -66,6 +71,8 @@ async function handlePatchJudgeApplication(req: NextApiRequest, res: NextApiResp
 
   const parsedBody = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
   const nextStatus = parsedBody?.status;
+  const reviewNotes =
+    typeof parsedBody?.reviewNotes === 'string' ? parsedBody.reviewNotes.trim() : '';
   const allowedStatuses = ['submitted', 'reviewing', 'accepted', 'rejected'];
 
   if (!allowedStatuses.includes(nextStatus)) {
@@ -74,14 +81,53 @@ async function handlePatchJudgeApplication(req: NextApiRequest, res: NextApiResp
     });
   }
 
+  if ((nextStatus === 'accepted' || nextStatus === 'rejected') && !reviewNotes) {
+    return res.status(400).json({
+      msg: 'Review comments are required before accepting or rejecting an application.',
+    });
+  }
+
   try {
-    await db.collection(JUDGE_APPLICATIONS_COLLECTION).doc(applicationId as string).set(
+    const applicationRef = db.collection(JUDGE_APPLICATIONS_COLLECTION).doc(applicationId as string);
+    const existingSnapshot = await applicationRef.get();
+
+    if (!existingSnapshot.exists) {
+      return res.status(404).json({
+        msg: 'Judge application not found.',
+      });
+    }
+
+    const existingApplication = existingSnapshot.data() as {
+      status?: string;
+      contactEmail?: string;
+      reviewNotes?: string;
+    };
+
+    await applicationRef.set(
       {
         status: nextStatus,
+        reviewNotes,
         reviewedAt: new Date().toISOString(),
       },
       { merge: true },
     );
+
+    if (existingApplication.status !== nextStatus && existingApplication.contactEmail) {
+      try {
+        const email =
+          nextStatus === 'rejected'
+            ? buildRejectedJudgeStatusEmail(reviewNotes)
+            : buildJudgeStatusEmail(nextStatus);
+        await sendEmail({
+          to: existingApplication.contactEmail,
+          subject: email.subject,
+          html: email.html,
+          text: email.text,
+        });
+      } catch (error) {
+        console.error('Failed to send judge application status email', error);
+      }
+    }
 
     return res.status(200).json({
       msg: 'Judge application updated.',

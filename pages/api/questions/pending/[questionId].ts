@@ -2,11 +2,13 @@ import { firestore } from 'firebase-admin';
 import { NextApiRequest, NextApiResponse } from 'next';
 import initializeApi from '../../../../lib/admin/init';
 import { userIsAuthorized } from '../../../../lib/authorization/check-authorization';
+import { buildAnsweredQuestionEmail, sendEmail } from '../../../../lib/email';
 
 initializeApi();
 const db = firestore();
 
 const QUESTION_COLLECTION = '/questions';
+const REGISTRATION_COLLECTION = '/registrations';
 
 /**
  *
@@ -54,8 +56,23 @@ async function resolvePendingQuestionById(req: NextApiRequest, res: NextApiRespo
     });
   }
 
+  const parsedBody = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+  const questionSnapshot = await db.collection(QUESTION_COLLECTION).doc(req.query.questionId as string).get();
+
+  if (!questionSnapshot.exists) {
+    return res.status(404).json({
+      msg: 'Question not found.',
+    });
+  }
+
+  const existingQuestion = questionSnapshot.data() as {
+    userId?: string;
+    question?: string;
+    answer?: string;
+  };
+
   const newData = {
-    ...JSON.parse(req.body),
+    ...parsedBody,
     status: 'answered',
   };
   const doc = await db
@@ -64,6 +81,34 @@ async function resolvePendingQuestionById(req: NextApiRequest, res: NextApiRespo
     .set(newData, {
       merge: true,
     });
+
+  const userId = existingQuestion?.userId;
+  const answer = parsedBody?.answer ?? '';
+  const shouldSendEmail =
+    userId &&
+    existingQuestion?.question &&
+    answer &&
+    (existingQuestion.answer ?? '') !== answer;
+
+  if (shouldSendEmail) {
+    try {
+      const registrationSnapshot = await db.collection(REGISTRATION_COLLECTION).doc(userId).get();
+      const recipientEmail = registrationSnapshot.data()?.user?.preferredEmail;
+
+      if (recipientEmail) {
+        const email = buildAnsweredQuestionEmail(existingQuestion.question, answer);
+        await sendEmail({
+          to: recipientEmail,
+          subject: email.subject,
+          html: email.html,
+          text: email.text,
+        });
+      }
+    } catch (error) {
+      console.error('Failed to send answered-question email', error);
+    }
+  }
+
   res.json(doc);
 }
 

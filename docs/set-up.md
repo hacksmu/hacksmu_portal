@@ -43,6 +43,8 @@ NEXT_PUBLIC_MEASUREMENT_ID=
 SERVICE_ACCOUNT_CLIENT_EMAIL=
 SERVICE_ACCOUNT_PRIVATE_KEY=
 SERVICE_ACCOUNT_PROJECT_ID=
+RESEND_API_KEY=
+EMAIL_FROM=
 
 ```
 
@@ -95,6 +97,28 @@ NEXT_PUBLIC_RESUME_UPLOAD_PASSWORD=
 ```
 
 ![Add user](./images/set-up-6.png)
+
+## Optional Email Notification Setup
+
+If you want the portal to email users when:
+
+- an organizer answers an Ask a Question submission
+- a judge application's status changes
+
+add these environment variables to `.env.local`:
+
+```
+RESEND_API_KEY=
+EMAIL_FROM=
+```
+
+`RESEND_API_KEY` should be your Resend API key, and `EMAIL_FROM` should be a verified sender such as:
+
+```
+HackSMU <noreply@yourdomain.com>
+```
+
+If these variables are not configured, the app will still work, but those email notifications will be skipped.
 
 ## Firebase Setup
  Follow the instructions in the [Firebase Setup doc](./firebase-setup.md) to see how to set Firebase up for your hackathon.
