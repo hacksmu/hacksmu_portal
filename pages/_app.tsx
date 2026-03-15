@@ -82,7 +82,7 @@ function PortalApp({ Component, pageProps }: AppProps) {
             </Head>
 
             {/* Apply the font variable here so it’s available everywhere */}
-            <div className={`min-h-screen flex flex-col mt-5`} style={{ background: '#040d22' }}>
+            <div className={`min-h-screen flex flex-col`} style={{ background: '#040d22' }}>
               <AppHeader />
               <MlhConsentModal />
               <Component {...pageProps} />

@@ -9,6 +9,37 @@
   33% { transform: translateX(5%) skewX(2deg) scaleY(1.05); opacity: 0.5; }
   66% { transform: translateX(15%) skewX(4deg) scaleY(0.98); opacity: 0.3; }
 }
+
+.mlh-badge-link {
+  display: block;
+  width: 58px;
+  min-width: 40px;
+  max-width: 88px;
+  margin-top: 0;
+}
+
+.mlh-badge-image {
+  width: 100%;
+  display: block;
+}
+
+@media (max-width: 1024px) {
+  .mlh-badge-link {
+    width: 48px;
+    min-width: 34px;
+    max-width: 74px;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .mlh-badge-link {
+    width: 40px;
+    min-width: 30px;
+    max-width: 60px;
+    margin-top: 0;
+  }
+}
 @keyframes aurora-2 {
   0%, 100% { transform: translateX(20%) skewX(5deg) scaleY(1.02); opacity: 0.25; }
   50% { transform: translateX(-20%) skewX(-5deg) scaleY(0.97); opacity: 0.45; }
