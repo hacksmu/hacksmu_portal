@@ -124,6 +124,27 @@ export default function Register() {
     }
   }
 
+  const getCheckboxQuestionError = (question, values) => {
+    const selectedValues = Array.isArray(values[question.name]) ? values[question.name] : [];
+    const requiredOptions = question.options.filter((option) => option.required);
+
+    if (question.required && selectedValues.length === 0) {
+      return 'Required';
+    }
+
+    const missingRequiredOptions = requiredOptions.filter(
+      (option) => !selectedValues.includes(option.value),
+    );
+
+    if (missingRequiredOptions.length === 0) {
+      return undefined;
+    }
+
+    return missingRequiredOptions.length === 1
+      ? `Required: ${missingRequiredOptions[0].title}`
+      : `Required: ${missingRequiredOptions.map((option) => option.title).join(', ')}`;
+  };
+
   const setErrors = (obj, values, errors) => {
     if (obj.textInputQuestions)
       for (let inputObj of obj.textInputQuestions) {
@@ -146,8 +167,9 @@ export default function Register() {
       }
     if (obj.checkboxQuestions)
       for (let inputObj of obj.checkboxQuestions) {
-        if (inputObj.required) {
-          if (!values[inputObj.name]) errors[inputObj.name] = 'Required';
+        const checkboxError = getCheckboxQuestionError(inputObj, values);
+        if (checkboxError) {
+          errors[inputObj.name] = checkboxError;
         }
       }
     if (obj.datalistQuestions)

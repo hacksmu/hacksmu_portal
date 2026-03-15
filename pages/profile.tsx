@@ -189,7 +189,10 @@ export default function ProfilePage() {
               )}
             </div>
             <div style={{ marginTop: 8, color: 'rgba(140,200,255,0.7)', fontSize: 13 }}>
-              {p.user.preferredEmail}
+              Auth email: {user.preferredEmail || 'Not available'}
+            </div>
+            <div style={{ marginTop: 4, color: 'rgba(140,200,255,0.7)', fontSize: 13 }}>
+              Registration email: {p.user.preferredEmail || 'Not available'}
             </div>
           </div>
 

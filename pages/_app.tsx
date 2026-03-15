@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { AppProps } from 'next/dist/shared/lib/router/router';
 import 'firebase/auth';
 import AppHeader from '../components/AppHeader';
+import MlhConsentModal from '../components/MlhConsentModal';
 import { initFirebase } from '../lib/firebase-client';
 import { AuthProvider } from '../lib/user/AuthContext';
 import '../styles/globals.css';
@@ -83,6 +84,7 @@ function PortalApp({ Component, pageProps }: AppProps) {
             {/* Apply the font variable here so it’s available everywhere */}
             <div className={`min-h-screen flex flex-col mt-5`} style={{ background: '#040d22' }}>
               <AppHeader />
+              <MlhConsentModal />
               <Component {...pageProps} />
             </div>
           </FCMProvider>

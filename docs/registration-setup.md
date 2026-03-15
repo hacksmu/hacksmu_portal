@@ -105,6 +105,7 @@ checkboxQuestions:
     {
         title: "" // Text displayed on screen as option choice
         value: "" //Text that will be saved into database
+        required: false //optional; if true, this specific checkbox option must be selected
     },
     //... add other options of same format
 ]

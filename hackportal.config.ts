@@ -360,6 +360,30 @@ export const hackPortalConfig: HackPortalConfig = {
       {
         checkboxQuestions: [
           {
+            question: 'We are currently in the process of partnering with MLH. The following 3 checkboxes are for this partnership. If we do not end up partnering with MLH, your information will not be shared',
+            required: false,
+            id: 'mlhConsent',
+            name: 'mlhConsent',
+            initialValue: [],
+            options: [
+              {
+                title: 'I have read and agree to the MLH Code of Conduct. (https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md)',
+                value: 'mlhConsent1',
+                required: true,
+              },
+              {
+                title: 'I authorize you to share my application/registration information with Major League Hacking for event administration, ranking, and MLH administration in-line with the MLH Privacy Policy (https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md). I further agree to the terms of both the MLH Contest Terms and Conditions (https://github.com/MLH/mlh-policies/blob/main/contest-terms.md) and the MLH Privacy Policy (https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md).',
+                value: 'mlhConsent2',
+                required: true,
+              },
+              {
+                title: 'I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements.',
+                value: 'mlhConsent3',
+                required: false,
+              },
+            ],
+          },
+          {
             //Allergies question
             question: 'Allergies / Dietary Restrictions:',
             required: false,
@@ -611,6 +635,7 @@ interface CheckboxQuestion extends RegistrationQuestion {
   options: Array<{
     title: string;
     value: string;
+    required?: boolean;
   }>;
 }
 

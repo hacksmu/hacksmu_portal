@@ -1,6 +1,31 @@
 import React, { useEffect, useState, useLayoutEffect, Fragment } from 'react';
 import { Field, ErrorMessage } from 'formik';
 
+const linkPattern = /(https?:\/\/[^\s)]+)/g;
+
+function renderTextWithLinks(text: string) {
+  const parts = text.split(linkPattern);
+
+  return parts.map((part, idx) => {
+    if (!part.match(linkPattern)) {
+      return <Fragment key={`${part}-${idx}`}>{part}</Fragment>;
+    }
+
+    return (
+      <a
+        key={`${part}-${idx}`}
+        href={part}
+        target="_blank"
+        rel="noreferrer"
+        onClick={(event) => event.stopPropagation()}
+        className="text-blue-600 underline"
+      >
+        {part}
+      </a>
+    );
+  });
+}
+
 /**
  *Text input question Component
  *
@@ -86,7 +111,8 @@ function Question(props) {
           {props.question.options.map((option) => (
             <label key={option.value}>
               <Field type="checkbox" name={props.question.name} value={option.value} />
-              &nbsp;{option.title}
+              &nbsp;{renderTextWithLinks(option.title)}
+              {option.required ? ' *' : ''}
             </label>
           ))}
         </div>

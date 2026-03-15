@@ -68,6 +68,57 @@ async function handleGetApplication(req: NextApiRequest, res: NextApiResponse) {
   return;
 }
 
+async function handlePatchApplication(req: NextApiRequest, res: NextApiResponse) {
+  const {
+    query: { token, applicationId },
+    headers,
+  } = req;
+
+  const userToken = (token as string) || (headers['authorization'] as string);
+
+  if (!userToken) {
+    return res.status(401).json({
+      type: 'request-unauthorized',
+      message: 'Request is not authorized to modify this application.',
+    });
+  }
+
+  try {
+    const payload = await auth().verifyIdToken(userToken);
+    const userId = applicationId as string;
+    const isAdmin = await userIsAuthorized(userToken, ['super_admin', 'admin']);
+
+    if (payload.uid !== userId && !isAdmin) {
+      return res.status(401).json({
+        type: 'request-unauthorized',
+        message: 'Request is not authorized to modify this application.',
+      });
+    }
+
+    const parsedBody = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+    const nextMlhConsent = parsedBody?.mlhConsent;
+
+    if (!Array.isArray(nextMlhConsent) || !nextMlhConsent.every((value) => typeof value === 'string')) {
+      return res.status(400).json({
+        type: 'invalid',
+        message: 'mlhConsent must be an array of strings.',
+      });
+    }
+
+    await db.collection(APPLICATIONS_COLLECTION).doc(userId).update({ mlhConsent: nextMlhConsent });
+
+    return res.status(200).json({
+      msg: 'Application updated',
+    });
+  } catch (error) {
+    console.error('Error when updating application', error);
+    return res.status(500).json({
+      code: 'internal-error',
+      message: 'Something went wrong when processing this request. Try again later.',
+    });
+  }
+}
+
 /**
  * Get application data.
  *
@@ -82,6 +133,7 @@ export default function handleApplications(req: NextApiRequest, res: NextApiResp
   if (method === 'GET') {
     return handleGetApplication(req, res);
   } else if (method === 'PATCH') {
+    return handlePatchApplication(req, res);
   } else if (method === 'DELETE') {
     // Maybe check for additional authorization so only organizers can delete individual applications?
   } else {

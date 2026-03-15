@@ -70,6 +70,7 @@ type User = Person & {
  */
 type Registration = {
   id: string;
+  registrationCreatedAt?: number;
   /**
    * A UNIX timestamp corresponding to when a hacker registered for the event.
    */
@@ -102,6 +103,7 @@ type Registration = {
   heardFrom: string;
   size: string;
   dietary: string[];
+  mlhConsent?: string[];
   accomodations: string;
   github?: string;
   linkedin?: string;
