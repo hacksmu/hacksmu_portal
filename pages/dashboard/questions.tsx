@@ -16,6 +16,8 @@ const glassPanel: React.CSSProperties = {
   borderRadius: 18,
   boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.32), 0 6px 28px rgba(0,20,70,0.24)',
 };
+const MIN_QUESTION_LENGTH = 10;
+const MAX_QUESTION_LENGTH = 500;
 
 function SectionHeader({ children }: { children: React.ReactNode }) {
   return (
@@ -65,12 +67,28 @@ export default function QuestionsPage() {
 
   const submitQuestion = async () => {
     if (!user) { addError('You must log in to ask a question'); return; }
-    if (!currentQuestion.trim()) return;
+    const trimmedQuestion = currentQuestion.trim();
+    const wordCount = trimmedQuestion.split(/\s+/).filter(Boolean).length;
+
+    if (!trimmedQuestion) return;
+    if (trimmedQuestion.length < MIN_QUESTION_LENGTH) {
+      addError(`Questions must be at least ${MIN_QUESTION_LENGTH} characters long.`);
+      return;
+    }
+    if (trimmedQuestion.length > MAX_QUESTION_LENGTH) {
+      addError(`Questions must be ${MAX_QUESTION_LENGTH} characters or less.`);
+      return;
+    }
+    if (wordCount < 3) {
+      addError('Please include a little more detail so organizers can help.');
+      return;
+    }
+
     setSubmitStatus('sending');
     try {
       await RequestHelper.post<QAReqBody, {}>('/api/questions/', {
         headers: { 'Content-Type': 'application/json' },
-      }, { userId: user.id, question: currentQuestion });
+      }, { userId: user.id, question: trimmedQuestion });
       setCurrentQuestion('');
       setSubmitStatus('sent');
       // Refresh pending questions
@@ -78,7 +96,7 @@ export default function QuestionsPage() {
       setPendingQuestions(pending);
       setTimeout(() => setSubmitStatus('idle'), 3000);
     } catch (error) {
-      addError('Failed to send question. Please try again.');
+      addError(error?.response?.data?.message ?? 'Failed to send question. Please try again.');
       setSubmitStatus('idle');
     }
   };
@@ -159,7 +177,7 @@ export default function QuestionsPage() {
             rows={4}
             value={currentQuestion}
             onChange={(e) => setCurrentQuestion(e.target.value)}
-            placeholder="Type your question here…"
+            placeholder="Ask an event-related question here…"
             style={{
               width: '100%',
               padding: '12px 16px',
@@ -180,6 +198,12 @@ export default function QuestionsPage() {
           />
 
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 14 }}>
+            <span style={{ color: 'rgba(200,232,255,0.58)', fontSize: 12 }}>
+              Keep it event-related and under {MAX_QUESTION_LENGTH} characters.
+            </span>
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 10 }}>
             {submitStatus === 'sent' ? (
               <span style={{ color: '#40ff9a', fontSize: 13, fontWeight: 600 }}>
                 ✓ Question submitted successfully

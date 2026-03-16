@@ -7,7 +7,7 @@ interface ErrorListProps {
 
 export default function ErrorList({ errors, onClose }: ErrorListProps) {
   return (
-    <div className="p-4">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
       {errors.map((error, idx) => (
         <ErrorCard
           key={idx}
