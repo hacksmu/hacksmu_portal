@@ -5,7 +5,7 @@ import ErrorList from '../../components/ErrorList';
 import PendingQuestion from '../../components/dashboardComponents/PendingQuestion';
 import { RequestHelper } from '../../lib/request-helper';
 import { useAuthContext } from '../../lib/user/AuthContext';
-import { QAReqBody } from '../api/questions';
+import { QADocument, QAReqBody } from '../api/questions';
 import DashboardHeader from '../../components/dashboardComponents/DashboardHeader';
 
 const glassPanel: React.CSSProperties = {
@@ -41,7 +41,7 @@ export default function QuestionsPage() {
   const [currentQuestion, setCurrentQuestion] = useState('');
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
   const [answeredQuestions, setAnsweredQuestions] = useState<AnsweredQuestion[]>([]);
-  const [pendingQuestions, setPendingQuestions] = useState<PendingQuestion[]>([]);
+  const [pendingQuestions, setPendingQuestions] = useState<QADocument[]>([]);
   const [answeredQuestionDisclosureStatus, setAnsweredDisclosureStatus] = useState<boolean[]>([]);
   const { user, isSignedIn } = useAuthContext();
 
@@ -55,7 +55,7 @@ export default function QuestionsPage() {
 
   const getMyPendingQuestions = async () => {
     if (!user) return [];
-    const { data } = await RequestHelper.get<PendingQuestion[]>(
+    const { data } = await RequestHelper.get<QADocument[]>(
       `/api/questions/${user.id}/pending`, {},
     );
     return data;
@@ -231,8 +231,8 @@ export default function QuestionsPage() {
             </p>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {pendingQuestions.map(({ question }, idx) => (
-                <PendingQuestion key={idx} question={question} />
+              {pendingQuestions.map(({ question, submittedAt }, idx) => (
+                <PendingQuestion key={idx} question={question} submittedAt={submittedAt} />
               ))}
             </div>
           )}

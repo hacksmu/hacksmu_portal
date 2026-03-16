@@ -193,7 +193,7 @@ export default function ResolveQuestionPage() {
           >
             Submitted Question
           </div>
-          <PendingQuestion question={question.question} />
+          <PendingQuestion question={question.question} submittedAt={question.submittedAt} />
         </div>
 
         <div style={{ ...glassPanel, padding: '24px 28px' }}>

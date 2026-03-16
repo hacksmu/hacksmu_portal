@@ -16,6 +16,7 @@ export interface QADocument extends QAReqBody {
   status: 'pending' | 'answered';
   answer: string;
   id: string;
+  submittedAt?: string;
 }
 
 // TODO: Add organizer/admin functionality to answer user questions submitted through the Ask a Question feature.
@@ -35,6 +36,7 @@ async function postQuestionToDB(req: NextApiRequest, res: NextApiResponse) {
     question: req.body.question,
     answer: '',
     status: 'pending',
+    submittedAt: new Date().toISOString(),
   };
 
   await db.collection(QUESTIONS_COLLECTION).add(questionDoc);

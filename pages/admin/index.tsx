@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import AdminHeader from '../../components/adminComponents/AdminHeader';
+import AnsweredQuestion from '../../components/dashboardComponents/AnsweredQuestion';
 import ErrorList from '../../components/ErrorList';
 import EventDetailLink from '../../components/adminComponents/eventComponents/EventDetailLink';
 import PendingQuestion from '../../components/dashboardComponents/PendingQuestion';
@@ -60,7 +61,12 @@ export default function Admin() {
   const [errors, setErrors] = useState<string[]>([]);
   const [showSuccessMsg, setShowSuccessMsg] = useState(false);
   const [questions, setQuestions] = useState<QADocument[]>([]);
+  const [answeredQuestions, setAnsweredQuestions] = useState<QADocument[]>([]);
   const [loadingQuestions, setLoadingQuestions] = useState(true);
+  const [loadingAnsweredQuestions, setLoadingAnsweredQuestions] = useState(true);
+  const [answeredQuestionDisclosureStatus, setAnsweredQuestionDisclosureStatus] = useState<
+    boolean[]
+  >([]);
 
   const addError = (errMsg: string) => {
     setErrors((prev) => [...prev, errMsg]);
@@ -99,20 +105,31 @@ export default function Admin() {
     async function loadPendingQuestions() {
       if (!user?.token || !isAuthorized(user)) {
         setLoadingQuestions(false);
+        setLoadingAnsweredQuestions(false);
         return;
       }
 
       try {
-        const { data } = await RequestHelper.get<QADocument[]>('/api/questions/pending', {
-          headers: {
-            Authorization: user.token,
-          },
-        });
-        setQuestions(data ?? []);
+        const [pendingResponse, answeredResponse] = await Promise.all([
+          RequestHelper.get<QADocument[]>('/api/questions/pending', {
+            headers: {
+              Authorization: user.token,
+            },
+          }),
+          RequestHelper.get<QADocument[]>('/api/questions/answered', {
+            headers: {
+              Authorization: user.token,
+            },
+          }),
+        ]);
+        setQuestions(pendingResponse.data ?? []);
+        setAnsweredQuestions(answeredResponse.data ?? []);
+        setAnsweredQuestionDisclosureStatus(new Array((answeredResponse.data ?? []).length).fill(false));
       } catch (error) {
-        addError('Failed to load pending questions.');
+        addError('Failed to load question data.');
       } finally {
         setLoadingQuestions(false);
+        setLoadingAnsweredQuestions(false);
       }
     }
 
@@ -146,6 +163,21 @@ export default function Admin() {
       <AdminHeader />
 
       <div style={{ padding: '24px 28px 48px', maxWidth: 1040, width: '100%', margin: '0 auto' }}>
+        <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'flex-start' }}>
+          <Link href="/dashboard">
+            <a
+              className="aero-btn"
+              style={{
+                fontSize: 13,
+                padding: '9px 16px',
+                textDecoration: 'none',
+              }}
+            >
+              Return to HackCenter
+            </a>
+          </Link>
+        </div>
+
         <div
           style={{
             ...glassPanel,
@@ -250,9 +282,47 @@ export default function Admin() {
               {questions.map((question, idx) => (
                 <Link key={idx} passHref href={`/admin/resolve/${question.id}`}>
                   <a style={{ textDecoration: 'none' }}>
-                    <PendingQuestion key={idx} question={question.question} />
+                    <PendingQuestion
+                      key={idx}
+                      question={question.question}
+                      submittedAt={question.submittedAt}
+                    />
                   </a>
                 </Link>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div style={{ ...glassPanel, padding: '24px 28px', marginBottom: 24 }}>
+          <SectionTitle>Answered Questions</SectionTitle>
+          {loadingAnsweredQuestions ? (
+            <div style={{ color: 'rgba(200,232,255,0.72)', paddingTop: 8 }}>
+              Loading answered questions...
+            </div>
+          ) : answeredQuestions.length === 0 ? (
+            <div style={{ color: 'rgba(200,232,255,0.72)', paddingTop: 8 }}>
+              No answered questions yet.
+            </div>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {answeredQuestions.map((question, idx) => (
+                <div key={question.id}>
+                  <AnsweredQuestion
+                    question={question.question}
+                    answer={question.answer}
+                    colorCode=""
+                    iconColorCode=""
+                    isOpen={answeredQuestionDisclosureStatus[idx]}
+                    toggleDisclosure={() => {
+                      setAnsweredQuestionDisclosureStatus((prev) => {
+                        const next = [...prev];
+                        next[idx] = !next[idx];
+                        return next;
+                      });
+                    }}
+                  />
+                </div>
               ))}
             </div>
           )}
