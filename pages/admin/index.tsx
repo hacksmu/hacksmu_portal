@@ -201,7 +201,7 @@ export default function Admin() {
                 letterSpacing: '0.04em',
               }}
             >
-              Event Dashboard
+              Admin Dashboard
             </div>
             <div style={{ marginTop: 8, color: 'rgba(200,232,255,0.78)', fontSize: 14 }}>
               Review pending questions, manage judge applications, and coordinate event operations.
