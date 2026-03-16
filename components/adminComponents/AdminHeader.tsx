@@ -57,7 +57,7 @@ export default function AdminHeader() {
       <header className="top-0 sticky hidden md:flex flex-row justify-between p-2 md:p-4 items-center">
         <div className="mx-auto md:flex justify-center md:text-lg lg:text-xl font-header md:text-left gap-2">
           <NavLink href="/admin" exact={true} className="mx-4">
-            <span style={navPillStyle(router.pathname === '/admin')}>Event Dashboard</span>
+            <span style={navPillStyle(router.pathname === '/admin')}>Admin Dashboard</span>
           </NavLink>
           {canReview(user) && (
             <NavLink href="/admin/judge-applications" exact={true} className="mx-4">
@@ -88,7 +88,7 @@ export default function AdminHeader() {
         <div className="panel w-full bg-[#F2F3FF] text-sm">
           <ul className="">
             <li className="p-2 hover:bg-[#DCDEFF]">
-              <Link href="/admin">Event Dashboard</Link>
+              <Link href="/admin">Admin Dashboard</Link>
             </li>
             {canReview(user) && (
               <li className="p-2 hover:bg-[#DCDEFF]">
