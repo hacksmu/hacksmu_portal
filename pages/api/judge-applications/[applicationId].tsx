@@ -12,6 +12,7 @@ initializeApi();
 
 const db = firestore();
 const JUDGE_APPLICATIONS_COLLECTION = '/judge-applications';
+const APP_BASE_URL = process.env.BASE_URL?.replace(/\/$/, '') ?? '';
 
 async function handleGetJudgeApplication(req: NextApiRequest, res: NextApiResponse) {
   const {
@@ -101,6 +102,9 @@ async function handlePatchJudgeApplication(req: NextApiRequest, res: NextApiResp
       status?: string;
       contactEmail?: string;
       reviewNotes?: string;
+      user?: {
+        firstName?: string;
+      };
     };
 
     await applicationRef.set(
@@ -116,8 +120,17 @@ async function handlePatchJudgeApplication(req: NextApiRequest, res: NextApiResp
       try {
         const email =
           nextStatus === 'rejected'
-            ? buildRejectedJudgeStatusEmail(reviewNotes)
-            : buildJudgeStatusEmail(nextStatus);
+            ? buildRejectedJudgeStatusEmail(
+                existingApplication.user?.firstName,
+                reviewNotes,
+                APP_BASE_URL ? `${APP_BASE_URL}/dashboard/judge-apply` : undefined,
+              )
+            : buildJudgeStatusEmail(
+                existingApplication.user?.firstName,
+                nextStatus,
+                nextStatus === 'accepted' ? reviewNotes : undefined,
+                APP_BASE_URL ? `${APP_BASE_URL}/dashboard/judge-apply` : undefined,
+              );
         await sendEmail({
           to: existingApplication.contactEmail,
           subject: email.subject,

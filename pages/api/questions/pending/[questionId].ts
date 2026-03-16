@@ -9,6 +9,7 @@ const db = firestore();
 
 const QUESTION_COLLECTION = '/questions';
 const REGISTRATION_COLLECTION = '/registrations';
+const APP_BASE_URL = process.env.BASE_URL?.replace(/\/$/, '') ?? '';
 
 /**
  *
@@ -90,23 +91,67 @@ async function resolvePendingQuestionById(req: NextApiRequest, res: NextApiRespo
     answer &&
     (existingQuestion.answer ?? '') !== answer;
 
+  console.log('[answered-question email] evaluation', {
+    questionId: req.query.questionId as string,
+    userId: userId ?? null,
+    hasQuestionText: Boolean(existingQuestion?.question),
+    hasAnswer: Boolean(answer),
+    previousAnswerLength: (existingQuestion.answer ?? '').length,
+    nextAnswerLength: answer.length,
+    answerChanged: (existingQuestion.answer ?? '') !== answer,
+    shouldSendEmail,
+    hasResendApiKey: Boolean(process.env.RESEND_API_KEY),
+    hasEmailFrom: Boolean(process.env.EMAIL_FROM),
+  });
+
   if (shouldSendEmail) {
     try {
       const registrationSnapshot = await db.collection(REGISTRATION_COLLECTION).doc(userId).get();
       const recipientEmail = registrationSnapshot.data()?.user?.preferredEmail;
+      const recipientFirstName = registrationSnapshot.data()?.user?.firstName;
+
+      console.log('[answered-question email] recipient lookup', {
+        questionId: req.query.questionId as string,
+        userId,
+        registrationExists: registrationSnapshot.exists,
+        recipientEmail: recipientEmail ?? null,
+      });
 
       if (recipientEmail) {
-        const email = buildAnsweredQuestionEmail(existingQuestion.question, answer);
-        await sendEmail({
+        const email = buildAnsweredQuestionEmail(
+          recipientFirstName,
+          existingQuestion.question,
+          answer,
+          APP_BASE_URL ? `${APP_BASE_URL}/dashboard/questions` : undefined,
+        );
+        const emailSent = await sendEmail({
           to: recipientEmail,
           subject: email.subject,
           html: email.html,
           text: email.text,
         });
+        console.log('[answered-question email] send result', {
+          questionId: req.query.questionId as string,
+          userId,
+          recipientEmail,
+          recipientFirstName: recipientFirstName ?? null,
+          questionUrl: APP_BASE_URL ? `${APP_BASE_URL}/dashboard/questions` : null,
+          emailSent,
+        });
+      } else {
+        console.log('[answered-question email] skipped because recipient email was missing', {
+          questionId: req.query.questionId as string,
+          userId,
+        });
       }
     } catch (error) {
       console.error('Failed to send answered-question email', error);
     }
+  } else {
+    console.log('[answered-question email] skipped before lookup', {
+      questionId: req.query.questionId as string,
+      userId: userId ?? null,
+    });
   }
 
   res.json(doc);

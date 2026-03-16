@@ -2,11 +2,13 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { auth, firestore } from 'firebase-admin';
 import initializeApi from '../../../lib/admin/init';
 import { userIsAuthorized } from '../../../lib/authorization/check-authorization';
+import { buildJudgeApplicationSubmittedEmail, sendEmail } from '../../../lib/email';
 
 initializeApi();
 
 const db = firestore();
 const JUDGE_APPLICATIONS_COLLECTION = '/judge-applications';
+const APP_BASE_URL = process.env.BASE_URL?.replace(/\/$/, '') ?? '';
 
 type JudgeApplicationRequest = {
   user: {
@@ -73,6 +75,23 @@ async function handlePostJudgeApplication(req: NextApiRequest, res: NextApiRespo
       status: body.status ?? 'submitted',
       submittedAt: new Date().toISOString(),
     });
+
+    if (body.contactEmail) {
+      try {
+        const email = buildJudgeApplicationSubmittedEmail(
+          body.user.firstName,
+          APP_BASE_URL ? `${APP_BASE_URL}/dashboard/judge-apply` : undefined,
+        );
+        await sendEmail({
+          to: body.contactEmail,
+          subject: email.subject,
+          html: email.html,
+          text: email.text,
+        });
+      } catch (error) {
+        console.error('Failed to send judge application submitted email', error);
+      }
+    }
 
     return res.status(200).json({
       msg: 'Judge application submitted successfully.',

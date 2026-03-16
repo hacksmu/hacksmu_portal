@@ -34,6 +34,8 @@ const availabilityOptions = [
   'I am comfortable giving constructive feedback to student teams.',
 ];
 
+const requiredAvailabilityOptions = availabilityOptions.slice(1);
+
 type JudgeApplication = {
   user: {
     id: string;
@@ -146,8 +148,13 @@ export default function JudgeApplyPage() {
     if (!values.judgingExperience) errors.judgingExperience = 'Required';
     if (values.expertiseAreas.length === 0) errors.expertiseAreas = 'Select at least one area';
     if (!values.whyJudge) errors.whyJudge = 'Required';
-    if (values.availability.length !== availabilityOptions.length) {
-      errors.availability = 'Please confirm all judge availability and expectations checkboxes';
+    const selectedAvailability = new Set(values.availability);
+    const missingRequiredAvailability = requiredAvailabilityOptions.some(
+      (option) => !selectedAvailability.has(option),
+    );
+    if (missingRequiredAvailability) {
+      errors.availability =
+        'Please confirm the judging block and reviewer expectations checkboxes';
     }
     if (!resumeFile) errors.resumeUrl = 'Resume upload is required';
     if (
