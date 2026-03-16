@@ -273,7 +273,7 @@ export default function Dashboard(props: {
               </div>
               <div style={{ marginTop: 6, color: 'rgba(200,232,255,0.78)', fontSize: 14 }}>
                 {isOrganizerView
-                  ? 'Open the admin review workspace to answer pending questions and review judge applications.'
+                  ? 'Open the admin dashboard to answer pending questions and review judge applications.'
                   : 'Apply to help review projects, support teams, and score submissions during HackSMU VII.'}
               </div>
             </div>
@@ -287,7 +287,7 @@ export default function Dashboard(props: {
                   whiteSpace: 'nowrap',
                 }}
               >
-                {isOrganizerView ? 'Open Admin Review' : 'Apply to Be a Judge'}
+                {isOrganizerView ? 'Open Admin Dashboard' : 'Apply to Be a Judge'}
               </a>
             </Link>
           </div>

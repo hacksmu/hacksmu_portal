@@ -32,7 +32,7 @@ function Sidebar() {
   const initials = displayName.slice(0, 2).toUpperCase();
   const dashboardLinks = [
     ...navLinks,
-    ...(isOrganizerView ? [{ label: 'Admin Review', path: '/admin', icon: '🛠' }] : []),
+    ...(isOrganizerView ? [{ label: 'Admin Dashboard', path: '/admin', icon: '🛠' }] : []),
   ];
 
   return (

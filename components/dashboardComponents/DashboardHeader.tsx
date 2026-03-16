@@ -16,7 +16,7 @@ export default function DashboardHeader() {
     { label: 'HackCenter', path: '/dashboard' },
     { label: 'Ask a Question', path: '/dashboard/questions' },
     ...(isOrganizerView
-      ? [{ label: 'Admin Review', path: '/admin' }]
+      ? [{ label: 'Admin Dashboard', path: '/admin' }]
       : [{ label: 'Judge Application', path: '/dashboard/judge-apply' }]),
   ];
 
