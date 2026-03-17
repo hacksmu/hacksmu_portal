@@ -110,7 +110,7 @@ export default function AuthPage() {
   }
 
   if (isSignedIn) {
-    router.push('/profile');
+    router.push('/dashboard');
   }
 
   return (
