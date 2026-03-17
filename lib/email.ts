@@ -160,7 +160,7 @@ export function buildJudgeApplicationSubmittedEmail(firstName?: string, applicat
         <p>${escapeHtml(greeting)}</p>
         <h2 style="margin-bottom: 16px;">Judge application submitted</h2>
         <p>Thank you for applying to judge at HackSMU.</p>
-        <p>We received your application and will review it soon. You will receive another email if your application status changes.</p>
+        <p>We received your application and will review it soon. You will receive another email if your application status changes. If your application is accepted, we will update your role in your profile from "Hacker" to "Judge".</p>
         ${
           applicationUrl
             ? `<p><a href="${safeApplicationUrl}" style="color: #0b63ce; font-weight: 700;">View your judge application in the portal</a></p>`
