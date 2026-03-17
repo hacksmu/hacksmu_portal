@@ -187,24 +187,6 @@ export default function AppHeader() {
 
         {/* Auth button */}
         <div style={{ display: 'flex', alignItems: 'center', marginRight: 16, gap: 25 }}>
-          <a
-            id="mlh-trust-badge"
-            className="mlh-badge-link"
-            href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2026-season&utm_content=white"
-            target="_blank"
-            rel="noreferrer"
-            style={{
-              flexShrink: 0,
-              alignSelf: 'flex-start',
-            }}
-          >
-            <img
-              className="mlh-badge-image"
-              src="https://s3.amazonaws.com/logged-assets/trust-badge/2026/mlh-trust-badge-2026-white.svg"
-              alt="Major League Hacking 2026 Hackathon Season"
-              style={{ width: '100%', display: 'block' }}
-            />
-          </a>
           <button
             className="auth-trigger-btn"
             onClick={toggleDialog}
@@ -244,6 +226,24 @@ export default function AppHeader() {
             }} />
             {!user || !isSignedIn ? 'Sign In' : hasProfile ? 'Profile' : 'Register'}
           </button>
+          <a
+            id="mlh-trust-badge"
+            className="mlh-badge-link"
+            href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2026-season&utm_content=white"
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              flexShrink: 0,
+              alignSelf: 'flex-start',
+            }}
+          >
+            <img
+              className="mlh-badge-image"
+              src="https://s3.amazonaws.com/logged-assets/trust-badge/2026/mlh-trust-badge-2026-white.svg"
+              alt="Major League Hacking 2026 Hackathon Season"
+              style={{ width: '100%', display: 'block' }}
+            />
+          </a>
         </div>
 
         {showProfileDialog && <ProfileDialog onDismiss={dismissDialog} />}
