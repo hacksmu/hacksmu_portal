@@ -888,7 +888,7 @@ function AboutContent() {
         {[
           { icon: '📍', label: 'Location', value: 'Hughes Trigg Student Center, SMU' },
           { icon: '📅', label: 'Dates', value: 'April 11-12, 2026' },
-          { icon: '🎓', label: 'Open To', value: 'All College Students' },
+          { icon: '🔞', label: 'Open To', value: 'Individuals 18 or older' },
           { icon: '💰', label: 'Entry Fee', value: 'Free!' },
           { icon: '🍕', label: 'Food', value: 'Meals Provided' },
           { icon: '🏆', label: 'Prizes', value: 'Massive Prize Pool!' },
