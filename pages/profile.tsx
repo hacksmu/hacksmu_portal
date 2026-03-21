@@ -13,6 +13,7 @@ import QRCode from '../components/dashboardComponents/QRCode';
 export default function ProfilePage() {
   const router = useRouter();
   const { isSignedIn, hasProfile, user, profile, updateProfile } = useAuthContext();
+  const school = profile?.school ?? profile?.university ?? '';
   const [uploading, setUploading] = useState(false);
   const [uploadMsg, setUploadMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const [removingResume, setRemovingResume] = useState(false);
@@ -172,7 +173,7 @@ export default function ProfilePage() {
               }}>
                 {role}
               </span>
-              {p.university && (
+              {school && (
                 <span style={{
                   display: 'inline-block',
                   padding: '3px 12px',
@@ -184,7 +185,7 @@ export default function ProfilePage() {
                   fontWeight: 600,
                   letterSpacing: '0.04em',
                 }}>
-                  🎓 {p.university}
+                  🎓 {school}
                 </span>
               )}
             </div>
@@ -245,7 +246,7 @@ export default function ProfilePage() {
           <div className="glass-panel" style={{ padding: 24 }}>
             <SectionHeader icon="🎓" label="Academic Info" />
             <InfoGrid rows={[
-              { label: 'University', value: p.university },
+              { label: 'School', value: school },
               { label: 'Major', value: p.major },
               { label: 'Study Level', value: p.studyLevel },
               { label: 'Age', value: p.age?.toString() },

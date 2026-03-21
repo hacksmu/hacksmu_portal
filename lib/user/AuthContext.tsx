@@ -110,7 +110,7 @@ function AuthProvider({ children }: React.PropsWithChildren<Record<string, any>>
       preferredEmail: email,
       photoUrl: photoURL,
       permissions: ['hacker'],
-      university: '',
+      school: '',
     });
     const query = new URL(`http://localhost:3000/api/userinfo`);
     query.searchParams.append('id', uid);
@@ -133,7 +133,7 @@ function AuthProvider({ children }: React.PropsWithChildren<Record<string, any>>
       lastName: userData.user.lastName,
       preferredEmail: userData.user.preferredEmail,
       permissions,
-      university: userData.university,
+      school: userData.school ?? userData.university ?? '',
     }));
     setProfile(userData);
     setLoading(false);

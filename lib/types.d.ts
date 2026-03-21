@@ -59,10 +59,10 @@ type User = Person & {
   permissions: UserPermission[];
 
   /**
-   * University that user currently attends
-   *
+   * School that user currently attends or most recently attended.
    */
-  university: string;
+  school: string;
+  university?: string;
 };
 
 /**
@@ -95,7 +95,8 @@ type Registration = {
   gender: string;
   race: string;
   ethnicity: string;
-  university: string;
+  school: string;
+  university?: string;
   major: string;
   studyLevel: string;
   hackathonExperience: number;

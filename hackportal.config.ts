@@ -2,6 +2,14 @@ import schools from './public/schools.json';
 import majors from './public/majors.json';
 import countries from './public/countries.json';
 
+const schoolOptions = schools
+  .map((entry) => entry.school ?? entry.university)
+  .filter((school): school is string => Boolean(school))
+  .map((school) => ({
+    title: school,
+    value: school,
+  }));
+
 export const hackPortalConfig: HackPortalConfig = {
   //registration fields are separated by question topics (general, school, hackathon experience, etc. )
   //each question topic is separated by question types(textInput, numberInput, dropdown, etc. )
@@ -168,17 +176,14 @@ export const hackPortalConfig: HackPortalConfig = {
       {
         datalistQuestions: [
           {
-            //University question
+            //School question
             question:
-              'This event is for college students and recent graduates worldwide. Which university do/did you attend?',
-            id: 'university',
-            name: 'university',
+              'This event is for individuals 18 or older. Which high school do you attend, or which university do/did you attend?',
+            id: 'school',
+            name: 'school',
             required: true,
             datalist: 'schools',
-            options: schools.map(({ university }) => ({
-              title: university,
-              value: university,
-            })),
+            options: schoolOptions,
             initialValue: '',
           },
           {
@@ -560,7 +565,7 @@ export type statRecordTypes = {
   size: Record<string, number>;
   softwareExperience: Record<string, number>;
   studyLevel: Record<string, number>;
-  university: Record<string, number>;
+  school: Record<string, number>;
   gender: Record<string, number>;
   hackathonExperience: Record<number, number>;
   heardFrom: Record<string, number>;
@@ -576,7 +581,7 @@ export const fieldNames = {
   size: 'Shirt Size',
   softwareExperience: 'Software Experience',
   studyLevel: 'Study Level',
-  university: 'University',
+  school: 'School',
   gender: 'Gender',
   hackathonExperience: 'Number of Hackathon attended',
   heardFrom: 'Heard of Hackathon from',
@@ -596,7 +601,7 @@ export const singleField = [
   'size',
   'softwareExperience',
   'studyLevel',
-  'university',
+  'school',
   'gender',
   'hackathonExperience',
   'heardFrom',

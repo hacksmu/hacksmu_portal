@@ -61,11 +61,16 @@ async function getStatsData() {
     }
 
     for (let singleField of singleFields) {
-      if (!userData[singleField] || userData[singleField] === '') continue;
-      if (!generalStats[singleField].hasOwnProperty(userData[singleField])) {
-        generalStats[singleField][userData[singleField]] = 0;
+      const fieldValue =
+        singleField === 'school'
+          ? userData.school ?? userData.university
+          : userData[singleField];
+
+      if (!fieldValue || fieldValue === '') continue;
+      if (!generalStats[singleField].hasOwnProperty(fieldValue)) {
+        generalStats[singleField][fieldValue] = 0;
       }
-      generalStats[singleField][userData[singleField]]++;
+      generalStats[singleField][fieldValue]++;
     }
 
     const userPermission = userData.user.permissions?.[0];

@@ -87,7 +87,7 @@ function buildRow(docId, registration) {
     gender: registration.gender,
     race: registration.race,
     ethnicity: registration.ethnicity,
-    university: registration.university,
+    school: registration.school || registration.university,
     major: registration.major,
     studyLevel: registration.studyLevel,
     hackathonExperience: registration.hackathonExperience,
