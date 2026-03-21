@@ -188,7 +188,7 @@ export const hackPortalConfig: HackPortalConfig = {
           },
           {
             //Major question
-            question: 'All majors are welcome at this event. What is/was your major?',
+            question: 'All majors are welcome at this event. What is/was your major? If you are currently in high school, what do you plan to major in?',
             id: 'major',
             name: 'major',
             required: true,
