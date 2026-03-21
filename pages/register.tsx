@@ -51,7 +51,7 @@ export default function Register() {
   }), [user]);
 
   const checkRedirect = async () => {
-    if (hasProfile) router.push('/profile');
+    if (hasProfile) router.push('/dashboard');
     else setLoading(false);
   };
 
@@ -77,7 +77,7 @@ export default function Register() {
       await RequestHelper.post<Registration, any>('/api/applications', {}, registrationData);
       setSubmitStatus('success');
       updateProfile(registrationData);
-      setTimeout(() => router.push('/profile'), 2500);
+      setTimeout(() => router.push('/dashboard'), 2500);
     } catch (error) {
       console.error(error);
       setSubmitStatus('error');

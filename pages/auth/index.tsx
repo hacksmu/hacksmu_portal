@@ -8,13 +8,29 @@ import Link from 'next/link';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import GoogleIcon from '../../public/icons/googleicon.png';
+
+function getVerificationActionSettings() {
+  const baseUrl =
+    process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN && typeof window !== 'undefined'
+      ? window.location.origin
+      : typeof window !== 'undefined'
+        ? window.location.origin
+        : process.env.BASE_URL;
+
+  return baseUrl
+    ? {
+        url: `${baseUrl.replace(/\/$/, '')}/auth/verify`,
+        handleCodeInApp: true,
+      }
+    : undefined;
+}
 /**
  * A page that allows the user to sign in.
  *
  * Route: /auth
  */
 export default function AuthPage() {
-  const { isSignedIn, signInWithGoogle, updateUser } = useAuthContext();
+  const { isSignedIn, hasProfile, signInWithGoogle, updateUser } = useAuthContext();
   const [currentEmail, setCurrentEmail] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
@@ -24,6 +40,37 @@ export default function AuthPage() {
   const [showPassword, setShowPassword] = useState(false);
 
   const router = useRouter();
+  const resendVerificationForCredentials = async () => {
+    if (!currentEmail || !currentPassword) {
+      setErrorMsg('Enter your email and password to resend the verification email.');
+      return;
+    }
+
+    setErrorMsg('');
+    try {
+      const { user } = await firebase
+        .auth()
+        .signInWithEmailAndPassword(currentEmail, currentPassword);
+
+      if (!user) {
+        throw new Error('Could not load this account.');
+      }
+
+      if (user.emailVerified) {
+        await firebase.auth().signOut();
+        setSendVerification(false);
+        setErrorMsg('This email is already verified. You can sign in now.');
+        return;
+      }
+
+      await user.sendEmailVerification(getVerificationActionSettings());
+      await firebase.auth().signOut();
+      alert('Verification email sent. Use the newest email in your inbox to verify your account.');
+    } catch (error) {
+      setErrorMsg(error?.message ?? 'Could not resend the verification email. Please try again.');
+    }
+  };
+
   const signIn = () => {
     setSendVerification(false);
     firebase
@@ -33,6 +80,7 @@ export default function AuthPage() {
         // Signed in
         if (!user.emailVerified) {
           setSendVerification(true);
+          await firebase.auth().signOut().catch(() => undefined);
           throw new Error('Email is not verified. Verify your email before logging in.');
         }
         await updateUser(user);
@@ -54,10 +102,10 @@ export default function AuthPage() {
         //send email verification
         firebase
           .auth()
-          .currentUser.sendEmailVerification()
+          .currentUser.sendEmailVerification(getVerificationActionSettings())
           .then(() => {
             alert(
-              'Account created! Check your email/spam folder to verify your account and log in.',
+              'Account created. Check your email for the newest verification link, then come back here to sign in.',
             );
             router.push('/auth');
           });
@@ -83,23 +131,6 @@ export default function AuthPage() {
       });
   };
 
-  const sendVerificationEmail = () => {
-    //send email verification
-    try {
-      firebase
-        .auth()
-        .currentUser.sendEmailVerification()
-        .then(() => {
-          router.push('/auth');
-          alert('Verification email sent, check your email to verify your account and log in');
-        });
-    } catch (error) {
-      alert(
-        'There has been a problem sending a verfication email.\nWait a few minutes before sending another request.',
-      );
-    }
-  };
-
   function handleSubmit(event?: React.FormEvent) {
     event?.preventDefault();
     if (signInOption) {
@@ -109,9 +140,10 @@ export default function AuthPage() {
     }
   }
 
-  if (isSignedIn) {
-    router.push('/dashboard');
-  }
+  React.useEffect(() => {
+    if (!isSignedIn) return;
+    router.replace(hasProfile ? '/dashboard' : '/register');
+  }, [hasProfile, isSignedIn, router]);
 
   return (
     <>
@@ -197,15 +229,14 @@ export default function AuthPage() {
                     </form>
                     {/* Error and verification messages */}
                     <div className="text-center">{errorMsg}</div>
-                    {/* !change if needed */}
-                    {/* Uncomment to allow resend verification email option (users could spam) */}
-                    {/* {sendVerification && (
-                    <div className='flex justify-center'>
-                      <button className="underline" onClick={() => sendVerificationEmail()}>
-                        Resend verification
+                    <div className="flex justify-center mt-3">
+                      <button
+                        className="underline text-medium-blue"
+                        onClick={() => resendVerificationForCredentials()}
+                      >
+                        Need a new verification email?
                       </button>
                     </div>
-                  )} */}
                     <button
                       className="mt-6 px-4 py-2 w-full rounded-full border border-complementary/20 text-complementary bg-white my-4 text-base font-bold text-center flex items-center justify-center"
                       onClick={() => signInWithGoogle()}

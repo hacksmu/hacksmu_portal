@@ -21,9 +21,6 @@ export default function AppHeader() {
   const user = useUser();
 
   useEffect(() => {
-    if (firebase.auth().currentUser !== null && !firebase.auth().currentUser.emailVerified) {
-      firebase.auth().signOut().catch(() => console.warn('Could not sign out'));
-    }
     if (
       isSignedIn &&
       profile &&

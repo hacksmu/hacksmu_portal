@@ -83,7 +83,7 @@ export default function Dashboard(props: {
   scheduleEvents: ScheduleEvent[];
   challenges: Challenge[];
 }) {
-  const { isSignedIn } = useAuthContext();
+  const { isSignedIn, profile } = useAuthContext();
   const user = useUser();
   const role = user.permissions?.length > 0 ? user.permissions[0] : 'hacker';
   const permissions = user.permissions ?? [];
@@ -149,7 +149,7 @@ export default function Dashboard(props: {
     );
   }
 
-  const firstName = user?.firstName || 'Hacker';
+  const firstName = profile?.user?.firstName || user?.firstName || 'Hacker';
 
   return (
     <>

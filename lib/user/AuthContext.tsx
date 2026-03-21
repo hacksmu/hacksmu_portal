@@ -75,6 +75,21 @@ function AuthProvider({ children }: React.PropsWithChildren<Record<string, any>>
       // User is signed out
       // TODO(auth): Determine if we want to remove user data from device on sign out
       setUser(null);
+      setProfile(null);
+      setLoading(false);
+      return;
+    }
+
+    const isPasswordUser = firebaseUser.providerData.some(
+      (provider) => provider?.providerId === 'password',
+    );
+
+    if (isPasswordUser && !firebaseUser.emailVerified) {
+      await firebase.auth().signOut().catch((error) => {
+        console.error('Could not sign out unverified user.', error);
+      });
+      setUser(null);
+      setProfile(null);
       setLoading(false);
       return;
     }
@@ -101,6 +116,7 @@ function AuthProvider({ children }: React.PropsWithChildren<Record<string, any>>
     });
     if (data.status !== 200) {
       console.error('Unexpected error when fetching AuthContext permission data...');
+      setProfile(null);
       setLoading(false);
       return;
     }
@@ -137,6 +153,7 @@ function AuthProvider({ children }: React.PropsWithChildren<Record<string, any>>
       .signOut()
       .then(() => {
         setUser(null);
+        setProfile(null);
       })
       .catch((error) => {
         console.error('Could not sign out.', error);
