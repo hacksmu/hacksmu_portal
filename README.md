@@ -25,6 +25,22 @@ _If you are using HackPortal for your event, please add yourself to this [list](
 
 Follow the instructions in the [set-up docs](./docs/set-up.md) to set up HackPortal for your hackathon.
 
+## Exporting Registrations
+
+To export the Firestore `registrations` collection as an Excel-friendly CSV file, run:
+
+```bash
+npm run export:registrations
+```
+
+This writes the output to:
+
+```bash
+registrations-export.csv
+```
+
+in the project root. The script reads Firebase Admin credentials from the root `.env.local` file and flattens common registration fields such as the user's name, registration email, school, major, resume link, and array fields like dietary restrictions or MLH consent.
+
 ## Making Changes
 Want to contribute? Follow the instructions in the [contributor docs](./docs/contributors.md) to see contributing guidelines.
 
