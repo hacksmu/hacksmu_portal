@@ -212,6 +212,14 @@ export const hackPortalConfig: HackPortalConfig = {
             initialValue: '',
             options: [
               {
+                title: 'High School / Secondary School',
+                value: 'highSchool',
+              },
+              {
+                title: 'Adult High School / GED Program',
+                value: 'adultHighSchool',
+              },
+              {
                 title: 'Undergraduate University (2 year - community college or similar)',
                 value: 'undergrad2Year',
               },
