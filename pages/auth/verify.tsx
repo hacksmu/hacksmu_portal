@@ -11,6 +11,7 @@ export default function VerifyEmailPage() {
   const router = useRouter();
   const [state, setState] = React.useState<VerificationState>('loading');
   const [message, setMessage] = React.useState('Verifying your email...');
+  const hasProcessedCodeRef = React.useRef(false);
 
   React.useEffect(() => {
     if (!router.isReady) return;
@@ -18,11 +19,15 @@ export default function VerifyEmailPage() {
     const mode = typeof router.query.mode === 'string' ? router.query.mode : '';
     const oobCode = typeof router.query.oobCode === 'string' ? router.query.oobCode : '';
 
+    if (hasProcessedCodeRef.current) return;
+
     if (mode !== 'verifyEmail' || !oobCode) {
       setState('error');
       setMessage('This verification link is invalid. Please request a new verification email.');
       return;
     }
+
+    hasProcessedCodeRef.current = true;
 
     firebase
       .auth()

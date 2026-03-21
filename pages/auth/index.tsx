@@ -98,38 +98,53 @@ export default function AuthPage() {
     firebase
       .auth()
       .createUserWithEmailAndPassword(currentEmail, currentPassword)
-      .then((userCredential) => {
-        // Signed in
-        var user = userCredential.user;
-        //send email verification
-        firebase
-          .auth()
-          .currentUser.sendEmailVerification(getVerificationActionSettings())
-          .then(() => {
-            alert(
-              'Account created. Check your email for the newest verification link, then come back here to sign in.',
-            );
-            router.push('/auth');
-          });
+      .then(async () => {
+        await firebase.auth().currentUser?.sendEmailVerification(getVerificationActionSettings());
+        await firebase.auth().signOut();
+        alert(
+          'Account created. Check your email for the newest verification link, then come back here to sign in.',
+        );
+        router.push('/auth');
       })
       .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        setErrorMsg(errorMessage);
+        setErrorMsg(error.message);
       });
   };
 
   const sendResetEmail = () => {
     firebase
       .auth()
-      .sendPasswordResetEmail(currentEmail)
+      .fetchSignInMethodsForEmail(currentEmail)
+      .then((methods) => {
+        if (!methods.length) {
+          throw new Error('No account was found for that email address.');
+        }
+
+        if (!methods.includes('password')) {
+          if (methods.includes('google.com')) {
+            throw new Error(
+              'This account uses Google sign-in. Please sign in with Google instead of resetting a password.',
+            );
+          }
+
+          if (methods.includes('github.com')) {
+            throw new Error(
+              'This account uses GitHub sign-in. Please sign in with GitHub instead of resetting a password.',
+            );
+          }
+
+          throw new Error(
+            'This account does not use email/password sign-in, so a password reset email cannot be sent.',
+          );
+        }
+
+        return firebase.auth().sendPasswordResetEmail(currentEmail);
+      })
       .then(() => {
         alert('Password reset email sent');
       })
       .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        setErrorMsg(errorMessage);
+        setErrorMsg(error.message);
       });
   };
 
