@@ -8,6 +8,7 @@ import Link from 'next/link';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import GoogleIcon from '../../public/icons/googleicon.png';
+import GithubIcon from '../../public/icons/githubicon.png';
 
 function getVerificationActionSettings() {
   const baseUrl =
@@ -30,7 +31,8 @@ function getVerificationActionSettings() {
  * Route: /auth
  */
 export default function AuthPage() {
-  const { isSignedIn, hasProfile, signInWithGoogle, updateUser } = useAuthContext();
+  const { isSignedIn, hasProfile, signInWithGoogle, signInWithGithub, updateUser } =
+    useAuthContext();
   const [currentEmail, setCurrentEmail] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
@@ -243,6 +245,13 @@ export default function AuthPage() {
                     >
                       <img src={GoogleIcon.src} alt="GoogleIcon" width={25} height={25} />
                       <p className="mx-2">Sign in with Google</p>
+                    </button>
+                    <button
+                      className="px-4 py-2 w-full rounded-full border border-complementary/20 text-complementary bg-white my-4 text-base font-bold text-center flex items-center justify-center"
+                      onClick={() => signInWithGithub()}
+                    >
+                      <img src={GithubIcon.src} alt="GithubIcon" width={25} height={25} />
+                      <p className="mx-2">Sign in with GitHub</p>
                     </button>
                   </React.Fragment>
                 </>

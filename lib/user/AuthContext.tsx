@@ -22,6 +22,11 @@ interface AuthContextState {
   signInWithGoogle: () => void;
 
   /**
+   * Signs in using GitHub OAuth pop-up.
+   */
+  signInWithGithub: () => void;
+
+  /**
    * Signs out of the current user session if active.
    */
   signOut: () => Promise<void>;
@@ -179,6 +184,23 @@ function AuthProvider({ children }: React.PropsWithChildren<Record<string, any>>
       });
   };
 
+  const signInWithGithub = async () => {
+    const provider = new firebase.auth.GithubAuthProvider();
+    return firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then(async ({ user }) => {
+        if (user === null) {
+          console.warn("The signed-in user is null? That doesn't seem right.");
+          return;
+        }
+        await updateUser(user);
+      })
+      .catch((error) => {
+        console.error('Error when signing in with GitHub', error);
+      });
+  };
+
   const isSignedIn = user !== null;
   const hasProfile = profile !== null;
 
@@ -186,6 +208,7 @@ function AuthProvider({ children }: React.PropsWithChildren<Record<string, any>>
     user,
     isSignedIn,
     signInWithGoogle,
+    signInWithGithub,
     signOut,
     hasProfile,
     profile,
