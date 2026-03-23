@@ -361,7 +361,7 @@ export default function Home({ answeredQuestion }: HomeProps) {
             <div className="powered-by-title" style={{ fontSize: 18, color: 'rgba(200,235,255,0.85)', fontWeight: 700, letterSpacing: '0.08em', marginBottom: -150, marginTop: 120 }}>Powered by</div>
             <div className="powered-by-logos" style={{ display: 'flex', flexDirection: 'column', gap: 0, alignItems: 'center' }}>
               <img className="powered-by-logo-smu" src="/sponsors/SMULyleLogo.png" alt="SMU Lyle School of Engineering" style={{ height: 350, width: 'auto', objectFit: 'contain' }} />
-              <img className="powered-by-logo-imasons" src="/sponsors/iMasonsLogo.png" alt="iMason's" style={{ height: 350, width: 'auto', objectFit: 'contain', marginTop: -350 }} />
+              <img className="powered-by-logo-imasons" src="/sponsors/iMasonsLogo.png" alt="iMason's" style={{ height: 250, width: 'auto', objectFit: 'contain', marginTop: -350 }} />
               <img className="powered-by-logo-grundfos" src="/sponsors/grundfos.png" alt="Grundfos" style={{ height: 350, width: 'auto', objectFit: 'contain', marginTop: -350 }} />
               <img className="powered-by-logo-purebuttons" src="/sponsors/pureButtons.png" alt="pureButtons" style={{ height: 150, width: 'auto', objectFit: 'contain', marginTop: -350}} />
             </div>
