@@ -356,14 +356,14 @@ export default function Home({ answeredQuestion }: HomeProps) {
         {/* ── LEFT PANELS COLUMN ── */}
         <div className="left-panels-column">
         {/* Top-left reserved panel (sponsor logos) */}
-        <div className="top-left-panel">
+      <div className="top-left-panel">
           <div style={{ padding: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', gap: 0 }}>
-            <div className="powered-by-title" style={{ color: 'rgba(200,235,255,0.85)', fontWeight: 700, letterSpacing: '0.08em' }}>Powered by</div>
-            <div className="powered-by-logos" style={{ display: 'flex', flexDirection: 'column', gap: 0, alignItems: 'center', width: '100%' }}>
-              <img className="powered-by-logo-smu" src="/sponsors/SMULyleLogo.png" alt="SMU Lyle School of Engineering" style={{ width: '100%', maxWidth: '100%', objectFit: 'contain' }} />
-              <img className="powered-by-logo-imasons" src="/sponsors/iMasonsLogo.png" alt="iMason's" style={{ width: '100%', maxWidth: '100%', objectFit: 'contain' }} />
-              <img className="powered-by-logo-grundfos" src="/sponsors/grundfos.png" alt="Grundfos" style={{ width: '100%', maxWidth: '100%', objectFit: 'contain' }} />
-              <img className="powered-by-logo-purebuttons" src="/sponsors/pureButtons.png" alt="pureButtons" style={{ width: '100%', maxWidth: '100%', objectFit: 'contain' }} />
+            <div className="powered-by-title" style={{ fontSize: 18, color: 'rgba(200,235,255,0.85)', fontWeight: 700, letterSpacing: '0.08em', marginBottom: -150, marginTop: 120 }}>Powered by</div>
+            <div className="powered-by-logos" style={{ display: 'flex', flexDirection: 'column', gap: 0, alignItems: 'center' }}>
+              <img className="powered-by-logo-smu" src="/sponsors/SMULyleLogo.png" alt="SMU Lyle School of Engineering" style={{ height: 450, width: 'auto', objectFit: 'contain' }} />
+              <img className="powered-by-logo-imasons" src="/sponsors/iMasonsLogo.png" alt="iMason's" style={{ height: 450, width: 'auto', objectFit: 'contain', marginTop: -350 }} />
+              <img className="powered-by-logo-grundfos" src="/sponsors/grundfos.png" alt="Grundfos" style={{ height: 450, width: 'auto', objectFit: 'contain', marginTop: -350 }} />
+              <img className="powered-by-logo-purebuttons" src="/sponsors/pureButtons.png" alt="pureButtons" style={{ height: 150, width: 'auto', objectFit: 'contain', marginTop: -350}} />
             </div>
           </div>
         </div>
