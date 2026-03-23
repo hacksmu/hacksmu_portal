@@ -363,7 +363,7 @@ export default function Home({ answeredQuestion }: HomeProps) {
               <img className="powered-by-logo-smu" src="/sponsors/SMULyleLogo.png" alt="SMU Lyle School of Engineering" style={{ height: 450, width: 'auto', objectFit: 'contain' }} />
               <img className="powered-by-logo-imasons" src="/sponsors/iMasonsLogo.png" alt="iMason's" style={{ height: 450, width: 'auto', objectFit: 'contain', marginTop: -350 }} />
               <img className="powered-by-logo-grundfos" src="/sponsors/grundfos.png" alt="Grundfos" style={{ height: 450, width: 'auto', objectFit: 'contain', marginTop: -320 }} />
-              <img className="powered-by-logo-purebuttons" src="/sponsors/pureButtons.png" alt="pureButtons" style={{ height: 150, width: 'auto', objectFit: 'contain', marginTop: -240, marginBottom: 30 }} />
+              <img className="powered-by-logo-purebuttons" src="/sponsors/pureButtons.png" alt="pureButtons" style={{ height: 150, width: 'auto', objectFit: 'contain', marginTop: -240}} />
             </div>
           </div>
         </div>
