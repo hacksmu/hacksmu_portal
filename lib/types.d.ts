@@ -59,10 +59,10 @@ type User = Person & {
   permissions: UserPermission[];
 
   /**
-   * University that user currently attends
-   *
+   * School that user currently attends or most recently attended.
    */
-  university: string;
+  school: string;
+  university?: string;
 };
 
 /**
@@ -70,6 +70,7 @@ type User = Person & {
  */
 type Registration = {
   id: string;
+  registrationCreatedAt?: number;
   /**
    * A UNIX timestamp corresponding to when a hacker registered for the event.
    */
@@ -94,7 +95,8 @@ type Registration = {
   gender: string;
   race: string;
   ethnicity: string;
-  university: string;
+  school: string;
+  university?: string;
   major: string;
   studyLevel: string;
   hackathonExperience: number;
@@ -102,6 +104,7 @@ type Registration = {
   heardFrom: string;
   size: string;
   dietary: string[];
+  mlhConsent?: string[];
   accomodations: string;
   github?: string;
   linkedin?: string;
@@ -207,6 +210,28 @@ type ColorScheme = {
 type Announcement = {
   announcement: string;
   timestamp?: string;
+};
+
+type JudgeApplication = {
+  user: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    preferredEmail: string;
+  };
+  contactEmail: string;
+  organization: string;
+  roleTitle: string;
+  judgingExperience: string;
+  expertiseAreas: string[];
+  portfolioLinks?: string;
+  whyJudge: string;
+  availability: string[];
+  resumeUrl: string;
+  status: 'submitted' | 'reviewing' | 'accepted' | 'rejected';
+  submittedAt?: string;
+  reviewedAt?: string;
+  reviewNotes?: string;
 };
 
 /**

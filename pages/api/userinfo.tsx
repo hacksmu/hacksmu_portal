@@ -64,7 +64,12 @@ async function handleUserInfo(req: NextApiRequest, res: NextApiResponse) {
     const snapshot = await db.collection(REGISTRATION_COLLECTION).doc(userID).get();
     if (!snapshot.exists)
       return res.status(404).json({ code: 'not found', message: "User doesn't exist..." });
-    res.status(200).json(snapshot.data());
+    const userData = snapshot.data() || {};
+    res.status(200).json({
+      ...userData,
+      school: userData.school ?? userData.university ?? '',
+      registrationCreatedAt: snapshot.createTime?.toMillis() ?? null,
+    });
   } catch (error) {
     console.error('Error when fetching applications', error);
     res.status(500).json({
@@ -88,9 +93,9 @@ export default async function handleScanTypes(
   const { method } = req;
 
   if (method === 'GET') {
-    handleUserInfo(req, res);
+    return handleUserInfo(req, res);
   } else {
     res.setHeader('Allow', ['GET', 'POST']);
-    res.status(405).end(`Method ${method} Not Allowed`);
+    return res.status(405).end(`Method ${method} Not Allowed`);
   }
 }

@@ -196,6 +196,21 @@ export default function UserAdminView({
               </div>
             );
           })}
+          <div className="flex flex-col gap-y-2">
+            <h1 className="text-center">Resume</h1>
+            {currentUser.resume ? (
+              <a
+                href={currentUser.resume}
+                target="_blank"
+                rel="noreferrer"
+                className="font-bold text-center underline text-blue-600"
+              >
+                View Resume
+              </a>
+            ) : (
+              <h1 className="font-bold text-center text-gray-400">No resume uploaded</h1>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -1,6 +1,31 @@
 import React, { useEffect, useState, useLayoutEffect, Fragment } from 'react';
 import { Field, ErrorMessage } from 'formik';
 
+const linkPattern = /(https?:\/\/[^\s)]+)/g;
+
+function renderTextWithLinks(text: string) {
+  const parts = text.split(linkPattern);
+
+  return parts.map((part, idx) => {
+    if (!part.match(linkPattern)) {
+      return <Fragment key={`${part}-${idx}`}>{part}</Fragment>;
+    }
+
+    return (
+      <a
+        key={`${part}-${idx}`}
+        href={part}
+        target="_blank"
+        rel="noreferrer"
+        onClick={(event) => event.stopPropagation()}
+        className="text-blue-600 underline"
+      >
+        {part}
+      </a>
+    );
+  });
+}
+
 /**
  *Text input question Component
  *
@@ -17,7 +42,7 @@ function Question(props) {
         <Field
           id={props.question.id}
           name={props.question.name}
-          className="border-2 border-gray-400 rounded-md p-1"
+          className="border-2 border-gray-400 rounded-md p-1 w-full"
         />
         <ErrorMessage
           name={props.question.name}
@@ -34,7 +59,7 @@ function Question(props) {
         </label>
         <input
           id={props.question.id}
-          className="border-2 border-gray-400 rounded-md p-1"
+          className="border-2 border-gray-400 rounded-md p-1 w-full"
           name={props.question.name}
           type="number"
           min={props.question.min}
@@ -60,7 +85,7 @@ function Question(props) {
           as="select"
           name={props.question.name}
           id={props.question.id}
-          className="border-2 border-gray-400 rounded-md p-1 mr-auto"
+          className="border-2 border-gray-400 rounded-md p-1 w-full"
         >
           <option value="" disabled selected></option>
           {props.question.options.map((option) => (
@@ -86,7 +111,8 @@ function Question(props) {
           {props.question.options.map((option) => (
             <label key={option.value}>
               <Field type="checkbox" name={props.question.name} value={option.value} />
-              &nbsp;{option.title}
+              &nbsp;{renderTextWithLinks(option.title)}
+              {option.required ? ' *' : ''}
             </label>
           ))}
         </div>
@@ -108,7 +134,7 @@ function Question(props) {
           id={props.question.id}
           name={props.question.name}
           list={props.question.datalist}
-          className="border-2 border-gray-400 rounded-md p-1"
+          className="border-2 border-gray-400 rounded-md p-1 w-full"
           autoComplete="off"
         ></Field>
         <datalist id={props.question.datalist}>
@@ -136,7 +162,7 @@ function Question(props) {
           as="textarea"
           name={props.question.name}
           placeholder={props.question.placeholder}
-          className="border-2 border-gray-400 rounded-md p-1"
+          className="border-2 border-gray-400 rounded-md p-1 w-full"
         ></Field>
         <ErrorMessage
           name={props.question.name}

@@ -2,6 +2,14 @@ import schools from './public/schools.json';
 import majors from './public/majors.json';
 import countries from './public/countries.json';
 
+const schoolOptions = schools
+  .map((entry) => entry.school ?? entry.university)
+  .filter((school): school is string => Boolean(school))
+  .map((school) => ({
+    title: school,
+    value: school,
+  }));
+
 export const hackPortalConfig: HackPortalConfig = {
   //registration fields are separated by question topics (general, school, hackathon experience, etc. )
   //each question topic is separated by question types(textInput, numberInput, dropdown, etc. )
@@ -168,22 +176,19 @@ export const hackPortalConfig: HackPortalConfig = {
       {
         datalistQuestions: [
           {
-            //University question
+            //School question
             question:
-              'This event is for college students worldwide. Which university do you attend?',
-            id: 'university',
-            name: 'university',
+              'This event is for individuals 18 or older. Which high school do you attend, or which university do/did you attend?',
+            id: 'school',
+            name: 'school',
             required: true,
             datalist: 'schools',
-            options: schools.map(({ university }) => ({
-              title: university,
-              value: university,
-            })),
+            options: schoolOptions,
             initialValue: '',
           },
           {
             //Major question
-            question: 'All majors are welcome at this event. What is your major?',
+            question: 'All majors are welcome at this event. What is/was your major? If you are currently in high school, what do you plan to major in?',
             id: 'major',
             name: 'major',
             required: true,
@@ -206,6 +211,14 @@ export const hackPortalConfig: HackPortalConfig = {
             name: 'studyLevel',
             initialValue: '',
             options: [
+              {
+                title: 'High School / Secondary School',
+                value: 'highSchool',
+              },
+              {
+                title: 'Adult High School / GED Program',
+                value: 'adultHighSchool',
+              },
               {
                 title: 'Undergraduate University (2 year - community college or similar)',
                 value: 'undergrad2Year',
@@ -359,6 +372,30 @@ export const hackPortalConfig: HackPortalConfig = {
       },
       {
         checkboxQuestions: [
+          {
+            question: 'We are currently in the process of partnering with MLH. The following 3 checkboxes are for this partnership. If we do not end up partnering with MLH, your information will not be shared',
+            required: false,
+            id: 'mlhConsent',
+            name: 'mlhConsent',
+            initialValue: [],
+            options: [
+              {
+                title: 'I have read and agree to the MLH Code of Conduct. (https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md)',
+                value: 'mlhConsent1',
+                required: true,
+              },
+              {
+                title: 'I authorize you to share my application/registration information with Major League Hacking for event administration, ranking, and MLH administration in-line with the MLH Privacy Policy (https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md). I further agree to the terms of both the MLH Contest Terms and Conditions (https://github.com/MLH/mlh-policies/blob/main/contest-terms.md) and the MLH Privacy Policy (https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md).',
+                value: 'mlhConsent2',
+                required: true,
+              },
+              {
+                title: 'I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements.',
+                value: 'mlhConsent3',
+                required: false,
+              },
+            ],
+          },
           {
             //Allergies question
             question: 'Allergies / Dietary Restrictions:',
@@ -536,7 +573,7 @@ export type statRecordTypes = {
   size: Record<string, number>;
   softwareExperience: Record<string, number>;
   studyLevel: Record<string, number>;
-  university: Record<string, number>;
+  school: Record<string, number>;
   gender: Record<string, number>;
   hackathonExperience: Record<number, number>;
   heardFrom: Record<string, number>;
@@ -552,7 +589,7 @@ export const fieldNames = {
   size: 'Shirt Size',
   softwareExperience: 'Software Experience',
   studyLevel: 'Study Level',
-  university: 'University',
+  school: 'School',
   gender: 'Gender',
   hackathonExperience: 'Number of Hackathon attended',
   heardFrom: 'Heard of Hackathon from',
@@ -572,7 +609,7 @@ export const singleField = [
   'size',
   'softwareExperience',
   'studyLevel',
-  'university',
+  'school',
   'gender',
   'hackathonExperience',
   'heardFrom',
@@ -611,6 +648,7 @@ interface CheckboxQuestion extends RegistrationQuestion {
   options: Array<{
     title: string;
     value: string;
+    required?: boolean;
   }>;
 }
 

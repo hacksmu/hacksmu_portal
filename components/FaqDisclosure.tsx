@@ -1,5 +1,26 @@
 import { useState } from 'react';
 
+const linkPattern = /(https?:\/\/[^\s)]+)/g;
+const isUrl = (value: string) => /^https?:\/\/\S+$/.test(value);
+
+function renderTextWithLinks(text: string) {
+  return text.split(linkPattern).map((part, index) =>
+    isUrl(part) ? (
+      <a
+        key={`${part}-${index}`}
+        href={part}
+        target="_blank"
+        rel="noreferrer"
+        style={{ color: 'rgba(80,200,255,0.95)', textDecoration: 'underline' }}
+      >
+        {part}
+      </a>
+    ) : (
+      <span key={`${part}-${index}`}>{part}</span>
+    ),
+  );
+}
+
 interface FaqDisclosureProps {
   question: string;
   answer: string | string[] | { type: string; text: string; url: string }[];
@@ -33,7 +54,7 @@ export default function FaqDisclosure({
       <div className={`faq-answer-panel${isOpen ? ' open' : ''}`}>
         <div className="faq-answer-text">
           {typeof answer === 'string' ? (
-            answer
+            renderTextWithLinks(answer)
           ) : Array.isArray(answer) ? (
             (answer as any[]).map((section: any, index: number) => {
               if (section?.type === 'link') {
@@ -47,7 +68,7 @@ export default function FaqDisclosure({
                   </a>
                 );
               } else if (section?.type === 'plaintext') {
-                return <span key={index}>{section.text}</span>;
+                return <span key={index}>{renderTextWithLinks(section.text)}</span>;
               }
               return null;
             })

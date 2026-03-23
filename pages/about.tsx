@@ -159,7 +159,7 @@ export default function AboutPage() {
               { label: 'Format', value: 'In-Person', icon: '🏫' },
               { label: 'Team Size', value: '1–4 Hackers', icon: '👥' },
               { label: 'Cost', value: 'Free to Attend', icon: '🎫' },
-              { label: 'Eligibility', value: 'All College Students', icon: '🎓' },
+              { label: 'Eligibility', value: '18 or older', icon: '🔞' },
             ].map(({ label, value, icon }) => (
               <div key={label}>
                 <div style={{ color: 'rgba(200,232,255,0.55)', fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 4 }}>

@@ -1,6 +1,27 @@
 import { Disclosure, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 
+const linkPattern = /(https?:\/\/[^\s)]+)/g;
+const isUrl = (value: string) => /^https?:\/\/\S+$/.test(value);
+
+function renderTextWithLinks(text: string) {
+  return text.split(linkPattern).map((part, index) =>
+    isUrl(part) ? (
+      <a
+        key={`${part}-${index}`}
+        href={part}
+        target="_blank"
+        rel="noreferrer"
+        className="underline"
+      >
+        {part}
+      </a>
+    ) : (
+      <span key={`${part}-${index}`}>{part}</span>
+    ),
+  );
+}
+
 /**
  *
  * Represents props used by FaqDisclosure component
@@ -13,7 +34,7 @@ import { ChevronDownIcon } from '@heroicons/react/solid';
  */
 interface FaqDisclosureProps {
   question: string;
-  answer: string;
+  answer: string | string[] | { type: string; text: string; url?: string }[];
   isOpen: boolean;
   toggleDisclosure: () => void;
 }
@@ -71,7 +92,35 @@ export default function FaqDisclosure({
             }`}
             static
           >
-            {answer}
+            {typeof answer === 'string' ? (
+              renderTextWithLinks(answer)
+            ) : Array.isArray(answer) ? (
+              (answer as any[]).map((section: any, index: number) => {
+                if (section?.type === 'link') {
+                  return (
+                    <a
+                      key={index}
+                      href={section.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="underline"
+                    >
+                      {section.text}
+                    </a>
+                  );
+                }
+
+                if (section?.type === 'plaintext') {
+                  return <span key={index}>{renderTextWithLinks(section.text)}</span>;
+                }
+
+                if (typeof section === 'string') {
+                  return <span key={index}>{renderTextWithLinks(section)}</span>;
+                }
+
+                return null;
+              })
+            ) : null}
           </Disclosure.Panel>
         </Transition>
         {/* )} */}

@@ -21,9 +21,6 @@ export default function AppHeader() {
   const user = useUser();
 
   useEffect(() => {
-    if (firebase.auth().currentUser !== null && !firebase.auth().currentUser.emailVerified) {
-      firebase.auth().signOut().catch(() => console.warn('Could not sign out'));
-    }
     if (
       isSignedIn &&
       profile &&
@@ -49,7 +46,7 @@ export default function AppHeader() {
   return (
     <>
       <header
-        className="app-topbar mt-[-24px] sticky top-0 z-[110]"
+        className="app-topbar sticky top-0 z-[110]"
         style={{
           backdropFilter: 'blur(18px) saturate(180%)',
           WebkitBackdropFilter: 'blur(18px) saturate(180%)',
@@ -186,7 +183,7 @@ export default function AppHeader() {
         </div>
 
         {/* Auth button */}
-        <div style={{ display: 'flex', alignItems: 'center', marginRight: 16 }}>
+        <div style={{ display: 'flex', alignItems: 'center', marginRight: 16, gap: 25 }}>
           <button
             className="auth-trigger-btn"
             onClick={toggleDialog}
@@ -226,6 +223,24 @@ export default function AppHeader() {
             }} />
             {!user || !isSignedIn ? 'Sign In' : hasProfile ? 'Profile' : 'Register'}
           </button>
+          <a
+            id="mlh-trust-badge"
+            className="mlh-badge-link"
+            href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2026-season&utm_content=white"
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              flexShrink: 0,
+              alignSelf: 'flex-start',
+            }}
+          >
+            <img
+              className="mlh-badge-image"
+              src="https://s3.amazonaws.com/logged-assets/trust-badge/2026/mlh-trust-badge-2026-white.svg"
+              alt="Major League Hacking 2026 Hackathon Season"
+              style={{ width: '100%', display: 'block' }}
+            />
+          </a>
         </div>
 
         {showProfileDialog && <ProfileDialog onDismiss={dismissDialog} />}

@@ -51,7 +51,7 @@ export default function Register() {
   }), [user]);
 
   const checkRedirect = async () => {
-    if (hasProfile) router.push('/profile');
+    if (hasProfile) router.push('/dashboard');
     else setLoading(false);
   };
 
@@ -77,7 +77,7 @@ export default function Register() {
       await RequestHelper.post<Registration, any>('/api/applications', {}, registrationData);
       setSubmitStatus('success');
       updateProfile(registrationData);
-      setTimeout(() => router.push('/profile'), 2500);
+      setTimeout(() => router.push('/dashboard'), 2500);
     } catch (error) {
       console.error(error);
       setSubmitStatus('error');
@@ -124,6 +124,27 @@ export default function Register() {
     }
   }
 
+  const getCheckboxQuestionError = (question, values) => {
+    const selectedValues = Array.isArray(values[question.name]) ? values[question.name] : [];
+    const requiredOptions = question.options.filter((option) => option.required);
+
+    if (question.required && selectedValues.length === 0) {
+      return 'Required';
+    }
+
+    const missingRequiredOptions = requiredOptions.filter(
+      (option) => !selectedValues.includes(option.value),
+    );
+
+    if (missingRequiredOptions.length === 0) {
+      return undefined;
+    }
+
+    return missingRequiredOptions.length === 1
+      ? `Required: ${missingRequiredOptions[0].title}`
+      : `Required: ${missingRequiredOptions.map((option) => option.title).join(', ')}`;
+  };
+
   const setErrors = (obj, values, errors) => {
     if (obj.textInputQuestions)
       for (let inputObj of obj.textInputQuestions) {
@@ -146,8 +167,9 @@ export default function Register() {
       }
     if (obj.checkboxQuestions)
       for (let inputObj of obj.checkboxQuestions) {
-        if (inputObj.required) {
-          if (!values[inputObj.name]) errors[inputObj.name] = 'Required';
+        const checkboxError = getCheckboxQuestionError(inputObj, values);
+        if (checkboxError) {
+          errors[inputObj.name] = checkboxError;
         }
       }
     if (obj.datalistQuestions)
@@ -266,7 +288,7 @@ export default function Register() {
             <Form
               onKeyDown={onKeyDown}
               noValidate
-              className="registrationForm flex flex-col max-w-4xl px-6 w-[56rem] text-lg"
+              className="registrationForm flex flex-col w-full max-w-4xl px-4 sm:px-6 text-base sm:text-lg"
             >
               <div className="text-2xl py-1 border-b-2 border-black mr-auto mt-8">General</div>
               {generalQuestions.map((obj, idx) => (

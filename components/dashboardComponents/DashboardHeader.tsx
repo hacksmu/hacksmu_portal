@@ -1,15 +1,24 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-
-const navItems = [
-  { label: 'HackCenter', path: '/dashboard' },
-  { label: 'Ask a Question', path: '/dashboard/questions' },
-];
+import { useUser } from '../../lib/profile/user-data';
 
 export default function DashboardHeader() {
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const user = useUser();
+  const permissions = user.permissions ?? [];
+  const isOrganizerView =
+    permissions.includes('organizer') ||
+    permissions.includes('admin') ||
+    permissions.includes('super_admin');
+  const navItems = [
+    { label: 'HackCenter', path: '/dashboard' },
+    { label: 'Ask a Question', path: '/dashboard/questions' },
+    ...(isOrganizerView
+      ? [{ label: 'Admin Dashboard', path: '/admin' }]
+      : [{ label: 'Judge Application', path: '/dashboard/judge-apply' }]),
+  ];
 
   return (
     <div style={{ marginTop: 14, marginBottom: 20 }}>

@@ -2,11 +2,14 @@ import { firestore } from 'firebase-admin';
 import { NextApiRequest, NextApiResponse } from 'next';
 import initializeApi from '../../../../lib/admin/init';
 import { userIsAuthorized } from '../../../../lib/authorization/check-authorization';
+import { buildAnsweredQuestionEmail, sendEmail } from '../../../../lib/email';
 
 initializeApi();
 const db = firestore();
 
 const QUESTION_COLLECTION = '/questions';
+const REGISTRATION_COLLECTION = '/registrations';
+const APP_BASE_URL = process.env.BASE_URL?.replace(/\/$/, '') ?? '';
 
 /**
  *
@@ -18,6 +21,15 @@ const QUESTION_COLLECTION = '/questions';
  *
  */
 async function getPendingQuestionById(req: NextApiRequest, res: NextApiResponse) {
+  const userToken = req.headers['authorization'] as string;
+  const isAuthorized = await userIsAuthorized(userToken, ['super_admin', 'admin', 'organizer']);
+
+  if (!isAuthorized) {
+    return res.status(403).json({
+      msg: 'Request is not authorized to view this question.',
+    });
+  }
+
   const snapshot = await db
     .collection(QUESTION_COLLECTION)
     .doc(req.query.questionId as string)
@@ -38,15 +50,30 @@ async function resolvePendingQuestionById(req: NextApiRequest, res: NextApiRespo
   const { headers } = req;
   const userToken = headers['authorization'];
 
-  const isAuthorized = await userIsAuthorized(userToken, ['super_admin', 'admin']);
+  const isAuthorized = await userIsAuthorized(userToken, ['super_admin', 'admin', 'organizer']);
   if (!isAuthorized) {
     return res.status(403).json({
       msg: 'Request is not authorized to perform admin functionality.',
     });
   }
 
+  const parsedBody = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+  const questionSnapshot = await db.collection(QUESTION_COLLECTION).doc(req.query.questionId as string).get();
+
+  if (!questionSnapshot.exists) {
+    return res.status(404).json({
+      msg: 'Question not found.',
+    });
+  }
+
+  const existingQuestion = questionSnapshot.data() as {
+    userId?: string;
+    question?: string;
+    answer?: string;
+  };
+
   const newData = {
-    ...JSON.parse(req.body),
+    ...parsedBody,
     status: 'answered',
   };
   const doc = await db
@@ -55,6 +82,78 @@ async function resolvePendingQuestionById(req: NextApiRequest, res: NextApiRespo
     .set(newData, {
       merge: true,
     });
+
+  const userId = existingQuestion?.userId;
+  const answer = parsedBody?.answer ?? '';
+  const shouldSendEmail =
+    userId &&
+    existingQuestion?.question &&
+    answer &&
+    (existingQuestion.answer ?? '') !== answer;
+
+  console.log('[answered-question email] evaluation', {
+    questionId: req.query.questionId as string,
+    userId: userId ?? null,
+    hasQuestionText: Boolean(existingQuestion?.question),
+    hasAnswer: Boolean(answer),
+    previousAnswerLength: (existingQuestion.answer ?? '').length,
+    nextAnswerLength: answer.length,
+    answerChanged: (existingQuestion.answer ?? '') !== answer,
+    shouldSendEmail,
+    hasResendApiKey: Boolean(process.env.RESEND_API_KEY),
+    hasEmailFrom: Boolean(process.env.EMAIL_FROM),
+  });
+
+  if (shouldSendEmail) {
+    try {
+      const registrationSnapshot = await db.collection(REGISTRATION_COLLECTION).doc(userId).get();
+      const recipientEmail = registrationSnapshot.data()?.user?.preferredEmail;
+      const recipientFirstName = registrationSnapshot.data()?.user?.firstName;
+
+      console.log('[answered-question email] recipient lookup', {
+        questionId: req.query.questionId as string,
+        userId,
+        registrationExists: registrationSnapshot.exists,
+        recipientEmail: recipientEmail ?? null,
+      });
+
+      if (recipientEmail) {
+        const email = buildAnsweredQuestionEmail(
+          recipientFirstName,
+          existingQuestion.question,
+          answer,
+          APP_BASE_URL ? `${APP_BASE_URL}/dashboard/questions` : undefined,
+        );
+        const emailSent = await sendEmail({
+          to: recipientEmail,
+          subject: email.subject,
+          html: email.html,
+          text: email.text,
+        });
+        console.log('[answered-question email] send result', {
+          questionId: req.query.questionId as string,
+          userId,
+          recipientEmail,
+          recipientFirstName: recipientFirstName ?? null,
+          questionUrl: APP_BASE_URL ? `${APP_BASE_URL}/dashboard/questions` : null,
+          emailSent,
+        });
+      } else {
+        console.log('[answered-question email] skipped because recipient email was missing', {
+          questionId: req.query.questionId as string,
+          userId,
+        });
+      }
+    } catch (error) {
+      console.error('Failed to send answered-question email', error);
+    }
+  } else {
+    console.log('[answered-question email] skipped before lookup', {
+      questionId: req.query.questionId as string,
+      userId: userId ?? null,
+    });
+  }
+
   res.json(doc);
 }
 
@@ -76,8 +175,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       return handlePostRequest(req, res);
     }
     default: {
-      return res.status(404).json({
-        msg: 'Route not found',
+      return res.status(405).json({
+        msg: 'Method not allowed',
       });
     }
   }

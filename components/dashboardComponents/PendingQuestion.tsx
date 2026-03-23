@@ -1,12 +1,24 @@
 interface PendingQuestionProps {
   question: string;
+  submittedAt?: string;
 }
 
-export default function PendingQuestion({ question }: PendingQuestionProps) {
+function formatSubmittedAt(submittedAt?: string) {
+  if (!submittedAt) return null;
+
+  const parsedDate = new Date(submittedAt);
+  if (Number.isNaN(parsedDate.getTime())) return null;
+
+  return parsedDate.toLocaleString();
+}
+
+export default function PendingQuestion({ question, submittedAt }: PendingQuestionProps) {
+  const formattedSubmittedAt = formatSubmittedAt(submittedAt);
+
   return (
     <div style={{
       display: 'flex',
-      alignItems: 'center',
+      alignItems: 'flex-start',
       gap: 10,
       padding: '11px 16px',
       borderRadius: 10,
@@ -20,10 +32,25 @@ export default function PendingQuestion({ question }: PendingQuestionProps) {
         background: '#ffa040',
         boxShadow: '0 0 8px rgba(255,160,64,0.70)',
         flexShrink: 0,
+        marginTop: 4,
       }} />
-      <span style={{ color: 'rgba(220,240,255,0.88)', fontSize: 14, lineHeight: 1.4 }}>
-        {question}
-      </span>
+      <div style={{ minWidth: 0 }}>
+        <div style={{ color: 'rgba(220,240,255,0.88)', fontSize: 14, lineHeight: 1.4 }}>
+          {question}
+        </div>
+        {formattedSubmittedAt && (
+          <div
+            style={{
+              marginTop: 6,
+              color: 'rgba(200,232,255,0.58)',
+              fontSize: 12,
+              lineHeight: 1.3,
+            }}
+          >
+            Submitted {formattedSubmittedAt}
+          </div>
+        )}
+      </div>
       <span style={{
         marginLeft: 'auto',
         flexShrink: 0,
@@ -32,6 +59,7 @@ export default function PendingQuestion({ question }: PendingQuestionProps) {
         letterSpacing: '0.06em',
         color: 'rgba(255,160,64,0.70)',
         textTransform: 'uppercase',
+        paddingTop: 2,
       }}>
         Pending
       </span>

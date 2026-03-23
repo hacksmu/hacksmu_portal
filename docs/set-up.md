@@ -30,19 +30,22 @@ Go to the HackPortal project files in your IDE. Rename the `.env.template` file 
 The file should look like this:
 
 ```
-NEXT_PUBLIC_FIREBASE_API_KEY=
-NEXT_PUBLIC_FIREBASE_APP_ID=
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
-NEXT_PUBLIC_RESUME_UPLOAD_PASSWORD=
-NEXT_PUBLIC_RESUME_UPLOAD_SERVICE_ACCOUNT=
-NEXT_PUBLIC_VAPID_KEY=
-NEXT_PUBLIC_MEASUREMENT_ID=
-SERVICE_ACCOUNT_CLIENT_EMAIL=
-SERVICE_ACCOUNT_PRIVATE_KEY=
-SERVICE_ACCOUNT_PROJECT_ID=
+NEXT_PUBLIC_FIREBASE_API_KEY="your-firebase-web-api-key"
+NEXT_PUBLIC_FIREBASE_APP_ID="your-firebase-app-id"
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="your-project.firebaseapp.com"
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID="your-firebase-messaging-sender-id"
+NEXT_PUBLIC_FIREBASE_PROJECT_ID="your-firebase-project-id"
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET="your-project.appspot.com"
+NEXT_PUBLIC_RESUME_UPLOAD_PASSWORD="your-resume-upload-password"
+NEXT_PUBLIC_RESUME_UPLOAD_SERVICE_ACCOUNT="resume-upload-account@yourdomain.com"
+NEXT_PUBLIC_VAPID_KEY="your-web-push-vapid-key"
+NEXT_PUBLIC_MEASUREMENT_ID="G-XXXXXXXXXX"
+SERVICE_ACCOUNT_CLIENT_EMAIL="firebase-adminsdk-xxxxx@your-project.iam.gserviceaccount.com"
+SERVICE_ACCOUNT_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+SERVICE_ACCOUNT_PROJECT_ID="your-firebase-project-id"
+BASE_URL="https://your-domain.org"
+RESEND_API_KEY="re_xxxxxxxxxxxxx"
+EMAIL_FROM="HackSMU <noreply@your-domain.org>"
 
 ```
 
@@ -95,6 +98,40 @@ NEXT_PUBLIC_RESUME_UPLOAD_PASSWORD=
 ```
 
 ![Add user](./images/set-up-6.png)
+
+## Optional Email Notification Setup
+
+If you want the portal to email users when:
+
+- an organizer answers an Ask a Question submission
+- a judge application's status changes
+
+add these environment variables to `.env.local`:
+
+```
+BASE_URL="https://your-domain.org"
+RESEND_API_KEY="re_xxxxxxxxxxxxx"
+EMAIL_FROM="HackSMU <noreply@yourdomain.com>"
+```
+
+These should all be placed in the root project `.env.local` file, not in a separate file inside `pages/api`.
+
+- `BASE_URL` should be the full public URL of your deployment, such as:
+
+```
+https://hacksmu.org
+```
+
+- `RESEND_API_KEY` should be your Resend API key
+- `EMAIL_FROM` should be a verified sender such as:
+
+```
+HackSMU <noreply@yourdomain.com>
+```
+
+If `RESEND_API_KEY` or `EMAIL_FROM` is missing, the app will still work, but email notifications will be skipped.
+
+If `BASE_URL` is missing, emails can still send, but portal links to the answered-question page and judge-application page will not appear in the message.
 
 ## Firebase Setup
  Follow the instructions in the [Firebase Setup doc](./firebase-setup.md) to see how to set Firebase up for your hackathon.

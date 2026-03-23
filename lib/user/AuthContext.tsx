@@ -22,6 +22,11 @@ interface AuthContextState {
   signInWithGoogle: () => void;
 
   /**
+   * Signs in using GitHub OAuth pop-up.
+   */
+  signInWithGithub: () => void;
+
+  /**
    * Signs out of the current user session if active.
    */
   signOut: () => Promise<void>;
@@ -75,6 +80,21 @@ function AuthProvider({ children }: React.PropsWithChildren<Record<string, any>>
       // User is signed out
       // TODO(auth): Determine if we want to remove user data from device on sign out
       setUser(null);
+      setProfile(null);
+      setLoading(false);
+      return;
+    }
+
+    const isPasswordUser = firebaseUser.providerData.some(
+      (provider) => provider?.providerId === 'password',
+    );
+
+    if (isPasswordUser && !firebaseUser.emailVerified) {
+      await firebase.auth().signOut().catch((error) => {
+        console.error('Could not sign out unverified user.', error);
+      });
+      setUser(null);
+      setProfile(null);
       setLoading(false);
       return;
     }
@@ -90,7 +110,7 @@ function AuthProvider({ children }: React.PropsWithChildren<Record<string, any>>
       preferredEmail: email,
       photoUrl: photoURL,
       permissions: ['hacker'],
-      university: '',
+      school: '',
     });
     const query = new URL(`http://localhost:3000/api/userinfo`);
     query.searchParams.append('id', uid);
@@ -101,6 +121,7 @@ function AuthProvider({ children }: React.PropsWithChildren<Record<string, any>>
     });
     if (data.status !== 200) {
       console.error('Unexpected error when fetching AuthContext permission data...');
+      setProfile(null);
       setLoading(false);
       return;
     }
@@ -112,7 +133,7 @@ function AuthProvider({ children }: React.PropsWithChildren<Record<string, any>>
       lastName: userData.user.lastName,
       preferredEmail: userData.user.preferredEmail,
       permissions,
-      university: userData.university,
+      school: userData.school ?? userData.university ?? '',
     }));
     setProfile(userData);
     setLoading(false);
@@ -137,6 +158,7 @@ function AuthProvider({ children }: React.PropsWithChildren<Record<string, any>>
       .signOut()
       .then(() => {
         setUser(null);
+        setProfile(null);
       })
       .catch((error) => {
         console.error('Could not sign out.', error);
@@ -162,6 +184,23 @@ function AuthProvider({ children }: React.PropsWithChildren<Record<string, any>>
       });
   };
 
+  const signInWithGithub = async () => {
+    const provider = new firebase.auth.GithubAuthProvider();
+    return firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then(async ({ user }) => {
+        if (user === null) {
+          console.warn("The signed-in user is null? That doesn't seem right.");
+          return;
+        }
+        await updateUser(user);
+      })
+      .catch((error) => {
+        console.error('Error when signing in with GitHub', error);
+      });
+  };
+
   const isSignedIn = user !== null;
   const hasProfile = profile !== null;
 
@@ -169,6 +208,7 @@ function AuthProvider({ children }: React.PropsWithChildren<Record<string, any>>
     user,
     isSignedIn,
     signInWithGoogle,
+    signInWithGithub,
     signOut,
     hasProfile,
     profile,
