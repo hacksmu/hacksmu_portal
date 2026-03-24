@@ -113,7 +113,7 @@ const DESKTOP_ICONS: IconDef[] = [
   },
   {
     key: 'sponsors',
-    label: 'Sponsors',
+    label: 'Partners',
     emoji: '⭐',
     grad: 'radial-gradient(ellipse at 38% 28%, rgba(255,255,255,0.85) 0%, rgba(255,240,160,0.6) 22%, rgba(255,180,20,0.75) 55%, rgba(160,80,0,0.95) 100%)',
     accentColor: '#ffd040',
@@ -123,7 +123,7 @@ const DESKTOP_ICONS: IconDef[] = [
     label: 'Schedule',
     emoji: '📅',
     grad: 'radial-gradient(ellipse at 38% 28%, rgba(255,255,255,0.85) 0%, rgba(160,255,220,0.6) 22%, rgba(30,200,140,0.75) 55%, rgba(10,90,60,0.95) 100%)',
-    accentColor: '#40ffb8',
+    accentColor: '#1c2522',
   },
   {
     key: 'team',
@@ -146,7 +146,7 @@ const SECTION_TITLES: Record<string, string> = {
   about: '✦ About HackSMU VII',
   faq: '✦ Frequently Asked Questions',
   resources: '✦ Hacker Resources',
-  sponsors: '✦ Our Sponsors',
+  sponsors: '✦ Our Partners',
   schedule: '✦ Schedule',
   team: '✦ Meet the Team',
   dashboard: '✦ Hacker Dashboard',
@@ -1066,6 +1066,7 @@ function SponsorsContent() {
     { name: 'SMU Student Senate', logo: '/sponsors/SMUStudentSenate.jpg', link: 'https://www.smustudentsenate.com/'},
     { name: 'Grundfos', logo: '/sponsors/grundfos.png', link: 'https://www.grundfos.com/us/about-us/who-we-are/the-history-of-grundfos?tab=1940' },
     { name: 'pureButtons', logo: '/sponsors/pureButtons.png', link: 'https://mlh.link/MLH-PureButtons-hackathons' },
+    { name: 'MLH', logo: '/sponsors/MLH.png', link: 'https://mlh.io' },
   ];
 
   return (
@@ -1088,7 +1089,7 @@ function SponsorsContent() {
             const Card = (
               <div
                 className="sponsor-glass-card shine-card"
-                style={{ padding: '18px 12px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}
+                style={{ padding: '18px 12px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, minHeight: 220, justifyContent: 'center' }}
               >
                 <img
                   src={s.logo}
