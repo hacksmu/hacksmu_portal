@@ -1100,7 +1100,7 @@ function SponsorsContent() {
                   filter: 'brightness(1.1)',
                   transform: s.name === 'SMU Lyle School of Engineering' ? 'scale(0.9)' : 'none',
                   transformOrigin: 'center',
-                  marginTop: s.name === 'SMU Lyle School of Engineering' ? 36 : (s.name === 'iMasons' ? 8 : 0),
+                  marginTop: s.name === 'SMU Lyle School of Engineering' ? 36 : (s.name === 'iMasons' ? 8 : (s.name === 'Grundfos' ? 40 : 0)),
                 }}
                 onError={e => (e.currentTarget.style.display = 'none')}
               />
