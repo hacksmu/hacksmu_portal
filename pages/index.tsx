@@ -1061,11 +1061,11 @@ function ResourcesContent() {
 // ── Sponsors ──────────────────────────────────────────────────
 function SponsorsContent() {
   const sponsors = [
-    { name: 'iMasons', logo: '/sponsors/iMasonsLogo.png' },
-    { name: 'SMU Lyle School of Engineering', logo: '/sponsors/SMULyleLogo.png' },
-    { name: 'SMU Student Senate', logo: '/sponsors/SMUStudentSenate.jpg' },
-    { name: 'Grundfos', logo: '/sponsors/grundfos.png' },
-    { name: 'pureButtons', logo: '/sponsors/pureButtons.png' },
+    { name: 'iMasons', logo: '/sponsors/iMasonsLogo.png', link: 'https://imasons.org/'},
+    { name: 'SMU Lyle School of Engineering', logo: '/sponsors/SMULyleLogo.png', link: 'https://www.smu.edu/lyle' },
+    { name: 'SMU Student Senate', logo: '/sponsors/SMUStudentSenate.jpg', link: 'https://www.smustudentsenate.com/'},
+    { name: 'Grundfos', logo: '/sponsors/grundfos.png', link: 'https://www.grundfos.com/us/about-us/who-we-are/the-history-of-grundfos?tab=1940' },
+    { name: 'pureButtons', logo: '/sponsors/pureButtons.png', link: 'https://mlh.link/MLH-PureButtons-hackathons' },
   ];
 
   return (
@@ -1084,40 +1084,57 @@ function SponsorsContent() {
           Sponsors
         </h3>
         <div className="sponsors-grid" style={{ display: 'grid', gap: 12 }}>
-          {sponsors.map((s) => (
-            <div
-              key={s.name}
-              className="sponsor-glass-card shine-card"
-              style={{ padding: '18px 12px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}
-            >
-              <img
-                src={s.logo}
-                alt={s.name}
-                style={{
-                  width: '100%',
-                  maxHeight: 90,
-                  objectFit: 'contain',
-                  filter: 'brightness(1.1)',
-                  transform: s.name === 'SMU Lyle School of Engineering' ? 'scale(0.9)' : 'none',
-                  transformOrigin: 'center',
-                  marginTop: s.name === 'SMU Lyle School of Engineering' ? 36 : (s.name === 'iMasons' ? 8 : (s.name === 'Grundfos' ? 40 : 0)),
-                }}
-                onError={e => (e.currentTarget.style.display = 'none')}
-              />
-              <span
-                style={{
-                  fontSize: 15,
-                  fontWeight: 700,
-                  color: 'rgba(220,240,255,0.90)',
-                  textAlign: 'center',
-                  lineHeight: 1.3,
-                  marginTop: s.name === 'iMasons' ? 10 : 0,
-                }}
+          {sponsors.map((s) => {
+            const Card = (
+              <div
+                className="sponsor-glass-card shine-card"
+                style={{ padding: '18px 12px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}
               >
-                {s.name}
-              </span>
-            </div>
-          ))}
+                <img
+                  src={s.logo}
+                  alt={s.name}
+                  style={{
+                    width: '100%',
+                    maxHeight: 90,
+                    objectFit: 'contain',
+                    filter: 'brightness(1.1)',
+                    transform: s.name === 'SMU Lyle School of Engineering' ? 'scale(0.9)' : 'none',
+                    transformOrigin: 'center',
+                    marginTop: s.name === 'SMU Lyle School of Engineering' ? 36 : (s.name === 'iMasons' ? 8 : (s.name === 'Grundfos' ? 40 : 0)),
+                  }}
+                  onError={e => (e.currentTarget.style.display = 'none')}
+                />
+                <span
+                  style={{
+                    fontSize: 15,
+                    fontWeight: 700,
+                    color: 'rgba(220,240,255,0.90)',
+                    textAlign: 'center',
+                    lineHeight: 1.3,
+                    marginTop: s.name === 'iMasons' ? 10 : 0,
+                  }}
+                >
+                  {s.name}
+                </span>
+              </div>
+            );
+            
+            return s.link ? (
+              <a
+                key={s.name}
+                href={s.link}
+                target="_blank"
+                rel="noreferrer"
+                style={{ textDecoration: 'none' }}
+              >
+                {Card}
+              </a>
+            ) : (
+              <div key={s.name}>
+                {Card}
+              </div>
+            );
+          })}
         </div>
       </div>
       <p style={{ textAlign: 'center', color: 'rgba(160,215,255,0.65)', fontSize: 14, marginTop: 8 }}>
