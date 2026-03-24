@@ -1066,7 +1066,7 @@ function SponsorsContent() {
     { name: 'SMU Student Senate', logo: '/sponsors/SMUStudentSenate.jpg', link: 'https://www.smustudentsenate.com/'},
     { name: 'Grundfos', logo: '/sponsors/grundfos.png', link: 'https://www.grundfos.com/us/about-us/who-we-are/the-history-of-grundfos?tab=1940' },
     { name: 'Pure Buttons', logo: '/sponsors/pureButtons.png', link: 'https://mlh.link/MLH-PureButtons-hackathons' },
-    { name: 'MLH', logo: '/sponsors/MLH.png', link: 'https://mlh.io' },
+    { name: 'Major League Hacking', logo: '/sponsors/MLH.png', link: 'https://mlh.io' },
   ];
 
   return (
