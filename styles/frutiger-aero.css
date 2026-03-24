@@ -1574,7 +1574,7 @@
   }
 
   .team-members-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   }
 
   .team-desktop-layout {
@@ -1958,7 +1958,7 @@
   }
 
   .SponsorLogos {
-    height: 320px !important;
+    height: 285px !important;
     width: auto !important;
     max-width: 100% !important;
   }

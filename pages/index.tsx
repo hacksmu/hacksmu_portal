@@ -160,6 +160,7 @@ const TEAM_MEMBERS = [
   { name: 'Grant Palmer', image: '/team/grant.jpeg', title: 'Marketing Team' },
   { name: 'Rin Lu', image: '/team/rin.jpeg', title: 'Technical Team' },
   { name: 'Ayoola Olaosebikan', image: '/team/ayoola.PNG', title: 'Logistics & Technical Team' },
+  { name: 'Hongrui Chen', image: '/team/hongrui.jpeg', title: 'Logistics Team' },
 ];
 
 // ─── Public Schedule (HackSMU 2026) ─────────────────────────────
@@ -1063,6 +1064,8 @@ function SponsorsContent() {
     { name: 'iMasons', logo: '/sponsors/iMasonsLogo.png' },
     { name: 'SMU Lyle School of Engineering', logo: '/sponsors/SMULyleLogo.png' },
     { name: 'SMU Student Senate', logo: '/sponsors/SMUStudentSenate.jpg' },
+    { name: 'Grundfos', logo: '/sponsors/grundfos.png' },
+    { name: 'pureButtons', logo: '/sponsors/pureButtons.png' },
   ];
 
   return (
@@ -1095,9 +1098,9 @@ function SponsorsContent() {
                   maxHeight: 90,
                   objectFit: 'contain',
                   filter: 'brightness(1.1)',
-                  transform: s.name === 'SMU Lyle School of Engineering' ? 'scale(3)' : 'none',
+                  transform: s.name === 'SMU Lyle School of Engineering' ? 'scale(0.9)' : 'none',
                   transformOrigin: 'center',
-                  marginTop: s.name === 'iMasons' ? 8 : 0,
+                  marginTop: s.name === 'SMU Lyle School of Engineering' ? 36 : (s.name === 'iMasons' ? 8 : 0),
                 }}
                 onError={e => (e.currentTarget.style.display = 'none')}
               />
@@ -1157,8 +1160,6 @@ function ScheduleContent() {
 // ── Team ─────────────────────────────────────────────────────
 function TeamContent() {
   const [mobileTeamIndex, setMobileTeamIndex] = useState(0);
-  const mainTeamCards = TEAM_MEMBERS.slice(0, 6);
-  const lastTeamCard = TEAM_MEMBERS[6];
   const teamCardWidth = 220;
   const mobileMember = TEAM_MEMBERS[mobileTeamIndex];
 
@@ -1166,7 +1167,15 @@ function TeamContent() {
     <div
       key={member.name}
       className="member-glass-card"
-      style={{ width: teamCardWidth, padding: '22px 16px', minHeight: 220, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start' }}
+      style={{
+        width: teamCardWidth,
+        padding: '22px 16px',
+        minHeight: 220,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+      }}
     >
       <img
         src={member.image}
@@ -1180,12 +1189,28 @@ function TeamContent() {
           boxShadow: '0 0 18px rgba(80,190,255,0.30)',
           margin: '0 auto 12px',
         }}
-        onError={e => (e.currentTarget.style.display = 'none')}
+        onError={(e) => (e.currentTarget.style.display = 'none')}
       />
-      <div style={{ fontSize: 15, fontWeight: 700, color: 'rgba(230,245,255,0.95)', lineHeight: 1.3, textAlign: 'center' }}>
+      <div
+        style={{
+          fontSize: 15,
+          fontWeight: 700,
+          color: 'rgba(230,245,255,0.95)',
+          lineHeight: 1.3,
+          textAlign: 'center',
+        }}
+      >
         {member.name}
       </div>
-      <div style={{ fontSize: 12, color: 'rgba(170,220,255,0.88)', lineHeight: 1.35, textAlign: 'center', marginTop: 6 }}>
+      <div
+        style={{
+          fontSize: 12,
+          color: 'rgba(170,220,255,0.88)',
+          lineHeight: 1.35,
+          textAlign: 'center',
+          marginTop: 6,
+        }}
+      >
         {member.title}
       </div>
     </div>
@@ -1196,15 +1221,15 @@ function TeamContent() {
       <div className="team-desktop-layout">
         <div
           className="team-members-grid"
-          style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit, minmax(${teamCardWidth}px, ${teamCardWidth}px))`, gap: 18, justifyContent: 'center' }}
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            gap: 18,
+          }}
         >
-          {mainTeamCards.map((member) => renderTeamCard(member))}
+          {TEAM_MEMBERS.map((member) => renderTeamCard(member))}
         </div>
-        {lastTeamCard && (
-          <div style={{ display: 'flex', justifyContent: 'center', marginTop: 18 }}>
-            {renderTeamCard(lastTeamCard)}
-          </div>
-        )}
       </div>
 
       <div className="team-mobile-slider">
@@ -1217,7 +1242,9 @@ function TeamContent() {
           <button
             className="aero-btn"
             style={{ fontSize: 13, padding: '6px 14px' }}
-            onClick={() => setMobileTeamIndex((prev) => (prev - 1 + TEAM_MEMBERS.length) % TEAM_MEMBERS.length)}
+            onClick={() =>
+              setMobileTeamIndex((prev) => (prev - 1 + TEAM_MEMBERS.length) % TEAM_MEMBERS.length)
+            }
           >
             ← Prev
           </button>
