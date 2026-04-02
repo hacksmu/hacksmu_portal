@@ -15,9 +15,7 @@ export default function DashboardHeader() {
   const navItems = [
     { label: 'HackCenter', path: '/dashboard' },
     { label: 'Ask a Question', path: '/dashboard/questions' },
-    ...(isOrganizerView
-      ? [{ label: 'Admin Dashboard', path: '/admin' }]
-      : [{ label: 'Judge Application', path: '/dashboard/judge-apply' }]),
+    ...(isOrganizerView ? [{ label: 'Admin Dashboard', path: '/admin' }] : []),
   ];
 
   return (

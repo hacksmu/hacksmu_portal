@@ -1,33 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { auth, firestore } from 'firebase-admin';
+import { firestore } from 'firebase-admin';
 import initializeApi from '../../../lib/admin/init';
 import { userIsAuthorized } from '../../../lib/authorization/check-authorization';
-import { buildJudgeApplicationSubmittedEmail, sendEmail } from '../../../lib/email';
 
 initializeApi();
 
 const db = firestore();
 const JUDGE_APPLICATIONS_COLLECTION = '/judge-applications';
-const APP_BASE_URL = process.env.BASE_URL?.replace(/\/$/, '') ?? '';
-
-type JudgeApplicationRequest = {
-  user: {
-    id: string;
-    firstName: string;
-    lastName: string;
-    preferredEmail: string;
-  };
-  contactEmail: string;
-  organization: string;
-  roleTitle: string;
-  judgingExperience: string;
-  expertiseAreas: string[];
-  portfolioLinks: string;
-  whyJudge: string;
-  availability: string[];
-  resumeUrl: string;
-  status?: 'submitted' | 'reviewing' | 'accepted' | 'rejected';
-};
 
 async function handleGetJudgeApplications(req: NextApiRequest, res: NextApiResponse) {
   const userToken = req.headers['authorization'] as string;
@@ -45,63 +24,9 @@ async function handleGetJudgeApplications(req: NextApiRequest, res: NextApiRespo
 }
 
 async function handlePostJudgeApplication(req: NextApiRequest, res: NextApiResponse) {
-  const userToken = req.headers['authorization'] as string;
-
-  if (!userToken) {
-    return res.status(401).json({
-      msg: 'You must be signed in to apply as a judge.',
-    });
-  }
-
-  try {
-    const payload = await auth().verifyIdToken(userToken);
-    const body: JudgeApplicationRequest = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
-
-    if (!body?.user?.id || payload.uid !== body.user.id) {
-      return res.status(401).json({
-        msg: 'Request is not authorized to create this judge application.',
-      });
-    }
-
-    const existing = await db.collection(JUDGE_APPLICATIONS_COLLECTION).doc(body.user.id).get();
-    if (existing.exists) {
-      return res.status(400).json({
-        msg: 'Judge application already exists for this user.',
-      });
-    }
-
-    await db.collection(JUDGE_APPLICATIONS_COLLECTION).doc(body.user.id).set({
-      ...body,
-      status: body.status ?? 'submitted',
-      submittedAt: new Date().toISOString(),
-    });
-
-    if (body.contactEmail) {
-      try {
-        const email = buildJudgeApplicationSubmittedEmail(
-          body.user.firstName,
-          APP_BASE_URL ? `${APP_BASE_URL}/dashboard/judge-apply` : undefined,
-        );
-        await sendEmail({
-          to: body.contactEmail,
-          subject: email.subject,
-          html: email.html,
-          text: email.text,
-        });
-      } catch (error) {
-        console.error('Failed to send judge application submitted email', error);
-      }
-    }
-
-    return res.status(200).json({
-      msg: 'Judge application submitted successfully.',
-    });
-  } catch (error) {
-    console.error('Error creating judge application', error);
-    return res.status(500).json({
-      msg: 'Something went wrong while submitting the judge application.',
-    });
-  }
+  return res.status(410).json({
+    msg: 'Judge applications have closed and are no longer accepting new submissions.',
+  });
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {

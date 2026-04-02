@@ -269,15 +269,15 @@ export default function Dashboard(props: {
                   textShadow: '0 0 14px rgba(0,200,255,0.45)',
                 }}
               >
-                {isOrganizerView ? 'Organizer review tools' : 'Interested in judging?'}
+                {isOrganizerView ? 'Organizer review tools' : 'Judge applications closed'}
               </div>
               <div style={{ marginTop: 6, color: 'rgba(200,232,255,0.78)', fontSize: 14 }}>
                 {isOrganizerView
                   ? 'Open the admin dashboard to answer pending questions and review judge applications.'
-                  : 'Apply to help review projects, support teams, and score submissions during HackSMU VII.'}
+                  : 'Thank you for your interest in judging HackSMU VII. We are no longer accepting new judge applications.'}
               </div>
             </div>
-            <Link href={isOrganizerView ? '/admin' : '/dashboard/judge-apply'}>
+            <Link href={isOrganizerView ? '/admin' : '/dashboard/questions'}>
               <a
                 className="aero-btn"
                 style={{
@@ -287,7 +287,7 @@ export default function Dashboard(props: {
                   whiteSpace: 'nowrap',
                 }}
               >
-                {isOrganizerView ? 'Open Admin Dashboard' : 'Apply to Be a Judge'}
+                {isOrganizerView ? 'Open Admin Dashboard' : 'Contact the Team'}
               </a>
             </Link>
           </div>
