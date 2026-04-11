@@ -97,7 +97,13 @@ async function getStatsData() {
 async function handleGetRequest(req: NextApiRequest, res: NextApiResponse) {
   const { headers } = req;
   const userToken = headers['authorization'];
-  const isAuthorized = await userIsAuthorized(userToken, ['super_admin']);
+
+  let isAuthorized = false;
+  try {
+    isAuthorized = await userIsAuthorized(userToken, ['super_admin']);
+  } catch (e) {
+    return res.status(403).json({ msg: 'Invalid or expired auth token.' });
+  }
 
   if (!isAuthorized) {
     return res.status(403).json({
@@ -105,9 +111,13 @@ async function handleGetRequest(req: NextApiRequest, res: NextApiResponse) {
     });
   }
 
-  // Start getting data here
-  const statsData = await getStatsData();
-  return res.json(statsData);
+  try {
+    const statsData = await getStatsData();
+    return res.json(statsData);
+  } catch (e) {
+    console.error('Error fetching stats data:', e);
+    return res.status(500).json({ msg: 'Failed to fetch stats data.' });
+  }
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
