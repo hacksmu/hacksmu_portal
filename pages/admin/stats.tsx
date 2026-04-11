@@ -332,6 +332,14 @@ export default function StatsPage() {
 
         {stats && (
           <>
+            {/* DEBUG — remove after confirming data */}
+            <details style={{ ...glassPanel, padding: '12px 18px', marginBottom: 20, color: '#80d8ff', fontSize: 12 }}>
+              <summary style={{ cursor: 'pointer', fontWeight: 700 }}>Raw API response (debug)</summary>
+              <pre style={{ marginTop: 10, overflowX: 'auto', maxHeight: 300, color: '#c8e8ff' }}>
+                {JSON.stringify(stats, null, 2)}
+              </pre>
+            </details>
+
             {/* Summary badges */}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, marginBottom: 28 }}>
               <StatBadge label="Total Registered" value={(stats.hackerCount ?? 0) + (stats.adminCount ?? 0) + (stats.superAdminCount ?? 0)} />

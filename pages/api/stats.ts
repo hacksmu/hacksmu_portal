@@ -73,7 +73,7 @@ async function getStatsData() {
       generalStats[singleField][fieldValue]++;
     }
 
-    const userPermission = userData.user.permissions?.[0];
+    const userPermission = userData.user?.permissions?.[0];
 
     switch (userPermission) {
       case 'super_admin': {
@@ -116,7 +116,7 @@ async function handleGetRequest(req: NextApiRequest, res: NextApiResponse) {
     return res.json(statsData);
   } catch (e) {
     console.error('Error fetching stats data:', e);
-    return res.status(500).json({ msg: 'Failed to fetch stats data.' });
+    return res.status(500).json({ msg: 'Failed to fetch stats data.', error: String(e) });
   }
 }
 
