@@ -33,11 +33,19 @@ const CATEGORIES: Category[] = [
     resources: [
       {
         label: 'Devpost',
-        href: '',
+        href: 'https://hacksmu-vii.devpost.com/',
         emoji: '🚀',
-        desc: 'Coming Soon.',
+        desc: 'Submit your project here. All teams must submit on Devpost before the deadline.',
         tag: 'Required',
         tagColor: '#ff6060',
+      },
+      {
+        label: 'Hacker Guide',
+        href: 'https://drive.google.com/file/d/1LwvB0-euCPu9BwhgIloM5gLaYr7ZKTxg/view?usp=sharing',
+        emoji: '📖',
+        desc: 'Rules, schedule, judging criteria, and everything you need to know before hacking.',
+        tag: 'Read First',
+        tagColor: '#40ff9a',
       },
     ],
   },

@@ -4,11 +4,6 @@ import NavLink from '../NavLink';
 import { useAuthContext } from '../../lib/user/AuthContext';
 import { useEffect } from 'react';
 
-function isAuthorized(user): boolean {
-  if (!user || !user.permissions) return false;
-  return (user.permissions as string[]).includes('super_admin');
-}
-
 function canReview(user): boolean {
   if (!user || !user.permissions) return false;
   return (
@@ -76,11 +71,6 @@ export default function AdminHeader() {
               <span style={navPillStyle(router.pathname === '/admin/users')}>Users Dashboard</span>
             </NavLink>
           )}
-          {isAuthorized(user) && (
-            <NavLink href="/admin/stats" exact={true} className="mx-4">
-              <span style={navPillStyle(router.pathname === '/admin/stats')}>Stats at a Glance</span>
-            </NavLink>
-          )}
         </div>
       </header>
       <div className="my-4 md:hidden ">
@@ -103,11 +93,6 @@ export default function AdminHeader() {
             {canManageAdmin(user) && (
               <li className="p-2 hover:bg-[#DCDEFF]">
                 <Link href="/admin/users">Users Dashboard</Link>
-              </li>
-            )}
-            {isAuthorized(user) && (
-              <li className="p-2 hover:bg-[#DCDEFF]">
-                <Link href="/admin/stats">Stats at a Glance</Link>
               </li>
             )}
           </ul>

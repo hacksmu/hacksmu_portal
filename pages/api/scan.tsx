@@ -66,7 +66,7 @@ async function handleScan(req: NextApiRequest, res: NextApiResponse) {
     headers,
   } = req;
 
-  const bodyData = JSON.parse(body);
+  const bodyData = typeof body === 'string' ? JSON.parse(body) : body;
 
   //
   // Check if request header contains token
@@ -102,7 +102,12 @@ async function handleScan(req: NextApiRequest, res: NextApiResponse) {
 
     if (scans.includes(bodyData.scan)) return res.status(201).json({ code: 'duplicate' });
     scans.push(bodyData.scan);
-    await db.collection(REGISTRATION_COLLECTION).doc(bodyData.id).update({ scans });
+    const updateData: Record<string, any> = { scans };
+    // Record the time of check-in when this is the check-in scan type
+    if (scanIsCheckInEvent) {
+      updateData.checkInTime = Date.now();
+    }
+    await db.collection(REGISTRATION_COLLECTION).doc(bodyData.id).update(updateData);
     res.status(200).json({});
   } catch (error) {
     console.error('Error when fetching applications', error);

@@ -16,6 +16,7 @@ const navLinks = [
   { label: 'Dashboard', path: '/dashboard', icon: '⚡' },
   { label: 'Schedule', path: '/schedule', icon: '📅' },
   { label: 'Profile', path: '/profile', icon: '👤' },
+  { label: 'My QR Code', path: '/dashboard/scan-in', icon: '🎫' },
 ];
 
 function Sidebar() {

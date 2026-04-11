@@ -192,9 +192,9 @@ const SCHEDULE_ITEMS = [
 const RESOURCES = [
   {
     label: 'Devpost',
-    href: '',
+    href: 'https://hacksmu-vii.devpost.com/',
     emoji: '🚀',
-    desc: 'Coming Soon',
+    desc: 'Submit your project here',
     grad: 'radial-gradient(ellipse at 38% 28%, rgba(255,255,255,0.8) 0%, rgba(255,210,140,0.55) 30%, rgba(240,120,20,0.7) 65%, rgba(140,50,0,0.92) 100%)',
   },
   {
@@ -213,9 +213,9 @@ const RESOURCES = [
   },
   {
     label: 'Hacker Guide',
-    href: '',
+    href: 'https://drive.google.com/file/d/1LwvB0-euCPu9BwhgIloM5gLaYr7ZKTxg/view?usp=sharing',
     emoji: '📖',
-    desc: 'Coming soon',
+    desc: 'Rules, schedule & everything you need',
     grad: 'radial-gradient(ellipse at 38% 28%, rgba(255,255,255,0.95) 0%, rgba(230,230,230,0.6) 35%, rgba(90,90,90,0.7) 65%, rgba(20,20,20,0.92) 100%)',
   },
   {

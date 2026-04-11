@@ -8,7 +8,6 @@ initializeApi();
 const db = firestore();
 
 const USERS_COLLECTION = '/registrations';
-const MISC_COLLECTION = '/miscellaneous';
 
 /**
  *
@@ -46,9 +45,21 @@ async function getAllUsers(req: NextApiRequest, res: NextApiResponse) {
     });
   }
 
-  const doc = await db.collection(MISC_COLLECTION).doc('allusers').get();
+  const snapshot = await db.collection(USERS_COLLECTION).get();
+  const users = snapshot.docs.map((doc) => {
+    const data = doc.data();
+    return {
+      id: doc.id,
+      scans: data.scans,
+      user: {
+        firstName: data.user?.firstName ?? '',
+        lastName: data.user?.lastName ?? '',
+        permissions: data.user?.permissions ?? [],
+      },
+    };
+  });
 
-  return res.json(doc.data().users);
+  return res.json(users);
 }
 
 function handleGetRequest(req: NextApiRequest, res: NextApiResponse) {

@@ -271,6 +271,55 @@ export default function Admin() {
           </div>
         )}
 
+        <Link href="/admin/scan">
+          <a
+            style={{
+              ...glassPanel,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 20,
+              padding: '20px 28px',
+              marginBottom: 24,
+              textDecoration: 'none',
+              cursor: 'pointer',
+              transition: 'box-shadow 0.2s, border-color 0.2s',
+              border: '1px solid rgba(0,200,255,0.35)',
+            }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLElement).style.boxShadow = 'inset 0 1px 0 rgba(255,255,255,0.32), 0 6px 36px rgba(0,180,255,0.22)';
+              (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,200,255,0.65)';
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLElement).style.boxShadow = 'inset 0 1px 0 rgba(255,255,255,0.32), 0 6px 28px rgba(0,20,70,0.24)';
+              (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,200,255,0.35)';
+            }}
+          >
+            <div style={{
+              width: 52, height: 52, borderRadius: '50%', flexShrink: 0,
+              background: 'radial-gradient(circle at 38% 35%, rgba(255,255,255,0.45) 0%, rgba(0,180,255,0.50) 50%, rgba(0,80,200,0.60) 100%)',
+              border: '2px solid rgba(0,200,255,0.55)',
+              boxShadow: '0 0 20px rgba(0,180,255,0.40)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 22,
+            }}>
+              📷
+            </div>
+            <div>
+              <div style={{
+                fontFamily: "'Orbitron', 'Roboto', sans-serif",
+                fontSize: 16, fontWeight: 800, color: '#e0f0ff',
+                letterSpacing: '0.04em', marginBottom: 4,
+              }}>
+                Start Scanning
+              </div>
+              <div style={{ color: 'rgba(200,232,255,0.70)', fontSize: 13 }}>
+                Scan hacker QR codes to check in attendees and track event claims
+              </div>
+            </div>
+            <div style={{ marginLeft: 'auto', color: 'rgba(0,200,255,0.70)', fontSize: 22 }}>→</div>
+          </a>
+        </Link>
+
         <div style={{ ...glassPanel, padding: '24px 28px', marginBottom: 24 }}>
           <SectionTitle>Pending Questions</SectionTitle>
           {loadingQuestions ? (
