@@ -3,7 +3,6 @@ import firebase from 'firebase/app';
 import 'firebase/messaging';
 import { RequestHelper } from '../request-helper';
 import { firebaseConfig } from '../firebase-client';
-import 'firebase/messaging';
 
 interface FCMContextState {
   fcmSw: ServiceWorkerRegistration;
@@ -23,13 +22,31 @@ function FCMProvider({ children }: React.PropsWithChildren<Record<string, any>>)
   const [messageToken, setMessageToken] = useState<string>();
 
   useEffect(() => {
-    if ('serviceWorker' in window.navigator) {
-      window.navigator.serviceWorker
-        .register(`/firebase-messaging-sw.js`)
-        .then(listenForNotifications, (error) => {
-          console.log('Service worker registration failed:', error);
-        });
+    if (!('serviceWorker' in window.navigator)) return;
+
+    const hasRequiredMessagingConfig = Boolean(
+      firebaseConfig.apiKey &&
+        firebaseConfig.projectId &&
+        firebaseConfig.messagingSenderId &&
+        firebaseConfig.appId,
+    );
+
+    if (!hasRequiredMessagingConfig) {
+      console.warn(
+        'Firebase Messaging is unavailable because required Firebase configuration is missing; notifications are disabled.',
+      );
+      return;
     }
+
+    window.navigator.serviceWorker
+      .register(`/firebase-messaging-sw.js`)
+      .then(listenForNotifications)
+      .catch((error) => {
+        console.warn(
+          'Firebase Messaging service worker registration failed; notifications are disabled.',
+          error,
+        );
+      });
   }, []);
 
   /**
@@ -37,40 +54,44 @@ function FCMProvider({ children }: React.PropsWithChildren<Record<string, any>>)
    * to listen for and recieve announcements
    */
   const listenForNotifications = async (registration: ServiceWorkerRegistration) => {
-    // Set service worker registration object to state variable
-    setSwRegistration(registration);
-    console.log('Service Worker registered successfully');
+    try {
+      // Initialize firebase app and get messaging before requesting notification permission.
+      if (firebase.apps.length <= 0) firebase.initializeApp(firebaseConfig);
+      const messaging = firebase.messaging();
 
-    // Initialize firebase app and get messaging
-    if (firebase.apps.length <= 0) firebase.initializeApp(firebaseConfig);
-    const messaging = firebase.messaging();
+      // Set service worker registration object to state variable
+      setSwRegistration(registration);
+      console.log('Service Worker registered successfully');
 
-    // Ask user to enable notifications
-    // If not granted, exit
-    if (Notification.permission === 'default') await Notification.requestPermission();
-    if (Notification.permission !== 'granted') return;
+      // Ask user to enable notifications
+      // If not granted, exit
+      if (Notification.permission === 'default') await Notification.requestPermission();
+      if (Notification.permission !== 'granted') return;
 
-    // Get token and save in database
-    let token = await messaging.getToken({
-      vapidKey: process.env.NEXT_PUBLIC_VAPID_KEY,
-    });
-    await RequestHelper.post<{ token: string }, void>(
-      '/api/tokens',
-      { headers: { 'Content-Type': 'application/json' } },
-      { token },
-    );
-    setMessageToken(token);
+      // Get token and save in database
+      const token = await messaging.getToken({
+        vapidKey: process.env.NEXT_PUBLIC_VAPID_KEY,
+      });
+      await RequestHelper.post<{ token: string }, void>(
+        '/api/tokens',
+        { headers: { 'Content-Type': 'application/json' } },
+        { token },
+      );
+      setMessageToken(token);
 
-    // Listen for messages
-    messaging.onMessage((payload) => {
-      const { announcement, iconUrl } = payload.data;
-      const options = {
-        body: announcement,
-        icon: iconUrl,
-        tag: new Date().toUTCString(),
-      };
-      registration.showNotification('HackPortal Announcement', options);
-    });
+      // Listen for messages
+      messaging.onMessage((payload) => {
+        const { announcement, iconUrl } = payload.data;
+        const options = {
+          body: announcement,
+          icon: iconUrl,
+          tag: new Date().toUTCString(),
+        };
+        registration.showNotification('HackPortal Announcement', options);
+      });
+    } catch (error) {
+      console.warn('Firebase Messaging is unavailable; notifications are disabled.', error);
+    }
   };
 
   const swContextValue: FCMContextState = {

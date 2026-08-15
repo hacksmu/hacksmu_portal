@@ -119,10 +119,31 @@ function AuthProvider({ children }: React.PropsWithChildren<Record<string, any>>
   };
 
   React.useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user !== null && !user.emailVerified) return;
-      updateUser(user);
-    });
+    let unsubscribe: (() => void) | undefined;
+
+    const handleAuthFailure = (error: unknown) => {
+      console.warn('Firebase Auth is unavailable; continuing as a signed-out visitor.', error);
+      setUser(null);
+      setProfile(null);
+      setLoading(false);
+    };
+
+    try {
+      unsubscribe = firebase.auth().onAuthStateChanged((firebaseUser) => {
+        if (firebaseUser !== null && !firebaseUser.emailVerified) {
+          setUser(null);
+          setProfile(null);
+          setLoading(false);
+          return;
+        }
+
+        updateUser(firebaseUser).catch(handleAuthFailure);
+      }, handleAuthFailure);
+    } catch (error) {
+      handleAuthFailure(error);
+    }
+
+    return () => unsubscribe?.();
   }, []);
 
   /**

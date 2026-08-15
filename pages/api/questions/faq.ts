@@ -1,11 +1,5 @@
-import { firestore } from 'firebase-admin';
 import { NextApiRequest, NextApiResponse } from 'next';
-import initializeApi from '../../../lib/admin/init';
-
-initializeApi();
-const db = firestore();
-
-const FAQS_COLLECTION = '/faqs';
+import { supabaseAdmin } from '../../../lib/supabase/admin';
 
 /**
  *
@@ -17,12 +11,17 @@ const FAQS_COLLECTION = '/faqs';
  *
  */
 async function getFaqs(req: NextApiRequest, res: NextApiResponse) {
-  const snapshot = await db.collection(FAQS_COLLECTION).get();
-  let data = [];
-  snapshot.forEach((doc) => {
-    data.push(doc.data());
-  });
-  res.json(data);
+  const { data, error } = await supabaseAdmin
+    .from('faqs')
+    .select('id, question, answer, order')
+    .order('order', { ascending: true });
+
+  if (error) {
+    console.error('Unable to load FAQs from Supabase:', error);
+    return res.status(500).json({ error: 'Unable to load FAQs' });
+  }
+
+  return res.status(200).json(data ?? []);
 }
 
 function handleGetRequest(req: NextApiRequest, res: NextApiResponse) {

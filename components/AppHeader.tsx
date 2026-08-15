@@ -23,16 +23,22 @@ export default function AppHeader() {
   const user = useUser();
 
   useEffect(() => {
-    if (firebase.auth().currentUser !== null && !firebase.auth().currentUser.emailVerified) {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          //signed out succesfully
-        })
-        .catch((error) => {
-          console.warn('Could not sign out');
-        });
+    try {
+      const auth = firebase.auth();
+      const currentUser = auth.currentUser;
+
+      if (currentUser !== null && !currentUser.emailVerified) {
+        auth
+          .signOut()
+          .then(() => {
+            //signed out succesfully
+          })
+          .catch((error) => {
+            console.warn('Could not sign out');
+          });
+      }
+    } catch (error) {
+      console.warn('Firebase Auth is unavailable; skipping the header auth check.', error);
     }
 
     //creating dynamic nav items

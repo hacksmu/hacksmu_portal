@@ -1,11 +1,5 @@
-import { firestore } from 'firebase-admin';
 import { NextApiRequest, NextApiResponse } from 'next';
-import initializeApi from '../../../lib/admin/init';
-
-initializeApi();
-const db = firestore();
-
-const SPONSORS = '/sponsors';
+import { supabaseAdmin } from '../../../lib/supabase/admin';
 
 /**
  *
@@ -17,12 +11,14 @@ const SPONSORS = '/sponsors';
  *
  */
 async function getSponsors(req: NextApiRequest, res: NextApiResponse) {
-  const snapshot = await db.collection(SPONSORS).get();
-  let data = [];
-  snapshot.forEach((doc) => {
-    data.push(doc.data());
-  });
-  res.json(data);
+  const { data, error } = await supabaseAdmin.from('sponsors').select('id, link, reference');
+
+  if (error) {
+    console.error('Unable to load sponsors from Supabase:', error);
+    return res.status(500).json({ error: 'Unable to load sponsors' });
+  }
+
+  return res.status(200).json(data ?? []);
 }
 
 function handleGetRequest(req: NextApiRequest, res: NextApiResponse) {

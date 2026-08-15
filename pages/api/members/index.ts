@@ -1,11 +1,5 @@
-import { firestore } from 'firebase-admin';
 import { NextApiRequest, NextApiResponse } from 'next';
-import initializeApi from '../../../lib/admin/init';
-
-initializeApi();
-const db = firestore();
-
-const MEMBERS_COLLECTION = '/members';
+import { supabaseAdmin } from '../../../lib/supabase/admin';
 
 /**
  *
@@ -17,12 +11,23 @@ const MEMBERS_COLLECTION = '/members';
  *
  */
 async function getMembersData(req: NextApiRequest, res: NextApiResponse) {
-  const snapshot = await db.collection(MEMBERS_COLLECTION).get();
-  let data = [];
-  snapshot.forEach((doc) => {
-    data.push(doc.data());
-  });
-  res.json(data);
+  const { data, error } = await supabaseAdmin
+    .from('members')
+    .select('id, name, description, linkedin, github, personal_site, rank, file_name')
+    .order('rank', { ascending: true });
+
+  if (error) {
+    console.error('Unable to load members from Supabase:', error);
+    return res.status(500).json({ error: 'Unable to load members' });
+  }
+
+  const members = (data ?? []).map(({ personal_site, file_name, ...member }) => ({
+    ...member,
+    personalSite: personal_site,
+    fileName: file_name,
+  }));
+
+  return res.status(200).json(members);
 }
 
 function handleGetRequest(req: NextApiRequest, res: NextApiResponse) {
