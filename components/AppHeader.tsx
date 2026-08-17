@@ -80,54 +80,41 @@ export default function AppHeader() {
 
   return (
     <>
-      <header className="mt-[-24px] sticky top-0 justify-between flex flex-row w-full bg-teal items-center h-12 z-50 p-4">
-        <a
-          className="left-[128px] md:left-[84px]"
-          id="mlh-trust-badge"
-          style={{
-            display: 'inline-block',
-            position: 'absolute',
-            top: '0px',
-            width: '54px',
-            zIndex: '0',
-          }}
-          href={
-            'https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2025-season&utm_content=gray'
-          }
-          target="_blank"
-          rel="noreferrer"
-        >
-          <img
-            src="https://s3.amazonaws.com/logged-assets/trust-badge/2025/mlh-trust-badge-2025-gray.svg"
-            alt="Major League Hacking 2025 Hackathon Season"
-            style={{ width: '100%' }}
-          />
-        </a>
-        <div className="flex justify-between items-center md:max-w-full md:justify-start md:w-9/12">
+      <header className="sticky top-0 z-50 mt-[-24px] flex h-12 w-full flex-row items-center justify-between border-b-4 border-[#32e6ff] bg-[#05020d] px-3 py-1 shadow-[0_3px_0_#ff4fd8]">
+        <div className="flex items-center justify-between md:w-9/12 md:max-w-full md:justify-start">
           <Link href="/">
-            <a className="flex gap-2 order-2 relative ml-[12px] font-display self-center items-center md:order-1 md:ml-0 z-[0]">
-              <Image src={'/assets/hacksmu_fish.png'} width="50px" height="81px" />
+            <a className="relative z-[0] order-2 ml-[12px] flex items-center self-center border-x-2 border-[#ff4fd8] px-1 font-display md:order-1 md:ml-0">
+              <Image
+                src="/assets2026/hacksmu-logo.png"
+                alt="HackSMU VIII"
+                width={38}
+                height={38}
+                objectFit="contain"
+              />
             </a>
           </Link>
           {/* Smartphone nav */}
-          <div onClick={toggleMenu} className={'relative md:hidden z-[1]'}>
-            {mobileIcon ? <MenuIcon htmlColor="white" /> : <CloseIcon htmlColor="white" />}
+          <div
+            onClick={toggleMenu}
+            className="relative z-[1] border-2 border-[#32e6ff] bg-[#111d3d] px-1 md:hidden"
+          >
+            {mobileIcon ? <MenuIcon htmlColor="#ffe56b" /> : <CloseIcon htmlColor="#ff4fd8" />}
             <ul
               className={`${
                 showMenu ? 'translate-x-0' : '-translate-x-full'
-              } transform transition-all ease-out duration-300 flex w-6/12 h-screen border-2 border-white flex-col bg-teal fixed top-0 left-0 z-[-1] pt-16`}
+              } fixed top-0 left-0 z-[-1] flex h-screen w-7/12 transform flex-col border-r-4 border-[#32e6ff] bg-[#070315] pt-16 shadow-[6px_0_0_#ff4fd8] transition-all duration-300 ease-out`}
             >
               {dynamicNavItems.map((item) => (
                 <Link key={item.text} href={item.path}>
-                  <a className="border-b-2 first:border-t-2 text-white border-white p-4 py-6 hover:bg-green-700">
-                    <p className="text-sm font-bold">{item.text}</p>
+                  <a className="border-b-2 border-[#743fc7] px-4 py-5 text-[#32e6ff] first:border-t-2 hover:bg-[#111d3d] hover:text-[#ffe56b]">
+                    <p className="font-pixel text-xs uppercase tracking-wider">{item.text}</p>
                   </a>
                 </Link>
               ))}
             </ul>
           </div>
           {/* PC nav */}
-          <div className="hidden text-xs order-2 md:flex items-center md:text-left lg:ml-14">
+          <div className="order-2 hidden items-center font-pixel text-xs md:flex md:text-left lg:ml-8">
             {dynamicNavItems.map((item) => (
               <Link
                 key={item.text}
@@ -140,15 +127,17 @@ export default function AppHeader() {
                 }
               >
                 <a>
-                  <p className="md:mx-4 text-xl font-bold text-white">{item.text}</p>
+                  <p className="border-b-2 border-transparent px-1 py-1 text-xs uppercase tracking-wider text-[#32e6ff] hover:border-[#ff4fd8] hover:text-[#ffe56b] md:mx-3">
+                    {item.text}
+                  </p>
                 </a>
               </Link>
             ))}
           </div>
         </div>
-        <div className="flex lg:mr-8">
+        <div className="flex lg:mr-4">
           <button
-            className="font-header font-bold bg-white rounded-full border-2 border-black text-sm px-8 py-1"
+            className="border-2 border-[#ffe56b] bg-[#111d3d] px-4 py-1 font-pixel text-[10px] uppercase text-white shadow-[3px_3px_0_#ff4fd8] hover:text-[#ffe56b] sm:px-6 sm:text-xs"
             onClick={toggleDialog}
           >
             {!user || !isSignedIn ? 'Sign in' : hasProfile ? 'Profile' : 'Register'}
